@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import currencyfield.CurrencyField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import limitedtextfield.LimitedTextField?>
+
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.StockEntryController">
+   <children>
+      <AnchorPane fx:id="stockEntryArea" layoutX="15.0" layoutY="24.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="24.0">
+               <children>
+                  <VBox>
+                     <children>
+                        <Label text="Fornecedor">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <ComboBox fx:id="supplierComboBox" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="185.0" promptText="Selecione" />
+                     </children>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox prefWidth="150.0">
+                     <children>
+                        <Label text="Data de Emissão" VBox.vgrow="ALWAYS">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <DatePicker fx:id="datePicker" maxHeight="-Infinity" prefHeight="30.0" prefWidth="150.0" promptText="Escolha uma data" />
+                     </children>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox prefWidth="150.0">
+                     <children>
+                        <Label text="Nota Fiscal">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <LimitedTextField fx:id="fiscalNote" prefHeight="30.0" prefWidth="150.0" />
+                     </children>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <Button fx:id="addStockEntryButton" mnemonicParsing="false" onAction="#addEntry" prefHeight="52.0" prefWidth="55.0" text="+" />
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
+      <Separator layoutY="95.0" prefHeight="17.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <AnchorPane fx:id="productsEntryArea" disable="true" layoutX="14.0" layoutY="98.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="105.0">
+         <children>
+            <HBox layoutX="28.0" layoutY="15.0" prefHeight="52.0" prefWidth="570.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="24.0">
+               <children>
+                  <VBox>
+                     <children>
+                        <Label text="Produto">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <ComboBox fx:id="productComboBox" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="185.0" promptText="Selecione" />
+                     </children>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox prefHeight="47.0" prefWidth="150.0">
+                     <children>
+                        <Label text="Quantidade *">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <LimitedTextField fx:id="amountTextField" prefHeight="30.0" prefWidth="150.0" />
+                     </children>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox prefWidth="150.0">
+                     <children>
+                        <Label text="Preço de Custo *">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <CurrencyField fx:id="costPriceTextField" prefHeight="30.0" prefWidth="150.0" />
+                     </children>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <Button fx:id="addProductEntryButton" mnemonicParsing="false" onAction="#addEntry" prefHeight="52.0" prefWidth="55.0" text="+" />
+               </children>
+            </HBox>
+            <TableView fx:id="productsEntryTableView" layoutX="15.0" layoutY="100.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="100.0">
+              <columns>
+                <TableColumn prefWidth="75.0" text="C1" />
+                <TableColumn prefWidth="75.0" text="C2" />
+              </columns>
+            </TableView>
+            <HBox AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0">
+               <children>
+                  <Button fx:id="saveButton" mnemonicParsing="false" onAction="#save" prefHeight="30.0" prefWidth="89.0" text="Salvar">
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="clearButton" mnemonicParsing="false" onAction="#clear" prefHeight="30.0" prefWidth="89.0" text="Limpar" />
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

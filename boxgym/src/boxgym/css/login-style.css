@@ -1,0 +1,30 @@
+@import "base.css";
+
+.left-anchor-pane {
+    -fx-background-color: -main-theme-color;
+}
+
+.right-anchor-pane {
+    -fx-background-color: -secundary-theme-color;
+}
+
+.icon {
+    -fx-fill: -main-theme-color;
+}
+
+.login-btn {
+    -fx-background-color: -main-theme-color !important;
+    -fx-text-fill: -light-text-color !important;
+}
+
+.login-btn:hover {
+    -fx-border-color: -button-border-color !important;
+}
+
+.login-btn:pressed {
+    -fx-background-color: derive(-main-theme-color, -40%) !important;
+}
+
+.normal-label {
+    -fx-text-fill: -dark-text-color;
+}

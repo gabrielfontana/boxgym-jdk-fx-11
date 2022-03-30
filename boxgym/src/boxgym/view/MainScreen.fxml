@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.MainScreenController">
+    <top>
+        <MenuBar prefHeight="25.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
+            <menus>
+                <Menu mnemonicParsing="false" text="BoxGym">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleHome" text="Início" accelerator="HOME" >
+                        </MenuItem>
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleLogout" text="Sair" accelerator="ESC">
+                        </MenuItem>
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Administrativo">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handlePlans" text="Planos" accelerator="Ctrl+0">
+                        </MenuItem>
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleClients" text="Clientes" accelerator="Ctrl+1">
+                        </MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#handleSuppliers" text="Fornecedores" accelerator="Ctrl+2">
+                        </MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#handleEmployees" text="Funcionários" accelerator="Ctrl+3">
+                        </MenuItem>
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Financeiro">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleBillsToPay" text="Contas a Pagar" accelerator="Ctrl+4">
+                        </MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#handleBillsToReceive" text="Contas a Receber" accelerator="Ctrl+5">
+                        </MenuItem>
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleBanks" text="Bancos" accelerator="Ctrl+6">
+                        </MenuItem>
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Vendas">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleSales" text="Vendas" accelerator="Ctrl+7">
+                        </MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#handleProducts" text="Produtos" accelerator="Ctrl+8">
+                        </MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#handleStock" text="Entradas no Estoque" accelerator="Ctrl+9">
+                        </MenuItem>
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Treinos">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleFiles" text="Fichas" accelerator="Ctrl+F">
+                        </MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#handleExercises" text="Exercícios" accelerator="Ctrl+E">
+                        </MenuItem>
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Avaliações">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleMeasurements" text="Medidas" accelerator="Ctrl+M">
+                        </MenuItem>
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Ajuda">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleAbout" text="Sobre" accelerator="F1">
+                        </MenuItem>
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+    <center>
+        <AnchorPane fx:id="contentArea" prefHeight="695.0" prefWidth="1280.0" BorderPane.alignment="CENTER" />
+    </center>
+</BorderPane>

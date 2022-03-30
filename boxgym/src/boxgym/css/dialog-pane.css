@@ -1,0 +1,26 @@
+@import "base.css";
+
+.myDialog:header *.header-panel *.label{
+    -fx-font-size: 18px !important;
+    -fx-font-family: "System" !important;
+    -fx-fill: -dark-text-color !important;
+}
+
+.myDialog > *.label.content{
+    -fx-font-size: 14px !important;
+    -fx-font-family: "System" !important;
+    -fx-fill: -dark-text-color !important;
+}
+
+.myDialog .button:default{
+    -fx-background-color: -main-theme-color !important;
+    -fx-text-fill: -light-text-color !important;
+}
+
+.myDialog .button:default:hover {
+    -fx-border-color: -button-border-color !important;
+}
+
+.myDialog .button:default:pressed {
+    -fx-background-color: derive(-main-theme-color, -40%) !important;
+}
