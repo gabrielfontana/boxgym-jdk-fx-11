@@ -56,7 +56,6 @@ public class StockEntryController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        datePicker.setEditable(false);
     }
 
     @FXML
