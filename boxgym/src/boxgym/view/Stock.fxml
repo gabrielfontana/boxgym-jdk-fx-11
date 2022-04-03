@@ -3,7 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="695.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.StockController">
+<AnchorPane prefHeight="695.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.StockController">
    <children>
       <Button fx:id="addButton" layoutX="607.0" layoutY="335.0" mnemonicParsing="false" onAction="#add" text="Adicionar" />
    </children>

@@ -77,7 +77,7 @@ public class SuppliersAddController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         setCreated(false);
-        ButtonHelper.addOrUpdateButtons(saveButton, clearButton);
+        buttonsProperties();
         loadFederativeUnitComboBox();
         suppliersInputRestrictions();
     }
@@ -152,5 +152,10 @@ public class SuppliersAddController implements Initializable {
         districtTextField.setText("");
         cityTextField.setText("");
         federativeUnitComboBox.valueProperty().set(null);
+    }
+    
+    private void buttonsProperties() {
+        ButtonHelper.defaultButton(saveButton);
+        ButtonHelper.buttonCursor(saveButton, clearButton);
     }
 }

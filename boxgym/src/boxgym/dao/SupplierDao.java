@@ -86,7 +86,7 @@ public class SupplierDao {
         return false;
     }
 
-    public LinkedHashMap<Integer, String> readId() {
+    public LinkedHashMap<Integer, String> getSupplierForHashMap() {
         LinkedHashMap<Integer, String> map = new LinkedHashMap<>();
         String sql = "SELECT `supplierId`, `tradeName` FROM `supplier`;";
         try {

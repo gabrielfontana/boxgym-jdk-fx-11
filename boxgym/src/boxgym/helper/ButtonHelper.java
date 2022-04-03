@@ -7,31 +7,31 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.image.ImageView;
 
 public class ButtonHelper {
+
     public static void loginButtons(Button loginButton, Hyperlink registerLabel) {
         loginButton.setDefaultButton(true);
         loginButton.setCursor(Cursor.HAND);
         registerLabel.setCursor(Cursor.HAND);
     }
-    
+
     public static void registerButtons(Button registerButton, MaterialDesignIconView backArrow) {
         registerButton.setDefaultButton(true);
         registerButton.setCursor(Cursor.HAND);
         backArrow.setCursor(Cursor.HAND);
     }
-    
-    public static void buttons(Button... buttons) {
-        for(Button b : buttons) {
+
+    public static void buttonCursor(Button... buttons) {
+        for (Button b : buttons) {
             b.setCursor(Cursor.HAND);
         }
     }
-    
-    public static void addOrUpdateButtons(Button saveButton, Button clearButton) {
-        saveButton.setDefaultButton(true);
-        saveButton.setCursor(Cursor.HAND);
-        clearButton.setCursor(Cursor.HAND);
+
+    public static void defaultButton(Button button) {
+        button.setDefaultButton(true);
     }
-    
+
     public static void imageButton(ImageView image) {
         image.setCursor(Cursor.HAND);
     }
+
 }

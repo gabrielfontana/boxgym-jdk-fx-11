@@ -69,12 +69,12 @@
                   </ImageView>
                   <HBox>
                      <children>
-                        <Label styleClass="title-label" text="ID: ">
+                        <Label minWidth="-Infinity" styleClass="title-label" text="ID: ">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
                         </Label>
-                        <Label fx:id="productIdLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="278.0" styleClass="data-label" />
+                        <Label fx:id="productIdLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="277.0" styleClass="data-label" />
                      </children>
                      <VBox.margin>
                         <Insets bottom="10.0" />
@@ -82,12 +82,12 @@
                   </HBox>
                   <HBox layoutX="10.0" layoutY="180.0">
                      <children>
-                        <Label prefHeight="20.0" styleClass="title-label" text="Nome: ">
+                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="title-label" text="Nome: ">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
                         </Label>
-                        <Label fx:id="nameLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="253.0" styleClass="data-label" />
+                        <Label fx:id="nameLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="252.0" styleClass="data-label" />
                      </children>
                      <VBox.margin>
                         <Insets bottom="10.0" />
@@ -95,12 +95,12 @@
                   </HBox>
                   <HBox layoutX="10.0" layoutY="210.0">
                      <children>
-                        <Label styleClass="title-label" text="Categoria: ">
+                        <Label minWidth="-Infinity" styleClass="title-label" text="Categoria: ">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
                         </Label>
-                        <Label fx:id="categoryLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="229.0" styleClass="data-label" />
+                        <Label fx:id="categoryLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="228.0" styleClass="data-label" />
                      </children>
                      <VBox.margin>
                         <Insets bottom="10.0" />
@@ -108,12 +108,12 @@
                   </HBox>
                   <HBox layoutX="10.0" layoutY="230.0">
                      <children>
-                        <Label styleClass="title-label" text="Descrição: ">
+                        <Label minWidth="-Infinity" styleClass="title-label" text="Descrição: ">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
                         </Label>
-                        <Label fx:id="descriptionLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="230.0" styleClass="data-label" />
+                        <Label fx:id="descriptionLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="229.0" styleClass="data-label" />
                      </children>
                      <VBox.margin>
                         <Insets bottom="10.0" />
@@ -121,12 +121,12 @@
                   </HBox>
                   <HBox layoutX="10.0" layoutY="210.0">
                      <children>
-                        <Label styleClass="title-label" text="Estoque: ">
+                        <Label minWidth="-Infinity" styleClass="title-label" text="Estoque: ">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
                         </Label>
-                        <Label fx:id="amountLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="241.0" styleClass="data-label" />
+                        <Label fx:id="amountLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="240.0" styleClass="data-label" />
                      </children>
                      <VBox.margin>
                         <Insets bottom="10.0" />
@@ -134,12 +134,12 @@
                   </HBox>
                   <HBox layoutX="10.0" layoutY="230.0">
                      <children>
-                        <Label styleClass="title-label" text="Estoque Mín.: ">
+                        <Label minWidth="-Infinity" styleClass="title-label" text="Estoque Mín.: ">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
                         </Label>
-                        <Label fx:id="minimumStockLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="207.0" styleClass="data-label" />
+                        <Label fx:id="minimumStockLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="206.0" styleClass="data-label" />
                      </children>
                      <VBox.margin>
                         <Insets bottom="10.0" />
@@ -147,12 +147,12 @@
                   </HBox>
                   <HBox layoutX="10.0" layoutY="250.0">
                      <children>
-                        <Label styleClass="title-label" text="Preço de Custo: ">
+                        <Label minWidth="-Infinity" styleClass="title-label" text="Preço de Custo: ">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
                         </Label>
-                        <Label fx:id="costPriceLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="194.0" styleClass="data-label" />
+                        <Label fx:id="costPriceLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="193.0" styleClass="data-label" />
                      </children>
                      <VBox.margin>
                         <Insets bottom="10.0" />
@@ -160,12 +160,12 @@
                   </HBox>
                   <HBox layoutX="10.0" layoutY="390.0">
                      <children>
-                        <Label styleClass="title-label" text="Preço de Venda: ">
+                        <Label minWidth="-Infinity" styleClass="title-label" text="Preço de Venda: ">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
                         </Label>
-                        <Label fx:id="sellingPriceLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="190.0" styleClass="data-label" />
+                        <Label fx:id="sellingPriceLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="189.0" styleClass="data-label" />
                      </children>
                      <VBox.margin>
                         <Insets bottom="10.0" />
@@ -173,12 +173,12 @@
                   </HBox>
                   <HBox layoutX="10.0" layoutY="360.0">
                      <children>
-                        <Label styleClass="title-label" text="Fornecedor: ">
+                        <Label minWidth="-Infinity" styleClass="title-label" text="Fornecedor: ">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
                         </Label>
-                        <Label fx:id="fkSupplierLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="218.0" styleClass="data-label" />
+                        <Label fx:id="fkSupplierLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="217.0" styleClass="data-label" />
                      </children>
                      <VBox.margin>
                         <Insets bottom="10.0" />
@@ -186,12 +186,12 @@
                   </HBox>
                   <HBox>
                      <children>
-                        <Label styleClass="title-label" text="Criação: ">
+                        <Label minWidth="-Infinity" styleClass="title-label" text="Criação: ">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
                         </Label>
-                        <Label fx:id="createdAtLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="244.0" styleClass="data-label" />
+                        <Label fx:id="createdAtLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="243.0" styleClass="data-label" />
                      </children>
                      <VBox.margin>
                         <Insets bottom="10.0" />
@@ -199,12 +199,12 @@
                   </HBox>
                   <HBox>
                      <children>
-                        <Label styleClass="title-label" text="Modificação: ">
+                        <Label minWidth="-Infinity" styleClass="title-label" text="Modificação: ">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
                         </Label>
-                        <Label fx:id="updatedAtLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="212.0" styleClass="data-label" />
+                        <Label fx:id="updatedAtLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="211.0" styleClass="data-label" />
                      </children>
                   </HBox>
                </children>

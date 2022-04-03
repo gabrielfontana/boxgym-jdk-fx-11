@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import limitedtextfield.LimitedTextField?>
 
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.StockEntryController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.StockEntryController">
     <children>
         <AnchorPane fx:id="stockEntryArea" layoutX="15.0" layoutY="24.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -34,14 +34,14 @@
                                 <Insets right="10.0" />
                             </HBox.margin>
                         </VBox>
-                        <VBox prefWidth="150.0">
+                        <VBox maxHeight="-Infinity" prefWidth="150.0">
                             <children>
                                 <Label text="Data de Emissão" VBox.vgrow="ALWAYS">
                                     <VBox.margin>
                                         <Insets bottom="5.0" />
                                     </VBox.margin>
                                 </Label>
-                                <DatePicker fx:id="datePicker" maxHeight="-Infinity" prefHeight="30.0" prefWidth="150.0" promptText="Escolha uma data" />
+                                <DatePicker fx:id="invoiceIssueDateDatePicker" maxHeight="-Infinity" prefHeight="30.0" prefWidth="150.0" promptText="Escolha uma data" />
                             </children>
                             <HBox.margin>
                                 <Insets right="10.0" />
@@ -54,7 +54,7 @@
                                         <Insets bottom="5.0" />
                                     </VBox.margin>
                                 </Label>
-                                <LimitedTextField fx:id="fiscalNote" prefHeight="30.0" prefWidth="150.0" />
+                                <LimitedTextField fx:id="invoiceNumberTextField" prefHeight="30.0" prefWidth="150.0" />
                             </children>
                             <HBox.margin>
                                 <Insets right="10.0" />
@@ -120,8 +120,10 @@
                 </HBox>
                 <TableView fx:id="productsEntryTableView" layoutX="15.0" layoutY="100.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="100.0">
                     <columns>
-                        <TableColumn prefWidth="75.0" text="C1" />
-                        <TableColumn prefWidth="75.0" text="C2" />
+                        <TableColumn fx:id="productTableColumn" minWidth="-Infinity" prefWidth="142.0" resizable="false" text="Produto" />
+                        <TableColumn fx:id="amountTableColumn" minWidth="-Infinity" prefWidth="142.0" resizable="false" text="Quantidade" />
+                  <TableColumn fx:id="costPriceTableColumn" minWidth="-Infinity" prefWidth="142.0" resizable="false" text="Preço de Custo" />
+                  <TableColumn fx:id="totalTableColumn" minWidth="-Infinity" prefWidth="142.0" resizable="false" text="Total" />
                     </columns>
                 </TableView>
                 <HBox AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0">

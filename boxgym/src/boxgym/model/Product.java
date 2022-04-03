@@ -20,6 +20,12 @@ public class Product {
     public Product() {
 
     }
+    
+    //Construtor da CombBox
+    public Product(int productId, String name) {
+        this.productId = productId;
+        this.name = name;
+    }
 
     //Construtor CREATE
     public Product(String name, String category, String description, int amount, int minimumStock,

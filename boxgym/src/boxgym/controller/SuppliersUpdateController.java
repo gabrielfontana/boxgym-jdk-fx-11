@@ -19,9 +19,9 @@ import javafx.scene.layout.AnchorPane;
 import limitedtextfield.LimitedTextField;
 
 public class SuppliersUpdateController implements Initializable {
-    
+
     AlertHelper ah = new AlertHelper();
-    
+
     @FXML
     private AnchorPane anchorPane;
 
@@ -57,13 +57,12 @@ public class SuppliersUpdateController implements Initializable {
 
     @FXML
     private ComboBox<String> federativeUnitComboBox;
-    
+
     @FXML
     private Button saveButton;
 
     @FXML
     private Button clearButton;
-
 
     private Supplier loadSupplier;
 
@@ -88,7 +87,7 @@ public class SuppliersUpdateController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         setUpdated(false);
-        ButtonHelper.addOrUpdateButtons(saveButton, clearButton);
+        buttonsProperties();
         loadFederativeUnitComboBox();
         suppliersInputRestrictions();
 
@@ -149,8 +148,8 @@ public class SuppliersUpdateController implements Initializable {
             ah.customAlert(Alert.AlertType.WARNING, "Não foi possível realizar o cadastro deste fornecedor!", "O campo 'CEP' deve conter 8 dígitos.");
         } else {
             Supplier supplier = new Supplier(loadSupplier.getSupplierId(), corporateNameTextField.getText(), tradeNameTextField.getText(),
-                emailTextField.getText(), phoneTextField.getText(), zipCodeTextField.getText(), addressTextField.getText(), addressComplementTextField.getText(),
-                districtTextField.getText(), cityTextField.getText(), federativeUnitComboBox.getSelectionModel().getSelectedItem());
+                    emailTextField.getText(), phoneTextField.getText(), zipCodeTextField.getText(), addressTextField.getText(), addressComplementTextField.getText(),
+                    districtTextField.getText(), cityTextField.getText(), federativeUnitComboBox.getSelectionModel().getSelectedItem());
             SupplierDao supplierDao = new SupplierDao();
             supplierDao.update(supplier);
             setUpdated(true);
@@ -171,5 +170,10 @@ public class SuppliersUpdateController implements Initializable {
         districtTextField.setText("");
         cityTextField.setText("");
         federativeUnitComboBox.valueProperty().set(null);
+    }
+
+    private void buttonsProperties() {
+        ButtonHelper.defaultButton(saveButton);
+        ButtonHelper.buttonCursor(saveButton, clearButton);
     }
 }

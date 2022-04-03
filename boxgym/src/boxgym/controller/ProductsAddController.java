@@ -30,7 +30,7 @@ import limitedtextfield.LimitedTextField;
 public class ProductsAddController implements Initializable {
 
     SupplierDao dao = new SupplierDao();
-    LinkedHashMap<Integer, String> map = dao.readId();
+    LinkedHashMap<Integer, String> map = dao.getSupplierForHashMap();
     ImageHelper ih = new ImageHelper();
     AlertHelper ah = new AlertHelper();
 
@@ -75,8 +75,7 @@ public class ProductsAddController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         setCreated(false);
-        ButtonHelper.addOrUpdateButtons(saveButton, clearButton);
-        ButtonHelper.imageButton(productImage);
+        buttonsProperties();
         loadSupplierNameComboBox();
         productsInputRestrictions();
         ih.loadDefaultImage(productImage);
@@ -158,5 +157,11 @@ public class ProductsAddController implements Initializable {
         sellingPriceTextField.setPrice(0.0);
         fkSupplierComboBox.valueProperty().set(null);
         ih.loadDefaultImage(productImage);
+    }
+    
+    private void buttonsProperties() {
+        ButtonHelper.defaultButton(saveButton);
+        ButtonHelper.buttonCursor(saveButton, clearButton);
+        ButtonHelper.imageButton(productImage);
     }
 }

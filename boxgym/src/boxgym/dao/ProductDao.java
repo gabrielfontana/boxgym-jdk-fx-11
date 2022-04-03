@@ -2,11 +2,13 @@ package boxgym.dao;
 
 import boxgym.jdbc.ConnectionFactory;
 import boxgym.model.Product;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,6 +48,47 @@ public class ProductDao {
             DbUtils.closeQuietly(rs);
         }
         return false;
+    }
+    
+    public LinkedHashMap<Integer, String> getProductForHashMap() {
+        LinkedHashMap<Integer, String> map = new LinkedHashMap<>();
+        String sql = "SELECT `productId`, `name` FROM `product`;";
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            Product p;
+            while (rs.next()) {
+                p = new Product(rs.getInt("productId"), rs.getString("name"));
+                map.put(p.getProductId(), p.getName());
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return map;
+    }
+    
+    public BigDecimal getProductCostPrice(int key) {
+        String sql = "SELECT `costPrice` FROM `product` WHERE `productId` = '" + key + "';";        
+        BigDecimal costPrice = new BigDecimal("0");
+        
+        try{
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if(rs.next()) {
+                costPrice = rs.getBigDecimal("costPrice");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return costPrice;
     }
 
     public List<Product> read() {

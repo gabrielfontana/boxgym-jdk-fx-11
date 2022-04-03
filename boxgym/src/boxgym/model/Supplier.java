@@ -21,7 +21,7 @@ public class Supplier {
 
     }
 
-    //Construtor da CombBox de Produtos
+    //Construtor da CombBox
     public Supplier(int supplierId, String tradeName) {
         this.supplierId = supplierId;
         this.tradeName = tradeName;

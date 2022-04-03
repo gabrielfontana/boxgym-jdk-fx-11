@@ -131,7 +131,7 @@ public class ProductsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         resetDetails();
-        ButtonHelper.buttons(generatePdfButton, exportExcelButton, addButton, updateButton, deleteButton);
+        ButtonHelper.buttonCursor(generatePdfButton, exportExcelButton, addButton, updateButton, deleteButton);
         initProductTableView();
         tableViewListeners();
         searchBox.setOnKeyPressed((KeyEvent e) -> search());
