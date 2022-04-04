@@ -22,12 +22,13 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.skin.TableHeaderRow;
 import javafx.scene.layout.AnchorPane;
 import limitedtextfield.LimitedTextField;
 
-public class StockEntryController implements Initializable {
+public class StockEntryAddController implements Initializable {
 
     SupplierDao supplierDao = new SupplierDao();
     LinkedHashMap<Integer, String> supplierMap = supplierDao.getSupplierForHashMap();
@@ -37,21 +38,24 @@ public class StockEntryController implements Initializable {
 
     @FXML
     private AnchorPane stockEntryArea;
-
+    
     @FXML
     private ComboBox<String> supplierComboBox;
-
+    
     @FXML
     private DatePicker invoiceIssueDateDatePicker;
 
     @FXML
     private LimitedTextField invoiceNumberTextField;
-
+    
     @FXML
     private Button addStockEntryButton;
-
+    
     @FXML
     private AnchorPane productsEntryArea;
+    
+    @FXML
+    private TextField stockEntryIdTextField;
 
     @FXML
     private ComboBox<String> productComboBox;
@@ -61,12 +65,12 @@ public class StockEntryController implements Initializable {
 
     @FXML
     private CurrencyField costPriceTextField;
-
+    
     @FXML
     private Button addProductEntryButton;
 
     @FXML
-    private TableView<StockEntryProduct> productsEntryTableView;
+    private TableView<StockEntryProduct> productEntryTableView;
 
     @FXML
     private TableColumn<StockEntryProduct, Integer> productTableColumn;
@@ -85,15 +89,26 @@ public class StockEntryController implements Initializable {
 
     @FXML
     private Button clearButton;
+    
+    private boolean created = false;
 
+    public boolean isCreated() {
+        return created;
+    }
+
+    public void setCreated(boolean created) {
+        this.created = created;
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        setCreated(false);
         loadSupplierNameComboBox();
         loadProductNameComboBox();
         productNameComboBoxListener();
         ButtonHelper.buttonCursor(addStockEntryButton, addProductEntryButton, saveButton, clearButton);
         tableViewListeners();
-        initSupplierTableView();
+        initProductEntryTableView();
     }
 
     private void loadSupplierNameComboBox() {
@@ -138,12 +153,24 @@ public class StockEntryController implements Initializable {
 
     private void productNameComboBoxListener() {
         productComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
-            ProductDao dao = new ProductDao();
-            costPriceTextField.setPrice(dao.getProductCostPrice(getKeyFromProductComboBox()).doubleValue());
-        }); 
+            if(productComboBox.getSelectionModel().getSelectedItem() != null) {
+                ProductDao dao = new ProductDao();
+                costPriceTextField.setPrice(dao.getProductCostPrice(getKeyFromProductComboBox()).doubleValue());
+            }
+        });
     }
 
-    private void initSupplierTableView() {
+    @FXML
+    void addStockEntry(ActionEvent event) {
+        stockEntryArea.setDisable(true);
+        productsEntryArea.setDisable(false);
+        StockEntry stockEntry = new StockEntry(invoiceIssueDateDatePicker.getValue(), invoiceNumberTextField.getText(), getKeyFromSupplierComboBox());
+        StockEntryDao stockEntryDao = new StockEntryDao();
+        stockEntryDao.create(stockEntry);
+        stockEntryIdTextField.setText(String.valueOf(stockEntryDao.getStockEntryId()));
+    }
+
+    private void initProductEntryTableView() {
         productTableColumn.setCellValueFactory(new PropertyValueFactory("fkProduct"));
         amountTableColumn.setCellValueFactory(new PropertyValueFactory("amount"));
         costPriceTableColumn.setCellValueFactory(new PropertyValueFactory("costPrice"));
@@ -151,31 +178,25 @@ public class StockEntryController implements Initializable {
     }
 
     @FXML
-    void addEntry(ActionEvent event) {
-        stockEntryArea.setDisable(true);
-        productsEntryArea.setDisable(false);
-        StockEntry stockEntry = new StockEntry(invoiceIssueDateDatePicker.getValue(), invoiceNumberTextField.getText(), getKeyFromSupplierComboBox());
-        StockEntryDao stockEntryDao = new StockEntryDao();
-        if(stockEntryDao.create(stockEntry)){
-            System.out.println("true");
-        } else {
-            System.out.println("false");
-        }
-    }
-
-    @FXML
-    void clear(ActionEvent event) {
+    void addProductEntry(ActionEvent event) {
 
     }
 
     @FXML
     void save(ActionEvent event) {
-        
+        setCreated(true);
+    }
+
+    @FXML
+    void clear(ActionEvent event) {
+        productComboBox.valueProperty().set(null);
+        amountTextField.setText("");
+        costPriceTextField.setPrice(0.0);
     }
 
     private void tableViewListeners() {
-        productsEntryTableView.skinProperty().addListener((obs, oldSkin, newSkin) -> {
-            final TableHeaderRow header = (TableHeaderRow) productsEntryTableView.lookup("TableHeaderRow");
+        productEntryTableView.skinProperty().addListener((obs, oldSkin, newSkin) -> {
+            final TableHeaderRow header = (TableHeaderRow) productEntryTableView.lookup("TableHeaderRow");
             header.reorderingProperty().addListener((o, oldVal, newVal) -> header.setReordering(false));
         });
     }

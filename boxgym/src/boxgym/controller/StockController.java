@@ -27,12 +27,19 @@ public class StockController implements Initializable {
     @FXML
     void add(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/boxgym/view/StockEntry.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/boxgym/view/StockEntryAdd.fxml"));
             Parent root = (Parent) loader.load();
             JMetro jMetro = new JMetro(root, Style.LIGHT);
-
+            
+            StockEntryAddController controller = loader.getController();
+            
             StageHelper.createAddOrUpdateStage("Adicionando Entrada de Estoque", root);
-
+            
+            if (controller.isCreated()) {
+                System.out.println("entrada de estoque contém produto");
+            } else {
+                System.out.println("entrada de estoque excluída");
+            }
         } catch (IOException ex) {
             Logger.getLogger(StockController.class.getName()).log(Level.SEVERE, null, ex);
         } 

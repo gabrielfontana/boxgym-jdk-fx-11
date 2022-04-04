@@ -10,12 +10,13 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import limitedtextfield.LimitedTextField?>
 
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.StockEntryController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.StockEntryAddController">
     <children>
         <AnchorPane fx:id="stockEntryArea" layoutX="15.0" layoutY="24.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -23,7 +24,7 @@
                     <children>
                         <VBox>
                             <children>
-                                <Label text="Fornecedor">
+                                <Label text="Fornecedor *">
                                     <VBox.margin>
                                         <Insets bottom="5.0" />
                                     </VBox.margin>
@@ -60,12 +61,13 @@
                                 <Insets right="10.0" />
                             </HBox.margin>
                         </VBox>
+                      <Button fx:id="addStockEntryButton" mnemonicParsing="false" onAction="#addStockEntry" prefHeight="52.0" prefWidth="55.0">
+                     <graphic>
+                        <MaterialDesignIconView glyphName="PLUS" size="21" />
+                     </graphic>
+                  </Button>
                     </children>
                 </HBox>
-                <Button fx:id="addStockEntryButton" layoutX="530.0" layoutY="24.0" mnemonicParsing="false" onAction="#addEntry" prefHeight="52.0" prefWidth="55.0">
-               <graphic>
-                  <MaterialDesignIconView glyphName="PLUS" size="21" />
-               </graphic></Button>
             </children>
         </AnchorPane>
         <Separator layoutY="95.0" prefHeight="17.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
@@ -73,9 +75,22 @@
             <children>
                 <HBox layoutX="28.0" layoutY="15.0" prefHeight="52.0" prefWidth="570.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="24.0">
                     <children>
-                        <VBox>
+                  <VBox prefHeight="52.0" prefWidth="109.0">
+                     <children>
+                        <Label text="Entrada de Estoque">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TextField fx:id="stockEntryIdTextField" disable="true" editable="false" prefHeight="30.0" prefWidth="57.0" />
+                     </children>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </VBox>
+                        <VBox prefHeight="52.0" prefWidth="177.0">
                             <children>
-                                <Label text="Produto">
+                                <Label text="Produto *">
                                     <VBox.margin>
                                         <Insets bottom="5.0" />
                                     </VBox.margin>
@@ -86,7 +101,7 @@
                                 <Insets right="10.0" />
                             </HBox.margin>
                         </VBox>
-                        <VBox prefHeight="47.0" prefWidth="150.0">
+                        <VBox prefHeight="52.0" prefWidth="95.0">
                             <children>
                                 <Label text="Quantidade *">
                                     <VBox.margin>
@@ -99,7 +114,7 @@
                                 <Insets right="10.0" />
                             </HBox.margin>
                         </VBox>
-                        <VBox prefWidth="150.0">
+                        <VBox prefHeight="52.0" prefWidth="95.0">
                             <children>
                                 <Label text="Preço de Custo *">
                                     <VBox.margin>
@@ -112,13 +127,13 @@
                                 <Insets right="10.0" />
                             </HBox.margin>
                         </VBox>
-                        <Button fx:id="addProductEntryButton" mnemonicParsing="false" onAction="#addEntry" prefHeight="52.0" prefWidth="55.0">
+                        <Button fx:id="addProductEntryButton" mnemonicParsing="false" onAction="#addProductEntry" prefHeight="52.0" prefWidth="55.0">
                      <graphic>
                         <MaterialDesignIconView glyphName="PLUS" size="21" />
                      </graphic></Button>
                     </children>
                 </HBox>
-                <TableView fx:id="productsEntryTableView" layoutX="15.0" layoutY="100.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="100.0">
+                <TableView fx:id="productEntryTableView" layoutX="15.0" layoutY="100.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="100.0">
                     <columns>
                         <TableColumn fx:id="productTableColumn" minWidth="-Infinity" prefWidth="142.0" resizable="false" text="Produto" />
                         <TableColumn fx:id="amountTableColumn" minWidth="-Infinity" prefWidth="142.0" resizable="false" text="Quantidade" />

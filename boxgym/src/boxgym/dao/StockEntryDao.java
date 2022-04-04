@@ -33,10 +33,30 @@ public class StockEntryDao {
         } catch (SQLException ex) {
             Logger.getLogger(StockEntryDao.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            DbUtils.closeQuietly(conn);
+            //DbUtils.closeQuietly(conn);
             DbUtils.closeQuietly(ps);
             DbUtils.closeQuietly(rs);
         }
         return false;
+    }
+    
+    public int getStockEntryId() {
+        String sql = "SELECT `stockEntryId` FROM `stockentry` ORDER BY `stockEntryId` DESC LIMIT 1;";        
+        int stockEntryId = 0;
+        
+        try{
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if(rs.next()) {
+                stockEntryId = rs.getInt("stockEntryId");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return stockEntryId;
     }
 }
