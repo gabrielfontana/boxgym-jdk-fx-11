@@ -24,3 +24,7 @@
 .table-row-cell:odd {
     -fx-background-color: #f3f3f3;
 }
+
+.action-button-column:hover {
+    -fx-background-color: transparent !important;
+}

@@ -8,8 +8,6 @@ import boxgym.helper.ButtonHelper;
 import boxgym.model.StockEntry;
 import boxgym.model.StockEntryProduct;
 import currencyfield.CurrencyField;
-import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
-import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ArrayList;
@@ -28,7 +26,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -106,8 +103,6 @@ public class StockEntryAddController implements Initializable {
     
     private boolean created = false;
     
-    private StockEntryProduct selected;
-
     public boolean isCreated() {
         return created;
     }
@@ -204,7 +199,6 @@ public class StockEntryAddController implements Initializable {
         amountTableColumn.setCellValueFactory(new PropertyValueFactory("amount"));
         costPriceTableColumn.setCellValueFactory(new PropertyValueFactory("costPrice"));
         totalTableColumn.setCellValueFactory(new PropertyValueFactory("total"));
-        actionButtonTableColumn.setStyle("-fx-alignment: CENTER;");
         actionButtonTableColumn.setCellFactory(ActionButtonTableCell.<StockEntryProduct>forTableColumn("", (StockEntryProduct p) -> {
             list.remove(p);
             obsListItens.remove(p);
@@ -226,13 +220,6 @@ public class StockEntryAddController implements Initializable {
     }
 
     private void tableViewListeners() {
-         productEntryTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
-            @Override
-            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                selected = (StockEntryProduct) newValue;
-            }
-        });
-        
         productEntryTableView.skinProperty().addListener((obs, oldSkin, newSkin) -> {
             final TableHeaderRow header = (TableHeaderRow) productEntryTableView.lookup("TableHeaderRow");
             header.reorderingProperty().addListener((o, oldVal, newVal) -> header.setReordering(false));

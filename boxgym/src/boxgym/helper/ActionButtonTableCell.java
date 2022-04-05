@@ -15,10 +15,12 @@ public class ActionButtonTableCell<S> extends TableCell<S, Button> {
 
     public ActionButtonTableCell(String label, Function<S, S> function) {
         this.actionButton = new Button(label, new MaterialDesignIconView(MaterialDesignIcon.DELETE, "15"));
+        this.actionButton.setMaxWidth(Double.MAX_VALUE);
+        this.actionButton.setStyle("-fx-background-color: transparent;");
         this.actionButton.setOnAction((ActionEvent e) -> {
             function.apply(getCurrentItem());
         });
-        this.actionButton.setMaxWidth(Double.MAX_VALUE);
+        ButtonHelper.buttonCursor(this.actionButton);
     }
 
     public S getCurrentItem() {
