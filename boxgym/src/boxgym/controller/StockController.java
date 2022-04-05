@@ -1,5 +1,6 @@
 package boxgym.controller;
 
+import boxgym.dao.StockEntryDao;
 import boxgym.helper.StageHelper;
 import java.io.IOException;
 import java.net.URL;
@@ -38,7 +39,8 @@ public class StockController implements Initializable {
             if (controller.isCreated()) {
                 System.out.println("entrada de estoque contém produto");
             } else {
-                System.out.println("entrada de estoque excluída");
+                StockEntryDao stockEntryDao = new StockEntryDao();
+                stockEntryDao.deleteLastEntry();
             }
         } catch (IOException ex) {
             Logger.getLogger(StockController.class.getName()).log(Level.SEVERE, null, ex);

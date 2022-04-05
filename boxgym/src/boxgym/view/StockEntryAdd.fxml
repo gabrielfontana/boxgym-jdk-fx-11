@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import limitedtextfield.LimitedTextField?>
 
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.StockEntryAddController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="600.0" stylesheets="@../css/table-view-style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.StockEntryAddController">
     <children>
         <AnchorPane fx:id="stockEntryArea" layoutX="15.0" layoutY="24.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -135,10 +135,11 @@
                 </HBox>
                 <TableView fx:id="productEntryTableView" layoutX="15.0" layoutY="100.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="100.0">
                     <columns>
-                        <TableColumn fx:id="productTableColumn" minWidth="-Infinity" prefWidth="142.0" resizable="false" text="Produto" />
-                        <TableColumn fx:id="amountTableColumn" minWidth="-Infinity" prefWidth="142.0" resizable="false" text="Quantidade" />
-                  <TableColumn fx:id="costPriceTableColumn" minWidth="-Infinity" prefWidth="142.0" resizable="false" text="Preço de Custo" />
-                  <TableColumn fx:id="totalTableColumn" minWidth="-Infinity" prefWidth="142.0" resizable="false" text="Total" />
+                        <TableColumn fx:id="productTableColumn" minWidth="-Infinity" prefWidth="125.0" resizable="false" text="Produto" />
+                        <TableColumn fx:id="amountTableColumn" minWidth="-Infinity" prefWidth="125.0" resizable="false" text="Quantidade" />
+                  <TableColumn fx:id="costPriceTableColumn" minWidth="-Infinity" prefWidth="125.0" resizable="false" text="Preço de Custo" />
+                  <TableColumn fx:id="totalTableColumn" minWidth="-Infinity" prefWidth="125.0" resizable="false" text="Total" />
+                  <TableColumn fx:id="actionButtonTableColumn" editable="false" maxWidth="55.0" minWidth="-Infinity" prefWidth="55.0" resizable="false" sortable="false" />
                     </columns>
                 </TableView>
                 <HBox AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0">

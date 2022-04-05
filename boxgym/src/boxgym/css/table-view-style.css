@@ -21,6 +21,6 @@
     -fx-border-color: #cccccc;
 }*/
 
-.table-row-cell:odd{
+.table-row-cell:odd {
     -fx-background-color: #f3f3f3;
 }

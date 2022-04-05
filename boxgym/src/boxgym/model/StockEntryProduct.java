@@ -15,6 +15,15 @@ public class StockEntryProduct {
 
     }
 
+    //Construtor ObservableList
+    public StockEntryProduct(int fkStockEntry, int fkProduct, int amount, BigDecimal costPrice, BigDecimal total) {
+        this.fkStockEntry = fkStockEntry;
+        this.fkProduct = fkProduct;
+        this.amount = amount;
+        this.costPrice = costPrice;
+        this.total = total;
+    }
+    
     //Construtor CREATE
     public StockEntryProduct(int fkStockEntry, int fkProduct, int amount, BigDecimal costPrice) {
         this.fkStockEntry = fkStockEntry;
@@ -22,7 +31,7 @@ public class StockEntryProduct {
         this.amount = amount;
         this.costPrice = costPrice;
     }
-    
+
     public int getStockEntryProductId() {
         return stockEntryProductId;
     }
@@ -70,4 +79,5 @@ public class StockEntryProduct {
     public void setTotal(BigDecimal total) {
         this.total = total;
     }
+    
 }

@@ -20,14 +20,14 @@ public class StockEntryDao {
         this.conn = new ConnectionFactory().getConnection();
     }
 
-    public boolean create(StockEntry stockEntry) {
-        String sql = "INSERT INTO `stockentry` (`invoiceIssueDate`, `invoiceNumber`, `fkSupplier`) VALUES (?, ?, ?);";
+    public boolean create(StockEntry entry) {
+        String sql = "INSERT INTO `stockentry` (`fkSupplier`, `invoiceIssueDate`, `invoiceNumber`) VALUES (?, ?, ?);";
 
         try {
             ps = conn.prepareStatement(sql);
-            ps.setDate(1, java.sql.Date.valueOf(stockEntry.getInvoiceIssueDate()));
-            ps.setString(2, stockEntry.getInvoiceNumber());
-            ps.setInt(3, stockEntry.getFkSupplier());
+            ps.setInt(1, entry.getFkSupplier());
+            ps.setDate(2, java.sql.Date.valueOf(entry.getInvoiceIssueDate()));
+            ps.setString(3, entry.getInvoiceNumber());
             ps.execute();
             return true;
         } catch (SQLException ex) {
@@ -51,12 +51,29 @@ public class StockEntryDao {
                 stockEntryId = rs.getInt("stockEntryId");
             }
         } catch (SQLException ex) {
-            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(StockEntryDao.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DbUtils.closeQuietly(conn);
             DbUtils.closeQuietly(ps);
             DbUtils.closeQuietly(rs);
         }
         return stockEntryId;
+    }
+    
+    public boolean deleteLastEntry() {
+        String sql = "DELETE FROM `stockentry` ORDER BY `stockEntryId` DESC LIMIT 1;";
+        
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.execute();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(StockEntryDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return false;
     }
 }

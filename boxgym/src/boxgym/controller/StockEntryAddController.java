@@ -3,15 +3,22 @@ package boxgym.controller;
 import boxgym.dao.ProductDao;
 import boxgym.dao.StockEntryDao;
 import boxgym.dao.SupplierDao;
+import boxgym.helper.ActionButtonTableCell;
 import boxgym.helper.ButtonHelper;
 import boxgym.model.StockEntry;
 import boxgym.model.StockEntryProduct;
 import currencyfield.CurrencyField;
+import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
+import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,6 +28,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -35,25 +43,28 @@ public class StockEntryAddController implements Initializable {
 
     ProductDao produtDao = new ProductDao();
     LinkedHashMap<Integer, String> productMap = produtDao.getProductForHashMap();
-
+    
+    List<StockEntryProduct> list = new ArrayList<>();
+    ObservableList<StockEntryProduct> obsListItens;
+    
     @FXML
     private AnchorPane stockEntryArea;
-    
+
     @FXML
     private ComboBox<String> supplierComboBox;
-    
+
     @FXML
     private DatePicker invoiceIssueDateDatePicker;
 
     @FXML
     private LimitedTextField invoiceNumberTextField;
-    
+
     @FXML
     private Button addStockEntryButton;
-    
+
     @FXML
     private AnchorPane productsEntryArea;
-    
+
     @FXML
     private TextField stockEntryIdTextField;
 
@@ -65,7 +76,7 @@ public class StockEntryAddController implements Initializable {
 
     @FXML
     private CurrencyField costPriceTextField;
-    
+
     @FXML
     private Button addProductEntryButton;
 
@@ -83,6 +94,9 @@ public class StockEntryAddController implements Initializable {
 
     @FXML
     private TableColumn<StockEntryProduct, BigDecimal> totalTableColumn;
+    
+     @FXML
+    private TableColumn<StockEntryProduct, Button> actionButtonTableColumn;
 
     @FXML
     private Button saveButton;
@@ -91,6 +105,8 @@ public class StockEntryAddController implements Initializable {
     private Button clearButton;
     
     private boolean created = false;
+    
+    private StockEntryProduct selected;
 
     public boolean isCreated() {
         return created;
@@ -99,7 +115,7 @@ public class StockEntryAddController implements Initializable {
     public void setCreated(boolean created) {
         this.created = created;
     }
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         setCreated(false);
@@ -153,7 +169,7 @@ public class StockEntryAddController implements Initializable {
 
     private void productNameComboBoxListener() {
         productComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
-            if(productComboBox.getSelectionModel().getSelectedItem() != null) {
+            if (productComboBox.getSelectionModel().getSelectedItem() != null) {
                 ProductDao dao = new ProductDao();
                 costPriceTextField.setPrice(dao.getProductCostPrice(getKeyFromProductComboBox()).doubleValue());
             }
@@ -164,37 +180,59 @@ public class StockEntryAddController implements Initializable {
     void addStockEntry(ActionEvent event) {
         stockEntryArea.setDisable(true);
         productsEntryArea.setDisable(false);
-        StockEntry stockEntry = new StockEntry(invoiceIssueDateDatePicker.getValue(), invoiceNumberTextField.getText(), getKeyFromSupplierComboBox());
+        StockEntry stockEntry = new StockEntry(getKeyFromSupplierComboBox(), invoiceIssueDateDatePicker.getValue(), invoiceNumberTextField.getText());
         StockEntryDao stockEntryDao = new StockEntryDao();
         stockEntryDao.create(stockEntry);
         stockEntryIdTextField.setText(String.valueOf(stockEntryDao.getStockEntryId()));
     }
 
+    @FXML
+    void addProductEntry(ActionEvent event) {
+        int amount = Integer.valueOf(amountTextField.getText());
+        BigDecimal costPrice = new BigDecimal(costPriceTextField.getPrice());
+        BigDecimal total = costPrice.multiply(BigDecimal.valueOf(amount));
+        StockEntryProduct item = new StockEntryProduct(Integer.valueOf(stockEntryIdTextField.getText()), getKeyFromProductComboBox(), amount, costPrice, total);
+        list.add(item);
+        obsListItens = FXCollections.observableArrayList(list);
+        productEntryTableView.setItems(obsListItens);
+        productEntryTableView.getSelectionModel().selectLast();
+        clear();
+    }
+    
     private void initProductEntryTableView() {
         productTableColumn.setCellValueFactory(new PropertyValueFactory("fkProduct"));
         amountTableColumn.setCellValueFactory(new PropertyValueFactory("amount"));
         costPriceTableColumn.setCellValueFactory(new PropertyValueFactory("costPrice"));
         totalTableColumn.setCellValueFactory(new PropertyValueFactory("total"));
+        actionButtonTableColumn.setStyle("-fx-alignment: CENTER;");
+        actionButtonTableColumn.setCellFactory(ActionButtonTableCell.<StockEntryProduct>forTableColumn("", (StockEntryProduct p) -> {
+            list.remove(p);
+            obsListItens.remove(p);
+            productEntryTableView.getItems().remove(p);
+            return p;
+        }));    
     }
 
     @FXML
-    void addProductEntry(ActionEvent event) {
-
-    }
-
-    @FXML
-    void save(ActionEvent event) {
+    void save() {
         setCreated(true);
     }
 
     @FXML
-    void clear(ActionEvent event) {
+    void clear() {
         productComboBox.valueProperty().set(null);
         amountTextField.setText("");
         costPriceTextField.setPrice(0.0);
     }
 
     private void tableViewListeners() {
+         productEntryTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                selected = (StockEntryProduct) newValue;
+            }
+        });
+        
         productEntryTableView.skinProperty().addListener((obs, oldSkin, newSkin) -> {
             final TableHeaderRow header = (TableHeaderRow) productEntryTableView.lookup("TableHeaderRow");
             header.reorderingProperty().addListener((o, oldVal, newVal) -> header.setReordering(false));

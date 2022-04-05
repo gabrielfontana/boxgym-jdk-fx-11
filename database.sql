@@ -19,7 +19,7 @@ CREATE TABLE `supplier` (
   `updatedAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`supplierId`),
   UNIQUE KEY `supplierUnique` (`companyRegistry`) USING BTREE
-)
+);
 
 CREATE TABLE `product` (
   `productId` INT(11) NOT NULL AUTO_INCREMENT,
@@ -36,7 +36,7 @@ CREATE TABLE `product` (
   `updatedAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`productId`),
   FOREIGN KEY (`fkSupplier`) REFERENCES `supplier`(`supplierId`) ON DELETE CASCADE ON UPDATE CASCADE
-)
+);
 
 CREATE TABLE `user` (
   `userId` INT(11) NOT NULL AUTO_INCREMENT,
@@ -46,15 +46,28 @@ CREATE TABLE `user` (
   `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
   `updatedAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`userId`)
-)
+);
 
 CREATE TABLE `stockentry` (
   `stockEntryId` INT(11) NOT NULL AUTO_INCREMENT,
+  `fkSupplier` INT(11) NOT NULL,
   `invoiceIssueDate` DATE,
   `invoiceNumber` VARCHAR(255),
-  `fkSupplier` INT(11) NOT NULL,
   `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
   `updatedAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`stockEntryId`),
   FOREIGN KEY (`fkSupplier`) REFERENCES `supplier`(`supplierId`) ON DELETE CASCADE ON UPDATE CASCADE
-)
+);
+
+CREATE TABLE `stockentry_product` (
+  `stockEntryProductId` INT(11) NOT NULL AUTO_INCREMENT,
+  `fkStockEntry` INT(11) NOT NULL,
+  `fkProduct` INT(11) NOT NULL,
+  `amount` INT(10) NOT NULL,
+  `costPrice` DECIMAL(10, 2) NOT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updatedAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`stockEntryProductId`),
+  FOREIGN KEY (`fkStockEntry`) REFERENCES `stockentry`(`stockEntryId`) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (`fkProduct`) REFERENCES `product`(`productId`) ON DELETE CASCADE ON UPDATE CASCADE
+);
