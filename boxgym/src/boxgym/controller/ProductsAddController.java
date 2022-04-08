@@ -1,7 +1,6 @@
 package boxgym.controller;
 
 import boxgym.dao.ProductDao;
-import boxgym.dao.SupplierDao;
 import boxgym.helper.AlertHelper;
 import boxgym.helper.ButtonHelper;
 import boxgym.helper.ImageHelper;
@@ -10,17 +9,12 @@ import boxgym.model.Product;
 import currencyfield.CurrencyField;
 import java.math.BigDecimal;
 import java.net.URL;
-import java.util.LinkedHashMap;
-import java.util.Map.Entry;
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -29,9 +23,8 @@ import limitedtextfield.LimitedTextField;
 
 public class ProductsAddController implements Initializable {
 
-    SupplierDao dao = new SupplierDao();
-    LinkedHashMap<Integer, String> map = dao.getSupplierForHashMap();
     ImageHelper ih = new ImageHelper();
+    
     AlertHelper ah = new AlertHelper();
 
     private boolean created = false;
@@ -64,9 +57,6 @@ public class ProductsAddController implements Initializable {
     private CurrencyField sellingPriceTextField;
 
     @FXML
-    private ComboBox<String> fkSupplierComboBox;
-
-    @FXML
     private Button saveButton;
 
     @FXML
@@ -76,7 +66,6 @@ public class ProductsAddController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         setCreated(false);
         buttonsProperties();
-        loadSupplierNameComboBox();
         productsInputRestrictions();
         ih.loadDefaultImage(productImage);
     }
@@ -89,31 +78,11 @@ public class ProductsAddController implements Initializable {
         this.created = created;
     }
 
-    private void loadSupplierNameComboBox() {
-        ObservableList<String> obsList = FXCollections.observableArrayList();
-        for (String s : map.values()) {
-            obsList.add(s);
-        }
-        fkSupplierComboBox.setPromptText("Selecione");
-        fkSupplierComboBox.setItems(obsList);
-    }
-
     private void productsInputRestrictions() {
         nameTextField.setValidationPattern("[a-zA-Z\\u00C0-\\u00FF0-9 ._-]", 255);
         categoryTextField.setValidationPattern("[a-zA-Z\\u00C0-\\u00FF0-9 ._-]", 255);
         amountTextField.setValidationPattern("[0-9]", 10);
         minimumStockTextField.setValidationPattern("[0-9]", 10);
-    }
-
-    private int getKeyFromComboBox() {
-        int fkSupplier = 0;
-        for (Entry<Integer, String> entry : map.entrySet()) {
-            if (fkSupplierComboBox.getSelectionModel().getSelectedItem().equals(entry.getValue())) {
-                fkSupplier = entry.getKey();
-                break;
-            }
-        }
-        return fkSupplier;
     }
 
     @FXML
@@ -130,14 +99,10 @@ public class ProductsAddController implements Initializable {
 
         if (!(validation.getEmptyCounter() == 0)) {
             ah.customAlert(Alert.AlertType.WARNING, "Não foi possível realizar o cadastro deste produto!", validation.getMessage());
-        } else if (fkSupplierComboBox.getItems().size() <= 0) {
-            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível realizar o cadastro deste produto!", "Cadastre um fornecedor antes.");
-        } else if (fkSupplierComboBox.getSelectionModel().getSelectedItem() == null) {
-            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível realizar o cadastro deste produto!", "Escolha um fornecedor!");
         } else {
             Product product = new Product(nameTextField.getText(), categoryTextField.getText(), descriptionTextArea.getText(), Integer.valueOf(amountTextField.getText()),
                     Integer.valueOf(minimumStockTextField.getText()), new BigDecimal(costPriceTextField.getPrice()), new BigDecimal(sellingPriceTextField.getPrice()),
-                    ih.getImageBytes(), getKeyFromComboBox());
+                    ih.getImageBytes());
             ProductDao productDao = new ProductDao();
             productDao.create(product);
             setCreated(true);
@@ -155,7 +120,6 @@ public class ProductsAddController implements Initializable {
         minimumStockTextField.setText("");
         costPriceTextField.setPrice(0.0);
         sellingPriceTextField.setPrice(0.0);
-        fkSupplierComboBox.valueProperty().set(null);
         ih.loadDefaultImage(productImage);
     }
     

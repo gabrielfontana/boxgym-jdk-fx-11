@@ -36,9 +36,7 @@ public class StockController implements Initializable {
             
             StageHelper.createAddOrUpdateStage("Adicionando Entrada de Estoque", root);
             
-            if (controller.isCreated()) {
-                System.out.println("entrada de estoque contém produto");
-            } else {
+            if (controller.isStockEntryCreationFlag() && !controller.isProductsEntryCreationFlag()) {
                 StockEntryDao stockEntryDao = new StockEntryDao();
                 stockEntryDao.deleteLastEntry();
             }

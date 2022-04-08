@@ -25,7 +25,7 @@ public class ProductDao {
     }
 
     public boolean create(Product product) {
-        String sql = "INSERT INTO `product` (`name`, `category`, `description`, `amount`, `minimumStock`, `costPrice`, `sellingPrice`, `image`, `fkSupplier`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        String sql = "INSERT INTO `product` (`name`, `category`, `description`, `amount`, `minimumStock`, `costPrice`, `sellingPrice`, `image`) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 
         try {
             ps = conn.prepareStatement(sql);
@@ -37,7 +37,6 @@ public class ProductDao {
             ps.setBigDecimal(6, product.getCostPrice());
             ps.setBigDecimal(7, product.getSellingPrice());
             ps.setBytes(8, product.getImage());
-            ps.setInt(9, product.getFkSupplier());
             ps.execute();
             return true;
         } catch (SQLException ex) {
@@ -108,7 +107,6 @@ public class ProductDao {
                 p.setCostPrice(rs.getBigDecimal("costPrice"));
                 p.setSellingPrice(rs.getBigDecimal("sellingPrice"));
                 p.setImage(rs.getBytes("image"));
-                p.setFkSupplier(rs.getInt("fkSupplier"));
                 p.setCreatedAt(rs.getString("createdAt"));
                 p.setUpdatedAt(rs.getString("updatedAt"));
                 productsList.add(p);
@@ -125,7 +123,7 @@ public class ProductDao {
 
     public boolean update(Product product) {
         String sql = "UPDATE `product` SET `name` = ?, `category` = ?, `description` = ?, `minimumStock` = ?, "
-                + "`costPrice` = ?, `sellingPrice` = ?, `image` = ?, `fkSupplier` = ? WHERE `productId` = ?;";
+                + "`costPrice` = ?, `sellingPrice` = ?, `image` = ? WHERE `productId` = ?;";
 
         try {
             ps = conn.prepareStatement(sql);
@@ -136,8 +134,7 @@ public class ProductDao {
             ps.setBigDecimal(5, product.getCostPrice());
             ps.setBigDecimal(6, product.getSellingPrice());
             ps.setBytes(7, product.getImage());
-            ps.setInt(8, product.getFkSupplier());
-            ps.setInt(9, product.getProductId());
+            ps.setInt(8, product.getProductId());
             ps.execute();
             return true;
         } catch (SQLException ex) {

@@ -2,8 +2,10 @@ package boxgym.controller;
 
 import boxgym.dao.ProductDao;
 import boxgym.dao.StockEntryDao;
+import boxgym.dao.StockEntryProductDao;
 import boxgym.dao.SupplierDao;
 import boxgym.helper.ActionButtonTableCell;
+import boxgym.helper.AlertHelper;
 import boxgym.helper.ButtonHelper;
 import boxgym.model.StockEntry;
 import boxgym.model.StockEntryProduct;
@@ -15,13 +17,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -40,10 +41,15 @@ public class StockEntryAddController implements Initializable {
 
     ProductDao produtDao = new ProductDao();
     LinkedHashMap<Integer, String> productMap = produtDao.getProductForHashMap();
-    
+
     List<StockEntryProduct> list = new ArrayList<>();
     ObservableList<StockEntryProduct> obsListItens;
-    
+
+    AlertHelper ah = new AlertHelper();
+
+    @FXML
+    private AnchorPane anchorPane;
+
     @FXML
     private AnchorPane stockEntryArea;
 
@@ -91,8 +97,8 @@ public class StockEntryAddController implements Initializable {
 
     @FXML
     private TableColumn<StockEntryProduct, BigDecimal> totalTableColumn;
-    
-     @FXML
+
+    @FXML
     private TableColumn<StockEntryProduct, Button> actionButtonTableColumn;
 
     @FXML
@@ -100,20 +106,30 @@ public class StockEntryAddController implements Initializable {
 
     @FXML
     private Button clearButton;
-    
-    private boolean created = false;
-    
-    public boolean isCreated() {
-        return created;
+
+    private boolean stockEntryCreationFlag;
+    private boolean productsEntryCreationFlag;
+
+    public boolean isStockEntryCreationFlag() {
+        return stockEntryCreationFlag;
     }
 
-    public void setCreated(boolean created) {
-        this.created = created;
+    public void setStockEntryCreationFlag(boolean stockEntryCreationFlag) {
+        this.stockEntryCreationFlag = stockEntryCreationFlag;
+    }
+
+    public boolean isProductsEntryCreationFlag() {
+        return productsEntryCreationFlag;
+    }
+
+    public void setProductsEntryCreationFlag(boolean productsEntryCreationFlag) {
+        this.productsEntryCreationFlag = productsEntryCreationFlag;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        setCreated(false);
+        setStockEntryCreationFlag(false);
+        setProductsEntryCreationFlag(false);
         loadSupplierNameComboBox();
         loadProductNameComboBox();
         productNameComboBoxListener();
@@ -179,6 +195,7 @@ public class StockEntryAddController implements Initializable {
         StockEntryDao stockEntryDao = new StockEntryDao();
         stockEntryDao.create(stockEntry);
         stockEntryIdTextField.setText(String.valueOf(stockEntryDao.getStockEntryId()));
+        setStockEntryCreationFlag(true);
     }
 
     @FXML
@@ -193,7 +210,7 @@ public class StockEntryAddController implements Initializable {
         productEntryTableView.getSelectionModel().selectLast();
         clear();
     }
-    
+
     private void initProductEntryTableView() {
         productTableColumn.setCellValueFactory(new PropertyValueFactory("fkProduct"));
         amountTableColumn.setCellValueFactory(new PropertyValueFactory("amount"));
@@ -204,12 +221,22 @@ public class StockEntryAddController implements Initializable {
             obsListItens.remove(p);
             productEntryTableView.getItems().remove(p);
             return p;
-        }));    
+        }));
     }
 
     @FXML
     void save() {
-        setCreated(true);
+        if (!(obsListItens == null)) {
+            for (int i = 0; i < obsListItens.size(); i++) {
+                StockEntryProductDao dao = new StockEntryProductDao();
+                dao.create(obsListItens.get(i));
+            }
+            setProductsEntryCreationFlag(true);
+            ah.customAlert(Alert.AlertType.INFORMATION, "A entrada de estoque foi realizada com sucesso!", "");
+            anchorPane.getScene().getWindow().hide();
+        } else {
+            ah.customAlert(Alert.AlertType.INFORMATION, "Insira pelo menos 1 produto!", "");
+        }
     }
 
     @FXML

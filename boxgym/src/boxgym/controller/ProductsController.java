@@ -77,9 +77,6 @@ public class ProductsController implements Initializable {
     private TableColumn<Product, BigDecimal> sellingPriceTableColumn;
 
     @FXML
-    private TableColumn<Product, Integer> fkSupplierTableColumn;
-
-    @FXML
     private ImageView productImageView;
 
     @FXML
@@ -105,9 +102,6 @@ public class ProductsController implements Initializable {
 
     @FXML
     private Label sellingPriceLabel;
-
-    @FXML
-    private Label fkSupplierLabel;
 
     @FXML
     private Label createdAtLabel;
@@ -211,7 +205,6 @@ public class ProductsController implements Initializable {
             minimumStockLabel.setText("");
             costPriceLabel.setText("");
             sellingPriceLabel.setText("");
-            fkSupplierLabel.setText("");
             createdAtLabel.setText("");
             updatedAtLabel.setText("");
         }
@@ -227,7 +220,6 @@ public class ProductsController implements Initializable {
             minimumStockLabel.setText(String.valueOf(selected.getMinimumStock()));
             costPriceLabel.setText(String.valueOf(selected.getCostPrice()));
             sellingPriceLabel.setText(String.valueOf(selected.getSellingPrice()));
-            fkSupplierLabel.setText(String.valueOf(selected.getFkSupplier()));
             createdAtLabel.setText(selected.getCreatedAt());
             updatedAtLabel.setText(selected.getUpdatedAt());
             try {
@@ -246,7 +238,6 @@ public class ProductsController implements Initializable {
         minimumStockTableColumn.setCellValueFactory(new PropertyValueFactory("minimumStock"));
         costPriceTableColumn.setCellValueFactory(new PropertyValueFactory("costPrice"));
         sellingPriceTableColumn.setCellValueFactory(new PropertyValueFactory("sellingPrice"));
-        fkSupplierTableColumn.setCellValueFactory(new PropertyValueFactory("fkSupplier"));
         productTableView.setItems(loadData());
     }
 
@@ -264,7 +255,6 @@ public class ProductsController implements Initializable {
         String minimumStock = String.valueOf(product.getMinimumStock()).toLowerCase();
         String costPrice = String.valueOf(product.getCostPrice()).toLowerCase();
         String sellingPrice = String.valueOf(product.getSellingPrice()).toLowerCase();
-        String fkSupplier = String.valueOf(product.getFkSupplier()).toLowerCase();
         String createdAt = String.valueOf(product.getCreatedAt()).toLowerCase();
         String updatedAt = String.valueOf(product.getUpdatedAt()).toLowerCase();
 
@@ -272,8 +262,7 @@ public class ProductsController implements Initializable {
                 || (category.contains(searchText)) || (description.contains(searchText))
                 || (amount.contains(searchText)) || (minimumStock.contains(searchText))
                 || (costPrice.contains(searchText)) || (sellingPrice.contains(searchText))
-                || (fkSupplier.contains(searchText)) || (createdAt.contains(searchText))
-                || (updatedAt.contains(searchText));
+                || (createdAt.contains(searchText)) || (updatedAt.contains(searchText));
     }
 
     private void search() {

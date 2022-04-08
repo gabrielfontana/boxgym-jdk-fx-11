@@ -1,7 +1,6 @@
 package boxgym.controller;
 
 import boxgym.dao.ProductDao;
-import boxgym.dao.SupplierDao;
 import boxgym.helper.AlertHelper;
 import boxgym.helper.ButtonHelper;
 import boxgym.helper.ImageHelper;
@@ -11,21 +10,16 @@ import currencyfield.CurrencyField;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -34,9 +28,8 @@ import limitedtextfield.LimitedTextField;
 
 public class ProductsUpdateController implements Initializable {
 
-    SupplierDao dao = new SupplierDao();
-    LinkedHashMap<Integer, String> map = dao.getSupplierForHashMap();
     ImageHelper ih = new ImageHelper();
+    
     AlertHelper ah = new AlertHelper();
     
     @FXML
@@ -65,9 +58,6 @@ public class ProductsUpdateController implements Initializable {
 
     @FXML
     private CurrencyField sellingPriceTextField;
-
-    @FXML
-    private ComboBox<String> fkSupplierComboBox;
     
     @FXML
     private Button saveButton;
@@ -99,7 +89,6 @@ public class ProductsUpdateController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         setUpdated(false);
         buttonsProperties();
-        loadSupplierNameComboBox();
         productsInputRestrictions();
         ih.loadDefaultImage(productImage);
         
@@ -108,32 +97,12 @@ public class ProductsUpdateController implements Initializable {
         });
     }
     
-    private void loadSupplierNameComboBox() {
-        ObservableList<String> obsList = FXCollections.observableArrayList();
-        for (String s : map.values()) {
-            obsList.add(s);
-        }
-        fkSupplierComboBox.setPromptText("Selecione");
-        fkSupplierComboBox.setItems(obsList);
-    }
-    
     private void productsInputRestrictions() {
         nameTextField.setValidationPattern("[a-zA-Z\\u00C0-\\u00FF0-9 ._-]", 255);
         categoryTextField.setValidationPattern("[a-zA-Z\\u00C0-\\u00FF0-9 ._-]", 255);
         minimumStockTextField.setValidationPattern("[0-9]", 10);
     }
     
-    private String getValueFromComboBox() {
-        String fkSupplier = null;
-        for (Map.Entry<Integer, String> entry : map.entrySet()) {
-            if (loadProduct.getFkSupplier() == entry.getKey()) {
-                fkSupplier = entry.getValue();
-                break;
-            }
-        }
-        return fkSupplier;
-    }
-
     private void initProduct() {
         nameTextField.setText(loadProduct.getName());
         categoryTextField.setText(loadProduct.getCategory());
@@ -142,23 +111,11 @@ public class ProductsUpdateController implements Initializable {
         minimumStockTextField.setText(String.valueOf(loadProduct.getMinimumStock()));
         costPriceTextField.setPrice(loadProduct.getCostPrice().doubleValue());
         sellingPriceTextField.setPrice(loadProduct.getSellingPrice().doubleValue());
-        fkSupplierComboBox.valueProperty().set(getValueFromComboBox());
         try{
             productImage.setImage(SwingFXUtils.toFXImage(ImageHelper.convertBytesToImage(loadProduct), null));
         } catch (IOException ex) {
             Logger.getLogger(ProductsUpdateController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-    
-    private int getKeyFromComboBox() {
-        int fkSupplier = 0;
-        for (Map.Entry<Integer, String> entry : map.entrySet()) {
-            if (fkSupplierComboBox.getSelectionModel().getSelectedItem().equals(entry.getValue())) {
-                fkSupplier = entry.getKey();
-                break;
-            }
-        }
-        return fkSupplier;
     }
     
     @FXML
@@ -175,14 +132,10 @@ public class ProductsUpdateController implements Initializable {
 
         if (!(validation.getEmptyCounter() == 0)) {
             ah.customAlert(Alert.AlertType.WARNING, "Não foi possível editar o cadastro deste produto!", validation.getMessage());
-        } else if (fkSupplierComboBox.getItems().size() <= 0) {
-            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível editar o cadastro deste produto!", "Cadastre um fornecedor antes.");
-        } else if (fkSupplierComboBox.getSelectionModel().getSelectedItem() == null) {
-            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível editar o cadastro deste produto!", "Escolha um fornecedor!");
         } else {
             Product product = new Product(loadProduct.getProductId(), nameTextField.getText(), categoryTextField.getText(), descriptionTextArea.getText(), 
                     Integer.valueOf(minimumStockTextField.getText()), new BigDecimal(costPriceTextField.getPrice()), new BigDecimal(sellingPriceTextField.getPrice()), 
-                    ih.getImageBytes(), getKeyFromComboBox());
+                    ih.getImageBytes());
             ProductDao productDao = new ProductDao();
             productDao.update(product);
             setUpdated(true);
@@ -199,7 +152,6 @@ public class ProductsUpdateController implements Initializable {
         minimumStockTextField.setText("");
         costPriceTextField.setPrice(0.0);
         sellingPriceTextField.setPrice(0.0);
-        fkSupplierComboBox.valueProperty().set(null);
         ih.loadDefaultImage(productImage);
     }
     

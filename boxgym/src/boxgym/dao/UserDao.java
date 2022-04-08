@@ -21,7 +21,7 @@ public class UserDao {
     }
     
     public boolean checkDuplicate(String username) {
-        String sql = "SELECT * FROM `user` WHERE `username` = '" + username + "';";
+        String sql = "SELECT * FROM `userRegistration` WHERE `username` = '" + username + "';";
         
         try{
             ps = conn.prepareStatement(sql);
@@ -40,7 +40,7 @@ public class UserDao {
     }
 
     public boolean create(User user) {
-        String sql = "INSERT INTO `user` (`username`, `password`, `confirmPassword`) VALUES (?, ?, ?);";
+        String sql = "INSERT INTO `userRegistration` (`username`, `password`, `confirmPassword`) VALUES (?, ?, ?);";
 
         try {
             ps = conn.prepareStatement(sql);
@@ -60,7 +60,7 @@ public class UserDao {
     }
 
     public boolean authenticate(User user) {
-        String sql = "SELECT `username`, `password` FROM `user` WHERE `username` = '" + user.getUsername() + "' AND `password` = '" + user.getPassword() + "';";
+        String sql = "SELECT `username`, `password` FROM `userRegistration` WHERE `username` = '" + user.getUsername() + "' AND `password` = '" + user.getPassword() + "';";
         
         try{
             ps = conn.prepareStatement(sql);

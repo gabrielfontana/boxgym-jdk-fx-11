@@ -13,7 +13,6 @@ public class Product {
     private BigDecimal costPrice; //Preço de custo
     private BigDecimal sellingPrice; //Preço de venda
     private byte[] image; //Imagem
-    private int fkSupplier; //Fornecedor
     private String createdAt; //Criado em
     private String updatedAt; //Atualizado em
 
@@ -29,7 +28,7 @@ public class Product {
 
     //Construtor CREATE
     public Product(String name, String category, String description, int amount, int minimumStock,
-            BigDecimal costPrice, BigDecimal sellingPrice, byte[] image, int fkSupplier) {
+            BigDecimal costPrice, BigDecimal sellingPrice, byte[] image) {
         this.name = name;
         this.category = category;
         this.description = description;
@@ -38,12 +37,11 @@ public class Product {
         this.costPrice = costPrice;
         this.sellingPrice = sellingPrice;
         this.image = image;
-        this.fkSupplier = fkSupplier;
     }
 
     //Construtor  UPDATE
     public Product(int productId, String name, String category, String description, int minimumStock,
-            BigDecimal costPrice, BigDecimal sellingPrice, byte[] image, int fkSupplier) {
+            BigDecimal costPrice, BigDecimal sellingPrice, byte[] image) {
         this.productId = productId;
         this.name = name;
         this.category = category;
@@ -52,7 +50,6 @@ public class Product {
         this.costPrice = costPrice;
         this.sellingPrice = sellingPrice;
         this.image = image;
-        this.fkSupplier = fkSupplier;
     }
 
     public int getProductId() {
@@ -125,14 +122,6 @@ public class Product {
 
     public void setImage(byte[] image) {
         this.image = image;
-    }
-
-    public int getFkSupplier() {
-        return fkSupplier;
-    }
-
-    public void setFkSupplier(int fkSupplier) {
-        this.fkSupplier = fkSupplier;
     }
 
     public String getCreatedAt() {

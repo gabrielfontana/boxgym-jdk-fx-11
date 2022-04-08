@@ -31,14 +31,12 @@ CREATE TABLE `product` (
   `costPrice` DECIMAL(10, 2) NOT NULL,
   `sellingPrice` DECIMAL(10, 2) NOT NULL,
   `image` MEDIUMBLOB NULL,
-  `fkSupplier` INT(11) NOT NULL,
   `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
   `updatedAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  PRIMARY KEY (`productId`),
-  FOREIGN KEY (`fkSupplier`) REFERENCES `supplier`(`supplierId`) ON DELETE CASCADE ON UPDATE CASCADE
+  PRIMARY KEY (`productId`)
 );
 
-CREATE TABLE `user` (
+CREATE TABLE `userRegistration` (
   `userId` INT(11) NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(32) NOT NULL,
   `password` VARCHAR(64) NOT NULL,
@@ -56,7 +54,7 @@ CREATE TABLE `stockentry` (
   `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
   `updatedAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`stockEntryId`),
-  FOREIGN KEY (`fkSupplier`) REFERENCES `supplier`(`supplierId`) ON DELETE CASCADE ON UPDATE CASCADE
+  FOREIGN KEY (`fkSupplier`) REFERENCES `supplier`(`supplierId`) ON UPDATE CASCADE
 );
 
 CREATE TABLE `stockentry_product` (
@@ -69,5 +67,5 @@ CREATE TABLE `stockentry_product` (
   `updatedAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`stockEntryProductId`),
   FOREIGN KEY (`fkStockEntry`) REFERENCES `stockentry`(`stockEntryId`) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (`fkProduct`) REFERENCES `product`(`productId`) ON DELETE CASCADE ON UPDATE CASCADE
+  FOREIGN KEY (`fkProduct`) REFERENCES `product`(`productId`) ON UPDATE CASCADE
 );
