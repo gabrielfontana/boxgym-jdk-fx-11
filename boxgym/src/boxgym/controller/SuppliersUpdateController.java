@@ -128,8 +128,8 @@ public class SuppliersUpdateController implements Initializable {
         emailTextField.setValidationPattern("[A-Za-z0-9@._-]", 255);
         phoneTextField.setValidationPattern("[0-9]", 11, "Sem pontuação!");
         zipCodeTextField.setValidationPattern("[0-9]", 8, "Sem pontuação!");
-        addressTextField.setValidationPattern("[a-zA-Z\\u00C0-\\u00FF0-9 ._-]", 255);
-        addressComplementTextField.setValidationPattern("[a-zA-Z\\u00C0-\\u00FF0-9 ._-]", 255);
+        addressTextField.setValidationPattern("[a-zA-Z\\u00C0-\\u00FF0-9 .,_-]", 255);
+        addressComplementTextField.setValidationPattern("[a-zA-Z\\u00C0-\\u00FF0-9 .,_-]", 255);
         districtTextField.setValidationPattern("[a-zA-Z\\u00C0-\\u00FF ]", 255);
         cityTextField.setValidationPattern("[a-zA-Z\\u00C0-\\u00FF ]", 255);
     }

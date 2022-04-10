@@ -63,7 +63,7 @@ public class LoginController implements Initializable {
             if (userDao.authenticate(user)) {
                 loginButton.getScene().getWindow().hide();
                 StageHelper sh = new StageHelper();
-                sh.createMainScreenStage("/boxgym/view/MainScreen.fxml", "Tela Principal");
+                sh.createMainScreenStage("/boxgym/view/MainScreen.fxml", "Menu");
             } else {
                 ah.customAlert(Alert.AlertType.WARNING, "Não foi possível efetuar o login!", "Usuário e/ou senha inválido(s)!");
                 usernameTextField.setText("");

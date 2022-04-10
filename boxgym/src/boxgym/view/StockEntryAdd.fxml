@@ -61,11 +61,11 @@
                                 <Insets right="10.0" />
                             </HBox.margin>
                         </VBox>
-                      <Button fx:id="addStockEntryButton" mnemonicParsing="false" onAction="#addStockEntry" prefHeight="52.0" prefWidth="55.0">
-                     <graphic>
-                        <MaterialDesignIconView glyphName="PLUS" size="21" />
-                     </graphic>
-                  </Button>
+                        <Button fx:id="addStockEntryButton" mnemonicParsing="false" onAction="#addStockEntry" prefHeight="52.0" prefWidth="55.0">
+                            <graphic>
+                                <MaterialDesignIconView glyphName="PLUS" size="21" />
+                            </graphic>
+                        </Button>
                     </children>
                 </HBox>
             </children>
@@ -75,19 +75,19 @@
             <children>
                 <HBox layoutX="28.0" layoutY="15.0" prefHeight="52.0" prefWidth="570.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="24.0">
                     <children>
-                  <VBox prefHeight="52.0" prefWidth="109.0">
-                     <children>
-                        <Label text="Entrada de Estoque">
-                           <VBox.margin>
-                              <Insets bottom="5.0" />
-                           </VBox.margin>
-                        </Label>
-                        <TextField fx:id="stockEntryIdTextField" disable="true" editable="false" prefHeight="30.0" prefWidth="57.0" />
-                     </children>
-                     <HBox.margin>
-                        <Insets right="10.0" />
-                     </HBox.margin>
-                  </VBox>
+                        <VBox prefHeight="52.0" prefWidth="109.0">
+                            <children>
+                                <Label text="Entrada de Estoque">
+                                    <VBox.margin>
+                                        <Insets bottom="5.0" />
+                                    </VBox.margin>
+                                </Label>
+                                <TextField fx:id="stockEntryIdTextField" disable="true" editable="false" prefHeight="30.0" prefWidth="57.0" />
+                            </children>
+                            <HBox.margin>
+                                <Insets right="10.0" />
+                            </HBox.margin>
+                        </VBox>
                         <VBox prefHeight="52.0" prefWidth="177.0">
                             <children>
                                 <Label text="Produto *">
@@ -128,18 +128,19 @@
                             </HBox.margin>
                         </VBox>
                         <Button fx:id="addProductEntryButton" mnemonicParsing="false" onAction="#addProductEntry" prefHeight="52.0" prefWidth="55.0">
-                     <graphic>
-                        <MaterialDesignIconView glyphName="PLUS" size="21" />
-                     </graphic></Button>
+                            <graphic>
+                                <MaterialDesignIconView glyphName="PLUS" size="21" />
+                            </graphic>
+                        </Button>
                     </children>
                 </HBox>
                 <TableView fx:id="productEntryTableView" layoutX="15.0" layoutY="100.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="100.0">
                     <columns>
                         <TableColumn fx:id="productTableColumn" minWidth="-Infinity" prefWidth="125.0" resizable="false" text="Produto" />
                         <TableColumn fx:id="amountTableColumn" minWidth="-Infinity" prefWidth="125.0" resizable="false" text="Quantidade" />
-                  <TableColumn fx:id="costPriceTableColumn" minWidth="-Infinity" prefWidth="125.0" resizable="false" text="Preço de Custo" />
-                  <TableColumn fx:id="totalTableColumn" minWidth="-Infinity" prefWidth="125.0" resizable="false" text="Total" />
-                  <TableColumn fx:id="actionButtonTableColumn" editable="false" maxWidth="55.0" minWidth="-Infinity" prefWidth="55.0" resizable="false" sortable="false" styleClass="action-button-column" />
+                        <TableColumn fx:id="costPriceTableColumn" minWidth="-Infinity" prefWidth="125.0" resizable="false" text="Preço de Custo" />
+                        <TableColumn fx:id="totalTableColumn" minWidth="-Infinity" prefWidth="125.0" resizable="false" text="Total" />
+                        <TableColumn fx:id="actionButtonTableColumn" editable="false" maxWidth="55.0" minWidth="-Infinity" prefWidth="55.0" resizable="false" sortable="false" styleClass="action-button-column" />
                     </columns>
                 </TableView>
                 <HBox AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0">
@@ -148,14 +149,15 @@
                             <HBox.margin>
                                 <Insets right="15.0" />
                             </HBox.margin>
-                     <graphic>
-                        <MaterialDesignIconView glyphName="CONTENT_SAVE" size="15" />
-                     </graphic>
+                            <graphic>
+                                <MaterialDesignIconView glyphName="CONTENT_SAVE" size="15" />
+                            </graphic>
                         </Button>
                         <Button fx:id="clearButton" mnemonicParsing="false" onAction="#clear" prefHeight="30.0" prefWidth="89.0" text="Limpar">
-                     <graphic>
-                        <MaterialDesignIconView glyphName="BROOM" size="15" />
-                     </graphic></Button>
+                            <graphic>
+                                <MaterialDesignIconView glyphName="BROOM" size="15" />
+                            </graphic>
+                        </Button>
                     </children>
                 </HBox>
             </children>

@@ -66,6 +66,22 @@ CREATE TABLE `stockentry_product` (
   `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
   `updatedAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`stockEntryProductId`),
-  FOREIGN KEY (`fkStockEntry`) REFERENCES `stockentry`(`stockEntryId`) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (`fkStockEntry`) REFERENCES `stockentry`(`stockEntryId`) ON UPDATE CASCADE,
   FOREIGN KEY (`fkProduct`) REFERENCES `product`(`productId`) ON UPDATE CASCADE
 );
+
+DELIMITER $$
+CREATE TRIGGER `triggerAddProductAmountAfterStockEntry` AFTER INSERT ON `stockentry_product`
+FOR EACH ROW BEGIN
+	UPDATE product SET amount = amount + NEW.amount WHERE productId = NEW.fkProduct;
+END
+$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE TRIGGER `triggerRemoveProductAmountAfterStockEntryExclusion` AFTER DELETE ON `stockentry_product`
+FOR EACH ROW BEGIN
+	UPDATE product SET amount = amount - OLD.amount WHERE productId = OLD.fkProduct;
+END
+$$
+DELIMITER ;

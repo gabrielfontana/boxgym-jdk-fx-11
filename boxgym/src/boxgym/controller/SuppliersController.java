@@ -26,6 +26,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -46,10 +47,7 @@ public class SuppliersController implements Initializable {
     private TextField searchBox;
     
     @FXML
-    private Button generatePdfButton;
-
-    @FXML
-    private Button exportExcelButton;
+    private MenuButton exportButton;
 
     @FXML
     private TableView<Supplier> supplierTableView;
@@ -127,7 +125,7 @@ public class SuppliersController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         resetDetails();
-        ButtonHelper.buttonCursor(generatePdfButton, exportExcelButton, addButton, updateButton, deleteButton);
+        ButtonHelper.buttonCursor(exportButton, addButton, updateButton, deleteButton);
         initSupplierTableView();
         tableViewListeners();
         searchBox.setOnKeyPressed((KeyEvent e) -> search());
@@ -186,7 +184,7 @@ public class SuppliersController implements Initializable {
         if (selected == null) {
             ah.customAlert(Alert.AlertType.WARNING, "Selecione um fornecedor para excluir!", "");
         } else {
-            alert.confirmationAlert("Tem certeza que deseja excluir \n o fornecedor '" + selected.getTradeName() + "'?", "Esta ação é irreversível e irá afetar todos os produtos cadastrados com esse fornecedor!");
+            alert.confirmationAlert("Tem certeza que deseja excluir \n o fornecedor '" + selected.getTradeName() + "'?", "Esta ação é irreversível!");
             if (alert.getResult().get() == ButtonType.YES) {
                 supplierDao.delete(selected);
                 supplierTableView.setItems(loadData());

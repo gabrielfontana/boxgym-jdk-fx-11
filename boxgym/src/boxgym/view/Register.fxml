@@ -60,7 +60,10 @@
                         <Insets bottom="10.0" />
                     </VBox.margin>
                 </HBox>
-                <Button fx:id="registerButton" mnemonicParsing="false" onAction="#register" prefHeight="30.0" prefWidth="250.0" styleClass="login-btn" text="Cadastrar" />
+                <Button fx:id="registerButton" mnemonicParsing="false" onAction="#register" prefHeight="30.0" prefWidth="250.0" styleClass="login-btn" text="Cadastrar">
+               <graphic>
+                  <MaterialDesignIconView fill="WHITE" glyphName="CLIPBOARD_CHECK" size="15.0" />
+               </graphic></Button>
             </children>
         </VBox>
     </children>    
