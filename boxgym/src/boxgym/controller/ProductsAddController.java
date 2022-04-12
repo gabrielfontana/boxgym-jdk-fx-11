@@ -92,10 +92,10 @@ public class ProductsAddController implements Initializable {
 
     @FXML
     void save(ActionEvent event) {
-        TextValidationHelper validation = new TextValidationHelper();
-        validation.handleEmptyField(nameTextField.getText(), "'Nome'\n");
-        validation.handleEmptyField(amountTextField.getText(), "'Quantidade'\n");
-        validation.handleEmptyField(minimumStockTextField.getText(), "'Estoque Mínimo'\n");
+        TextValidationHelper validation = new TextValidationHelper("Por favor, preencha o(s) seguinte(s) campo(s) obrigatório(s): \n\n");
+        validation.emptyTextField(nameTextField.getText(), "'Nome'\n");
+        validation.emptyTextField(amountTextField.getText(), "'Estoque Inicial'\n");
+        validation.emptyTextField(minimumStockTextField.getText(), "'Estoque Mínimo'\n");
 
         if (!(validation.getEmptyCounter() == 0)) {
             ah.customAlert(Alert.AlertType.WARNING, "Não foi possível realizar o cadastro deste produto!", validation.getMessage());

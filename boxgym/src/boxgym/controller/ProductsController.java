@@ -28,6 +28,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -47,10 +48,7 @@ public class ProductsController implements Initializable {
     private TextField searchBox;
     
     @FXML
-    private Button generatePdfButton;
-
-    @FXML
-    private Button exportExcelButton;
+    private MenuButton exportButton;
 
     @FXML
     private TableView<Product> productTableView;
@@ -125,7 +123,7 @@ public class ProductsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         resetDetails();
-        ButtonHelper.buttonCursor(generatePdfButton, exportExcelButton, addButton, updateButton, deleteButton);
+        ButtonHelper.buttonCursor(exportButton, addButton, updateButton, deleteButton);
         initProductTableView();
         tableViewListeners();
         searchBox.setOnKeyPressed((KeyEvent e) -> search());
@@ -298,7 +296,7 @@ public class ProductsController implements Initializable {
     }
 
     @FXML
-    void exportExcel(ActionEvent event) {
+    void exportToExcel(ActionEvent event) {
 
     }
 

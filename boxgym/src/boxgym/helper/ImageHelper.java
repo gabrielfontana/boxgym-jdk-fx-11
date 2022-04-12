@@ -30,8 +30,8 @@ public class ImageHelper {
     public void setImageBytes(byte[] imageBytes) {
         this.imageBytes = imageBytes;
     }
-    
-    public void loadDefaultImage(ImageView productImage){
+
+    public void loadDefaultImage(ImageView productImage) {
         defaultImagePath = "boxgym/img/default-no-image.png";
         productImage.setImage(new Image(defaultImagePath));
         convertImageToBytes("src/" + defaultImagePath);
@@ -59,7 +59,7 @@ public class ImageHelper {
             Logger.getLogger(ImageHelper.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public static BufferedImage convertBytesToImage(Product selected) throws IOException {
         byte[] imgByteArray = selected.getImage();
         ByteArrayInputStream inputStream = new ByteArrayInputStream(imgByteArray);

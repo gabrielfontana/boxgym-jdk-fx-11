@@ -7,6 +7,7 @@ import boxgym.dao.SupplierDao;
 import boxgym.helper.ActionButtonTableCell;
 import boxgym.helper.AlertHelper;
 import boxgym.helper.ButtonHelper;
+import boxgym.helper.TextValidationHelper;
 import boxgym.model.StockEntry;
 import boxgym.model.StockEntryProduct;
 import currencyfield.CurrencyField;
@@ -130,12 +131,19 @@ public class StockEntryAddController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         setStockEntryCreationFlag(false);
         setProductsEntryCreationFlag(false);
+        inputRestrictions();
         loadSupplierNameComboBox();
+        invoiceIssueDateDatePicker.setEditable(false);
         loadProductNameComboBox();
         productNameComboBoxListener();
         ButtonHelper.buttonCursor(addStockEntryButton, addProductEntryButton, saveButton, clearButton);
         tableViewListeners();
         initProductEntryTableView();
+    }
+
+    private void inputRestrictions() {
+        invoiceNumberTextField.setValidationPattern("[0-9]", 10);
+        amountTextField.setValidationPattern("[0-9]", 10);
     }
 
     private void loadSupplierNameComboBox() {
@@ -156,6 +164,26 @@ public class StockEntryAddController implements Initializable {
             }
         }
         return key;
+    }
+
+    @FXML
+    void addStockEntry(ActionEvent event) {
+        TextValidationHelper validation = new TextValidationHelper("Atenção: \n\n");
+        validation.invalidComboBox(supplierComboBox, "Fornecedor inválido! \n");
+        validation.nullDatePicker(invoiceIssueDateDatePicker, "Data inválida! \n");
+        validation.emptyTextField(invoiceNumberTextField.getText(), "Nota fiscal inválida! \n");
+
+        if (!(validation.getEmptyCounter() == 0)) {
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível adicionar essa entrada de estoque!", validation.getMessage());
+        } else {
+            stockEntryArea.setDisable(true);
+            productsEntryArea.setDisable(false);
+            StockEntry stockEntry = new StockEntry(getKeyFromSupplierComboBox(), invoiceIssueDateDatePicker.getValue(), invoiceNumberTextField.getText());
+            StockEntryDao stockEntryDao = new StockEntryDao();
+            stockEntryDao.create(stockEntry);
+            stockEntryIdTextField.setText(String.valueOf(stockEntryDao.getStockEntryId()));
+            setStockEntryCreationFlag(true);
+        }
     }
 
     private void loadProductNameComboBox() {
@@ -188,27 +216,24 @@ public class StockEntryAddController implements Initializable {
     }
 
     @FXML
-    void addStockEntry(ActionEvent event) {
-        stockEntryArea.setDisable(true);
-        productsEntryArea.setDisable(false);
-        StockEntry stockEntry = new StockEntry(getKeyFromSupplierComboBox(), invoiceIssueDateDatePicker.getValue(), invoiceNumberTextField.getText());
-        StockEntryDao stockEntryDao = new StockEntryDao();
-        stockEntryDao.create(stockEntry);
-        stockEntryIdTextField.setText(String.valueOf(stockEntryDao.getStockEntryId()));
-        setStockEntryCreationFlag(true);
-    }
-
-    @FXML
     void addProductEntry(ActionEvent event) {
-        int amount = Integer.valueOf(amountTextField.getText());
-        BigDecimal costPrice = new BigDecimal(costPriceTextField.getPrice());
-        BigDecimal total = costPrice.multiply(BigDecimal.valueOf(amount));
-        StockEntryProduct item = new StockEntryProduct(Integer.valueOf(stockEntryIdTextField.getText()), getKeyFromProductComboBox(), amount, costPrice, total);
-        list.add(item);
-        obsListItens = FXCollections.observableArrayList(list);
-        productEntryTableView.setItems(obsListItens);
-        productEntryTableView.getSelectionModel().selectLast();
-        clear();
+        TextValidationHelper validation = new TextValidationHelper("Atenção: \n\n");
+        validation.invalidComboBox(productComboBox, "Produto inválido! \n");
+        validation.emptyTextField(amountTextField.getText(), "Quantidade inválida! \n");
+
+        if (!(validation.getEmptyCounter() == 0)) {
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível adicionar esse produto!", validation.getMessage());
+        } else {
+            int amount = Integer.valueOf(amountTextField.getText());
+            BigDecimal costPrice = new BigDecimal(costPriceTextField.getPrice());
+            BigDecimal total = costPrice.multiply(BigDecimal.valueOf(amount));
+            StockEntryProduct item = new StockEntryProduct(Integer.valueOf(stockEntryIdTextField.getText()), getKeyFromProductComboBox(), amount, costPrice, total);
+            list.add(item);
+            obsListItens = FXCollections.observableArrayList(list);
+            productEntryTableView.setItems(obsListItens);
+            productEntryTableView.getSelectionModel().selectLast();
+            clear();
+        }
     }
 
     private void initProductEntryTableView() {
@@ -235,7 +260,7 @@ public class StockEntryAddController implements Initializable {
             ah.customAlert(Alert.AlertType.INFORMATION, "A entrada de estoque foi realizada com sucesso!", "");
             anchorPane.getScene().getWindow().hide();
         } else {
-            ah.customAlert(Alert.AlertType.INFORMATION, "Insira pelo menos 1 produto!", "");
+            ah.customAlert(Alert.AlertType.INFORMATION, "Lista de produtos vazia!", "");
         }
     }
 

@@ -57,7 +57,7 @@
                               <MaterialDesignIconView glyphName="FILE_PDF" size="15.0" />
                            </graphic>
                         </MenuItem>
-                      <MenuItem fx:id="exportExcelButton" mnemonicParsing="false" onAction="#exportExcel" text="Excel">
+                      <MenuItem fx:id="exportExcelButton" mnemonicParsing="false" onAction="#exportToExcel" text="Excel">
                            <graphic>
                               <MaterialDesignIconView glyphName="FILE_EXCEL" size="15.0" />
                            </graphic>
@@ -84,7 +84,7 @@
               <columns>
                   <TableColumn fx:id="supplierIdTableColumn" minWidth="90.0" prefWidth="90.0" resizable="false" text="ID" />
                   <TableColumn fx:id="companyRegistryTableColumn" minWidth="134.0" prefWidth="134.0" resizable="false" text="CNPJ" />
-                  <TableColumn fx:id="tradeNameTableColumn" minWidth="270.0" prefWidth="270.0" resizable="false" text="Nome Fantasia" />
+                  <TableColumn fx:id="corporateNameTableColumn" minWidth="270.0" prefWidth="270.0" resizable="false" text="Razão Social" />
                   <TableColumn fx:id="emailTableColumn" minWidth="270.0" prefWidth="270.0" resizable="false" text="E-mail" />
                   <TableColumn fx:id="phoneTableColumn" minWidth="134.0" prefWidth="134.0" resizable="false" text="Telefone" />
               </columns>

@@ -1,13 +1,16 @@
 package boxgym.helper;
 
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+
 public class TextValidationHelper {
 
     private int emptyCounter;
     private String message;
 
-    public TextValidationHelper() {
+    public TextValidationHelper(String message) {
         this.emptyCounter = 0;
-        this.message = "Por favor, preencha o(s) seguinte(s) campo(s) obrigatório(s): \n\n";
+        this.message = message;
     }
 
     public int getEmptyCounter() {
@@ -18,8 +21,26 @@ public class TextValidationHelper {
         return message;
     }
 
-    public boolean handleEmptyField(String field, String message) {
+    public boolean emptyTextField(String field, String message) {
         if (field.isEmpty()) {
+            this.message += message;
+            this.emptyCounter++;
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean invalidComboBox(ComboBox comboBox, String message) {
+        if (comboBox.getItems().size() <= 0 || comboBox.getSelectionModel().getSelectedItem() == null) {
+            this.message += message;
+            this.emptyCounter++;
+            return true;
+        }
+        return false;
+    }
+
+    public boolean nullDatePicker(DatePicker datePicker, String message) {
+        if (datePicker.getValue() == null) {
             this.message += message;
             this.emptyCounter++;
             return true;

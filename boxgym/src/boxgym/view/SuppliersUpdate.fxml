@@ -46,7 +46,7 @@
                 </HBox>
                 <VBox VBox.vgrow="ALWAYS">
                     <children>
-                        <Label text="Nome Fantasia *">
+                        <Label text="Nome Fantasia">
                             <VBox.margin>
                                 <Insets bottom="5.0" />
                             </VBox.margin>

@@ -115,10 +115,9 @@ public class SuppliersAddController implements Initializable {
 
         SupplierDao supplierDao = new SupplierDao();
 
-        TextValidationHelper validation = new TextValidationHelper();
-        validation.handleEmptyField(companyRegistryTextField.getText(), "'CNPJ'\n");
-        validation.handleEmptyField(corporateNameTextField.getText(), "'Razão Social'\n");
-        validation.handleEmptyField(tradeNameTextField.getText(), "'Nome Fantasia'");
+        TextValidationHelper validation = new TextValidationHelper("Por favor, preencha o(s) seguinte(s) campo(s) obrigatório(s): \n\n");
+        validation.emptyTextField(companyRegistryTextField.getText(), "'CNPJ'\n");
+        validation.emptyTextField(corporateNameTextField.getText(), "'Razão Social'\n");
 
         if (!(validation.getEmptyCounter() == 0)) {
             ah.customAlert(Alert.AlertType.WARNING, "Não foi possível realizar o cadastro deste fornecedor!", validation.getMessage());

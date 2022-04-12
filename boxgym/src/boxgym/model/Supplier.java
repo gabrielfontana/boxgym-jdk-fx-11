@@ -22,9 +22,9 @@ public class Supplier {
     }
 
     //Construtor da CombBox
-    public Supplier(int supplierId, String tradeName) {
+    public Supplier(int supplierId, String corporateName) {
         this.supplierId = supplierId;
-        this.tradeName = tradeName;
+        this.corporateName = corporateName;
     }
 
     //Construtor CREATE

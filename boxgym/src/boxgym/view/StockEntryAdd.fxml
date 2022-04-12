@@ -37,12 +37,12 @@
                         </VBox>
                         <VBox maxHeight="-Infinity" prefWidth="150.0">
                             <children>
-                                <Label text="Data de Emissão" VBox.vgrow="ALWAYS">
+                                <Label text="Data de Emissão *" VBox.vgrow="ALWAYS">
                                     <VBox.margin>
                                         <Insets bottom="5.0" />
                                     </VBox.margin>
                                 </Label>
-                                <DatePicker fx:id="invoiceIssueDateDatePicker" maxHeight="-Infinity" prefHeight="30.0" prefWidth="150.0" promptText="Escolha uma data" />
+                                <DatePicker fx:id="invoiceIssueDateDatePicker" maxHeight="30.0" maxWidth="150.0" minHeight="30.0" minWidth="150.0" promptText="Escolha uma data" />
                             </children>
                             <HBox.margin>
                                 <Insets right="10.0" />
@@ -50,7 +50,7 @@
                         </VBox>
                         <VBox prefWidth="150.0">
                             <children>
-                                <Label text="Nota Fiscal">
+                                <Label text="Nota Fiscal *">
                                     <VBox.margin>
                                         <Insets bottom="5.0" />
                                     </VBox.margin>
@@ -116,7 +116,7 @@
                         </VBox>
                         <VBox prefHeight="52.0" prefWidth="95.0">
                             <children>
-                                <Label text="Preço de Custo *">
+                                <Label text="Preço de Custo">
                                     <VBox.margin>
                                         <Insets bottom="5.0" />
                                     </VBox.margin>

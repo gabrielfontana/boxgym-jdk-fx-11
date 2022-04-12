@@ -59,7 +59,7 @@ public class SuppliersController implements Initializable {
     private TableColumn<Supplier, String> companyRegistryTableColumn;
 
     @FXML
-    private TableColumn<Supplier, String> tradeNameTableColumn;
+    private TableColumn<Supplier, String> corporateNameTableColumn;
 
     @FXML
     private TableColumn<Supplier, String> emailTableColumn;
@@ -235,7 +235,7 @@ public class SuppliersController implements Initializable {
     private void initSupplierTableView() {
         supplierIdTableColumn.setCellValueFactory(new PropertyValueFactory("supplierId"));
         companyRegistryTableColumn.setCellValueFactory(new PropertyValueFactory("companyRegistry"));
-        tradeNameTableColumn.setCellValueFactory(new PropertyValueFactory("tradeName"));
+        corporateNameTableColumn.setCellValueFactory(new PropertyValueFactory("corporateName"));
         emailTableColumn.setCellValueFactory(new PropertyValueFactory("email"));
         phoneTableColumn.setCellValueFactory(new PropertyValueFactory("phone"));
         supplierTableView.setItems(loadData());
@@ -304,7 +304,7 @@ public class SuppliersController implements Initializable {
     }
 
     @FXML
-    void exportExcel(ActionEvent event) throws IOException {
+    void exportToExcel(ActionEvent event) throws IOException {
         FileChooser chooser = new FileChooser();
         chooser.getExtensionFilters().add(new ExtensionFilter("Pasta de Trabalho do Excel", "*.xlsx"));
         File file = chooser.showSaveDialog(new Stage());

@@ -88,14 +88,14 @@ public class SupplierDao {
 
     public LinkedHashMap<Integer, String> getSupplierForHashMap() {
         LinkedHashMap<Integer, String> map = new LinkedHashMap<>();
-        String sql = "SELECT `supplierId`, `tradeName` FROM `supplier`;";
+        String sql = "SELECT `supplierId`, `corporateName` FROM `supplier`;";
         try {
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
             Supplier s;
             while (rs.next()) {
-                s = new Supplier(rs.getInt("supplierId"), rs.getString("tradeName"));
-                map.put(s.getSupplierId(), s.getTradeName());
+                s = new Supplier(rs.getInt("supplierId"), rs.getString("corporateName"));
+                map.put(s.getSupplierId(), s.getCorporateName());
             }
         } catch (SQLException ex) {
             Logger.getLogger(SupplierDao.class.getName()).log(Level.SEVERE, null, ex);
