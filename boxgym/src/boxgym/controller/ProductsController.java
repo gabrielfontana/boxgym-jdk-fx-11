@@ -5,10 +5,12 @@ import boxgym.helper.AlertHelper;
 import boxgym.helper.ButtonHelper;
 import boxgym.helper.ImageHelper;
 import boxgym.helper.StageHelper;
+import boxgym.helper.TextFieldFormat;
 import boxgym.model.Product;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -210,21 +212,21 @@ public class ProductsController implements Initializable {
 
     private void showDetails() {
         if (selected != null) {
+            try {
+                productImageView.setImage(SwingFXUtils.toFXImage(ImageHelper.convertBytesToImage(selected), null));
+            } catch (IOException ex) {
+                Logger.getLogger(ProductsController.class.getName()).log(Level.SEVERE, null, ex);
+            }
             productIdLabel.setText(String.valueOf(selected.getProductId()));
             nameLabel.setText(selected.getName());
             categoryLabel.setText(selected.getCategory());
             descriptionLabel.setText(selected.getDescription());
             amountLabel.setText(String.valueOf(selected.getAmount()));
             minimumStockLabel.setText(String.valueOf(selected.getMinimumStock()));
-            costPriceLabel.setText(String.valueOf(selected.getCostPrice()));
-            sellingPriceLabel.setText(String.valueOf(selected.getSellingPrice()));
-            createdAtLabel.setText(selected.getCreatedAt());
-            updatedAtLabel.setText(selected.getUpdatedAt());
-            try {
-                productImageView.setImage(SwingFXUtils.toFXImage(ImageHelper.convertBytesToImage(selected), null));
-            } catch (IOException ex) {
-                Logger.getLogger(ProductsController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            TextFieldFormat.currencyFormat(costPriceLabel, selected.getCostPrice());
+            TextFieldFormat.currencyFormat(sellingPriceLabel, selected.getSellingPrice());
+            createdAtLabel.setText(selected.getCreatedAt().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
+            updatedAtLabel.setText(selected.getUpdatedAt().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
         }
     }
 
@@ -234,8 +236,13 @@ public class ProductsController implements Initializable {
         categoryTableColumn.setCellValueFactory(new PropertyValueFactory("category"));
         amountTableColumn.setCellValueFactory(new PropertyValueFactory("amount"));
         minimumStockTableColumn.setCellValueFactory(new PropertyValueFactory("minimumStock"));
+        
         costPriceTableColumn.setCellValueFactory(new PropertyValueFactory("costPrice"));
+        TextFieldFormat.productTableCellCurrencyFormat(costPriceTableColumn);
+        
         sellingPriceTableColumn.setCellValueFactory(new PropertyValueFactory("sellingPrice"));
+        TextFieldFormat.productTableCellCurrencyFormat(sellingPriceTableColumn);
+        
         productTableView.setItems(loadData());
     }
 

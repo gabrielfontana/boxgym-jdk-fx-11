@@ -1,6 +1,7 @@
 package boxgym.model;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 public class Product {
 
@@ -13,8 +14,8 @@ public class Product {
     private BigDecimal costPrice; //Preço de custo
     private BigDecimal sellingPrice; //Preço de venda
     private byte[] image; //Imagem
-    private String createdAt; //Criado em
-    private String updatedAt; //Atualizado em
+    private LocalDateTime createdAt; //Criado em
+    private LocalDateTime updatedAt; //Atualizado em
 
     public Product() {
 
@@ -124,19 +125,19 @@ public class Product {
         this.image = image;
     }
 
-    public String getCreatedAt() {
+     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public String getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(String updatedAt) {
+    public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 

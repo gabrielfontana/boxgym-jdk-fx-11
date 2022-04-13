@@ -1,6 +1,7 @@
 package boxgym.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class StockEntry {
 
@@ -8,8 +9,8 @@ public class StockEntry {
     private int fkSupplier; //Fornecedor
     private LocalDate invoiceIssueDate; //Data de emissão da nota fiscal
     private String invoiceNumber; //Número da nota fiscal
-    private String createdAt; //Criado em
-    private String updatedAt; //Atualizado em
+    private LocalDateTime createdAt; //Criado em
+    private LocalDateTime updatedAt; //Atualizado em
 
     public StockEntry() {
 
@@ -54,19 +55,19 @@ public class StockEntry {
         this.invoiceNumber = invoiceNumber;
     }
 
-    public String getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public String getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(String updatedAt) {
+    public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 }

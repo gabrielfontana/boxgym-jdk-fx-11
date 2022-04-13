@@ -8,6 +8,7 @@ import boxgym.model.Supplier;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -227,8 +228,8 @@ public class SuppliersController implements Initializable {
             districtLabel.setText(selected.getDistrict());
             cityLabel.setText(selected.getCity());
             federativeUnitLabel.setText(selected.getFederativeUnit());
-            createdAtLabel.setText(selected.getCreatedAt());
-            updatedAtLabel.setText(selected.getUpdatedAt());
+            createdAtLabel.setText(selected.getCreatedAt().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
+            updatedAtLabel.setText(selected.getUpdatedAt().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
         }
     }
 

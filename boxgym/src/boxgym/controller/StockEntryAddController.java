@@ -7,6 +7,7 @@ import boxgym.dao.SupplierDao;
 import boxgym.helper.ActionButtonTableCell;
 import boxgym.helper.AlertHelper;
 import boxgym.helper.ButtonHelper;
+import boxgym.helper.TextFieldFormat;
 import boxgym.helper.TextValidationHelper;
 import boxgym.model.StockEntry;
 import boxgym.model.StockEntryProduct;
@@ -240,7 +241,9 @@ public class StockEntryAddController implements Initializable {
         productTableColumn.setCellValueFactory(new PropertyValueFactory("fkProduct"));
         amountTableColumn.setCellValueFactory(new PropertyValueFactory("amount"));
         costPriceTableColumn.setCellValueFactory(new PropertyValueFactory("costPrice"));
+        TextFieldFormat.stockEntryProductTableCellCurrencyFormat(costPriceTableColumn);
         totalTableColumn.setCellValueFactory(new PropertyValueFactory("total"));
+        TextFieldFormat.stockEntryProductTableCellCurrencyFormat(totalTableColumn);
         actionButtonTableColumn.setCellFactory(ActionButtonTableCell.<StockEntryProduct>forTableColumn("", (StockEntryProduct p) -> {
             list.remove(p);
             obsListItens.remove(p);

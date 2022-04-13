@@ -127,8 +127,8 @@ public class SupplierDao {
                 s.setDistrict(rs.getString("district"));
                 s.setCity(rs.getString("city"));
                 s.setFederativeUnit(rs.getString("federativeUnit"));
-                s.setCreatedAt(rs.getString("createdAt"));
-                s.setUpdatedAt(rs.getString("updatedAt"));
+                s.setCreatedAt(rs.getTimestamp("createdAt").toLocalDateTime());
+                s.setUpdatedAt(rs.getTimestamp("updatedAt").toLocalDateTime());
                 suppliersList.add(s);
             }
         } catch (SQLException ex) {

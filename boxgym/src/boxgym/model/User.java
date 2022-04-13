@@ -1,12 +1,14 @@
 package boxgym.model;
 
+import java.time.LocalDateTime;
+
 public class User {
     private int userId; //Identificador
     private String username; //Nome de usuário
     private String password; //Senha
     private String confirmPassword; //Confirmar Senha
-    private String createdAt; //Criado em
-    private String updatedAt; //Atualizado em
+    private LocalDateTime createdAt; //Criado em
+    private LocalDateTime updatedAt; //Atualizado em
     
     public User() {
         
@@ -57,19 +59,19 @@ public class User {
         this.confirmPassword = confirmPassword;
     }
 
-    public String getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public String getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(String updatedAt) {
+    public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
     

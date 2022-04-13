@@ -107,8 +107,8 @@ public class ProductDao {
                 p.setCostPrice(rs.getBigDecimal("costPrice"));
                 p.setSellingPrice(rs.getBigDecimal("sellingPrice"));
                 p.setImage(rs.getBytes("image"));
-                p.setCreatedAt(rs.getString("createdAt"));
-                p.setUpdatedAt(rs.getString("updatedAt"));
+                p.setCreatedAt(rs.getTimestamp("createdAt").toLocalDateTime());
+                p.setUpdatedAt(rs.getTimestamp("updatedAt").toLocalDateTime());
                 productsList.add(p);
             }
         } catch (SQLException ex) {

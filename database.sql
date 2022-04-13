@@ -15,8 +15,8 @@ CREATE TABLE `supplier` (
   `district` VARCHAR(255) NULL, 
   `city` VARCHAR(255) NULL, 
   `federativeUnit` CHAR(2) NULL,
-  `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updatedAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `createdAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`supplierId`),
   UNIQUE KEY `supplierUnique` (`companyRegistry`) USING BTREE
 );
@@ -31,8 +31,8 @@ CREATE TABLE `product` (
   `costPrice` DECIMAL(10, 2) NOT NULL,
   `sellingPrice` DECIMAL(10, 2) NOT NULL,
   `image` MEDIUMBLOB NULL,
-  `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updatedAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `createdAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`productId`)
 );
 
@@ -41,8 +41,8 @@ CREATE TABLE `userRegistration` (
   `username` VARCHAR(32) NOT NULL,
   `password` VARCHAR(64) NOT NULL,
   `confirmPassword` VARCHAR(64) NOT NULL,
-  `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updatedAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `createdAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`userId`)
 );
 
@@ -51,8 +51,8 @@ CREATE TABLE `stockentry` (
   `fkSupplier` INT(11) NOT NULL,
   `invoiceIssueDate` DATE NOT NULL,
   `invoiceNumber` VARCHAR(10) NOT NULL,
-  `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updatedAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `createdAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`stockEntryId`),
   FOREIGN KEY (`fkSupplier`) REFERENCES `supplier`(`supplierId`) ON UPDATE CASCADE
 );
@@ -63,8 +63,8 @@ CREATE TABLE `stockentry_product` (
   `fkProduct` INT(11) NOT NULL,
   `amount` INT(10) NOT NULL,
   `costPrice` DECIMAL(10, 2) NOT NULL,
-  `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updatedAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `createdAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`stockEntryProductId`),
   FOREIGN KEY (`fkStockEntry`) REFERENCES `stockentry`(`stockEntryId`) ON UPDATE CASCADE,
   FOREIGN KEY (`fkProduct`) REFERENCES `product`(`productId`) ON UPDATE CASCADE
