@@ -7,12 +7,18 @@ import java.text.NumberFormat;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TextField;
 
 public class TextFieldFormat {
 
     public static void currencyFormat(Label label, BigDecimal value) {
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
         label.setText(currencyFormat.format(value));
+    }
+    
+    public static void currencyFormat(TextField text, BigDecimal value) {
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
+        text.setText(currencyFormat.format(value));
     }
 
     public static void productTableCellCurrencyFormat(TableColumn column) {

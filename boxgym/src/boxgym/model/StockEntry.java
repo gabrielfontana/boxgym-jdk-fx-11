@@ -12,10 +12,6 @@ public class StockEntry {
     private LocalDateTime createdAt; //Criado em
     private LocalDateTime updatedAt; //Atualizado em
 
-    public StockEntry() {
-
-    }
-
     //Construtor CREATE
     public StockEntry(int fkSupplier, LocalDate invoiceIssueDate, String invoiceNumber) {
         this.fkSupplier = fkSupplier;

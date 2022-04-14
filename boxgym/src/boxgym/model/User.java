@@ -10,10 +10,6 @@ public class User {
     private LocalDateTime createdAt; //Criado em
     private LocalDateTime updatedAt; //Atualizado em
     
-    public User() {
-        
-    }
-    
     //Construtor CREATE
     public User(String username, String password, String confirmPassword) {
         this.username = username;

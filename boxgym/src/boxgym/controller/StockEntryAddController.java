@@ -19,6 +19,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -104,6 +105,9 @@ public class StockEntryAddController implements Initializable {
     private TableColumn<StockEntryProduct, Button> actionButtonTableColumn;
 
     @FXML
+    private LimitedTextField totalPriceTextField;
+
+    @FXML
     private Button saveButton;
 
     @FXML
@@ -140,6 +144,7 @@ public class StockEntryAddController implements Initializable {
         ButtonHelper.buttonCursor(addStockEntryButton, addProductEntryButton, saveButton, clearButton);
         tableViewListeners();
         initProductEntryTableView();
+        TextFieldFormat.currencyFormat(totalPriceTextField, BigDecimal.ZERO);
     }
 
     private void inputRestrictions() {
@@ -225,14 +230,13 @@ public class StockEntryAddController implements Initializable {
         if (!(validation.getEmptyCounter() == 0)) {
             ah.customAlert(Alert.AlertType.WARNING, "Não foi possível adicionar esse produto!", validation.getMessage());
         } else {
-            int amount = Integer.valueOf(amountTextField.getText());
-            BigDecimal costPrice = new BigDecimal(costPriceTextField.getPrice());
-            BigDecimal total = costPrice.multiply(BigDecimal.valueOf(amount));
-            StockEntryProduct item = new StockEntryProduct(Integer.valueOf(stockEntryIdTextField.getText()), getKeyFromProductComboBox(), amount, costPrice, total);
+            StockEntryProduct item = new StockEntryProduct(Integer.valueOf(stockEntryIdTextField.getText()), getKeyFromProductComboBox(),
+                    Integer.valueOf(amountTextField.getText()), new BigDecimal(costPriceTextField.getPrice()));
             list.add(item);
             obsListItens = FXCollections.observableArrayList(list);
             productEntryTableView.setItems(obsListItens);
             productEntryTableView.getSelectionModel().selectLast();
+            textFieldBinding();
             clear();
         }
     }
@@ -252,12 +256,21 @@ public class StockEntryAddController implements Initializable {
         }));
     }
 
+    private void textFieldBinding() {
+        totalPriceTextField.textProperty().bind(Bindings.createObjectBinding(()
+                -> productEntryTableView.getItems().stream()
+                        .map(StockEntryProduct::getTotal)
+                        .reduce(BigDecimal.ZERO, BigDecimal::add),
+                productEntryTableView.getItems()).asString("%.2f")
+        );
+    }
+
     @FXML
     void save() {
         if (!(obsListItens == null)) {
-            for (int i = 0; i < obsListItens.size(); i++) {
+            for (StockEntryProduct item : obsListItens) {
                 StockEntryProductDao dao = new StockEntryProductDao();
-                dao.create(obsListItens.get(i));
+                dao.create(item);
             }
             setProductsEntryCreationFlag(true);
             ah.customAlert(Alert.AlertType.INFORMATION, "A entrada de estoque foi realizada com sucesso!", "");
