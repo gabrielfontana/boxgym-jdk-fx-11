@@ -11,16 +11,6 @@
     -fx-font-size: 14;
 }
 
-/*.table-view .column-header {
-    -fx-border-width: 0 1 0 0;
-    -fx-border-color: #cccccc;
-}
-
-.table-row-cell .table-cell {
-    -fx-border-width: 0 1 0 0;
-    -fx-border-color: #cccccc;
-}*/
-
 .table-row-cell:odd {
     -fx-background-color: #f3f3f3;
 }
