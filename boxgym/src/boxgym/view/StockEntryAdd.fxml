@@ -141,11 +141,11 @@
                       </HBox>
                       <TableView fx:id="productEntryTableView" prefHeight="170.0" prefWidth="570.0">
                           <columns>
-                              <TableColumn fx:id="productTableColumn" minWidth="-Infinity" prefWidth="125.0" resizable="false" text="Produto" />
+                              <TableColumn fx:id="productTableColumn" minWidth="-Infinity" prefWidth="125.0" resizable="false" text="Cód. do &#10;Produto" />
                               <TableColumn fx:id="amountTableColumn" minWidth="-Infinity" prefWidth="125.0" resizable="false" text="Quantidade" />
-                              <TableColumn fx:id="costPriceTableColumn" minWidth="-Infinity" prefWidth="125.0" resizable="false" text="Preço de Custo" />
+                              <TableColumn fx:id="costPriceTableColumn" minWidth="-Infinity" prefWidth="125.0" resizable="false" text="Preço &#10;de Custo" />
                               <TableColumn fx:id="totalTableColumn" minWidth="-Infinity" prefWidth="125.0" resizable="false" text="Total" />
-                              <TableColumn fx:id="actionButtonTableColumn" editable="false" maxWidth="55.0" minWidth="-Infinity" prefWidth="55.0" resizable="false" sortable="false" styleClass="action-button-column" />
+                              <TableColumn fx:id="actionButtonTableColumn" editable="false" maxWidth="55.0" minWidth="-Infinity" prefWidth="55.0" resizable="false" sortable="false" />
                           </columns>
                      <VBox.margin>
                         <Insets bottom="20.0" />

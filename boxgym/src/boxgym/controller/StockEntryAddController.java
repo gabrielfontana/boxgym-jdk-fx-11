@@ -267,8 +267,8 @@ public class StockEntryAddController implements Initializable {
 
     @FXML
     void save() {
-        if (!(obsListItens == null)) {
-            for (StockEntryProduct item : obsListItens) {
+        if (!(list == null)) {
+            for (StockEntryProduct item : list) {
                 StockEntryProductDao dao = new StockEntryProductDao();
                 dao.create(item);
             }

@@ -25,6 +25,6 @@
     -fx-background-color: #f3f3f3;
 }
 
-.action-button-column:hover {
+.column-header:hover {
     -fx-background-color: transparent !important;
 }

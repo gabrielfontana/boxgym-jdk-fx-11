@@ -87,7 +87,7 @@
                   <TableColumn fx:id="nameTableColumn" minWidth="154.0" prefWidth="154.0" resizable="false" text="Nome" />
                   <TableColumn fx:id="categoryTableColumn" minWidth="154.0" prefWidth="154.0" resizable="false" text="Categoria" />
                   <TableColumn fx:id="amountTableColumn" minWidth="100.0" prefWidth="100.0" resizable="false" text="Estoque" />
-                  <TableColumn fx:id="minimumStockTableColumn" minWidth="100.0" prefWidth="100.0" resizable="false" text="Estoque Mín." />
+                  <TableColumn fx:id="minimumStockTableColumn" minWidth="100.0" prefWidth="100.0" resizable="false" text="Estoque &#10;Mínimo" />
                   <TableColumn fx:id="costPriceTableColumn" minWidth="150.0" prefWidth="150.0" resizable="false" text="Preço de Custo" />
                   <TableColumn fx:id="sellingPriceTableColumn" minWidth="150.0" prefWidth="150.0" resizable="false" text="Preço de Venda" />
                </columns>
