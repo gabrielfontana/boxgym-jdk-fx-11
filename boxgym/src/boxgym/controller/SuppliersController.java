@@ -41,12 +41,12 @@ import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
 
 public class SuppliersController implements Initializable {
-    
+
     AlertHelper ah = new AlertHelper();
-    
+
     @FXML
     private TextField searchBox;
-    
+
     @FXML
     private MenuButton exportButton;
 
@@ -109,7 +109,7 @@ public class SuppliersController implements Initializable {
 
     @FXML
     private Label updatedAtLabel;
-    
+
     @FXML
     private Button addButton;
 
@@ -138,7 +138,7 @@ public class SuppliersController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/boxgym/view/SuppliersAdd.fxml"));
             Parent root = (Parent) loader.load();
             JMetro jMetro = new JMetro(root, Style.LIGHT);
-            
+
             SuppliersAddController controller = loader.getController();
 
             StageHelper.createAddOrUpdateStage("Adicionando Fornecedor", root);
@@ -162,7 +162,7 @@ public class SuppliersController implements Initializable {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/boxgym/view/SuppliersUpdate.fxml"));
                 Parent root = (Parent) loader.load();
                 JMetro jMetro = new JMetro(root, Style.LIGHT);
-                
+
                 SuppliersUpdateController controller = loader.getController();
                 controller.setLoadSupplier(selected);
 
@@ -248,28 +248,25 @@ public class SuppliersController implements Initializable {
     }
 
     private boolean searchFindsSupplier(Supplier supplier, String searchText) {
-        String supplierId = String.valueOf(supplier.getSupplierId()).toLowerCase();
-        String companyRegistry = String.valueOf(supplier.getCompanyRegistry()).toLowerCase();
+        String supplierId = String.valueOf(supplier.getSupplierId());
+        String companyRegistry = String.valueOf(supplier.getCompanyRegistry());
         String corporateName = String.valueOf(supplier.getCorporateName()).toLowerCase();
         String tradeName = String.valueOf(supplier.getTradeName()).toLowerCase();
         String email = String.valueOf(supplier.getEmail()).toLowerCase();
-        String phone = String.valueOf(supplier.getPhone()).toLowerCase();
-        String zipCode = String.valueOf(supplier.getZipCode()).toLowerCase();
+        String phone = String.valueOf(supplier.getPhone());
+        String zipCode = String.valueOf(supplier.getZipCode());
         String address = String.valueOf(supplier.getAddress()).toLowerCase();
         String addressComplement = String.valueOf(supplier.getAddressComplement()).toLowerCase();
         String district = String.valueOf(supplier.getDistrict()).toLowerCase();
         String city = String.valueOf(supplier.getCity()).toLowerCase();
         String federativeUnit = String.valueOf(supplier.getFederativeUnit()).toLowerCase();
-        String createdAt = String.valueOf(supplier.getCreatedAt()).toLowerCase();
-        String updatedAt = String.valueOf(supplier.getUpdatedAt()).toLowerCase();
 
         return (supplierId.contains(searchText)) || (companyRegistry.contains(searchText))
                 || (corporateName.contains(searchText)) || (tradeName.contains(searchText))
                 || (email.contains(searchText)) || (phone.contains(searchText))
                 || (zipCode.contains(searchText)) || (address.contains(searchText))
                 || (addressComplement.contains(searchText)) || (district.contains(searchText))
-                || (city.contains(searchText)) || (federativeUnit.contains(searchText))
-                || (createdAt.contains(searchText)) || (updatedAt.contains(searchText));
+                || (city.contains(searchText)) || (federativeUnit.contains(searchText));
     }
 
     private void search() {

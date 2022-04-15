@@ -80,7 +80,7 @@
                   </Button>
                </children>
             </HBox>
-            <TableView fx:id="supplierTableView" layoutY="58.0" prefHeight="550.0" prefWidth="900.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="40.0">
+            <TableView fx:id="supplierTableView" prefHeight="550.0" prefWidth="900.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="40.0">
               <columns>
                   <TableColumn fx:id="supplierIdTableColumn" minWidth="90.0" prefWidth="90.0" resizable="false" text="ID" />
                   <TableColumn fx:id="companyRegistryTableColumn" minWidth="134.0" prefWidth="134.0" resizable="false" text="CNPJ" />

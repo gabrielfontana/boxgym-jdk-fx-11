@@ -43,12 +43,12 @@ import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
 
 public class ProductsController implements Initializable {
-    
+
     AlertHelper ah = new AlertHelper();
-    
+
     @FXML
     private TextField searchBox;
-    
+
     @FXML
     private MenuButton exportButton;
 
@@ -108,7 +108,7 @@ public class ProductsController implements Initializable {
 
     @FXML
     private Label updatedAtLabel;
-    
+
     @FXML
     private Button addButton;
 
@@ -137,7 +137,7 @@ public class ProductsController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/boxgym/view/ProductsAdd.fxml"));
             Parent root = (Parent) loader.load();
             JMetro jMetro = new JMetro(root, Style.LIGHT);
-            
+
             ProductsAddController controller = loader.getController();
 
             StageHelper.createAddOrUpdateStage("Adicionando Produto", root);
@@ -161,7 +161,7 @@ public class ProductsController implements Initializable {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/boxgym/view/ProductsUpdate.fxml"));
                 Parent root = (Parent) loader.load();
                 JMetro jMetro = new JMetro(root, Style.LIGHT);
-                
+
                 ProductsUpdateController controller = loader.getController();
                 controller.setLoadProduct(selected);
 
@@ -236,13 +236,13 @@ public class ProductsController implements Initializable {
         categoryTableColumn.setCellValueFactory(new PropertyValueFactory("category"));
         amountTableColumn.setCellValueFactory(new PropertyValueFactory("amount"));
         minimumStockTableColumn.setCellValueFactory(new PropertyValueFactory("minimumStock"));
-        
+
         costPriceTableColumn.setCellValueFactory(new PropertyValueFactory("costPrice"));
         TextFieldFormat.productTableCellCurrencyFormat(costPriceTableColumn);
-        
+
         sellingPriceTableColumn.setCellValueFactory(new PropertyValueFactory("sellingPrice"));
         TextFieldFormat.productTableCellCurrencyFormat(sellingPriceTableColumn);
-        
+
         productTableView.setItems(loadData());
     }
 
@@ -252,22 +252,19 @@ public class ProductsController implements Initializable {
     }
 
     private boolean searchFindsProduct(Product product, String searchText) {
-        String productId = String.valueOf(product.getProductId()).toLowerCase();
+        String productId = String.valueOf(product.getProductId());
         String name = String.valueOf(product.getName()).toLowerCase();
         String category = String.valueOf(product.getCategory()).toLowerCase();
         String description = String.valueOf(product.getDescription()).toLowerCase();
-        String amount = String.valueOf(product.getAmount()).toLowerCase();
-        String minimumStock = String.valueOf(product.getMinimumStock()).toLowerCase();
-        String costPrice = String.valueOf(product.getCostPrice()).toLowerCase();
-        String sellingPrice = String.valueOf(product.getSellingPrice()).toLowerCase();
-        String createdAt = String.valueOf(product.getCreatedAt()).toLowerCase();
-        String updatedAt = String.valueOf(product.getUpdatedAt()).toLowerCase();
+        String amount = String.valueOf(product.getAmount());
+        String minimumStock = String.valueOf(product.getMinimumStock());
+        String costPrice = String.valueOf(product.getCostPrice());
+        String sellingPrice = String.valueOf(product.getSellingPrice());
 
         return (productId.contains(searchText)) || (name.contains(searchText))
                 || (category.contains(searchText)) || (description.contains(searchText))
                 || (amount.contains(searchText)) || (minimumStock.contains(searchText))
-                || (costPrice.contains(searchText)) || (sellingPrice.contains(searchText))
-                || (createdAt.contains(searchText)) || (updatedAt.contains(searchText));
+                || (costPrice.contains(searchText)) || (sellingPrice.contains(searchText));
     }
 
     private void search() {
