@@ -1,10 +1,120 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckMenuItem?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioMenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="695.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.StockController">
+<AnchorPane prefHeight="695.0" prefWidth="1280.0" style="-fx-background-color: #ffffff;" stylesheets="@../css/table-view-style.css" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.StockController">
    <children>
-      <Button fx:id="addButton" layoutX="607.0" layoutY="335.0" mnemonicParsing="false" onAction="#add" text="Adicionar" />
+      <AnchorPane layoutX="30.0" layoutY="35.0" prefHeight="80.0" prefWidth="1280.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label text="Vendas &gt; Entradas de Estoque" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="165.0" layoutY="123.0" prefHeight="695.0" prefWidth="940.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="340.0" AnchorPane.topAnchor="80.0">
+         <children>
+            <HBox alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="900.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <MenuButton fx:id="filterButton" mnemonicParsing="false" prefHeight="30.0">
+                     <graphic>
+                        <MaterialDesignIconView glyphName="FILTER_VARIANT" size="15.0" />
+                     </graphic>
+                     <items>
+                        <CheckMenuItem fx:id="caseSensitiveOp" mnemonicParsing="false" text="Maiúsculas e minúsculas">
+                           <graphic>
+                              <MaterialDesignIconView glyphName="CASE_SENSITIVE_ALT" size="15.0" />
+                           </graphic>
+                        </CheckMenuItem>
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <RadioMenuItem fx:id="containsOp" mnemonicParsing="false" selected="true" text="Contém">
+                           <graphic>
+                              <MaterialDesignIconView glyphName="ALPHABETICAL" size="15.0" />
+                           </graphic>
+                           <toggleGroup>
+                              <ToggleGroup fx:id="filterOptions" />
+                           </toggleGroup>
+                        </RadioMenuItem>
+                        <RadioMenuItem fx:id="alphabeticalEqualsToOp" mnemonicParsing="false" text="Igual a" toggleGroup="$filterOptions">
+                           <graphic>
+                              <MaterialDesignIconView glyphName="ALPHABETICAL" size="15.0" />
+                           </graphic>
+                        </RadioMenuItem>
+                        <RadioMenuItem fx:id="startsWithOp" mnemonicParsing="false" text="Inicia com" toggleGroup="$filterOptions">
+                           <graphic>
+                              <MaterialDesignIconView glyphName="ALPHABETICAL" size="15.0" />
+                           </graphic>
+                        </RadioMenuItem>
+                        <RadioMenuItem fx:id="endsWithOp" mnemonicParsing="false" text="Termina com" toggleGroup="$filterOptions">
+                           <graphic>
+                              <MaterialDesignIconView glyphName="ALPHABETICAL" size="15.0" />
+                           </graphic>
+                        </RadioMenuItem>
+                     </items>
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+                  </MenuButton>
+                  <TextField fx:id="searchBox" prefHeight="30.0" prefWidth="149.0" promptText="Pesquisar..." HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Button fx:id="addButton" mnemonicParsing="false" onAction="#add" prefHeight="30.0" prefWidth="90.0" text="Adicionar">
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+                     <graphic>
+                        <MaterialDesignIconView glyphName="PLUS" size="15.0" />
+                     </graphic>
+                  </Button>
+                  <MenuButton fx:id="exportButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="105.0" text="Exportar">
+                     <items>
+                        <MenuItem fx:id="generatePdfButton" mnemonicParsing="false" onAction="#generatePdf" text="PDF">
+                           <graphic>
+                              <MaterialDesignIconView glyphName="FILE_PDF" size="15.0" />
+                           </graphic>
+                        </MenuItem>
+                        <MenuItem fx:id="exportExcelButton" mnemonicParsing="false" onAction="#exportToExcel" text="Excel">
+                           <graphic>
+                              <MaterialDesignIconView glyphName="FILE_EXCEL" size="15.0" />
+                           </graphic>
+                        </MenuItem>
+                     </items>
+                     <graphic>
+                        <MaterialDesignIconView glyphName="FILE_EXPORT" size="15" />
+                     </graphic>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </MenuButton>
+               </children>
+            </HBox>
+            <TableView fx:id="stockEntryTableView" prefHeight="550.0" prefWidth="900.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="40.0">
+               <columns>
+                  <TableColumn fx:id="stockIdTableColumn" minWidth="90.0" prefWidth="90.0" text="ID" />
+                  <TableColumn fx:id="fkSupplierTableColumn" minWidth="270.0" prefWidth="270.0" text="Fornecedor" />
+                  <TableColumn fx:id="invoiceIssueDateTableColumn" minWidth="270.0" prefWidth="270.0" text="Data de Emissão" />
+                  <TableColumn fx:id="invoiceNumberTableColumn" minWidth="268.0" prefWidth="268.0" text="Nota Fiscal" />
+               </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

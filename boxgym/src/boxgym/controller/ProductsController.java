@@ -39,7 +39,6 @@ import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.skin.TableHeaderRow;
 import javafx.scene.image.Image;
@@ -49,16 +48,15 @@ import jfxtras.styles.jmetro.Style;
 
 public class ProductsController implements Initializable {
 
-    AlertHelper ah = new AlertHelper();
-
+    AlertHelper alert = new AlertHelper();
+    
+    private Product selected;
+    
     @FXML
-    private TextField searchBox;
+    private MenuButton filterButton;
 
     @FXML
     private CheckMenuItem caseSensitiveOp;
-
-    @FXML
-    private ToggleGroup filterOptions;
 
     @FXML
     private RadioMenuItem containsOp;
@@ -71,10 +69,22 @@ public class ProductsController implements Initializable {
 
     @FXML
     private RadioMenuItem endsWithOp;
+    
+    @FXML
+    private TextField searchBox;
+
+    @FXML
+    private Button addButton;
+
+    @FXML
+    private Button updateButton;
+
+    @FXML
+    private Button deleteButton;
 
     @FXML
     private MenuButton exportButton;
-
+    
     @FXML
     private TableView<Product> productTableView;
 
@@ -132,23 +142,10 @@ public class ProductsController implements Initializable {
     @FXML
     private Label updatedAtLabel;
 
-    @FXML
-    private Button addButton;
-
-    @FXML
-    private Button updateButton;
-
-    @FXML
-    private Button deleteButton;
-
-    private Product selected;
-
-    AlertHelper alert = new AlertHelper();
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         resetDetails();
-        ButtonHelper.buttonCursor(exportButton, addButton, updateButton, deleteButton);
+        ButtonHelper.buttonCursor(exportButton, filterButton, addButton, updateButton, deleteButton);
         initProductTableView();
         tableViewListeners();
         Platform.runLater(() -> searchBox.requestFocus());
@@ -177,7 +174,7 @@ public class ProductsController implements Initializable {
     @FXML
     void updateProduct(ActionEvent event) {
         if (selected == null) {
-            ah.customAlert(Alert.AlertType.WARNING, "Selecione um produto para editar!", "");
+            alert.customAlert(Alert.AlertType.WARNING, "Selecione um produto para editar!", "");
         } else {
             int index = productTableView.getSelectionModel().getSelectedIndex();
             try {
@@ -205,14 +202,14 @@ public class ProductsController implements Initializable {
         ProductDao productDao = new ProductDao();
 
         if (selected == null) {
-            ah.customAlert(Alert.AlertType.WARNING, "Selecione um produto para excluir!", "");
+            alert.customAlert(Alert.AlertType.WARNING, "Selecione um produto para excluir!", "");
         } else {
             alert.confirmationAlert("Tem certeza que deseja excluir o produto '" + selected.getName() + "'?", "Esta ação é irreversível!");
             if (alert.getResult().get() == ButtonType.YES) {
                 productDao.delete(selected);
                 refreshTableView();
                 resetDetails();
-                ah.customAlert(Alert.AlertType.INFORMATION, "O produto foi excluído com sucesso!", "");
+                alert.customAlert(Alert.AlertType.INFORMATION, "O produto foi excluído com sucesso!", "");
             }
         }
     }

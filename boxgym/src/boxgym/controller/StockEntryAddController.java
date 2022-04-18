@@ -90,7 +90,7 @@ public class StockEntryAddController implements Initializable {
     private TableView<StockEntryProduct> productEntryTableView;
 
     @FXML
-    private TableColumn<StockEntryProduct, Integer> productTableColumn;
+    private TableColumn<StockEntryProduct, String> productTableColumn;
 
     @FXML
     private TableColumn<StockEntryProduct, Integer> amountTableColumn;
@@ -232,6 +232,7 @@ public class StockEntryAddController implements Initializable {
         } else {
             StockEntryProduct item = new StockEntryProduct(Integer.valueOf(stockEntryIdTextField.getText()), getKeyFromProductComboBox(),
                     Integer.valueOf(amountTextField.getText()), new BigDecimal(costPriceTextField.getPrice()));
+            item.setTempProductName(productComboBox.getSelectionModel().getSelectedItem());
             list.add(item);
             obsListItens = FXCollections.observableArrayList(list);
             productEntryTableView.setItems(obsListItens);
@@ -242,7 +243,7 @@ public class StockEntryAddController implements Initializable {
     }
 
     private void initProductEntryTableView() {
-        productTableColumn.setCellValueFactory(new PropertyValueFactory("fkProduct"));
+        productTableColumn.setCellValueFactory(new PropertyValueFactory("tempProductName"));
         amountTableColumn.setCellValueFactory(new PropertyValueFactory("amount"));
         costPriceTableColumn.setCellValueFactory(new PropertyValueFactory("costPrice"));
         TextFieldFormat.stockEntryProductTableCellCurrencyFormat(costPriceTableColumn);

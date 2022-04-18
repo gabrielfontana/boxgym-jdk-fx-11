@@ -79,7 +79,7 @@
                                 <MaterialDesignIconView fill="BLACK" glyphName="PACKAGE" size="15.0" />
                             </graphic>
                         </MenuItem>
-                        <MenuItem accelerator="Ctrl+9" mnemonicParsing="false" onAction="#handleStock" text="Entradas no Estoque">
+                        <MenuItem accelerator="Ctrl+9" mnemonicParsing="false" onAction="#handleStock" text="Entradas de Estoque">
                             <graphic>
                                 <MaterialDesignIconView fill="BLACK" glyphName="PACKAGE_UP" size="15.0" />
                             </graphic>

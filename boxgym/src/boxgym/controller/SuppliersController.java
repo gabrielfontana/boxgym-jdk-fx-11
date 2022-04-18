@@ -36,7 +36,6 @@ import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.skin.TableHeaderRow;
 import javafx.stage.FileChooser;
@@ -47,16 +46,15 @@ import jfxtras.styles.jmetro.Style;
 
 public class SuppliersController implements Initializable {
 
-    AlertHelper ah = new AlertHelper();
-
+    AlertHelper alert = new AlertHelper();
+    
+    private Supplier selected;
+    
     @FXML
-    private TextField searchBox;
+    private MenuButton filterButton;
 
     @FXML
     private CheckMenuItem caseSensitiveOp;
-
-    @FXML
-    private ToggleGroup filterOptions;
 
     @FXML
     private RadioMenuItem containsOp;
@@ -70,6 +68,18 @@ public class SuppliersController implements Initializable {
     @FXML
     private RadioMenuItem endsWithOp;
 
+    @FXML
+    private TextField searchBox;
+    
+    @FXML
+    private Button addButton;
+
+    @FXML
+    private Button updateButton;
+
+    @FXML
+    private Button deleteButton;
+    
     @FXML
     private MenuButton exportButton;
 
@@ -142,23 +152,10 @@ public class SuppliersController implements Initializable {
     @FXML
     private Label updatedAtLabel;
 
-    @FXML
-    private Button addButton;
-
-    @FXML
-    private Button updateButton;
-
-    @FXML
-    private Button deleteButton;
-
-    private Supplier selected;
-
-    AlertHelper alert = new AlertHelper();
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         resetDetails();
-        ButtonHelper.buttonCursor(exportButton, addButton, updateButton, deleteButton);
+        ButtonHelper.buttonCursor(exportButton, filterButton, addButton, updateButton, deleteButton);
         initSupplierTableView();
         tableViewListeners();
         Platform.runLater(() -> searchBox.requestFocus());
@@ -187,7 +184,7 @@ public class SuppliersController implements Initializable {
     @FXML
     void updateSupplier(ActionEvent event) {
         if (selected == null) {
-            ah.customAlert(Alert.AlertType.WARNING, "Selecione um fornecedor para editar!", "");
+            alert.customAlert(Alert.AlertType.WARNING, "Selecione um fornecedor para editar!", "");
         } else {
             int index = supplierTableView.getSelectionModel().getSelectedIndex();
             try {
@@ -215,14 +212,14 @@ public class SuppliersController implements Initializable {
         SupplierDao supplierDao = new SupplierDao();
 
         if (selected == null) {
-            ah.customAlert(Alert.AlertType.WARNING, "Selecione um fornecedor para excluir!", "");
+            alert.customAlert(Alert.AlertType.WARNING, "Selecione um fornecedor para excluir!", "");
         } else {
             alert.confirmationAlert("Tem certeza que deseja excluir \n o fornecedor '" + selected.getTradeName() + "'?", "Esta ação é irreversível!");
             if (alert.getResult().get() == ButtonType.YES) {
                 supplierDao.delete(selected);
                 refreshTableView();
                 resetDetails();
-                ah.customAlert(Alert.AlertType.WARNING, "O fornecedor foi excluído com sucesso!", "");
+                alert.customAlert(Alert.AlertType.WARNING, "O fornecedor foi excluído com sucesso!", "");
             }
         }
     }

@@ -18,6 +18,8 @@ public class StockEntryProduct {
     private LocalDateTime createdAt; //Criado em
     private LocalDateTime updatedAt; //Atualizado em
     private final ReadOnlyObjectWrapper<BigDecimal> total = new ReadOnlyObjectWrapper<>(); //Total = Quantidade * Preço de custo
+    
+    private String tempProductName;
 
     //Construtor ObservableList e CREATE
     public StockEntryProduct(int fkStockEntry, int fkProduct, int amount, BigDecimal costPrice) {
@@ -101,4 +103,13 @@ public class StockEntryProduct {
     public final BigDecimal getTotal() {
         return this.totalProperty().get();
     }
+
+    public String getTempProductName() {
+        return tempProductName;
+    }
+
+    public void setTempProductName(String tempProductName) {
+        this.tempProductName = tempProductName;
+    }
+    
 }
