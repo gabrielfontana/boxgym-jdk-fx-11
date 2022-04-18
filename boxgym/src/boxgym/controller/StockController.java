@@ -3,6 +3,7 @@ package boxgym.controller;
 import boxgym.dao.StockEntryDao;
 import boxgym.helper.ButtonHelper;
 import boxgym.helper.StageHelper;
+import boxgym.helper.TextFieldFormat;
 import boxgym.model.StockEntry;
 import java.io.IOException;
 import java.net.URL;
@@ -69,7 +70,7 @@ public class StockController implements Initializable {
     private TableColumn<StockEntry, Integer> stockIdTableColumn;
     
     @FXML
-    private TableColumn<StockEntry, Integer> fkSupplierTableColumn;
+    private TableColumn<StockEntry, String> fkSupplierTableColumn;
 
     @FXML
     private TableColumn<StockEntry, LocalDate> invoiceIssueDateTableColumn;
@@ -124,8 +125,11 @@ public class StockController implements Initializable {
 
     private void initSupplierTableView() {
         stockIdTableColumn.setCellValueFactory(new PropertyValueFactory("stockEntryId"));
-        fkSupplierTableColumn.setCellValueFactory(new PropertyValueFactory("fkSupplier"));
+        fkSupplierTableColumn.setCellValueFactory(new PropertyValueFactory("tempSupplierName"));
+        
         invoiceIssueDateTableColumn.setCellValueFactory(new PropertyValueFactory("invoiceIssueDate"));
+        TextFieldFormat.stockEntryTableCellDateFormat(invoiceIssueDateTableColumn);
+        
         invoiceNumberTableColumn.setCellValueFactory(new PropertyValueFactory("invoiceNumber"));
         refreshTableView();
     }

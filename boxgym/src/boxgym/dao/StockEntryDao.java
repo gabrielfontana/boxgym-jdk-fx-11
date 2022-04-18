@@ -81,7 +81,9 @@ public class StockEntryDao {
     
     public List<StockEntry> read() {
         List<StockEntry> stockEntriesList = new ArrayList<>();
-        String sql = "SELECT * FROM `stockentry`;";
+        String sql = "SELECT se.stockEntryId, se.fkSupplier, s.corporateName AS `tempSupplierName`, se.invoiceIssueDate, se.invoiceNumber, se.createdAt, se.updatedAt "
+                + "FROM `stockentry` AS se INNER JOIN `supplier` AS s "
+                + "ON se.fkSupplier = s.supplierId;";
         try {
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -89,6 +91,7 @@ public class StockEntryDao {
                 StockEntry se = new StockEntry();
                 se.setStockEntryId(rs.getInt("stockEntryId"));
                 se.setFkSupplier(rs.getInt("fkSupplier"));
+                se.setTempSupplierName(rs.getString("tempSupplierName"));
                 se.setInvoiceIssueDate(rs.getDate("invoiceIssueDate").toLocalDate());
                 se.setInvoiceNumber(rs.getString("invoiceNumber"));
                 se.setCreatedAt(rs.getTimestamp("createdAt").toLocalDateTime());

@@ -142,7 +142,7 @@
          <children>
             <VBox AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <ImageView fx:id="productImageView" fitHeight="160.0" fitWidth="160.0" pickOnBounds="true">
+                  <ImageView fx:id="productImageView" fitHeight="160.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true">
                      <VBox.margin>
                         <Insets bottom="10.0" />
                      </VBox.margin>

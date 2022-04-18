@@ -1,9 +1,12 @@
 package boxgym.helper;
 
 import boxgym.model.Product;
+import boxgym.model.StockEntry;
 import boxgym.model.StockEntryProduct;
 import java.math.BigDecimal;
 import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -50,4 +53,20 @@ public class TextFieldFormat {
             }
         });
     }
+    
+    public static void stockEntryTableCellDateFormat(TableColumn column) {
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        column.setCellFactory(tc -> new TableCell<StockEntry, LocalDate>() {
+            @Override
+            protected void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                if (empty) {
+                    setText(null);
+                } else {
+                    setText(date.format(dateFormat));
+                }
+            }
+        });
+    }
+    
 }

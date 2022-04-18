@@ -119,7 +119,7 @@
             </HBox>
          </children>
       </VBox>
-      <ImageView fx:id="productImage" fitHeight="160.0" fitWidth="160.0" layoutX="247.0" layoutY="295.0" onMouseClicked="#chooseImage" pickOnBounds="true" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="247.0" AnchorPane.rightAnchor="247.0" />
+      <ImageView fx:id="productImage" fitHeight="160.0" fitWidth="160.0" layoutX="247.0" layoutY="295.0" onMouseClicked="#chooseImage" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="247.0" AnchorPane.rightAnchor="247.0" />
       <HBox layoutX="14.0" layoutY="417.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0">
          <children>
             <Button fx:id="saveButton" mnemonicParsing="false" onAction="#save" prefHeight="30.0" prefWidth="89.0" text="Salvar">

@@ -12,6 +12,8 @@ public class StockEntry {
     private LocalDateTime createdAt; //Criado em
     private LocalDateTime updatedAt; //Atualizado em
     
+    private String tempSupplierName;
+    
     public StockEntry() {
         
     }
@@ -70,4 +72,13 @@ public class StockEntry {
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+    public String getTempSupplierName() {
+        return tempSupplierName;
+    }
+
+    public void setTempSupplierName(String tempSupplierName) {
+        this.tempSupplierName = tempSupplierName;
+    }
+    
 }
