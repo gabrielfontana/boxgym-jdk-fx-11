@@ -11,9 +11,12 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -29,16 +32,18 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
+import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.skin.TableHeaderRow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
 
@@ -48,6 +53,24 @@ public class ProductsController implements Initializable {
 
     @FXML
     private TextField searchBox;
+
+    @FXML
+    private CheckMenuItem caseSensitiveOp;
+
+    @FXML
+    private ToggleGroup filterOptions;
+
+    @FXML
+    private RadioMenuItem containsOp;
+
+    @FXML
+    private RadioMenuItem alphabeticalEqualsToOp;
+
+    @FXML
+    private RadioMenuItem startsWithOp;
+
+    @FXML
+    private RadioMenuItem endsWithOp;
 
     @FXML
     private MenuButton exportButton;
@@ -128,7 +151,7 @@ public class ProductsController implements Initializable {
         ButtonHelper.buttonCursor(exportButton, addButton, updateButton, deleteButton);
         initProductTableView();
         tableViewListeners();
-        searchBox.setOnKeyPressed((KeyEvent e) -> search());
+        Platform.runLater(() -> searchBox.requestFocus());
     }
 
     @FXML
@@ -143,7 +166,7 @@ public class ProductsController implements Initializable {
             StageHelper.createAddOrUpdateStage("Adicionando Produto", root);
 
             if (controller.isCreated()) {
-                initProductTableView();
+                refreshTableView();
                 productTableView.getSelectionModel().selectLast();
             }
         } catch (IOException ex) {
@@ -168,7 +191,7 @@ public class ProductsController implements Initializable {
                 StageHelper.createAddOrUpdateStage("Editando Produto", root);
 
                 if (controller.isUpdated()) {
-                    initProductTableView();
+                    refreshTableView();
                     productTableView.getSelectionModel().select(index);
                 }
             } catch (IOException ex) {
@@ -187,7 +210,7 @@ public class ProductsController implements Initializable {
             alert.confirmationAlert("Tem certeza que deseja excluir o produto '" + selected.getName() + "'?", "Esta ação é irreversível!");
             if (alert.getResult().get() == ButtonType.YES) {
                 productDao.delete(selected);
-                productTableView.setItems(loadData());
+                refreshTableView();
                 resetDetails();
                 ah.customAlert(Alert.AlertType.INFORMATION, "O produto foi excluído com sucesso!", "");
             }
@@ -230,6 +253,16 @@ public class ProductsController implements Initializable {
         }
     }
 
+    private ObservableList<Product> loadData() {
+        ProductDao productDao = new ProductDao();
+        return FXCollections.observableArrayList(productDao.read());
+    }
+
+    private void refreshTableView() {
+        productTableView.setItems(loadData());
+        search();
+    }
+
     private void initProductTableView() {
         productIdTableColumn.setCellValueFactory(new PropertyValueFactory("productId"));
         nameTableColumn.setCellValueFactory(new PropertyValueFactory("name"));
@@ -243,28 +276,68 @@ public class ProductsController implements Initializable {
         sellingPriceTableColumn.setCellValueFactory(new PropertyValueFactory("sellingPrice"));
         TextFieldFormat.productTableCellCurrencyFormat(sellingPriceTableColumn);
 
-        productTableView.setItems(loadData());
+        refreshTableView();
     }
 
-    private ObservableList<Product> loadData() {
-        ProductDao productDao = new ProductDao();
-        return FXCollections.observableArrayList(productDao.read());
-    }
-
-    private boolean searchFindsProduct(Product product, String searchText) {
+    private boolean caseSensitiveEnabled(Product product, String searchText, int optionOrder) {
         String productId = String.valueOf(product.getProductId());
-        String name = String.valueOf(product.getName()).toLowerCase();
-        String category = String.valueOf(product.getCategory()).toLowerCase();
-        String description = String.valueOf(product.getDescription()).toLowerCase();
+        String name = product.getName();
+        String category = product.getCategory();
         String amount = String.valueOf(product.getAmount());
         String minimumStock = String.valueOf(product.getMinimumStock());
-        String costPrice = String.valueOf(product.getCostPrice());
-        String sellingPrice = String.valueOf(product.getSellingPrice());
+        String costPrice = "R$ ".concat(String.valueOf(product.getCostPrice()).replace(".", ","));
+        String sellingPrice = "R$ ".concat(String.valueOf(product.getSellingPrice()).replace(".", ","));
 
-        return (productId.contains(searchText)) || (name.contains(searchText))
-                || (category.contains(searchText)) || (description.contains(searchText))
-                || (amount.contains(searchText)) || (minimumStock.contains(searchText))
-                || (costPrice.contains(searchText)) || (sellingPrice.contains(searchText));
+        List<String> fields = Arrays.asList(productId, name, category, amount, minimumStock, costPrice, sellingPrice);
+
+        return stringComparasion(fields, searchText, optionOrder);
+    }
+
+    private boolean caseSensitiveDisabled(Product product, String searchText, int optionOrder) {
+        String productId = String.valueOf(product.getProductId());
+        String name = product.getName().toLowerCase();
+        String category = product.getCategory().toLowerCase();
+        String amount = String.valueOf(product.getAmount());
+        String minimumStock = String.valueOf(product.getMinimumStock());
+        String costPrice = "r$ ".concat(String.valueOf(product.getCostPrice()).replace(".", ","));
+        String sellingPrice = "r$ ".concat(String.valueOf(product.getSellingPrice()).replace(".", ","));
+
+        List<String> fields = Arrays.asList(productId, name, category, amount, minimumStock, costPrice, sellingPrice);
+
+        return stringComparasion(fields, searchText, optionOrder);
+    }
+
+    private boolean stringComparasion(List<String> list, String searchText, int optionOrder) {
+        boolean searchReturn = false;
+        switch (optionOrder) {
+            case 1:
+                searchReturn = (list.get(0).contains(searchText)) || (list.get(1).contains(searchText))
+                        || (list.get(2).contains(searchText)) || (list.get(3).contains(searchText))
+                        || (list.get(4).contains(searchText)) || (list.get(5).contains(searchText))
+                        || (list.get(6).contains(searchText));
+                break;
+            case 2:
+                searchReturn = (list.get(0).equals(searchText)) || (list.get(1).equals(searchText))
+                        || (list.get(2).equals(searchText)) || (list.get(3).equals(searchText))
+                        || (list.get(4).equals(searchText)) || (list.get(5).equals(searchText))
+                        || (list.get(6).equals(searchText));
+                break;
+            case 3:
+                searchReturn = (list.get(0).startsWith(searchText)) || (list.get(1).startsWith(searchText))
+                        || (list.get(2).startsWith(searchText)) || (list.get(3).startsWith(searchText))
+                        || (list.get(4).startsWith(searchText)) || (list.get(5).startsWith(searchText))
+                        || (list.get(6).startsWith(searchText));
+                break;
+            case 4:
+                searchReturn = (list.get(0).endsWith(searchText)) || (list.get(1).endsWith(searchText))
+                        || (list.get(2).endsWith(searchText)) || (list.get(3).endsWith(searchText))
+                        || (list.get(4).endsWith(searchText)) || (list.get(5).endsWith(searchText))
+                        || (list.get(6).endsWith(searchText));
+                break;
+            default:
+                break;
+        }
+        return searchReturn;
     }
 
     private void search() {
@@ -275,7 +348,19 @@ public class ProductsController implements Initializable {
                 if (newValue == null || newValue.isEmpty()) {
                     return true;
                 }
-                return searchFindsProduct(product, newValue.toLowerCase());
+                
+                if (caseSensitiveOp.isSelected()) {
+                    if (containsOp.isSelected()) return caseSensitiveEnabled(product, newValue, 1);
+                    if (alphabeticalEqualsToOp.isSelected()) return caseSensitiveEnabled(product, newValue, 2);
+                    if (startsWithOp.isSelected()) return caseSensitiveEnabled(product, newValue, 3);
+                    if (endsWithOp.isSelected()) return caseSensitiveEnabled(product, newValue, 4);
+                } 
+                
+                if (alphabeticalEqualsToOp.isSelected()) return caseSensitiveDisabled(product, newValue.toLowerCase(), 2);
+                if (startsWithOp.isSelected()) return caseSensitiveDisabled(product, newValue.toLowerCase(), 3);
+                if (endsWithOp.isSelected()) return caseSensitiveDisabled(product, newValue.toLowerCase(), 4);
+                
+                return caseSensitiveDisabled(product, newValue.toLowerCase(), 1);
             });
         });
 
@@ -293,10 +378,10 @@ public class ProductsController implements Initializable {
             }
         });
 
-        productTableView.skinProperty().addListener((obs, oldSkin, newSkin) -> {
+        /*productTableView.skinProperty().addListener((obs, oldSkin, newSkin) -> {
             final TableHeaderRow header = (TableHeaderRow) productTableView.lookup("TableHeaderRow");
             header.reorderingProperty().addListener((o, oldVal, newVal) -> header.setReordering(false));
-        });
+        });*/
     }
 
     @FXML

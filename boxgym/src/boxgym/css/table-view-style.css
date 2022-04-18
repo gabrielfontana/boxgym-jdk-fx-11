@@ -15,6 +15,12 @@
     -fx-background-color: #f3f3f3;
 }
 
-.column-header:hover {
-    -fx-background-color: transparent !important;
+.table-view .column-header {
+   -fx-border-style: solid;
+   -fx-border-color: #f3f3f3;
+   -fx-border-width: 1;
+}
+
+.table-view .column-header:hover {
+    -fx-background-color: transparent;
 }

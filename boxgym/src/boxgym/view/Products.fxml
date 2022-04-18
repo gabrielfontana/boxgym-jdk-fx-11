@@ -3,12 +3,16 @@
 <?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckMenuItem?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioMenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -30,7 +34,46 @@
          <children>
             <HBox alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="900.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <TextField fx:id="searchBox" prefHeight="30.0" prefWidth="438.0" promptText="Pesquisar..." HBox.hgrow="ALWAYS">
+                  <MenuButton mnemonicParsing="false" prefHeight="30.0">
+                     <graphic>
+                        <MaterialDesignIconView glyphName="FILTER_VARIANT" size="15.0" />
+                     </graphic>
+                     <items>
+                        <CheckMenuItem fx:id="caseSensitiveOp" mnemonicParsing="false" text="Maiúsculas e minúsculas">
+                           <graphic>
+                              <MaterialDesignIconView glyphName="CASE_SENSITIVE_ALT" size="15.0" />
+                           </graphic>
+                        </CheckMenuItem>
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <RadioMenuItem fx:id="containsOp" mnemonicParsing="false" selected="true" text="Contém">
+                           <graphic>
+                              <MaterialDesignIconView glyphName="ALPHABETICAL" size="15.0" />
+                           </graphic>
+                           <toggleGroup>
+                              <ToggleGroup fx:id="filterOptions" />
+                           </toggleGroup>
+                        </RadioMenuItem>
+                        <RadioMenuItem fx:id="alphabeticalEqualsToOp" mnemonicParsing="false" text="Igual a" toggleGroup="$filterOptions">
+                           <graphic>
+                              <MaterialDesignIconView glyphName="ALPHABETICAL" size="15.0" />
+                           </graphic>
+                        </RadioMenuItem>
+                        <RadioMenuItem fx:id="startsWithOp" mnemonicParsing="false" text="Inicia com" toggleGroup="$filterOptions">
+                           <graphic>
+                              <MaterialDesignIconView glyphName="ALPHABETICAL" size="15.0" />
+                           </graphic>
+                        </RadioMenuItem>
+                        <RadioMenuItem fx:id="endsWithOp" mnemonicParsing="false" text="Termina com" toggleGroup="$filterOptions">
+                           <graphic>
+                              <MaterialDesignIconView glyphName="ALPHABETICAL" size="15.0" />
+                           </graphic>
+                        </RadioMenuItem>
+                     </items>
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+                  </MenuButton>
+                  <TextField fx:id="searchBox" prefHeight="30.0" prefWidth="149.0" promptText="Pesquisar..." HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets right="15.0" />
                      </HBox.margin>
@@ -51,7 +94,15 @@
                         <MaterialDesignIconView glyphName="PENCIL" size="15.0" />
                      </graphic>
                   </Button>
-                  <MenuButton fx:id="exportButton" mnemonicParsing="false" prefHeight="30.0" text="Exportar">
+                  <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteProduct" prefHeight="30.0" prefWidth="90.0" text="Excluir">
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+                     <graphic>
+                        <MaterialDesignIconView glyphName="DELETE" size="15.0" />
+                     </graphic>
+                  </Button>
+                  <MenuButton fx:id="exportButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="105.0" text="Exportar">
                      <items>
                         <MenuItem fx:id="generatePdfButton" mnemonicParsing="false" onAction="#generatePdf" text="PDF">
                            <graphic>
@@ -68,28 +119,20 @@
                         <MaterialDesignIconView glyphName="FILE_EXPORT" size="15" />
                      </graphic>
                      <HBox.margin>
-                        <Insets right="15.0" />
-                     </HBox.margin>
-                  </MenuButton>
-                  <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteProduct" prefHeight="30.0" prefWidth="90.0" text="Excluir">
-                     <HBox.margin>
                         <Insets />
                      </HBox.margin>
-                     <graphic>
-                        <MaterialDesignIconView glyphName="DELETE" size="15.0" />
-                     </graphic>
-                  </Button>
+                  </MenuButton>
                </children>
             </HBox>
             <TableView fx:id="productTableView" prefHeight="550.0" prefWidth="900.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="40.0">
                <columns>
-                  <TableColumn fx:id="productIdTableColumn" minWidth="90.0" prefWidth="90.0" resizable="false" text="ID" />
-                  <TableColumn fx:id="nameTableColumn" minWidth="154.0" prefWidth="154.0" resizable="false" text="Nome" />
-                  <TableColumn fx:id="categoryTableColumn" minWidth="154.0" prefWidth="154.0" resizable="false" text="Categoria" />
-                  <TableColumn fx:id="amountTableColumn" minWidth="100.0" prefWidth="100.0" resizable="false" text="Estoque" />
-                  <TableColumn fx:id="minimumStockTableColumn" minWidth="100.0" prefWidth="100.0" resizable="false" text="Estoque &#10;Mínimo" />
-                  <TableColumn fx:id="costPriceTableColumn" minWidth="150.0" prefWidth="150.0" resizable="false" text="Preço de Custo" />
-                  <TableColumn fx:id="sellingPriceTableColumn" minWidth="150.0" prefWidth="150.0" resizable="false" text="Preço de Venda" />
+                  <TableColumn fx:id="productIdTableColumn" minWidth="90.0" prefWidth="90.0" text="ID" />
+                  <TableColumn fx:id="nameTableColumn" minWidth="154.0" prefWidth="154.0" text="Nome" />
+                  <TableColumn fx:id="categoryTableColumn" minWidth="154.0" prefWidth="154.0" text="Categoria" />
+                  <TableColumn fx:id="amountTableColumn" minWidth="100.0" prefWidth="100.0" text="Estoque" />
+                  <TableColumn fx:id="minimumStockTableColumn" minWidth="100.0" prefWidth="100.0" text="Estoque &#10;Mínimo" />
+                  <TableColumn fx:id="costPriceTableColumn" minWidth="150.0" prefWidth="150.0" text="Preço de Custo" />
+                  <TableColumn fx:id="sellingPriceTableColumn" minWidth="150.0" prefWidth="150.0" text="Preço de Venda" />
                </columns>
             </TableView>
          </children>

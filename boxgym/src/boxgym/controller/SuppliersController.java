@@ -9,9 +9,12 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -26,14 +29,16 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
+import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.skin.TableHeaderRow;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -46,6 +51,24 @@ public class SuppliersController implements Initializable {
 
     @FXML
     private TextField searchBox;
+
+    @FXML
+    private CheckMenuItem caseSensitiveOp;
+
+    @FXML
+    private ToggleGroup filterOptions;
+
+    @FXML
+    private RadioMenuItem containsOp;
+
+    @FXML
+    private RadioMenuItem alphabeticalEqualsToOp;
+
+    @FXML
+    private RadioMenuItem startsWithOp;
+
+    @FXML
+    private RadioMenuItem endsWithOp;
 
     @FXML
     private MenuButton exportButton;
@@ -67,7 +90,16 @@ public class SuppliersController implements Initializable {
 
     @FXML
     private TableColumn<Supplier, String> phoneTableColumn;
-
+    
+    @FXML
+    private TableColumn<Supplier, String> addressTableColumn;
+    
+    @FXML
+    private TableColumn<Supplier, String> cityTableColumn;
+    
+    @FXML
+    private TableColumn<Supplier, String> federativeUnitTableColumn;
+    
     @FXML
     private Label supplierIdLabel;
 
@@ -129,7 +161,7 @@ public class SuppliersController implements Initializable {
         ButtonHelper.buttonCursor(exportButton, addButton, updateButton, deleteButton);
         initSupplierTableView();
         tableViewListeners();
-        searchBox.setOnKeyPressed((KeyEvent e) -> search());
+        Platform.runLater(() -> searchBox.requestFocus());
     }
 
     @FXML
@@ -144,7 +176,7 @@ public class SuppliersController implements Initializable {
             StageHelper.createAddOrUpdateStage("Adicionando Fornecedor", root);
 
             if (controller.isCreated()) {
-                initSupplierTableView();
+                refreshTableView();
                 supplierTableView.getSelectionModel().selectLast();
             }
         } catch (IOException ex) {
@@ -169,7 +201,7 @@ public class SuppliersController implements Initializable {
                 StageHelper.createAddOrUpdateStage("Editando Fornecedor", root);
 
                 if (controller.isUpdated()) {
-                    initSupplierTableView();
+                    refreshTableView();
                     supplierTableView.getSelectionModel().select(index);
                 }
             } catch (IOException ex) {
@@ -188,7 +220,7 @@ public class SuppliersController implements Initializable {
             alert.confirmationAlert("Tem certeza que deseja excluir \n o fornecedor '" + selected.getTradeName() + "'?", "Esta ação é irreversível!");
             if (alert.getResult().get() == ButtonType.YES) {
                 supplierDao.delete(selected);
-                supplierTableView.setItems(loadData());
+                refreshTableView();
                 resetDetails();
                 ah.customAlert(Alert.AlertType.WARNING, "O fornecedor foi excluído com sucesso!", "");
             }
@@ -233,40 +265,99 @@ public class SuppliersController implements Initializable {
         }
     }
 
+    private ObservableList<Supplier> loadData() {
+        SupplierDao supplierDao = new SupplierDao();
+        return FXCollections.observableArrayList(supplierDao.read());
+    }
+
+    private void refreshTableView() {
+        supplierTableView.setItems(loadData());
+        search();
+    }
+
     private void initSupplierTableView() {
         supplierIdTableColumn.setCellValueFactory(new PropertyValueFactory("supplierId"));
         companyRegistryTableColumn.setCellValueFactory(new PropertyValueFactory("companyRegistry"));
         corporateNameTableColumn.setCellValueFactory(new PropertyValueFactory("corporateName"));
         emailTableColumn.setCellValueFactory(new PropertyValueFactory("email"));
         phoneTableColumn.setCellValueFactory(new PropertyValueFactory("phone"));
-        supplierTableView.setItems(loadData());
+        addressTableColumn.setCellValueFactory(new PropertyValueFactory("address"));
+        cityTableColumn.setCellValueFactory(new PropertyValueFactory("city"));
+        federativeUnitTableColumn.setCellValueFactory(new PropertyValueFactory("federativeUnit"));
+        refreshTableView();
     }
 
-    private ObservableList<Supplier> loadData() {
-        SupplierDao supplierDao = new SupplierDao();
-        return FXCollections.observableArrayList(supplierDao.read());
-    }
-
-    private boolean searchFindsSupplier(Supplier supplier, String searchText) {
+    private boolean caseSensitiveEnabled(Supplier supplier, String searchText, int optionOrder) {
         String supplierId = String.valueOf(supplier.getSupplierId());
-        String companyRegistry = String.valueOf(supplier.getCompanyRegistry());
-        String corporateName = String.valueOf(supplier.getCorporateName()).toLowerCase();
-        String tradeName = String.valueOf(supplier.getTradeName()).toLowerCase();
-        String email = String.valueOf(supplier.getEmail()).toLowerCase();
-        String phone = String.valueOf(supplier.getPhone());
-        String zipCode = String.valueOf(supplier.getZipCode());
-        String address = String.valueOf(supplier.getAddress()).toLowerCase();
-        String addressComplement = String.valueOf(supplier.getAddressComplement()).toLowerCase();
-        String district = String.valueOf(supplier.getDistrict()).toLowerCase();
-        String city = String.valueOf(supplier.getCity()).toLowerCase();
-        String federativeUnit = String.valueOf(supplier.getFederativeUnit()).toLowerCase();
+        String companyRegistry = supplier.getCompanyRegistry();
+        String corporateName = supplier.getCorporateName();
+        String tradeName = supplier.getTradeName();
+        String email = supplier.getEmail();
+        String phone = supplier.getPhone();
+        String zipCode = supplier.getZipCode();
+        String address = supplier.getAddress();
+        String addressComplement = supplier.getAddressComplement();
+        String district = supplier.getDistrict();
+        String city = supplier.getCity();
+        String federativeUnit = supplier.getFederativeUnit();
 
-        return (supplierId.contains(searchText)) || (companyRegistry.contains(searchText))
-                || (corporateName.contains(searchText)) || (tradeName.contains(searchText))
-                || (email.contains(searchText)) || (phone.contains(searchText))
-                || (zipCode.contains(searchText)) || (address.contains(searchText))
-                || (addressComplement.contains(searchText)) || (district.contains(searchText))
-                || (city.contains(searchText)) || (federativeUnit.contains(searchText));
+        List<String> fields = Arrays.asList(supplierId, companyRegistry, corporateName, tradeName, email,
+                phone, zipCode, address, addressComplement, district, city, federativeUnit);
+
+        return stringComparasion(fields, searchText, optionOrder);
+    }
+    
+    private boolean caseSensitiveDisabled(Supplier supplier, String searchText, int optionOrder) {
+        String supplierId = String.valueOf(supplier.getSupplierId());
+        String companyRegistry = supplier.getCompanyRegistry();
+        String corporateName = supplier.getCorporateName().toLowerCase();
+        String tradeName = supplier.getTradeName().toLowerCase();
+        String email = supplier.getEmail().toLowerCase();
+        String phone = supplier.getPhone();
+        String zipCode = supplier.getZipCode();
+        String address = supplier.getAddress().toLowerCase();
+        String addressComplement = supplier.getAddressComplement().toLowerCase();
+        String district = supplier.getDistrict().toLowerCase();
+        String city = supplier.getCity().toLowerCase();
+        String federativeUnit = supplier.getFederativeUnit().toLowerCase();
+
+        List<String> fields = Arrays.asList(supplierId, companyRegistry, corporateName, tradeName, email,
+                phone, zipCode, address, addressComplement, district, city, federativeUnit);
+
+        return stringComparasion(fields, searchText, optionOrder);
+    }
+
+    private boolean stringComparasion(List<String> list, String searchText, int optionOrder) {
+        boolean searchReturn = false;
+        switch (optionOrder) {
+            case 1:
+                searchReturn = (list.get(0).contains(searchText)) || (list.get(1).contains(searchText)) || (list.get(2).contains(searchText))
+                        || (list.get(3).contains(searchText)) || (list.get(4).contains(searchText)) || (list.get(5).contains(searchText))
+                        || (list.get(6).contains(searchText)) || (list.get(7).contains(searchText)) || (list.get(8).contains(searchText))
+                        || (list.get(9).contains(searchText)) || (list.get(10).contains(searchText)) || (list.get(11).contains(searchText));
+                break;
+            case 2:
+                searchReturn = (list.get(0).equals(searchText)) || (list.get(1).equals(searchText)) || (list.get(2).equals(searchText))
+                        || (list.get(3).equals(searchText)) || (list.get(4).equals(searchText)) || (list.get(5).equals(searchText))
+                        || (list.get(6).equals(searchText)) || (list.get(7).equals(searchText)) || (list.get(8).equals(searchText))
+                        || (list.get(9).equals(searchText)) || (list.get(10).equals(searchText)) || (list.get(11).equals(searchText));
+                break;
+            case 3:
+                searchReturn = (list.get(0).startsWith(searchText)) || (list.get(1).startsWith(searchText)) || (list.get(2).startsWith(searchText))
+                        || (list.get(3).startsWith(searchText)) || (list.get(4).startsWith(searchText)) || (list.get(5).startsWith(searchText))
+                        || (list.get(6).startsWith(searchText)) || (list.get(7).startsWith(searchText)) || (list.get(8).startsWith(searchText))
+                        || (list.get(9).startsWith(searchText)) || (list.get(10).startsWith(searchText)) || (list.get(11).startsWith(searchText));
+                break;
+            case 4:
+                searchReturn = (list.get(0).endsWith(searchText)) || (list.get(1).endsWith(searchText)) || (list.get(2).endsWith(searchText))
+                        || (list.get(3).endsWith(searchText)) || (list.get(4).endsWith(searchText)) || (list.get(5).endsWith(searchText))
+                        || (list.get(6).endsWith(searchText)) || (list.get(7).endsWith(searchText)) || (list.get(8).endsWith(searchText))
+                        || (list.get(9).endsWith(searchText)) || (list.get(10).endsWith(searchText)) || (list.get(11).endsWith(searchText));
+                break;
+            default:
+                break;
+        }
+        return searchReturn;
     }
 
     private void search() {
@@ -277,7 +368,19 @@ public class SuppliersController implements Initializable {
                 if (newValue == null || newValue.isEmpty()) {
                     return true;
                 }
-                return searchFindsSupplier(supplier, newValue.toLowerCase());
+                
+                if (caseSensitiveOp.isSelected()) {
+                    if (containsOp.isSelected()) return caseSensitiveEnabled(supplier, newValue, 1);
+                    if (alphabeticalEqualsToOp.isSelected()) return caseSensitiveEnabled(supplier, newValue, 2);
+                    if (startsWithOp.isSelected()) return caseSensitiveEnabled(supplier, newValue, 3);
+                    if (endsWithOp.isSelected()) return caseSensitiveEnabled(supplier, newValue, 4);
+                } 
+                
+                if (alphabeticalEqualsToOp.isSelected()) return caseSensitiveDisabled(supplier, newValue.toLowerCase(), 2);
+                if (startsWithOp.isSelected()) return caseSensitiveDisabled(supplier, newValue.toLowerCase(), 3);
+                if (endsWithOp.isSelected()) return caseSensitiveDisabled(supplier, newValue.toLowerCase(), 4);
+                
+                return caseSensitiveDisabled(supplier, newValue.toLowerCase(), 1);
             });
         });
 
@@ -295,10 +398,10 @@ public class SuppliersController implements Initializable {
             }
         });
 
-        supplierTableView.skinProperty().addListener((obs, oldSkin, newSkin) -> {
+        /*supplierTableView.skinProperty().addListener((obs, oldSkin, newSkin) -> {
             final TableHeaderRow header = (TableHeaderRow) supplierTableView.lookup("TableHeaderRow");
             header.reorderingProperty().addListener((o, oldVal, newVal) -> header.setReordering(false));
-        });
+        });*/
     }
 
     @FXML
