@@ -2,11 +2,20 @@
     -fx-background-color: #ffffff;
 }
 
-.title-label {
+.vbox-border {
+    -fx-border-color: #f3f3f3;
+}
+
+.details-section-title {
     -fx-font-weight: bold;
     -fx-font-size: 14;
 }
 
-.data-label {
-    -fx-font-size: 14;
+.attribute-name-label {
+    -fx-font-weight: bold;
+    -fx-font-size: 12;
+}
+
+.attribute-value-label {
+    -fx-font-size: 12;
 }

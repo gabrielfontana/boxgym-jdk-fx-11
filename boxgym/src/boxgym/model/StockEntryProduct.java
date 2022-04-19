@@ -4,8 +4,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.ReadOnlyObjectProperty;
-import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleObjectProperty;
 
 public class StockEntryProduct {
@@ -17,10 +15,14 @@ public class StockEntryProduct {
     private final ObjectProperty<BigDecimal> costPrice = new SimpleObjectProperty<>(); //Preço de custo
     private LocalDateTime createdAt; //Criado em
     private LocalDateTime updatedAt; //Atualizado em
-    private final ReadOnlyObjectWrapper<BigDecimal> total = new ReadOnlyObjectWrapper<>(); //Total = Quantidade * Preço de custo
+    private final ObjectProperty<BigDecimal> total = new SimpleObjectProperty<>(); //Total = Quantidade * Preço de custo
     
     private String tempProductName;
-
+    
+    public StockEntryProduct() {
+        
+    }
+    
     //Construtor ObservableList e CREATE
     public StockEntryProduct(int fkStockEntry, int fkProduct, int amount, BigDecimal costPrice) {
         this.fkStockEntry = fkStockEntry;
@@ -96,12 +98,16 @@ public class StockEntryProduct {
         this.updatedAt = updatedAt;
     }
 
-    public ReadOnlyObjectProperty<BigDecimal> totalProperty() {
-        return this.total.getReadOnlyProperty();
+    public ObjectProperty<BigDecimal> totalProperty() {
+        return this.total;
     }
 
     public final BigDecimal getTotal() {
         return this.totalProperty().get();
+    }
+
+    public final void setTotal(final BigDecimal total) {
+        this.totalProperty().set(total);
     }
 
     public String getTempProductName() {

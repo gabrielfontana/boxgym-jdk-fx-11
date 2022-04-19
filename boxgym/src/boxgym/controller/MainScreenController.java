@@ -104,8 +104,8 @@ public class MainScreenController implements Initializable {
     }
 
     @FXML
-    void handleStock(ActionEvent event) throws IOException {
-        changeContentArea("/boxgym/view/Stock.fxml");
+    void handleStockEntry(ActionEvent event) throws IOException {
+        changeContentArea("/boxgym/view/StockEntry.fxml");
     }
 
     @FXML

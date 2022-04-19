@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+
+<AnchorPane id="AnchorPane" prefHeight="300.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.StockEntryProductsListController">
+   <children>
+      <TableView fx:id="productsListTableView" layoutX="14.0" layoutY="50.0" prefHeight="260.0" prefWidth="690.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+         <columns>
+            <TableColumn fx:id="productTableColumn" minWidth="300.0" prefWidth="300.0" text="Produto" />
+            <TableColumn fx:id="amountTableColumn" minWidth="130.0" prefWidth="130.0" text="Quantidade" />
+            <TableColumn fx:id="costPriceTableColumn" minWidth="130.0" prefWidth="130.0" text="Preço de Custo" />
+            <TableColumn fx:id="totalTableColumn" minWidth="128.0" prefWidth="128.0" text="Total" />
+         </columns>
+      </TableView>
+      <HBox layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0">
+         <children>
+            <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Quantidade de Produtos: ">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="countLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="224.0" styleClass="attribute-value-label" />
+         </children>
+      </HBox>
+   </children>
+   <stylesheets>
+      <URL value="@../css/details.css" />
+      <URL value="@../css/table-view-style.css" />
+   </stylesheets>
+</AnchorPane>
