@@ -48,10 +48,11 @@ public class ProductDao {
         }
         return false;
     }
-    
+
     public LinkedHashMap<Integer, String> getProductForHashMap() {
         LinkedHashMap<Integer, String> map = new LinkedHashMap<>();
         String sql = "SELECT `productId`, `name` FROM `product`;";
+
         try {
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -69,19 +70,19 @@ public class ProductDao {
         }
         return map;
     }
-    
+
     public BigDecimal getProductCostPrice(int key) {
-        String sql = "SELECT `costPrice` FROM `product` WHERE `productId` = '" + key + "';";        
+        String sql = "SELECT `costPrice` FROM `product` WHERE `productId` = '" + key + "';";
         BigDecimal costPrice = new BigDecimal("0");
-        
-        try{
+
+        try {
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
-            if(rs.next()) {
+            if (rs.next()) {
                 costPrice = rs.getBigDecimal("costPrice");
             }
         } catch (SQLException ex) {
-            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductDao.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DbUtils.closeQuietly(conn);
             DbUtils.closeQuietly(ps);
@@ -93,6 +94,7 @@ public class ProductDao {
     public List<Product> read() {
         List<Product> productsList = new ArrayList<>();
         String sql = "SELECT * FROM `product`";
+
         try {
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();

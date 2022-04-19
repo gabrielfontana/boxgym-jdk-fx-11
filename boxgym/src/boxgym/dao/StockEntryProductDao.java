@@ -49,6 +49,7 @@ public class StockEntryProductDao {
                 + "FROM `stockentry_product` AS se_p INNER JOIN `product` AS p "
                 + "ON se_p.fkProduct = p.productId "
                 + "WHERE se_p.fkStockEntry = " + selectedStockEntry + ";";
+
         try {
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -71,8 +72,8 @@ public class StockEntryProductDao {
     }
 
     public int count(int selectedStockEntry) {
-        String sql = "SELECT count(*) AS `count` FROM `stockentry_product` WHERE `fkStockEntry` = " + selectedStockEntry + ";";
         int count = 0;
+        String sql = "SELECT count(*) AS `count` FROM `stockentry_product` WHERE `fkStockEntry` = " + selectedStockEntry + ";";
 
         try {
             ps = conn.prepareStatement(sql);

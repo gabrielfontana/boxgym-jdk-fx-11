@@ -39,9 +39,10 @@ public class SupplierDao {
     }
 
     public boolean checkDuplicate(Supplier supplier) {
+        String cnpj = supplier.getCompanyRegistry();
+        String sql = "SELECT `companyRegistry` FROM `supplier` WHERE `companyRegistry` = '" + cnpj + "';";
+
         try {
-            String cnpj = supplier.getCompanyRegistry();
-            String sql = "SELECT `companyRegistry` FROM `supplier` WHERE `companyRegistry` = '" + cnpj + "';";
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
             if (rs.next()) {
@@ -89,6 +90,7 @@ public class SupplierDao {
     public LinkedHashMap<Integer, String> getSupplierForHashMap() {
         LinkedHashMap<Integer, String> map = new LinkedHashMap<>();
         String sql = "SELECT `supplierId`, `corporateName` FROM `supplier`;";
+
         try {
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -110,6 +112,7 @@ public class SupplierDao {
     public List<Supplier> read() {
         List<Supplier> suppliersList = new ArrayList<>();
         String sql = "SELECT * FROM `supplier`;";
+
         try {
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();

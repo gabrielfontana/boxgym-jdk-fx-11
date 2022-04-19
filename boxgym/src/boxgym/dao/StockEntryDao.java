@@ -41,15 +41,15 @@ public class StockEntryDao {
         }
         return false;
     }
-    
+
     public int getStockEntryId() {
-        String sql = "SELECT `stockEntryId` FROM `stockentry` ORDER BY `stockEntryId` DESC LIMIT 1;";        
+        String sql = "SELECT `stockEntryId` FROM `stockentry` ORDER BY `stockEntryId` DESC LIMIT 1;";
         int stockEntryId = 0;
-        
-        try{
+
+        try {
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
-            if(rs.next()) {
+            if (rs.next()) {
                 stockEntryId = rs.getInt("stockEntryId");
             }
         } catch (SQLException ex) {
@@ -61,10 +61,10 @@ public class StockEntryDao {
         }
         return stockEntryId;
     }
-    
+
     public boolean deleteLastEntry() {
         String sql = "DELETE FROM `stockentry` ORDER BY `stockEntryId` DESC LIMIT 1;";
-        
+
         try {
             ps = conn.prepareStatement(sql);
             ps.execute();
@@ -78,12 +78,13 @@ public class StockEntryDao {
         }
         return false;
     }
-    
+
     public List<StockEntry> read() {
         List<StockEntry> stockEntriesList = new ArrayList<>();
         String sql = "SELECT se.stockEntryId, se.fkSupplier, s.corporateName AS `tempSupplierName`, se.invoiceIssueDate, se.invoiceNumber, se.createdAt, se.updatedAt "
                 + "FROM `stockentry` AS se INNER JOIN `supplier` AS s "
                 + "ON se.fkSupplier = s.supplierId;";
+
         try {
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();

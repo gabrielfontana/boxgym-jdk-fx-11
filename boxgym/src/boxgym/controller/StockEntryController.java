@@ -165,19 +165,18 @@ public class StockEntryController implements Initializable {
             alert.customAlert(Alert.AlertType.WARNING, "Selecione uma entrada de estoque para listar os produtos!", "");
         } else {
             int index = stockEntryTableView.getSelectionModel().getSelectedIndex();
-            int stockEntryId = selected.getStockEntryId();
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/boxgym/view/StockEntryProductsList.fxml"));
                 Parent root = (Parent) loader.load();
                 JMetro jMetro = new JMetro(root, Style.LIGHT);
-                
+
                 StockEntryProductsListController controller = loader.getController();
-                controller.setSelectedStockEntry(stockEntryId);
-                
+                controller.setSelectedStockEntry(selected.getStockEntryId());
+
                 StageHelper.createAddOrUpdateStage("Listando Produtos da Entrada de Estoque", root);
                 stockEntryTableView.getSelectionModel().select(index);
             } catch (IOException ex) {
-                Logger.getLogger(SuppliersController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(StockEntryController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
