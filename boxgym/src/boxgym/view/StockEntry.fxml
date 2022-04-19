@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="695.0" prefWidth="1280.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.StockEntryController">
+<AnchorPane prefHeight="695.0" prefWidth="1280.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.StockEntryController">
    <children>
       <AnchorPane layoutX="30.0" layoutY="35.0" prefHeight="80.0" prefWidth="1280.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -108,19 +108,20 @@
                   </MenuButton>
                </children>
             </HBox>
-            <TableView fx:id="stockEntryTableView" prefHeight="550.0" prefWidth="900.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="40.0">
+            <TableView fx:id="stockEntryTableView" prefHeight="550.0" prefWidth="900.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="40.0">
                <columns>
                   <TableColumn fx:id="stockIdTableColumn" minWidth="90.0" prefWidth="90.0" text="ID" />
-                  <TableColumn fx:id="fkSupplierTableColumn" minWidth="270.0" prefWidth="270.0" text="Fornecedor" />
-                  <TableColumn fx:id="invoiceIssueDateTableColumn" minWidth="270.0" prefWidth="270.0" text="Data de Emissão" />
-                  <TableColumn fx:id="invoiceNumberTableColumn" minWidth="268.0" prefWidth="268.0" text="Nota Fiscal" />
+                  <TableColumn fx:id="fkSupplierTableColumn" minWidth="270.0" prefWidth="425.0" text="Fornecedor" />
+                  <TableColumn fx:id="invoiceIssueDateTableColumn" minWidth="192.0" prefWidth="192.0" text="Data de Emissão" />
+                  <TableColumn fx:id="invoiceNumberTableColumn" minWidth="191.0" prefWidth="191.0" text="Nota Fiscal" />
                </columns>
             </TableView>
+            <Label fx:id="countLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="224.0" styleClass="attribute-value-label" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="954.0" layoutY="89.0" prefHeight="615.0" prefWidth="340.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
          <children>
-            <VBox styleClass="vbox-border" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
+            <VBox styleClass="vbox-border" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label alignment="CENTER" minWidth="-Infinity" prefHeight="20.0" prefWidth="300.0" styleClass="details-section-title" text="Detalhes">
                      <VBox.margin>

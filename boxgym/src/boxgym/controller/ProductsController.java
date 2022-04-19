@@ -108,6 +108,9 @@ public class ProductsController implements Initializable {
 
     @FXML
     private TableColumn<Product, BigDecimal> sellingPriceTableColumn;
+    
+    @FXML
+    private Label countLabel;
 
     @FXML
     private ImageView productImageView;
@@ -258,6 +261,7 @@ public class ProductsController implements Initializable {
     private void refreshTableView() {
         productTableView.setItems(loadData());
         search();
+        initCount();
     }
 
     private void initProductTableView() {
@@ -274,6 +278,16 @@ public class ProductsController implements Initializable {
         TextFieldFormat.productTableCellCurrencyFormat(sellingPriceTableColumn);
 
         refreshTableView();
+    }
+    
+    private void initCount() {
+        ProductDao dao = new ProductDao();
+        int count = dao.count();
+        if(count == 1) {
+            countLabel.setText("Exibindo " + String.valueOf(count) + " resultado");
+        } else {
+            countLabel.setText("Exibindo " + String.valueOf(count) + " resultados");
+        }
     }
 
     private boolean caseSensitiveEnabled(Product product, String searchText, int optionOrder) {

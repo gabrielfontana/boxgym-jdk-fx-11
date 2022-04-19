@@ -70,6 +70,11 @@ public class StockEntryProductsListController implements Initializable {
     
     private void initCount() {
         StockEntryProductDao dao = new StockEntryProductDao();
-        countLabel.setText(String.valueOf(dao.count(getSelectedStockEntry())));
+        int count = dao.count(getSelectedStockEntry());
+        if(count == 1) {
+            countLabel.setText("Exibindo " + String.valueOf(count) + " resultado");
+        } else {
+            countLabel.setText("Exibindo " + String.valueOf(count) + " resultados");
+        }
     }
 }

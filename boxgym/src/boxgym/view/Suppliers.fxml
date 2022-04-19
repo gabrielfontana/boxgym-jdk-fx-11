@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="695.0" prefWidth="1280.0" styleClass="anchor-pane" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.SuppliersController">
+<AnchorPane prefHeight="695.0" prefWidth="1280.0" styleClass="anchor-pane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.SuppliersController">
    <children>
       <AnchorPane layoutX="20.0" layoutY="25.0" prefHeight="80.0" prefWidth="1280.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -124,7 +124,7 @@
                   </MenuButton>
                </children>
             </HBox>
-            <TableView fx:id="supplierTableView" prefHeight="550.0" prefWidth="900.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="40.0">
+            <TableView fx:id="supplierTableView" prefHeight="550.0" prefWidth="900.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="40.0">
               <columns>
                   <TableColumn fx:id="supplierIdTableColumn" minWidth="90.0" prefWidth="90.0" text="ID" />
                   <TableColumn fx:id="companyRegistryTableColumn" minWidth="134.0" prefWidth="134.0" text="CNPJ" />
@@ -136,11 +136,12 @@
                   <TableColumn fx:id="federativeUnitTableColumn" minWidth="90.0" prefWidth="90.0" text="UF" />
               </columns>
             </TableView>
+            <Label fx:id="countLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="224.0" styleClass="attribute-value-label" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="944.0" layoutY="79.0" prefHeight="615.0" prefWidth="340.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
          <children>
-            <VBox styleClass="vbox-border" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
+            <VBox styleClass="vbox-border" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label alignment="CENTER" minWidth="-Infinity" prefHeight="20.0" prefWidth="300.0" styleClass="details-section-title" text="Detalhes">
                      <VBox.margin>

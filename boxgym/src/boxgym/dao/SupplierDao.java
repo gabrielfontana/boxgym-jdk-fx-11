@@ -190,6 +190,26 @@ public class SupplierDao {
         }
         return false;
     }
+    
+    public int count() {
+        int count = 0;
+        String sql = "SELECT count(*) AS `count` FROM `supplier`;";
+
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("count");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SupplierDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return count;
+    }
 
     public boolean createExcelFile(String filePath) {
         try {

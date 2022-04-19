@@ -108,4 +108,24 @@ public class StockEntryDao {
         }
         return stockEntriesList;
     }
+    
+    public int count() {
+        int count = 0;
+        String sql = "SELECT count(*) AS `count` FROM `stockentry`;";
+
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("count");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(StockEntryDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return count;
+    }
 }

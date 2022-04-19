@@ -85,6 +85,9 @@ public class StockEntryController implements Initializable {
     private TableColumn<StockEntry, String> invoiceNumberTableColumn;
 
     @FXML
+    private Label countLabel;
+
+    @FXML
     private Label stockEntryIdLabel;
 
     @FXML
@@ -125,12 +128,12 @@ public class StockEntryController implements Initializable {
 
             StageHelper.createAddOrUpdateStage("Adicionando Entrada de Estoque", root);
 
-            if (controller.isStockEntryCreationFlag() && controller.isProductsEntryCreationFlag()) {
-                refreshTableView();
-                stockEntryTableView.getSelectionModel().selectLast();
-            } else {
+            if (controller.isStockEntryCreationFlag() && !controller.isProductsEntryCreationFlag()) {
                 StockEntryDao stockEntryDao = new StockEntryDao();
                 stockEntryDao.deleteLastEntry();
+            } else if (controller.isStockEntryCreationFlag() && controller.isProductsEntryCreationFlag()) {
+                refreshTableView();
+                stockEntryTableView.getSelectionModel().selectLast();
             }
         } catch (IOException ex) {
             Logger.getLogger(StockEntryController.class.getName()).log(Level.SEVERE, null, ex);
@@ -189,6 +192,7 @@ public class StockEntryController implements Initializable {
     private void refreshTableView() {
         stockEntryTableView.setItems(loadData());
         search();
+        initCount();
     }
 
     private void initSupplierTableView() {
@@ -200,6 +204,16 @@ public class StockEntryController implements Initializable {
 
         invoiceNumberTableColumn.setCellValueFactory(new PropertyValueFactory("invoiceNumber"));
         refreshTableView();
+    }
+
+    private void initCount() {
+        StockEntryDao dao = new StockEntryDao();
+        int count = dao.count();
+        if (count == 1) {
+            countLabel.setText("Exibindo " + String.valueOf(count) + " resultado");
+        } else {
+            countLabel.setText("Exibindo " + String.valueOf(count) + " resultados");
+        }
     }
 
     private void search() {

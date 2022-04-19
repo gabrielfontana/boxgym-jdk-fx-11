@@ -111,6 +111,9 @@ public class SuppliersController implements Initializable {
     private TableColumn<Supplier, String> federativeUnitTableColumn;
     
     @FXML
+    private Label countLabel;
+    
+    @FXML
     private Label supplierIdLabel;
 
     @FXML
@@ -270,6 +273,7 @@ public class SuppliersController implements Initializable {
     private void refreshTableView() {
         supplierTableView.setItems(loadData());
         search();
+        initCount();
     }
 
     private void initSupplierTableView() {
@@ -282,6 +286,16 @@ public class SuppliersController implements Initializable {
         cityTableColumn.setCellValueFactory(new PropertyValueFactory("city"));
         federativeUnitTableColumn.setCellValueFactory(new PropertyValueFactory("federativeUnit"));
         refreshTableView();
+    }
+    
+    private void initCount() {
+        SupplierDao dao = new SupplierDao();
+        int count = dao.count();
+        if(count == 1) {
+            countLabel.setText("Exibindo " + String.valueOf(count) + " resultado");
+        } else {
+            countLabel.setText("Exibindo " + String.valueOf(count) + " resultados");
+        }
     }
 
     private boolean caseSensitiveEnabled(Supplier supplier, String searchText, int optionOrder) {
