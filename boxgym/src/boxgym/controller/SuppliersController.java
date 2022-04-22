@@ -38,6 +38,7 @@ import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.skin.TableHeaderRow;
 import javafx.scene.input.MouseEvent;
@@ -50,14 +51,17 @@ import jfxtras.styles.jmetro.Style;
 public class SuppliersController implements Initializable {
 
     AlertHelper alert = new AlertHelper();
-    
+
     private Supplier selected;
-    
+
     @FXML
     private MenuButton filterButton;
 
     @FXML
     private CheckMenuItem caseSensitiveOp;
+
+    @FXML
+    private ToggleGroup filterOptions;
 
     @FXML
     private RadioMenuItem containsOp;
@@ -73,7 +77,7 @@ public class SuppliersController implements Initializable {
 
     @FXML
     private TextField searchBox;
-    
+
     @FXML
     private Button addButton;
 
@@ -82,7 +86,7 @@ public class SuppliersController implements Initializable {
 
     @FXML
     private Button deleteButton;
-    
+
     @FXML
     private MenuButton exportButton;
 
@@ -103,25 +107,28 @@ public class SuppliersController implements Initializable {
 
     @FXML
     private TableColumn<Supplier, String> phoneTableColumn;
-    
+
     @FXML
     private TableColumn<Supplier, String> addressTableColumn;
-    
+
     @FXML
     private TableColumn<Supplier, String> cityTableColumn;
-    
+
     @FXML
     private TableColumn<Supplier, String> federativeUnitTableColumn;
-    
+
     @FXML
     private Label countLabel;
-    
+
+    @FXML
+    private Label selectedRowLabel;
+
     @FXML
     private MaterialDesignIconView firstRow;
-    
+
     @FXML
     private MaterialDesignIconView lastRow;
-    
+
     @FXML
     private Label supplierIdLabel;
 
@@ -170,7 +177,7 @@ public class SuppliersController implements Initializable {
         ButtonHelper.buttonCursor(exportButton, filterButton, addButton, updateButton, deleteButton);
         ButtonHelper.iconButton(firstRow, lastRow);
         initSupplierTableView();
-        tableViewListeners();
+        listeners();
         Platform.runLater(() -> searchBox.requestFocus());
     }
 
@@ -283,7 +290,7 @@ public class SuppliersController implements Initializable {
     private void refreshTableView() {
         supplierTableView.setItems(loadData());
         search();
-        initCount();
+        countLabel.setText(TableViewCount.footerMessage(supplierTableView.getItems().size(), "resultado"));
     }
 
     private void initSupplierTableView() {
@@ -296,12 +303,6 @@ public class SuppliersController implements Initializable {
         cityTableColumn.setCellValueFactory(new PropertyValueFactory("city"));
         federativeUnitTableColumn.setCellValueFactory(new PropertyValueFactory("federativeUnit"));
         refreshTableView();
-    }
-    
-    private void initCount() {
-        SupplierDao dao = new SupplierDao();
-        int count = dao.count();
-        countLabel.setText(TableViewCount.footerMessage(count, "resultado"));
     }
 
     private boolean caseSensitiveEnabled(Supplier supplier, String searchText, int optionOrder) {
@@ -323,7 +324,7 @@ public class SuppliersController implements Initializable {
 
         return stringComparasion(fields, searchText, optionOrder);
     }
-    
+
     private boolean caseSensitiveDisabled(Supplier supplier, String searchText, int optionOrder) {
         String supplierId = String.valueOf(supplier.getSupplierId());
         String companyRegistry = supplier.getCompanyRegistry();
@@ -385,20 +386,23 @@ public class SuppliersController implements Initializable {
                 if (newValue == null || newValue.isEmpty()) {
                     return true;
                 }
-                
+
                 if (caseSensitiveOp.isSelected()) {
                     if (containsOp.isSelected()) return caseSensitiveEnabled(supplier, newValue, 1);
                     if (alphabeticalEqualsToOp.isSelected()) return caseSensitiveEnabled(supplier, newValue, 2);
                     if (startsWithOp.isSelected()) return caseSensitiveEnabled(supplier, newValue, 3);
                     if (endsWithOp.isSelected()) return caseSensitiveEnabled(supplier, newValue, 4);
-                } 
-                
+                }
+
                 if (alphabeticalEqualsToOp.isSelected()) return caseSensitiveDisabled(supplier, newValue.toLowerCase(), 2);
                 if (startsWithOp.isSelected()) return caseSensitiveDisabled(supplier, newValue.toLowerCase(), 3);
                 if (endsWithOp.isSelected()) return caseSensitiveDisabled(supplier, newValue.toLowerCase(), 4);
-                
+
                 return caseSensitiveDisabled(supplier, newValue.toLowerCase(), 1);
             });
+            supplierTableView.getSelectionModel().clearSelection();
+            countLabel.setText(TableViewCount.footerMessage(supplierTableView.getItems().size(), "resultado"));
+            selectedRowLabel.setText("");
         });
 
         SortedList<Supplier> sortedData = new SortedList<>(filteredData);
@@ -406,19 +410,26 @@ public class SuppliersController implements Initializable {
         supplierTableView.setItems(sortedData);
     }
 
-    private void tableViewListeners() {
-        supplierTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
-            @Override
-            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                selected = (Supplier) newValue;
-                showDetails();
+    private void listeners() {
+        supplierTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            selected = (Supplier) newValue;
+            showDetails();
+            if (selected == null) {
+                selectedRowLabel.setText("");
+            } else {
+                selectedRowLabel.setText("Linha " + String.valueOf(supplierTableView.getSelectionModel().getSelectedIndex() + 1) + " selecionada");
             }
         });
-
-        /*supplierTableView.skinProperty().addListener((obs, oldSkin, newSkin) -> {
-            final TableHeaderRow header = (TableHeaderRow) supplierTableView.lookup("TableHeaderRow");
-            header.reorderingProperty().addListener((o, oldVal, newVal) -> header.setReordering(false));
-        });*/
+        
+        caseSensitiveOp.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            searchBox.setText("");
+            searchBox.requestFocus();
+        });
+        
+        filterOptions.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
+            searchBox.setText("");
+            searchBox.requestFocus();
+        });
     }
 
     @FXML
@@ -438,7 +449,7 @@ public class SuppliersController implements Initializable {
     void generatePdf(ActionEvent event) {
 
     }
-    
+
     @FXML
     void goToFirstRow(MouseEvent event) {
         supplierTableView.getSelectionModel().selectFirst();

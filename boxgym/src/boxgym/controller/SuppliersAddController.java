@@ -109,9 +109,13 @@ public class SuppliersAddController implements Initializable {
 
     @FXML
     void save(ActionEvent event) {
+        String selectedFederativeUnit = federativeUnitComboBox.getSelectionModel().getSelectedItem();
+        if (selectedFederativeUnit == null) {
+            selectedFederativeUnit = "";
+        }
         Supplier supplier = new Supplier(companyRegistryTextField.getText(), corporateNameTextField.getText(), tradeNameTextField.getText(),
                 emailTextField.getText(), phoneTextField.getText(), zipCodeTextField.getText(), addressTextField.getText(), addressComplementTextField.getText(),
-                districtTextField.getText(), cityTextField.getText(), federativeUnitComboBox.getSelectionModel().getSelectedItem());
+                districtTextField.getText(), cityTextField.getText(), selectedFederativeUnit);
 
         SupplierDao supplierDao = new SupplierDao();
 
@@ -123,7 +127,7 @@ public class SuppliersAddController implements Initializable {
             ah.customAlert(Alert.AlertType.WARNING, "Não foi possível realizar o cadastro deste fornecedor!", validation.getMessage());
         } else if (!(CnpjValidator.isValid(companyRegistryTextField.getText()))) {
             ah.customAlert(Alert.AlertType.WARNING, "Não foi possível realizar o cadastro deste fornecedor!", "'CNPJ' inválido.");
-        } else if (supplierDao.checkDuplicate(supplier)) {
+        } else if (supplierDao.checkExistingSupplier(supplier)) {
             ah.customAlert(Alert.AlertType.WARNING, "Não foi possível realizar o cadastro deste fornecedor!", "Este CNPJ já está cadastrado.");
             companyRegistryTextField.setText("");
         } else if (!(phoneTextField.getText().length() == 0 || phoneTextField.getText().length() == 10 || phoneTextField.getText().length() == 11)) {

@@ -20,7 +20,7 @@ public class UserDao {
         this.conn = new ConnectionFactory().getConnection();
     }
     
-    public boolean checkDuplicate(String username) {
+    public boolean checkExistingUser(String username) {
         String sql = "SELECT * FROM `userRegistration` WHERE `username` = '" + username + "';";
         
         try{

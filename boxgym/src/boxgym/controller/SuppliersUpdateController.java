@@ -146,9 +146,13 @@ public class SuppliersUpdateController implements Initializable {
         } else if (!(zipCodeTextField.getText().length() == 0 || zipCodeTextField.getText().length() == 8)) {
             ah.customAlert(Alert.AlertType.WARNING, "Não foi possível atualizar o cadastro deste fornecedor!", "O campo 'CEP' deve conter 8 dígitos.");
         } else {
+            String selectedFederativeUnit = federativeUnitComboBox.getSelectionModel().getSelectedItem();
+            if (selectedFederativeUnit == null) {
+                selectedFederativeUnit = "";
+            }
             Supplier supplier = new Supplier(loadSupplier.getSupplierId(), corporateNameTextField.getText(), tradeNameTextField.getText(),
                     emailTextField.getText(), phoneTextField.getText(), zipCodeTextField.getText(), addressTextField.getText(), addressComplementTextField.getText(),
-                    districtTextField.getText(), cityTextField.getText(), federativeUnitComboBox.getSelectionModel().getSelectedItem());
+                    districtTextField.getText(), cityTextField.getText(), selectedFederativeUnit);
             SupplierDao supplierDao = new SupplierDao();
             supplierDao.update(supplier);
             setUpdated(true);

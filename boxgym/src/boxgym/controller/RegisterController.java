@@ -69,7 +69,7 @@ public class RegisterController implements Initializable {
             ah.customAlert(Alert.AlertType.WARNING, "Não foi possível efetuar o cadastro!", "As senhas não coincidem!");
             passwordTextField.setText("");
             confirmPasswordTextField.setText("");
-        } else if (userDao.checkDuplicate(usernameTextField.getText())) {
+        } else if (userDao.checkExistingUser(usernameTextField.getText())) {
             usernameTextField.setText("");
             ah.customAlert(Alert.AlertType.WARNING, "Não foi possível efetuar o cadastro!", "Nome de usuário já cadastrado!");
         } else {
