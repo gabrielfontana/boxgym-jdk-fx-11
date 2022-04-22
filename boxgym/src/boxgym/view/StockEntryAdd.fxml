@@ -4,7 +4,6 @@
 <?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
@@ -15,8 +14,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import limitedtextfield.LimitedTextField?>
+<?import org.controlsfx.control.PrefixSelectionComboBox?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="500.0" prefWidth="600.0" stylesheets="@../css/table-view-style.css" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.StockEntryAddController">
+<AnchorPane fx:id="anchorPane" prefHeight="500.0" prefWidth="600.0" stylesheets="@../css/table-view-style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.StockEntryAddController">
     <children>
         <AnchorPane fx:id="stockEntryArea" layoutX="15.0" layoutY="24.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -29,7 +29,7 @@
                                         <Insets bottom="5.0" />
                                     </VBox.margin>
                                 </Label>
-                                <ComboBox fx:id="supplierComboBox" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="185.0" promptText="Selecione" />
+                        <PrefixSelectionComboBox fx:id="supplierComboBox" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="185.0" />
                             </children>
                             <HBox.margin>
                                 <Insets right="10.0" />
@@ -97,7 +97,7 @@
                                               <Insets bottom="5.0" />
                                           </VBox.margin>
                                       </Label>
-                                      <ComboBox fx:id="productComboBox" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="185.0" promptText="Selecione" />
+                              <PrefixSelectionComboBox fx:id="productComboBox" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="185.0" />
                                   </children>
                                   <HBox.margin>
                                       <Insets right="10.0" />
@@ -136,7 +136,7 @@
                               </Button>
                           </children>
                      <VBox.margin>
-                        <Insets bottom="20.0" />
+                        <Insets bottom="10.0" />
                      </VBox.margin>
                       </HBox>
                       <TableView fx:id="productEntryTableView" prefHeight="170.0" prefWidth="570.0">
@@ -144,22 +144,43 @@
                               <TableColumn fx:id="productTableColumn" minWidth="-Infinity" prefWidth="125.0" resizable="false" text="Produto" />
                               <TableColumn fx:id="amountTableColumn" minWidth="-Infinity" prefWidth="125.0" resizable="false" text="Quantidade" />
                               <TableColumn fx:id="costPriceTableColumn" minWidth="-Infinity" prefWidth="125.0" resizable="false" text="Preço &#10;de Custo" />
-                              <TableColumn fx:id="totalTableColumn" minWidth="-Infinity" prefWidth="125.0" resizable="false" text="Total" />
+                              <TableColumn fx:id="subtotalTableColumn" minWidth="-Infinity" prefWidth="125.0" resizable="false" text="Subtotal" />
                               <TableColumn fx:id="actionButtonTableColumn" editable="false" maxWidth="55.0" minWidth="-Infinity" prefWidth="55.0" resizable="false" sortable="false" />
                           </columns>
                      <VBox.margin>
-                        <Insets bottom="20.0" />
+                        <Insets bottom="5.0" />
                      </VBox.margin>
                       </TableView>
+                  <HBox prefHeight="20.0" prefWidth="570.0">
+                     <children>
+                        <Label fx:id="countLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="830.0" styleClass="attribute-value-label">
+                           <HBox.margin>
+                              <Insets right="15.0" />
+                           </HBox.margin>
+                        </Label>
+                        <MaterialDesignIconView fx:id="firstRow" disable="true" glyphName="PAGE_FIRST" onMouseClicked="#goToFirstRow" size="20">
+                           <HBox.margin>
+                              <Insets right="15.0" />
+                           </HBox.margin>
+                        </MaterialDesignIconView>
+                        <MaterialDesignIconView fx:id="lastRow" disable="true" glyphName="PAGE_LAST" onMouseClicked="#goToLastRow" size="20" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </HBox>
                   <VBox prefWidth="150.0">
                      <children>
-                        <Label text="Total de Produtos">
+                        <Label text="Total">
                            <VBox.margin>
                               <Insets bottom="5.0" />
                            </VBox.margin>
                         </Label>
                         <LimitedTextField fx:id="totalPriceTextField" editable="false" maxWidth="-Infinity" prefHeight="30.0" prefWidth="95.0" />
                      </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
                   </VBox>
                </children>
             </VBox>

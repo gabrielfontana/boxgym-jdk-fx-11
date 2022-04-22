@@ -83,7 +83,8 @@ public class StockEntryDao {
         List<StockEntry> stockEntriesList = new ArrayList<>();
         String sql = "SELECT se.stockEntryId, se.fkSupplier, s.corporateName AS `tempSupplierName`, se.invoiceIssueDate, se.invoiceNumber, se.createdAt, se.updatedAt "
                 + "FROM `stockentry` AS se INNER JOIN `supplier` AS s "
-                + "ON se.fkSupplier = s.supplierId;";
+                + "ON se.fkSupplier = s.supplierId "
+                + "ORDER BY se.stockEntryId ASC;";
 
         try {
             ps = conn.prepareStatement(sql);

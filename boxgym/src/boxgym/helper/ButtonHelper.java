@@ -42,5 +42,11 @@ public class ButtonHelper {
     public static void imageButton(ImageView image) {
         image.setCursor(Cursor.HAND);
     }
+    
+    public static void iconButton(MaterialDesignIconView... icons) {
+        for (MaterialDesignIconView icon : icons) {
+            icon.setCursor(Cursor.HAND);
+        }
+    }
 
 }

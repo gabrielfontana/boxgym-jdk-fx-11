@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
 <?import java.net.URL?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -14,12 +16,22 @@
             <TableColumn fx:id="productTableColumn" minWidth="300.0" prefWidth="300.0" text="Produto" />
             <TableColumn fx:id="amountTableColumn" minWidth="130.0" prefWidth="130.0" text="Quantidade" />
             <TableColumn fx:id="costPriceTableColumn" minWidth="130.0" prefWidth="130.0" text="Preço de Custo" />
-            <TableColumn fx:id="totalTableColumn" minWidth="128.0" prefWidth="128.0" text="Total" />
+            <TableColumn fx:id="subtotalTableColumn" minWidth="128.0" prefWidth="128.0" text="Subtotal" />
          </columns>
       </TableView>
-      <HBox layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0">
+      <HBox layoutX="10.0" layoutY="-7.5" prefHeight="20.0" prefWidth="690.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
          <children>
-            <Label fx:id="countLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="224.0" styleClass="attribute-value-label" />
+            <Label fx:id="countLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="830.0" styleClass="attribute-value-label">
+               <HBox.margin>
+                  <Insets right="15.0" />
+               </HBox.margin>
+            </Label>
+            <MaterialDesignIconView fx:id="firstRow" glyphName="PAGE_FIRST" onMouseClicked="#goToFirstRow" size="20">
+               <HBox.margin>
+                  <Insets right="15.0" />
+               </HBox.margin>
+            </MaterialDesignIconView>
+            <MaterialDesignIconView fx:id="lastRow" glyphName="PAGE_LAST" onMouseClicked="#goToLastRow" size="20" />
          </children>
       </HBox>
    </children>

@@ -15,7 +15,7 @@ public class StockEntryProduct {
     private final ObjectProperty<BigDecimal> costPrice = new SimpleObjectProperty<>(); //Preço de custo
     private LocalDateTime createdAt; //Criado em
     private LocalDateTime updatedAt; //Atualizado em
-    private final ObjectProperty<BigDecimal> total = new SimpleObjectProperty<>(); //Total = Quantidade * Preço de custo
+    private final ObjectProperty<BigDecimal> subtotal = new SimpleObjectProperty<>(); //Subotal = Quantidade * Preço de custo
     
     private String tempProductName;
     
@@ -29,7 +29,7 @@ public class StockEntryProduct {
         this.fkProduct = fkProduct;
         setAmount(amount);
         setCostPrice(costPrice);
-        total.bind(Bindings.createObjectBinding(() -> 
+        subtotal.bind(Bindings.createObjectBinding(() -> 
                 getCostPrice().multiply(BigDecimal.valueOf(getAmount()))
         ));
     }
@@ -98,16 +98,16 @@ public class StockEntryProduct {
         this.updatedAt = updatedAt;
     }
 
-    public ObjectProperty<BigDecimal> totalProperty() {
-        return this.total;
+    public ObjectProperty<BigDecimal> subtotalProperty() {
+        return this.subtotal;
     }
 
-    public final BigDecimal getTotal() {
-        return this.totalProperty().get();
+    public final BigDecimal getSubtotal() {
+        return this.subtotalProperty().get();
     }
 
-    public final void setTotal(final BigDecimal total) {
-        this.totalProperty().set(total);
+    public final void setSubtotal(final BigDecimal subtotal) {
+        this.subtotalProperty().set(subtotal);
     }
 
     public String getTempProductName() {

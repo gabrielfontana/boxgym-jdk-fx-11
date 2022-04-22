@@ -116,7 +116,21 @@
                   <TableColumn fx:id="invoiceNumberTableColumn" minWidth="191.0" prefWidth="191.0" text="Nota Fiscal" />
                </columns>
             </TableView>
-            <Label fx:id="countLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="224.0" styleClass="attribute-value-label" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" />
+            <HBox prefHeight="20.0" prefWidth="900.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+               <children>
+                  <Label fx:id="countLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="830.0" styleClass="attribute-value-label">
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+                  </Label>
+                  <MaterialDesignIconView fx:id="firstRow" glyphName="PAGE_FIRST" onMouseClicked="#goToFirstRow" size="20">
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+                  </MaterialDesignIconView>
+                  <MaterialDesignIconView fx:id="lastRow" glyphName="PAGE_LAST" onMouseClicked="#goToLastRow" size="20" />
+               </children>
+            </HBox>
          </children>
       </AnchorPane>
       <AnchorPane layoutX="954.0" layoutY="89.0" prefHeight="615.0" prefWidth="340.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">

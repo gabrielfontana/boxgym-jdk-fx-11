@@ -14,9 +14,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
 import limitedtextfield.LimitedTextField;
+import org.controlsfx.control.PrefixSelectionComboBox;
 
 public class SuppliersAddController implements Initializable {
     
@@ -56,7 +56,7 @@ public class SuppliersAddController implements Initializable {
     private LimitedTextField cityTextField;
 
     @FXML
-    private ComboBox<String> federativeUnitComboBox;
+    private PrefixSelectionComboBox<String> federativeUnitComboBox;
     
     @FXML
     private Button saveButton;

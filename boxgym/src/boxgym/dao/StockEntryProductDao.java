@@ -45,7 +45,7 @@ public class StockEntryProductDao {
 
     public List<StockEntryProduct> read(int selectedStockEntry) {
         List<StockEntryProduct> productsList = new ArrayList<>();
-        String sql = "SELECT p.name AS `tempProductName`, se_p.amount, se_p.costPrice, se_p.amount * se_p.costPrice AS total "
+        String sql = "SELECT p.name AS `tempProductName`, se_p.amount, se_p.costPrice, se_p.amount * se_p.costPrice AS `subtotal` "
                 + "FROM `stockentry_product` AS se_p INNER JOIN `product` AS p "
                 + "ON se_p.fkProduct = p.productId "
                 + "WHERE se_p.fkStockEntry = " + selectedStockEntry + ";";
@@ -58,7 +58,7 @@ public class StockEntryProductDao {
                 sep.setTempProductName(rs.getString("tempProductName"));
                 sep.setAmount(rs.getInt("amount"));
                 sep.setCostPrice(rs.getBigDecimal("costPrice"));
-                sep.setTotal(rs.getBigDecimal("total"));
+                sep.setSubtotal(rs.getBigDecimal("subtotal"));
                 productsList.add(sep);
             }
         } catch (SQLException ex) {

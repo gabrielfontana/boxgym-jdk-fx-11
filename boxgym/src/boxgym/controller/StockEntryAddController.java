@@ -7,11 +7,13 @@ import boxgym.dao.SupplierDao;
 import boxgym.helper.ActionButtonTableCell;
 import boxgym.helper.AlertHelper;
 import boxgym.helper.ButtonHelper;
+import boxgym.helper.TableViewCount;
 import boxgym.helper.TextFieldFormat;
 import boxgym.helper.TextValidationHelper;
 import boxgym.model.StockEntry;
 import boxgym.model.StockEntryProduct;
 import currencyfield.CurrencyField;
+import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ArrayList;
@@ -27,15 +29,17 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.skin.TableHeaderRow;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import limitedtextfield.LimitedTextField;
+import org.controlsfx.control.PrefixSelectionComboBox;
 
 public class StockEntryAddController implements Initializable {
 
@@ -57,7 +61,7 @@ public class StockEntryAddController implements Initializable {
     private AnchorPane stockEntryArea;
 
     @FXML
-    private ComboBox<String> supplierComboBox;
+    private PrefixSelectionComboBox<String> supplierComboBox;
 
     @FXML
     private DatePicker invoiceIssueDateDatePicker;
@@ -75,7 +79,7 @@ public class StockEntryAddController implements Initializable {
     private TextField stockEntryIdTextField;
 
     @FXML
-    private ComboBox<String> productComboBox;
+    private PrefixSelectionComboBox<String> productComboBox;
 
     @FXML
     private LimitedTextField amountTextField;
@@ -99,10 +103,19 @@ public class StockEntryAddController implements Initializable {
     private TableColumn<StockEntryProduct, BigDecimal> costPriceTableColumn;
 
     @FXML
-    private TableColumn<StockEntryProduct, BigDecimal> totalTableColumn;
+    private TableColumn<StockEntryProduct, BigDecimal> subtotalTableColumn;
 
     @FXML
     private TableColumn<StockEntryProduct, Button> actionButtonTableColumn;
+
+    @FXML
+    private Label countLabel;
+    
+    @FXML
+    private MaterialDesignIconView firstRow;
+    
+    @FXML
+    private MaterialDesignIconView lastRow;
 
     @FXML
     private LimitedTextField totalPriceTextField;
@@ -134,16 +147,20 @@ public class StockEntryAddController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        ButtonHelper.buttonCursor(addStockEntryButton, addProductEntryButton, saveButton, clearButton);
+        ButtonHelper.iconButton(firstRow, lastRow);
+        
         setStockEntryCreationFlag(false);
         setProductsEntryCreationFlag(false);
         inputRestrictions();
         loadSupplierNameComboBox();
         invoiceIssueDateDatePicker.setEditable(false);
+        
         loadProductNameComboBox();
         productNameComboBoxListener();
-        ButtonHelper.buttonCursor(addStockEntryButton, addProductEntryButton, saveButton, clearButton);
         tableViewListeners();
         initProductEntryTableView();
+        countLabel.setText("Exibindo nenhum produto");
         TextFieldFormat.currencyFormat(totalPriceTextField, BigDecimal.ZERO);
     }
 
@@ -184,6 +201,8 @@ public class StockEntryAddController implements Initializable {
         } else {
             stockEntryArea.setDisable(true);
             productsEntryArea.setDisable(false);
+            firstRow.setDisable(false);
+            lastRow.setDisable(false);
             StockEntry stockEntry = new StockEntry(getKeyFromSupplierComboBox(), invoiceIssueDateDatePicker.getValue(), invoiceNumberTextField.getText());
             StockEntryDao stockEntryDao = new StockEntryDao();
             stockEntryDao.create(stockEntry);
@@ -237,6 +256,7 @@ public class StockEntryAddController implements Initializable {
             obsListItens = FXCollections.observableArrayList(list);
             productEntryTableView.setItems(obsListItens);
             productEntryTableView.getSelectionModel().selectLast();
+            initCount();
             textFieldBinding();
             clear();
         }
@@ -247,22 +267,28 @@ public class StockEntryAddController implements Initializable {
         amountTableColumn.setCellValueFactory(new PropertyValueFactory("amount"));
         costPriceTableColumn.setCellValueFactory(new PropertyValueFactory("costPrice"));
         TextFieldFormat.stockEntryProductTableCellCurrencyFormat(costPriceTableColumn);
-        totalTableColumn.setCellValueFactory(new PropertyValueFactory("total"));
-        TextFieldFormat.stockEntryProductTableCellCurrencyFormat(totalTableColumn);
+        subtotalTableColumn.setCellValueFactory(new PropertyValueFactory("subtotal"));
+        TextFieldFormat.stockEntryProductTableCellCurrencyFormat(subtotalTableColumn);
         actionButtonTableColumn.setCellFactory(ActionButtonTableCell.<StockEntryProduct>forTableColumn("", (StockEntryProduct p) -> {
             list.remove(p);
             obsListItens.remove(p);
             productEntryTableView.getItems().remove(p);
+            initCount();
             return p;
         }));
+    }
+
+    private void initCount() {
+        int count = obsListItens.size();
+        countLabel.setText(TableViewCount.footerMessage(count, "produto"));
     }
 
     private void textFieldBinding() {
         totalPriceTextField.textProperty().bind(Bindings.createObjectBinding(()
                 -> productEntryTableView.getItems().stream()
-                        .map(StockEntryProduct::getTotal)
+                        .map(StockEntryProduct::getSubtotal)
                         .reduce(BigDecimal.ZERO, BigDecimal::add),
-                productEntryTableView.getItems()).asString("%.2f")
+                productEntryTableView.getItems()).asString("R$ %.2f")
         );
     }
 
@@ -293,6 +319,16 @@ public class StockEntryAddController implements Initializable {
             final TableHeaderRow header = (TableHeaderRow) productEntryTableView.lookup("TableHeaderRow");
             header.reorderingProperty().addListener((o, oldVal, newVal) -> header.setReordering(false));
         });
+    }
+    
+    @FXML
+    void goToFirstRow(MouseEvent event) {
+        productEntryTableView.getSelectionModel().selectFirst();
+    }
+
+    @FXML
+    void goToLastRow(MouseEvent event) {
+        productEntryTableView.getSelectionModel().selectLast();
     }
 
 }

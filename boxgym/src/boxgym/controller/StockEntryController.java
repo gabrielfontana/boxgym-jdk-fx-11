@@ -4,8 +4,10 @@ import boxgym.dao.StockEntryDao;
 import boxgym.helper.AlertHelper;
 import boxgym.helper.ButtonHelper;
 import boxgym.helper.StageHelper;
+import boxgym.helper.TableViewCount;
 import boxgym.helper.TextFieldFormat;
 import boxgym.model.StockEntry;
+import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -33,6 +35,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
 
@@ -86,6 +89,12 @@ public class StockEntryController implements Initializable {
 
     @FXML
     private Label countLabel;
+    
+    @FXML
+    private MaterialDesignIconView firstRow;
+    
+    @FXML
+    private MaterialDesignIconView lastRow;
 
     @FXML
     private Label stockEntryIdLabel;
@@ -112,6 +121,7 @@ public class StockEntryController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         resetDetails();
         ButtonHelper.buttonCursor(filterButton, exportButton, addButton, listButton);
+        ButtonHelper.iconButton(firstRow, lastRow);
         initSupplierTableView();
         tableViewListeners();
         Platform.runLater(() -> searchBox.requestFocus());
@@ -209,11 +219,7 @@ public class StockEntryController implements Initializable {
     private void initCount() {
         StockEntryDao dao = new StockEntryDao();
         int count = dao.count();
-        if (count == 1) {
-            countLabel.setText("Exibindo " + String.valueOf(count) + " resultado");
-        } else {
-            countLabel.setText("Exibindo " + String.valueOf(count) + " resultados");
-        }
+        countLabel.setText(TableViewCount.footerMessage(count, "resultado"));
     }
 
     private void search() {
@@ -243,5 +249,15 @@ public class StockEntryController implements Initializable {
     @FXML
     void generatePdf(ActionEvent event) {
 
+    }
+    
+    @FXML
+    void goToFirstRow(MouseEvent event) {
+        stockEntryTableView.getSelectionModel().selectFirst();
+    }
+
+    @FXML
+    void goToLastRow(MouseEvent event) {
+        stockEntryTableView.getSelectionModel().selectLast();
     }
 }

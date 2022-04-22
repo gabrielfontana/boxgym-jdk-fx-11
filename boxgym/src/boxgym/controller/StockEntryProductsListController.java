@@ -1,7 +1,11 @@
 package boxgym.controller;
 
 import boxgym.dao.StockEntryProductDao;
+import boxgym.helper.ButtonHelper;
+import boxgym.helper.TableViewCount;
+import boxgym.helper.TextFieldFormat;
 import boxgym.model.StockEntryProduct;
+import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -14,6 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 
 public class StockEntryProductsListController implements Initializable {
      
@@ -32,10 +37,16 @@ public class StockEntryProductsListController implements Initializable {
     private TableColumn<StockEntryProduct, BigDecimal> costPriceTableColumn;
 
     @FXML
-    private TableColumn<StockEntryProduct, BigDecimal> totalTableColumn;
+    private TableColumn<StockEntryProduct, BigDecimal> subtotalTableColumn;
     
     @FXML
     private Label countLabel;
+    
+    @FXML
+    private MaterialDesignIconView firstRow;
+    
+    @FXML
+    private MaterialDesignIconView lastRow;
 
     public int getSelectedStockEntry() {
         return selectedStockEntry;
@@ -47,6 +58,7 @@ public class StockEntryProductsListController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        ButtonHelper.iconButton(firstRow, lastRow);
         Platform.runLater(() -> initMethods());
     }
     
@@ -64,17 +76,25 @@ public class StockEntryProductsListController implements Initializable {
         productTableColumn.setCellValueFactory(new PropertyValueFactory("tempProductName"));
         amountTableColumn.setCellValueFactory(new PropertyValueFactory("amount"));
         costPriceTableColumn.setCellValueFactory(new PropertyValueFactory("costPrice"));
-        totalTableColumn.setCellValueFactory(new PropertyValueFactory("total"));
+        TextFieldFormat.productTableCellCurrencyFormat(costPriceTableColumn);
+        subtotalTableColumn.setCellValueFactory(new PropertyValueFactory("subtotal"));
+        TextFieldFormat.productTableCellCurrencyFormat(subtotalTableColumn);
         productsListTableView.setItems(loadData());
     }
     
     private void initCount() {
         StockEntryProductDao dao = new StockEntryProductDao();
         int count = dao.count(getSelectedStockEntry());
-        if(count == 1) {
-            countLabel.setText("Exibindo " + String.valueOf(count) + " resultado");
-        } else {
-            countLabel.setText("Exibindo " + String.valueOf(count) + " resultados");
-        }
+        countLabel.setText(TableViewCount.footerMessage(count, "produto"));
+    }
+    
+    @FXML
+    void goToFirstRow(MouseEvent event) {
+        productsListTableView.getSelectionModel().selectFirst();
+    }
+
+    @FXML
+    void goToLastRow(MouseEvent event) {
+        productsListTableView.getSelectionModel().selectLast();
     }
 }
