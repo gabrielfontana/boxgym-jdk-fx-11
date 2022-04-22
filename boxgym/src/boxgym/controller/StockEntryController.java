@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,6 +22,8 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -34,6 +38,7 @@ import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import jfxtras.styles.jmetro.JMetro;
@@ -50,6 +55,9 @@ public class StockEntryController implements Initializable {
 
     @FXML
     private CheckMenuItem caseSensitiveOp;
+
+    @FXML
+    private ToggleGroup filterOptions;
 
     @FXML
     private RadioMenuItem containsOp;
@@ -89,10 +97,13 @@ public class StockEntryController implements Initializable {
 
     @FXML
     private Label countLabel;
-    
+
+    @FXML
+    private Label selectedRowLabel;
+
     @FXML
     private MaterialDesignIconView firstRow;
-    
+
     @FXML
     private MaterialDesignIconView lastRow;
 
@@ -123,7 +134,7 @@ public class StockEntryController implements Initializable {
         ButtonHelper.buttonCursor(filterButton, exportButton, addButton, listButton);
         ButtonHelper.iconButton(firstRow, lastRow);
         initSupplierTableView();
-        tableViewListeners();
+        listeners();
         Platform.runLater(() -> searchBox.requestFocus());
     }
 
@@ -202,7 +213,7 @@ public class StockEntryController implements Initializable {
     private void refreshTableView() {
         stockEntryTableView.setItems(loadData());
         search();
-        initCount();
+        countLabel.setText(TableViewCount.footerMessage(stockEntryTableView.getItems().size(), "resultado"));
     }
 
     private void initSupplierTableView() {
@@ -216,29 +227,105 @@ public class StockEntryController implements Initializable {
         refreshTableView();
     }
 
-    private void initCount() {
-        StockEntryDao dao = new StockEntryDao();
-        int count = dao.count();
-        countLabel.setText(TableViewCount.footerMessage(count, "resultado"));
+    private boolean caseSensitiveEnabled(StockEntry stockEntry, String searchText, int optionOrder) {
+        String stockEntryId = String.valueOf(stockEntry.getStockEntryId());
+        String tempSupplierName = stockEntry.getTempSupplierName();
+        String invoiceIssueDate = stockEntry.getInvoiceIssueDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        String invoiceNumber = stockEntry.getInvoiceNumber();
+
+        List<String> fields = Arrays.asList(stockEntryId, tempSupplierName, invoiceIssueDate, invoiceNumber);
+
+        return stringComparasion(fields, searchText, optionOrder);
+    }
+
+    private boolean caseSensitiveDisabled(StockEntry stockEntry, String searchText, int optionOrder) {
+        String stockEntryId = String.valueOf(stockEntry.getStockEntryId());
+        String tempSupplierName = stockEntry.getTempSupplierName().toLowerCase();
+        String invoiceIssueDate = stockEntry.getInvoiceIssueDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        String invoiceNumber = stockEntry.getInvoiceNumber();
+
+        List<String> fields = Arrays.asList(stockEntryId, tempSupplierName, invoiceIssueDate, invoiceNumber);
+
+        return stringComparasion(fields, searchText, optionOrder);
+    }
+
+    private boolean stringComparasion(List<String> list, String searchText, int optionOrder) {
+        boolean searchReturn = false;
+        switch (optionOrder) {
+            case 1:
+                searchReturn = (list.get(0).contains(searchText)) || (list.get(1).contains(searchText))
+                        || (list.get(2).contains(searchText)) || (list.get(3).contains(searchText));
+                break;
+            case 2:
+                searchReturn = (list.get(0).equals(searchText)) || (list.get(1).equals(searchText))
+                        || (list.get(2).equals(searchText)) || (list.get(3).equals(searchText));
+                break;
+            case 3:
+                searchReturn = (list.get(0).startsWith(searchText)) || (list.get(1).startsWith(searchText))
+                        || (list.get(2).startsWith(searchText)) || (list.get(3).startsWith(searchText));
+                break;
+            case 4:
+                searchReturn = (list.get(0).endsWith(searchText)) || (list.get(1).endsWith(searchText))
+                        || (list.get(2).endsWith(searchText)) || (list.get(3).endsWith(searchText));
+                break;
+            default:
+                break;
+        }
+        return searchReturn;
     }
 
     private void search() {
+        FilteredList<StockEntry> filteredData = new FilteredList<>(loadData(), p -> true);
 
+        searchBox.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(stockEntry -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                
+                if (caseSensitiveOp.isSelected()) {
+                    if (containsOp.isSelected()) return caseSensitiveEnabled(stockEntry, newValue, 1);
+                    if (alphabeticalEqualsToOp.isSelected()) return caseSensitiveEnabled(stockEntry, newValue, 2);
+                    if (startsWithOp.isSelected()) return caseSensitiveEnabled(stockEntry, newValue, 3);
+                    if (endsWithOp.isSelected()) return caseSensitiveEnabled(stockEntry, newValue, 4);
+                } 
+                
+                if (alphabeticalEqualsToOp.isSelected()) return caseSensitiveDisabled(stockEntry, newValue.toLowerCase(), 2);
+                if (startsWithOp.isSelected()) return caseSensitiveDisabled(stockEntry, newValue.toLowerCase(), 3);
+                if (endsWithOp.isSelected()) return caseSensitiveDisabled(stockEntry, newValue.toLowerCase(), 4);
+                
+                return caseSensitiveDisabled(stockEntry, newValue.toLowerCase(), 1);
+            });
+            stockEntryTableView.getSelectionModel().clearSelection();
+            countLabel.setText(TableViewCount.footerMessage(stockEntryTableView.getItems().size(), "resultado"));
+            selectedRowLabel.setText("");
+        });
+
+        SortedList<StockEntry> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(stockEntryTableView.comparatorProperty());
+        stockEntryTableView.setItems(sortedData);
     }
 
-    private void tableViewListeners() {
-        stockEntryTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
-            @Override
-            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                selected = (StockEntry) newValue;
-                showDetails();
+    private void listeners() {
+        stockEntryTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            selected = (StockEntry) newValue;
+            showDetails();
+            if (selected == null) {
+                selectedRowLabel.setText("");
+            } else {
+                selectedRowLabel.setText("Linha " + String.valueOf(stockEntryTableView.getSelectionModel().getSelectedIndex() + 1) + " selecionada");
             }
         });
 
-        /*supplierTableView.skinProperty().addListener((obs, oldSkin, newSkin) -> {
-            final TableHeaderRow header = (TableHeaderRow) supplierTableView.lookup("TableHeaderRow");
-            header.reorderingProperty().addListener((o, oldVal, newVal) -> header.setReordering(false));
-        });*/
+        caseSensitiveOp.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            searchBox.setText("");
+            searchBox.requestFocus();
+        });
+
+        filterOptions.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
+            searchBox.setText("");
+            searchBox.requestFocus();
+        });
     }
 
     @FXML
@@ -250,7 +337,7 @@ public class StockEntryController implements Initializable {
     void generatePdf(ActionEvent event) {
 
     }
-    
+
     @FXML
     void goToFirstRow(MouseEvent event) {
         stockEntryTableView.getSelectionModel().selectFirst();

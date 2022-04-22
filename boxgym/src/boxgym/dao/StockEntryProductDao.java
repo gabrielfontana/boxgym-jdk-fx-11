@@ -71,23 +71,4 @@ public class StockEntryProductDao {
         return productsList;
     }
 
-    public int count(int selectedStockEntry) {
-        int count = 0;
-        String sql = "SELECT count(*) AS `count` FROM `stockentry_product` WHERE `fkStockEntry` = " + selectedStockEntry + ";";
-
-        try {
-            ps = conn.prepareStatement(sql);
-            rs = ps.executeQuery();
-            if (rs.next()) {
-                return rs.getInt("count");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(StockEntryProductDao.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            DbUtils.closeQuietly(conn);
-            DbUtils.closeQuietly(ps);
-            DbUtils.closeQuietly(rs);
-        }
-        return count;
-    }
 }

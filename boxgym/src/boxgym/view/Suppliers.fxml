@@ -20,7 +20,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="695.0" prefWidth="1280.0" styleClass="anchor-pane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.SuppliersController">
+<AnchorPane prefHeight="695.0" prefWidth="1280.0" styleClass="anchor-pane" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.SuppliersController">
    <children>
       <AnchorPane layoutX="20.0" layoutY="25.0" prefHeight="80.0" prefWidth="1280.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -79,7 +79,7 @@
                         <Insets right="15.0" />
                      </HBox.margin>
                   </TextField>
-                  <Button fx:id="addButton" mnemonicParsing="false" onAction="#addSupplier" prefHeight="30.0" prefWidth="90.0" text="Adicionar">
+                  <Button fx:id="addButton" mnemonicParsing="false" onAction="#addSupplier" prefHeight="30.0" prefWidth="90.0" text="Cadastrar">
                      <HBox.margin>
                         <Insets right="15.0" />
                      </HBox.margin>
@@ -137,7 +137,7 @@
                   <TableColumn fx:id="federativeUnitTableColumn" minWidth="90.0" prefWidth="90.0" text="UF" />
               </columns>
             </TableView>
-            <BorderPane prefHeight="20.0" prefWidth="900.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0">
+            <BorderPane prefHeight="20.0" prefWidth="900.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
                <left>
                   <Label fx:id="countLabel" prefHeight="20.0" prefWidth="150.0" styleClass="attribute-value-label" BorderPane.alignment="CENTER">
                      <BorderPane.margin>

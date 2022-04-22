@@ -158,7 +158,6 @@ public class StockEntryAddController implements Initializable {
         
         loadProductNameComboBox();
         productNameComboBoxListener();
-        tableViewListeners();
         initProductEntryTableView();
         countLabel.setText("Exibindo nenhum produto");
         TextFieldFormat.currencyFormat(totalPriceTextField, BigDecimal.ZERO);
@@ -312,13 +311,6 @@ public class StockEntryAddController implements Initializable {
         productComboBox.valueProperty().set(null);
         amountTextField.setText("");
         costPriceTextField.setPrice(0.0);
-    }
-
-    private void tableViewListeners() {
-        productEntryTableView.skinProperty().addListener((obs, oldSkin, newSkin) -> {
-            final TableHeaderRow header = (TableHeaderRow) productEntryTableView.lookup("TableHeaderRow");
-            header.reorderingProperty().addListener((o, oldVal, newVal) -> header.setReordering(false));
-        });
     }
     
     @FXML

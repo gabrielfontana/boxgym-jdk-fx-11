@@ -21,15 +21,17 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
 public class StockEntryProductsListController implements Initializable {
-     
+
     private int selectedStockEntry;
     
+    private StockEntryProduct selected;
+
     @FXML
     private TableView<StockEntryProduct> productsListTableView;
-    
+
     @FXML
     private TableColumn<StockEntryProduct, String> productTableColumn;
-    
+
     @FXML
     private TableColumn<StockEntryProduct, Integer> amountTableColumn;
 
@@ -38,13 +40,16 @@ public class StockEntryProductsListController implements Initializable {
 
     @FXML
     private TableColumn<StockEntryProduct, BigDecimal> subtotalTableColumn;
-    
+
     @FXML
     private Label countLabel;
-    
+
+    @FXML
+    private Label selectedRowLabel;
+
     @FXML
     private MaterialDesignIconView firstRow;
-    
+
     @FXML
     private MaterialDesignIconView lastRow;
 
@@ -55,23 +60,24 @@ public class StockEntryProductsListController implements Initializable {
     public void setSelectedStockEntry(int selectedStockEntry) {
         this.selectedStockEntry = selectedStockEntry;
     }
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         ButtonHelper.iconButton(firstRow, lastRow);
         Platform.runLater(() -> initMethods());
     }
-    
-    private void initMethods(){
+
+    private void initMethods() {
         initProductsListTableView();
-        initCount();
+        listeners();
+        countLabel.setText(TableViewCount.footerMessage(productsListTableView.getItems().size(), "produto"));
     }
-    
+
     private ObservableList<StockEntryProduct> loadData() {
         StockEntryProductDao dao = new StockEntryProductDao();
         return FXCollections.observableArrayList(dao.read(getSelectedStockEntry()));
     }
-    
+
     private void initProductsListTableView() {
         productTableColumn.setCellValueFactory(new PropertyValueFactory("tempProductName"));
         amountTableColumn.setCellValueFactory(new PropertyValueFactory("amount"));
@@ -81,13 +87,18 @@ public class StockEntryProductsListController implements Initializable {
         TextFieldFormat.productTableCellCurrencyFormat(subtotalTableColumn);
         productsListTableView.setItems(loadData());
     }
-    
-    private void initCount() {
-        StockEntryProductDao dao = new StockEntryProductDao();
-        int count = dao.count(getSelectedStockEntry());
-        countLabel.setText(TableViewCount.footerMessage(count, "produto"));
+
+    private void listeners() {
+        productsListTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            selected = (StockEntryProduct) newValue;
+            if (selected == null) {
+                selectedRowLabel.setText("");
+            } else {
+                selectedRowLabel.setText("Linha " + String.valueOf(productsListTableView.getSelectionModel().getSelectedIndex() + 1) + " selecionada");
+            }
+        });
     }
-    
+
     @FXML
     void goToFirstRow(MouseEvent event) {
         productsListTableView.getSelectionModel().selectFirst();

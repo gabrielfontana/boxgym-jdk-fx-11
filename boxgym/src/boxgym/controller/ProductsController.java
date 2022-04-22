@@ -41,6 +41,7 @@ import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.skin.TableHeaderRow;
 import javafx.scene.image.Image;
@@ -60,6 +61,9 @@ public class ProductsController implements Initializable {
 
     @FXML
     private CheckMenuItem caseSensitiveOp;
+    
+    @FXML
+    private ToggleGroup filterOptions;
 
     @FXML
     private RadioMenuItem containsOp;
@@ -116,6 +120,9 @@ public class ProductsController implements Initializable {
     private Label countLabel;
     
     @FXML
+    private Label selectedRowLabel;
+    
+    @FXML
     private MaterialDesignIconView firstRow;
     
     @FXML
@@ -160,7 +167,7 @@ public class ProductsController implements Initializable {
         ButtonHelper.buttonCursor(exportButton, filterButton, addButton, updateButton, deleteButton);
         ButtonHelper.iconButton(firstRow, lastRow);
         initProductTableView();
-        tableViewListeners();
+        listeners();
         Platform.runLater(() -> searchBox.requestFocus());
     }
 
@@ -271,7 +278,7 @@ public class ProductsController implements Initializable {
     private void refreshTableView() {
         productTableView.setItems(loadData());
         search();
-        initCount();
+        countLabel.setText(TableViewCount.footerMessage(productTableView.getItems().size(), "resultado"));
     }
 
     private void initProductTableView() {
@@ -288,12 +295,6 @@ public class ProductsController implements Initializable {
         TextFieldFormat.productTableCellCurrencyFormat(sellingPriceTableColumn);
 
         refreshTableView();
-    }
-    
-    private void initCount() {
-        ProductDao dao = new ProductDao();
-        int count = dao.count();
-        countLabel.setText(TableViewCount.footerMessage(count, "resultado"));
     }
 
     private boolean caseSensitiveEnabled(Product product, String searchText, int optionOrder) {
@@ -379,6 +380,9 @@ public class ProductsController implements Initializable {
                 
                 return caseSensitiveDisabled(product, newValue.toLowerCase(), 1);
             });
+            productTableView.getSelectionModel().clearSelection();
+            countLabel.setText(TableViewCount.footerMessage(productTableView.getItems().size(), "resultado"));
+            selectedRowLabel.setText("");
         });
 
         SortedList<Product> sortedData = new SortedList<>(filteredData);
@@ -386,19 +390,26 @@ public class ProductsController implements Initializable {
         productTableView.setItems(sortedData);
     }
 
-    private void tableViewListeners() {
-        productTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
-            @Override
-            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                selected = (Product) newValue;
-                showDetails();
+    private void listeners() {
+        productTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            selected = (Product) newValue;
+            showDetails();
+            if (selected == null) {
+                selectedRowLabel.setText("");
+            } else {
+                selectedRowLabel.setText("Linha " + String.valueOf(productTableView.getSelectionModel().getSelectedIndex() + 1) + " selecionada");
             }
         });
-
-        /*productTableView.skinProperty().addListener((obs, oldSkin, newSkin) -> {
-            final TableHeaderRow header = (TableHeaderRow) productTableView.lookup("TableHeaderRow");
-            header.reorderingProperty().addListener((o, oldVal, newVal) -> header.setReordering(false));
-        });*/
+        
+        caseSensitiveOp.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            searchBox.setText("");
+            searchBox.requestFocus();
+        });
+        
+        filterOptions.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
+            searchBox.setText("");
+            searchBox.requestFocus();
+        });
     }
 
     @FXML
