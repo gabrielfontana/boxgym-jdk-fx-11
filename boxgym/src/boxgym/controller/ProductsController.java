@@ -9,6 +9,7 @@ import boxgym.helper.TableViewCount;
 import boxgym.helper.TextFieldFormat;
 import boxgym.model.Product;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
+import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
@@ -19,8 +20,6 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -43,10 +42,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.skin.TableHeaderRow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
 
@@ -414,7 +414,15 @@ public class ProductsController implements Initializable {
 
     @FXML
     void exportToExcel(ActionEvent event) {
+        FileChooser chooser = new FileChooser();
+        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Pasta de Trabalho do Excel", "*.xlsx"));
+        File file = chooser.showSaveDialog(new Stage());
+        
+        ProductDao productDao = new ProductDao();
 
+        if (file != null) {
+            productDao.createExcelFile(file.getAbsolutePath());
+        }
     }
 
     @FXML

@@ -1,5 +1,6 @@
 package boxgym.dao;
 
+import boxgym.helper.ExcelFileHelper;
 import boxgym.jdbc.ConnectionFactory;
 import boxgym.model.Supplier;
 import java.io.FileNotFoundException;
@@ -9,21 +10,18 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.poi.ss.usermodel.BorderStyle;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
-import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -190,54 +188,48 @@ public class SupplierDao {
         }
         return false;
     }
-    
+
     public boolean createExcelFile(String filePath) {
+        String sql = "SELECT * FROM `supplier`";
+
         try {
             XSSFWorkbook workbook = new XSSFWorkbook();
+
+            XSSFCellStyle infoStyle = ExcelFileHelper.excelStyle(workbook, "Arial", true, BorderStyle.NONE);
+            XSSFCellStyle headerStyle = ExcelFileHelper.excelStyle(workbook, "Arial", true, BorderStyle.THIN);
+            XSSFCellStyle defaultStyle = ExcelFileHelper.excelStyle(workbook, "Arial", false, BorderStyle.THIN);
+
             XSSFSheet sheet = workbook.createSheet("Fornecedores");
-
-            XSSFCellStyle infoStyle = excelStyle(workbook, "Arial", true, BorderStyle.NONE);
-            XSSFCellStyle headerStyle = excelStyle(workbook, "Arial", true, BorderStyle.THIN);
-            XSSFCellStyle defaultStyle = excelStyle(workbook, "Arial", false, BorderStyle.THIN);
-
-            CellRangeAddress mergedRegion = new CellRangeAddress(0, 0, 0, 3);
-            sheet.addMergedRegion(mergedRegion);
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-            Date date = new Date();
-            XSSFRow dateRow = sheet.createRow(0);
-            createStyledCell(dateRow, 0, "Relatório gerado em: " + formatter.format(date), infoStyle);
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 3));
+            ExcelFileHelper.createStyledCell(sheet.createRow(0), 0, "Relatório gerado em: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")), infoStyle);
 
             List<String> fields = Arrays.asList("ID", "CNPJ", "Razão Social", "Nome Fantasia", "E-mail", "Telefone", "CEP",
                     "Endereço", "Complemento", "Bairro", "Cidade", "UF", "Criação", "Modificação");
-            XSSFRow headerRow = sheet.createRow(2);
             for (int i = 0; i < fields.size(); i++) {
-                createStyledCell(headerRow, i, fields.get(i), headerStyle);
+                ExcelFileHelper.createStyledCell(sheet.createRow(2), i, fields.get(i), headerStyle);
             }
 
-            String sql = "SELECT * FROM `supplier`";
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
-
             int contentRow = 3;
             while (rs.next()) {
                 XSSFRow row = sheet.createRow(contentRow);
-                createStyledCell(row, 0, rs.getInt("supplierId"), defaultStyle);
-                createStyledCell(row, 1, rs.getString("companyRegistry"), defaultStyle);
-                createStyledCell(row, 2, rs.getString("corporateName"), defaultStyle);
-                createStyledCell(row, 3, rs.getString("tradeName"), defaultStyle);
-                createStyledCell(row, 4, rs.getString("email"), defaultStyle);
-                createStyledCell(row, 5, rs.getString("phone"), defaultStyle);
-                createStyledCell(row, 6, rs.getString("zipCode"), defaultStyle);
-                createStyledCell(row, 7, rs.getString("address"), defaultStyle);
-                createStyledCell(row, 8, rs.getString("addressComplement"), defaultStyle);
-                createStyledCell(row, 9, rs.getString("district"), defaultStyle);
-                createStyledCell(row, 10, rs.getString("city"), defaultStyle);
-                createStyledCell(row, 11, rs.getString("federativeUnit"), defaultStyle);
-                createStyledCell(row, 12, rs.getString("createdAt"), defaultStyle);
-                createStyledCell(row, 13, rs.getString("updatedAt"), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 0, rs.getInt("supplierId"), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 1, rs.getString("companyRegistry"), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 2, rs.getString("corporateName"), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 3, rs.getString("tradeName"), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 4, rs.getString("email"), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 5, rs.getString("phone"), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 6, rs.getString("zipCode"), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 7, rs.getString("address"), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 8, rs.getString("addressComplement"), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 9, rs.getString("district"), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 10, rs.getString("city"), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 11, rs.getString("federativeUnit"), defaultStyle);
+                ExcelFileHelper.createStyledDateTimeCell(row, 12, rs.getString("createdAt"), DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"), defaultStyle);
+                ExcelFileHelper.createStyledDateTimeCell(row, 13, rs.getString("updatedAt"), DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"), defaultStyle);
                 contentRow++;
             }
-
             for (int i = 0; i < fields.size(); i++) {
                 sheet.autoSizeColumn(i);
             }
@@ -258,33 +250,4 @@ public class SupplierDao {
         }
         return false;
     }
-
-    private XSSFCellStyle excelStyle(XSSFWorkbook workbook, String fontName, boolean bold, BorderStyle border) {
-        XSSFFont font = workbook.createFont();
-        font.setFontName(fontName);
-        font.setBold(bold);
-        XSSFCellStyle style = workbook.createCellStyle();
-        style.setFont(font);
-        style.setBorderTop(border);
-        style.setBorderBottom(border);
-        style.setBorderLeft(border);
-        style.setBorderRight(border);
-        style.setAlignment(HorizontalAlignment.CENTER);
-        return style;
-    }
-
-    private XSSFCell createStyledCell(XSSFRow row, int cellIndex, String cellValue, XSSFCellStyle style) {
-        XSSFCell cell = row.createCell(cellIndex);
-        cell.setCellValue(cellValue);
-        cell.setCellStyle(style);
-        return cell;
-    }
-
-    private XSSFCell createStyledCell(XSSFRow row, int cellIndex, Integer cellValue, XSSFCellStyle style) {
-        XSSFCell cell = row.createCell(cellIndex);
-        cell.setCellValue(cellValue);
-        cell.setCellStyle(style);
-        return cell;
-    }
-
 }
