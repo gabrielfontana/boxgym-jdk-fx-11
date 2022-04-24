@@ -20,6 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -195,9 +196,9 @@ public class SupplierDao {
         try {
             XSSFWorkbook workbook = new XSSFWorkbook();
 
-            XSSFCellStyle infoStyle = ExcelFileHelper.excelStyle(workbook, "Arial", true, BorderStyle.NONE);
-            XSSFCellStyle headerStyle = ExcelFileHelper.excelStyle(workbook, "Arial", true, BorderStyle.THIN);
-            XSSFCellStyle defaultStyle = ExcelFileHelper.excelStyle(workbook, "Arial", false, BorderStyle.THIN);
+            XSSFCellStyle infoStyle = ExcelFileHelper.excelStyle(workbook, "Arial", true, BorderStyle.NONE, IndexedColors.WHITE);
+            XSSFCellStyle headerStyle = ExcelFileHelper.excelStyle(workbook, "Arial", true, BorderStyle.THIN, IndexedColors.LIGHT_TURQUOISE);
+            XSSFCellStyle defaultStyle = ExcelFileHelper.excelStyle(workbook, "Arial", false, BorderStyle.THIN, IndexedColors.WHITE);
 
             XSSFSheet sheet = workbook.createSheet("Fornecedores");
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 3));
@@ -205,15 +206,16 @@ public class SupplierDao {
 
             List<String> fields = Arrays.asList("ID", "CNPJ", "Razão Social", "Nome Fantasia", "E-mail", "Telefone", "CEP",
                     "Endereço", "Complemento", "Bairro", "Cidade", "UF", "Criação", "Modificação");
+            XSSFRow headerRow = sheet.createRow(2);
             for (int i = 0; i < fields.size(); i++) {
-                ExcelFileHelper.createStyledCell(sheet.createRow(2), i, fields.get(i), headerStyle);
+                ExcelFileHelper.createStyledCell(headerRow, i, fields.get(i), headerStyle);
             }
 
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
-            int contentRow = 3;
+            int rowIndex = 3;
             while (rs.next()) {
-                XSSFRow row = sheet.createRow(contentRow);
+                XSSFRow row = sheet.createRow(rowIndex);
                 ExcelFileHelper.createStyledCell(row, 0, rs.getInt("supplierId"), defaultStyle);
                 ExcelFileHelper.createStyledCell(row, 1, rs.getString("companyRegistry"), defaultStyle);
                 ExcelFileHelper.createStyledCell(row, 2, rs.getString("corporateName"), defaultStyle);
@@ -228,7 +230,7 @@ public class SupplierDao {
                 ExcelFileHelper.createStyledCell(row, 11, rs.getString("federativeUnit"), defaultStyle);
                 ExcelFileHelper.createStyledDateTimeCell(row, 12, rs.getString("createdAt"), DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"), defaultStyle);
                 ExcelFileHelper.createStyledDateTimeCell(row, 13, rs.getString("updatedAt"), DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"), defaultStyle);
-                contentRow++;
+                rowIndex++;
             }
             for (int i = 0; i < fields.size(); i++) {
                 sheet.autoSizeColumn(i);

@@ -3,6 +3,7 @@ package boxgym.dao;
 import boxgym.helper.ExcelFileHelper;
 import boxgym.jdbc.ConnectionFactory;
 import boxgym.model.StockEntry;
+import boxgym.model.StockEntryProduct;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -19,6 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -132,31 +134,58 @@ public class StockEntryDao {
         try {
             XSSFWorkbook workbook = new XSSFWorkbook();
 
-            XSSFCellStyle infoStyle = ExcelFileHelper.excelStyle(workbook, "Arial", true, BorderStyle.NONE);
-            XSSFCellStyle headerStyle = ExcelFileHelper.excelStyle(workbook, "Arial", true, BorderStyle.THIN);
-            XSSFCellStyle defaultStyle = ExcelFileHelper.excelStyle(workbook, "Arial", false, BorderStyle.THIN);
+            XSSFCellStyle infoStyle = ExcelFileHelper.excelStyle(workbook, "Arial", true, BorderStyle.NONE, IndexedColors.WHITE);
+            XSSFCellStyle headerStyle = ExcelFileHelper.excelStyle(workbook, "Arial", true, BorderStyle.THIN, IndexedColors.GREY_25_PERCENT);
+            XSSFCellStyle subHeaderStyle = ExcelFileHelper.excelStyle(workbook, "Arial", true, BorderStyle.THIN, IndexedColors.WHITE);
+            XSSFCellStyle defaultStyle = ExcelFileHelper.excelStyle(workbook, "Arial", false, BorderStyle.THIN, IndexedColors.WHITE);
 
             XSSFSheet sheet = workbook.createSheet("Entradas de Estoque");
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 3));
             ExcelFileHelper.createStyledCell(sheet.createRow(0), 0, "Relatório gerado em: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")), infoStyle);
 
-            List<String> fields = Arrays.asList("ID", "Fornecedor", "Data de Emissão da Nota Fiscal", "Nota Fiscal", "Criação", "Modificação");
+            List<String> fields = Arrays.asList("ID", "Fornecedor", "Data de Emissão", "Nota Fiscal", "Criação", "Modificação");
+            XSSFRow headerRow = sheet.createRow(2);
             for (int i = 0; i < fields.size(); i++) {
-                ExcelFileHelper.createStyledCell(sheet.createRow(2), i, fields.get(i), headerStyle);
+                ExcelFileHelper.createStyledCell(headerRow, i, fields.get(i), headerStyle);
             }
+
+            List<String> relatedProductsFields = Arrays.asList("Produto", "Quantidade", "Preço de Custo", "Subtotal");
 
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
-            int contentRow = 3;
+            int rowIndex = 3;
             while (rs.next()) {
-                XSSFRow row = sheet.createRow(contentRow);
+                // StockEntry
+                int currentStockEntryId = rs.getInt("stockEntryId");
+                XSSFRow row = sheet.createRow(rowIndex);
                 ExcelFileHelper.createStyledCell(row, 0, rs.getInt("stockEntryId"), defaultStyle);
                 ExcelFileHelper.createStyledCell(row, 1, rs.getString("tempSupplierName"), defaultStyle);
                 ExcelFileHelper.createStyledDateCell(row, 2, rs.getString("invoiceIssueDate"), DateTimeFormatter.ofPattern("dd/MM/yyyy"), defaultStyle);
                 ExcelFileHelper.createStyledCell(row, 3, rs.getString("invoiceNumber"), defaultStyle);
                 ExcelFileHelper.createStyledDateTimeCell(row, 4, rs.getString("createdAt"), DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"), defaultStyle);
                 ExcelFileHelper.createStyledDateTimeCell(row, 5, rs.getString("updatedAt"), DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"), defaultStyle);
-                contentRow++;
+                rowIndex++;
+                
+                // StockEntryProduct
+                XSSFRow row2 = sheet.createRow(rowIndex);
+                StockEntryProductDao dao = new StockEntryProductDao();
+                List<StockEntryProduct> relatedProducts = dao.read(currentStockEntryId);
+                int firstRowForGroup = rowIndex;
+                for (int i = 0; i < relatedProductsFields.size(); i++) {
+                    ExcelFileHelper.createStyledCell(row2, i + 1, relatedProductsFields.get(i), subHeaderStyle);
+                }
+                rowIndex++;
+                for (int i = 0; i < relatedProducts.size(); i++) {
+                    XSSFRow row3 = sheet.createRow(rowIndex);
+                    ExcelFileHelper.createStyledCell(row3, 1, relatedProducts.get(i).getTempProductName(), defaultStyle);
+                    ExcelFileHelper.createStyledCell(row3, 2, relatedProducts.get(i).getAmount(), defaultStyle);
+                    ExcelFileHelper.createStyledCell(row3, 3, relatedProducts.get(i).getCostPrice().doubleValue(), defaultStyle);
+                    ExcelFileHelper.createStyledCell(row3, 4, relatedProducts.get(i).getSubtotal().doubleValue(), defaultStyle);
+                    rowIndex++;
+                }
+                int lastRowForGroup = rowIndex;
+                sheet.groupRow(firstRowForGroup, lastRowForGroup);
+                rowIndex++;
             }
             for (int i = 0; i < fields.size(); i++) {
                 sheet.autoSizeColumn(i);
