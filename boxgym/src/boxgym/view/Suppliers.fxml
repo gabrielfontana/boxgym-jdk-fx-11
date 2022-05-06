@@ -130,6 +130,7 @@
                   <TableColumn fx:id="supplierIdTableColumn" minWidth="90.0" prefWidth="90.0" text="ID" />
                   <TableColumn fx:id="companyRegistryTableColumn" minWidth="134.0" prefWidth="134.0" text="CNPJ" />
                   <TableColumn fx:id="corporateNameTableColumn" minWidth="175.0" prefWidth="175.0" text="Razão Social" />
+                  <TableColumn fx:id="tradeNameTableColumn" minWidth="175.0" prefWidth="175.0" text="Nome Fantasia" />
                   <TableColumn fx:id="emailTableColumn" minWidth="175.0" prefWidth="175.0" text="E-mail" />
                   <TableColumn fx:id="phoneTableColumn" minWidth="134.0" prefWidth="134.0" text="Telefone" />
                   <TableColumn fx:id="addressTableColumn" minWidth="175.0" prefWidth="175.0" text="Endereço" />

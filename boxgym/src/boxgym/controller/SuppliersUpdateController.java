@@ -131,7 +131,7 @@ public class SuppliersUpdateController implements Initializable {
         addressTextField.setValidationPattern("[a-zA-Z\\u00C0-\\u00FF0-9 .,_-]", 255);
         addressComplementTextField.setValidationPattern("[a-zA-Z\\u00C0-\\u00FF0-9 .,_-]", 255);
         districtTextField.setValidationPattern("[a-zA-Z\\u00C0-\\u00FF ]", 255);
-        cityTextField.setValidationPattern("[a-zA-Z\\u00C0-\\u00FF ]", 255);
+        cityTextField.setValidationPattern("[a-zA-Z\\u00C0-\\u00FF '-]", 255);
     }
 
     @FXML

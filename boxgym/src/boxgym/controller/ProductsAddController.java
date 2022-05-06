@@ -79,7 +79,7 @@ public class ProductsAddController implements Initializable {
     }
 
     private void productsInputRestrictions() {
-        nameTextField.setValidationPattern("[a-zA-Z\\u00C0-\\u00FF0-9 ._-]", 255);
+        nameTextField.setValidationPattern("[a-zA-Z\\u00C0-\\u00FF0-9 ()%._-]", 255);
         categoryTextField.setValidationPattern("[a-zA-Z\\u00C0-\\u00FF0-9 ._-]", 255);
         amountTextField.setValidationPattern("[0-9]", 10);
         minimumStockTextField.setValidationPattern("[0-9]", 10);

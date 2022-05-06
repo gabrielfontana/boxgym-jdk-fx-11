@@ -432,11 +432,13 @@ public class ProductsController implements Initializable {
     
     @FXML
     void goToFirstRow(MouseEvent event) {
+        productTableView.scrollTo(0);
         productTableView.getSelectionModel().selectFirst();
     }
 
     @FXML
     void goToLastRow(MouseEvent event) {
+        productTableView.scrollTo(productTableView.getItems().size() - 1);
         productTableView.getSelectionModel().selectLast();
     }
 

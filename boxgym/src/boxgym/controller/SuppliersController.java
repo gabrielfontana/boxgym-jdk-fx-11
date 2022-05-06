@@ -100,6 +100,9 @@ public class SuppliersController implements Initializable {
     private TableColumn<Supplier, String> corporateNameTableColumn;
 
     @FXML
+    private TableColumn<Supplier, String> tradeNameTableColumn;
+    
+    @FXML
     private TableColumn<Supplier, String> emailTableColumn;
 
     @FXML
@@ -294,6 +297,7 @@ public class SuppliersController implements Initializable {
         supplierIdTableColumn.setCellValueFactory(new PropertyValueFactory("supplierId"));
         companyRegistryTableColumn.setCellValueFactory(new PropertyValueFactory("companyRegistry"));
         corporateNameTableColumn.setCellValueFactory(new PropertyValueFactory("corporateName"));
+        tradeNameTableColumn.setCellValueFactory(new PropertyValueFactory("tradeName"));
         emailTableColumn.setCellValueFactory(new PropertyValueFactory("email"));
         phoneTableColumn.setCellValueFactory(new PropertyValueFactory("phone"));
         addressTableColumn.setCellValueFactory(new PropertyValueFactory("address"));
@@ -449,11 +453,13 @@ public class SuppliersController implements Initializable {
 
     @FXML
     void goToFirstRow(MouseEvent event) {
+        supplierTableView.scrollTo(0);
         supplierTableView.getSelectionModel().selectFirst();
     }
 
     @FXML
     void goToLastRow(MouseEvent event) {
+        supplierTableView.scrollTo(supplierTableView.getItems().size() - 1);
         supplierTableView.getSelectionModel().selectLast();
     }
 

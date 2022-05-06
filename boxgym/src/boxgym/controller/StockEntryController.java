@@ -352,11 +352,13 @@ public class StockEntryController implements Initializable {
 
     @FXML
     void goToFirstRow(MouseEvent event) {
+        stockEntryTableView.scrollTo(0);
         stockEntryTableView.getSelectionModel().selectFirst();
     }
 
     @FXML
     void goToLastRow(MouseEvent event) {
+        stockEntryTableView.scrollTo(stockEntryTableView.getItems().size() - 1);
         stockEntryTableView.getSelectionModel().selectLast();
     }
 }
