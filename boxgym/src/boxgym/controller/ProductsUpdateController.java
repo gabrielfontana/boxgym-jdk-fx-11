@@ -21,6 +21,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -112,7 +113,11 @@ public class ProductsUpdateController implements Initializable {
         costPriceTextField.setPrice(loadProduct.getCostPrice().doubleValue());
         sellingPriceTextField.setPrice(loadProduct.getSellingPrice().doubleValue());
         try{
-            productImage.setImage(SwingFXUtils.toFXImage(ImageHelper.convertBytesToImage(loadProduct), null));
+            if(loadProduct.getImage() == null) {
+                productImage.setImage(new Image("boxgym/img/default-no-image.png"));
+            } else {
+                productImage.setImage(SwingFXUtils.toFXImage(ImageHelper.convertBytesToImage(loadProduct), null));
+            }
         } catch (IOException ex) {
             Logger.getLogger(ProductsUpdateController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -152,7 +157,9 @@ public class ProductsUpdateController implements Initializable {
         minimumStockTextField.setText("");
         costPriceTextField.setPrice(0.0);
         sellingPriceTextField.setPrice(0.0);
-        ih.loadDefaultImage(productImage);
+        //ih.loadDefaultImage(productImage);
+        productImage.setImage(new Image("boxgym/img/default-no-image.png"));
+        ih.setImageBytes(null);
     }
     
     private void buttonsProperties() {

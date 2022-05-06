@@ -253,7 +253,11 @@ public class ProductsController implements Initializable {
     private void showDetails() {
         if (selected != null) {
             try {
-                productImageView.setImage(SwingFXUtils.toFXImage(ImageHelper.convertBytesToImage(selected), null));
+                if (selected.getImage() == null) {
+                    productImageView.setImage(new Image("/boxgym/img/default-no-image.png"));
+                } else {
+                    productImageView.setImage(SwingFXUtils.toFXImage(ImageHelper.convertBytesToImage(selected), null));
+                }
             } catch (IOException ex) {
                 Logger.getLogger(ProductsController.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -18,7 +18,7 @@ import org.apache.commons.io.IOUtils;
 
 public class ImageHelper {
 
-    private String defaultImagePath;
+    //private String defaultImagePath;
     private String imagePath;
     private FileInputStream fis;
     private byte[] imageBytes;
@@ -31,11 +31,11 @@ public class ImageHelper {
         this.imageBytes = imageBytes;
     }
 
-    public void loadDefaultImage(ImageView productImage) {
+    /*public void loadDefaultImage(ImageView productImage) {
         defaultImagePath = "boxgym/img/default-no-image.png";
         productImage.setImage(new Image(defaultImagePath));
         convertImageToBytes("src/" + defaultImagePath);
-    }
+    }*/
 
     public void chooser(ImageView productImage) {
         FileChooser chooser = new FileChooser();
