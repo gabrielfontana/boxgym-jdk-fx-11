@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="300.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.StockEntryProductsListController">
+<AnchorPane id="AnchorPane" prefHeight="300.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.StockEntryProductsListController">
    <children>
       <TableView fx:id="productsListTableView" layoutX="14.0" layoutY="50.0" prefHeight="260.0" prefWidth="690.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
          <columns>
@@ -31,12 +31,12 @@
          <right>
             <HBox BorderPane.alignment="CENTER">
                <children>
-                  <MaterialDesignIconView fx:id="firstRow" glyphName="PAGE_FIRST" onMouseClicked="#goToFirstRow" size="20">
+                  <MaterialDesignIconView fx:id="firstRow" glyphName="ARROW_UP" onMouseClicked="#goToFirstRow" size="20">
                      <HBox.margin>
                         <Insets right="15.0" />
                      </HBox.margin>
                   </MaterialDesignIconView>
-                  <MaterialDesignIconView fx:id="lastRow" glyphName="PAGE_LAST" onMouseClicked="#goToLastRow" size="20" />
+                  <MaterialDesignIconView fx:id="lastRow" glyphName="ARROW_DOWN" onMouseClicked="#goToLastRow" size="20" />
                </children>
             </HBox>
          </right>

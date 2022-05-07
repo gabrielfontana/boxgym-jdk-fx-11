@@ -16,7 +16,7 @@
 <?import limitedtextfield.LimitedTextField?>
 <?import org.controlsfx.control.PrefixSelectionComboBox?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="500.0" prefWidth="600.0" stylesheets="@../css/table-view-style.css" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.StockEntryAddController">
+<AnchorPane fx:id="anchorPane" prefHeight="500.0" prefWidth="600.0" stylesheets="@../css/table-view-style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.StockEntryAddController">
     <children>
         <AnchorPane fx:id="stockEntryArea" layoutX="15.0" layoutY="24.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -158,12 +158,12 @@
                               <Insets right="15.0" />
                            </HBox.margin>
                         </Label>
-                        <MaterialDesignIconView fx:id="firstRow" disable="true" glyphName="PAGE_FIRST" onMouseClicked="#goToFirstRow" size="20">
+                        <MaterialDesignIconView fx:id="firstRow" disable="true" glyphName="ARROW_UP" onMouseClicked="#goToFirstRow" size="20">
                            <HBox.margin>
                               <Insets right="15.0" />
                            </HBox.margin>
                         </MaterialDesignIconView>
-                        <MaterialDesignIconView fx:id="lastRow" disable="true" glyphName="PAGE_LAST" onMouseClicked="#goToLastRow" size="20" />
+                        <MaterialDesignIconView fx:id="lastRow" disable="true" glyphName="ARROW_DOWN" onMouseClicked="#goToLastRow" size="20" />
                      </children>
                      <VBox.margin>
                         <Insets bottom="20.0" />

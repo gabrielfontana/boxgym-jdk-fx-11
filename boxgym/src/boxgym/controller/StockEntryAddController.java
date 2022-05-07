@@ -35,7 +35,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.skin.TableHeaderRow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import limitedtextfield.LimitedTextField;
@@ -321,8 +320,12 @@ public class StockEntryAddController implements Initializable {
 
     @FXML
     void goToLastRow(MouseEvent event) {
-        productEntryTableView.scrollTo(productEntryTableView.getItems().size() - 1);
-        productEntryTableView.getSelectionModel().selectLast();
+        if (productEntryTableView.getItems().size() == 1) {
+            goToFirstRow(event);
+        } else {
+            productEntryTableView.scrollTo(productEntryTableView.getItems().size() - 1);
+            productEntryTableView.getSelectionModel().selectLast();
+        }
     }
 
 }

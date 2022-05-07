@@ -107,7 +107,11 @@ public class StockEntryProductsListController implements Initializable {
 
     @FXML
     void goToLastRow(MouseEvent event) {
-        productsListTableView.scrollTo(productsListTableView.getItems().size() - 1);
-        productsListTableView.getSelectionModel().selectLast();
+        if (productsListTableView.getItems().size() == 1) {
+            goToFirstRow(event);
+        } else {
+            productsListTableView.scrollTo(productsListTableView.getItems().size() - 1);
+            productsListTableView.getSelectionModel().selectLast();
+        }
     }
 }

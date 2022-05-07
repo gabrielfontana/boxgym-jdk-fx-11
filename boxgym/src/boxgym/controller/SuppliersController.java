@@ -459,8 +459,12 @@ public class SuppliersController implements Initializable {
 
     @FXML
     void goToLastRow(MouseEvent event) {
-        supplierTableView.scrollTo(supplierTableView.getItems().size() - 1);
-        supplierTableView.getSelectionModel().selectLast();
+         if (supplierTableView.getItems().size() == 1) {
+            goToFirstRow(event);
+        } else {
+            supplierTableView.scrollTo(supplierTableView.getItems().size() - 1);
+            supplierTableView.getSelectionModel().selectLast(); 
+         }
     }
 
 }
