@@ -70,7 +70,7 @@ public class MainScreenController implements Initializable {
 
     @FXML
     void handleClients(ActionEvent event) throws IOException {
-        changeContentArea("/boxgym/view/Clients.fxml");
+        changeContentArea("/boxgym/view/Customers.fxml");
     }
 
     @FXML

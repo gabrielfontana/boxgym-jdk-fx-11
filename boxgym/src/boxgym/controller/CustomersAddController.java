@@ -1,11 +1,11 @@
 package boxgym.controller;
 
-import boxgym.dao.SupplierDao;
+import boxgym.dao.CustomerDao;
 import boxgym.helper.AlertHelper;
 import boxgym.helper.ButtonHelper;
-import boxgym.helper.CnpjValidator;
+import boxgym.helper.CpfValidator;
 import boxgym.helper.TextValidationHelper;
-import boxgym.model.Supplier;
+import boxgym.model.Customer;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -18,7 +18,7 @@ import javafx.scene.layout.AnchorPane;
 import limitedtextfield.LimitedTextField;
 import org.controlsfx.control.PrefixSelectionComboBox;
 
-public class SuppliersAddController implements Initializable {
+public class CustomersAddController implements Initializable {
 
     AlertHelper ah = new AlertHelper();
 
@@ -26,13 +26,13 @@ public class SuppliersAddController implements Initializable {
     private AnchorPane anchorPane;
 
     @FXML
-    private LimitedTextField companyRegistryTextField;
+    private LimitedTextField personRegistryTextField;
 
     @FXML
-    private LimitedTextField corporateNameTextField;
+    private LimitedTextField nameTextField;
 
     @FXML
-    private LimitedTextField tradeNameTextField;
+    private PrefixSelectionComboBox<String> sexComboBox;
 
     @FXML
     private LimitedTextField emailTextField;
@@ -78,8 +78,15 @@ public class SuppliersAddController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         setCreated(false);
         buttonsProperties();
+        loadSexComboBox();
         loadFederativeUnitComboBox();
-        suppliersInputRestrictions();
+        customersInputRestrictions();
+    }
+
+    private void loadSexComboBox() {
+        String[] maleAndFemale = {"Masculino", "Feminino"};
+        sexComboBox.setPromptText("Selecione");
+        sexComboBox.setItems(FXCollections.observableArrayList(maleAndFemale));
     }
 
     private void loadFederativeUnitComboBox() {
@@ -94,10 +101,9 @@ public class SuppliersAddController implements Initializable {
         federativeUnitComboBox.setItems(FXCollections.observableArrayList(federativeUnitsList));
     }
 
-    private void suppliersInputRestrictions() {
-        companyRegistryTextField.setValidationPattern("[0-9]", 14, "Sem pontuação!");
-        corporateNameTextField.setValidationPattern("[a-zA-Z\\u00C0-\\u00FF0-9 ._-]", 255);
-        tradeNameTextField.setValidationPattern("[a-zA-Z\\u00C0-\\u00FF0-9 ._-]", 255);
+    private void customersInputRestrictions() {
+        personRegistryTextField.setValidationPattern("[0-9]", 11, "Sem pontuação!");
+        nameTextField.setValidationPattern("[a-zA-Z\\u00C0-\\u00FF0-9 ]", 255);
         emailTextField.setValidationPattern("[A-Za-z0-9@._-]", 255);
         phoneTextField.setValidationPattern("[0-9]", 11, "Sem pontuação!");
         zipCodeTextField.setValidationPattern("[0-9]", 8, "Sem pontuação!");
@@ -109,41 +115,42 @@ public class SuppliersAddController implements Initializable {
 
     @FXML
     void save(ActionEvent event) {
-        SupplierDao supplierDao = new SupplierDao();
+        CustomerDao customerDao = new CustomerDao();
 
-        TextValidationHelper validation = new TextValidationHelper("Por favor, preencha o(s) seguinte(s) campo(s) obrigatório(s): \n\n");
-        validation.emptyTextField(companyRegistryTextField.getText(), "'CNPJ'\n");
-        validation.emptyTextField(corporateNameTextField.getText(), "'Razão Social'\n");
+        TextValidationHelper validation = new TextValidationHelper("Atenção: \n\n");
+        validation.emptyTextField(personRegistryTextField.getText(), "O campo 'CPF' está vazio! \n");
+        validation.emptyTextField(nameTextField.getText(), "O campo 'Nome' está vazio! \n");
+        validation.invalidComboBox(sexComboBox, "O campo 'Sexo' está vazio! \n");
 
         if (!(validation.getEmptyCounter() == 0)) {
-            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível realizar o cadastro deste fornecedor!", validation.getMessage());
-        } else if (!(CnpjValidator.isValid(companyRegistryTextField.getText()))) {
-            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível realizar o cadastro deste fornecedor!", "'CNPJ' inválido.");
-        } else if (supplierDao.checkExistingSupplier(companyRegistryTextField.getText())) {
-            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível realizar o cadastro deste fornecedor!", "Este CNPJ já está cadastrado.");
-            companyRegistryTextField.setText("");
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível realizar o cadastro deste cliente!", validation.getMessage());
+        } else if (!(CpfValidator.isValid(personRegistryTextField.getText()))) {
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível realizar o cadastro deste cliente!", "'CPF' inválido.");
+        } else if (customerDao.checkExistingCustomer(personRegistryTextField.getText())) {
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível realizar o cadastro deste cliente!", "Este CPF já está cadastrado.");
+            personRegistryTextField.setText("");
         } else if (!(phoneTextField.getText().length() == 0 || phoneTextField.getText().length() == 10 || phoneTextField.getText().length() == 11)) {
-            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível realizar o cadastro deste fornecedor!", "O formato do campo 'Telefone' está incorreto.");
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível realizar o cadastro deste cliente!", "O formato do campo 'Telefone' está incorreto.");
         } else if (!(zipCodeTextField.getText().length() == 0 || zipCodeTextField.getText().length() == 8)) {
-            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível realizar o cadastro deste fornecedor!", "O campo 'CEP' deve conter 8 dígitos.");
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível realizar o cadastro deste cliente!", "O campo 'CEP' deve conter 8 dígitos.");
         } else {
             String selectedFederativeUnit = federativeUnitComboBox.getSelectionModel().getSelectedItem();
             if (selectedFederativeUnit == null) selectedFederativeUnit = "";
-            Supplier supplier = new Supplier(companyRegistryTextField.getText(), corporateNameTextField.getText(), tradeNameTextField.getText(),
+            Customer customer = new Customer(personRegistryTextField.getText(), nameTextField.getText(), sexComboBox.getSelectionModel().getSelectedItem(),
                     emailTextField.getText(), phoneTextField.getText(), zipCodeTextField.getText(), addressTextField.getText(), addressComplementTextField.getText(),
                     districtTextField.getText(), cityTextField.getText(), selectedFederativeUnit);
-            supplierDao.create(supplier);
+            customerDao.create(customer);
             setCreated(true);
-            ah.customAlert(Alert.AlertType.INFORMATION, "O fornecedor foi cadastrado com sucesso!", "");
+            ah.customAlert(Alert.AlertType.INFORMATION, "O cliente foi cadastrado com sucesso!", "");
             anchorPane.getScene().getWindow().hide();
         }
     }
 
     @FXML
-    void clear() {
-        companyRegistryTextField.setText("");
-        corporateNameTextField.setText("");
-        tradeNameTextField.setText("");
+    void clear(ActionEvent event) {
+        personRegistryTextField.setText("");
+        nameTextField.setText("");
+        sexComboBox.valueProperty().set(null);
         emailTextField.setText("");
         phoneTextField.setText("");
         zipCodeTextField.setText("");
@@ -158,4 +165,5 @@ public class SuppliersAddController implements Initializable {
         ButtonHelper.defaultButton(saveButton);
         ButtonHelper.buttonCursor(saveButton, clearButton);
     }
+
 }

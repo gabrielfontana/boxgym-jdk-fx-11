@@ -20,11 +20,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="695.0" prefWidth="1280.0" styleClass="anchor-pane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.SuppliersController">
+<AnchorPane prefHeight="695.0" prefWidth="1280.0" styleClass="anchor-pane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.CustomersController">
    <children>
       <AnchorPane layoutX="20.0" layoutY="25.0" prefHeight="80.0" prefWidth="1280.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label text="Administrativo &gt; Fornecedores" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+            <Label text="Administrativo &gt; Clientes" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -79,7 +79,7 @@
                         <Insets right="15.0" />
                      </HBox.margin>
                   </TextField>
-                  <Button fx:id="addButton" mnemonicParsing="false" onAction="#addSupplier" prefHeight="30.0" prefWidth="90.0" text="Cadastrar">
+                  <Button fx:id="addButton" mnemonicParsing="false" onAction="#addCustomer" prefHeight="30.0" prefWidth="90.0" text="Cadastrar">
                      <HBox.margin>
                         <Insets right="15.0" />
                      </HBox.margin>
@@ -87,7 +87,7 @@
                         <MaterialDesignIconView glyphName="PLUS" size="15.0" />
                      </graphic>
                   </Button>
-                  <Button fx:id="updateButton" mnemonicParsing="false" onAction="#updateSupplier" prefHeight="30.0" prefWidth="90.0" text="Atualizar">
+                  <Button fx:id="updateButton" mnemonicParsing="false" onAction="#updateCustomer" prefHeight="30.0" prefWidth="90.0" text="Atualizar">
                      <HBox.margin>
                         <Insets right="15.0" />
                      </HBox.margin>
@@ -95,7 +95,7 @@
                         <MaterialDesignIconView glyphName="PENCIL" size="15.0" />
                      </graphic>
                   </Button>
-                  <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteSupplier" prefHeight="30.0" prefWidth="90.0" text="Excluir">
+                  <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteCustomer" prefHeight="30.0" prefWidth="90.0" text="Excluir">
                      <HBox.margin>
                         <Insets right="15.0" />
                      </HBox.margin>
@@ -104,18 +104,18 @@
                      </graphic>
                   </Button>
                   <MenuButton fx:id="exportButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="105.0" text="Exportar">
-                    <items>
-                      <MenuItem fx:id="generatePdfButton" mnemonicParsing="false" onAction="#generatePdf" text="PDF">
+                     <items>
+                        <MenuItem fx:id="generatePdfButton" mnemonicParsing="false" onAction="#generatePdf" text="PDF">
                            <graphic>
                               <MaterialDesignIconView glyphName="FILE_PDF" size="15.0" />
                            </graphic>
                         </MenuItem>
-                      <MenuItem fx:id="exportExcelButton" mnemonicParsing="false" onAction="#exportToExcel" text="Excel">
+                        <MenuItem fx:id="exportExcelButton" mnemonicParsing="false" onAction="#exportToExcel" text="Excel">
                            <graphic>
                               <MaterialDesignIconView glyphName="FILE_EXCEL" size="15.0" />
                            </graphic>
                         </MenuItem>
-                    </items>
+                     </items>
                      <graphic>
                         <MaterialDesignIconView glyphName="FILE_EXPORT" size="15" />
                      </graphic>
@@ -125,18 +125,18 @@
                   </MenuButton>
                </children>
             </HBox>
-            <TableView fx:id="supplierTableView" prefHeight="550.0" prefWidth="900.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="40.0">
-              <columns>
-                  <TableColumn fx:id="supplierIdTableColumn" minWidth="90.0" prefWidth="90.0" text="ID" />
-                  <TableColumn fx:id="companyRegistryTableColumn" minWidth="127.0" prefWidth="127.0" text="CNPJ" />
-                  <TableColumn fx:id="corporateNameTableColumn" minWidth="250.0" prefWidth="250.0" text="Razão Social" />
-                  <TableColumn fx:id="tradeNameTableColumn" minWidth="200.0" prefWidth="200.0" text="Nome Fantasia" />
+            <TableView fx:id="customerTableView" prefHeight="550.0" prefWidth="900.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="40.0">
+               <columns>
+                  <TableColumn fx:id="customerIdTableColumn" minWidth="90.0" prefWidth="90.0" text="ID" />
+                  <TableColumn fx:id="personRegistryTableColumn" minWidth="108.0" prefWidth="108.0" text="CPF" />
+                  <TableColumn fx:id="nameTableColumn" minWidth="250.0" prefWidth="250.0" text="Nome" />
+                  <TableColumn fx:id="sexTableColumn" minWidth="90.0" prefWidth="90.0" text="Sexo" />
                   <TableColumn fx:id="emailTableColumn" minWidth="250.0" prefWidth="250.0" text="E-mail" />
                   <TableColumn fx:id="phoneTableColumn" minWidth="108.0" prefWidth="108.0" text="Telefone" />
                   <TableColumn fx:id="addressTableColumn" minWidth="200.0" prefWidth="200.0" text="Endereço" />
                   <TableColumn fx:id="cityTableColumn" minWidth="130.0" prefWidth="130.0" text="Cidade" />
                   <TableColumn fx:id="federativeUnitTableColumn" minWidth="53.0" prefWidth="53.0" text="UF" />
-              </columns>
+               </columns>
             </TableView>
             <BorderPane prefHeight="20.0" prefWidth="900.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
                <left>
@@ -184,7 +184,7 @@
                               <Insets />
                            </HBox.margin>
                         </Label>
-                        <Label fx:id="supplierIdLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="280.0" styleClass="attribute-value-label" />
+                        <Label fx:id="customerIdLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="280.0" styleClass="attribute-value-label" />
                      </children>
                      <VBox.margin>
                         <Insets bottom="10.0" />
@@ -192,12 +192,12 @@
                   </HBox>
                   <HBox>
                      <children>
-                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="CNPJ: ">
+                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="CPF:  ">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
                         </Label>
-                        <Label fx:id="companyRegistryLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="263.0" styleClass="attribute-value-label" />
+                        <Label fx:id="personRegistryLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="269.0" styleClass="attribute-value-label" />
                      </children>
                      <VBox.margin>
                         <Insets bottom="10.0" />
@@ -205,12 +205,12 @@
                   </HBox>
                   <HBox>
                      <children>
-                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Razão Social: ">
+                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Nome:  ">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
                         </Label>
-                        <Label fx:id="corporateNameLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="223.0" styleClass="attribute-value-label" />
+                        <Label fx:id="nameLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="255.0" styleClass="attribute-value-label" />
                      </children>
                      <VBox.margin>
                         <Insets bottom="10.0" />
@@ -218,12 +218,12 @@
                   </HBox>
                   <HBox>
                      <children>
-                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Nome Fantasia: ">
+                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Sexo: ">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
                         </Label>
-                        <Label fx:id="tradeNameLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="209.0" styleClass="attribute-value-label" />
+                        <Label fx:id="sexLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="266.0" styleClass="attribute-value-label" />
                      </children>
                      <VBox.margin>
                         <Insets bottom="10.0" />

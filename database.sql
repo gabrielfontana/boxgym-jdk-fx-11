@@ -70,6 +70,25 @@ CREATE TABLE `stockentry_product` (
   FOREIGN KEY (`fkProduct`) REFERENCES `product`(`productId`) ON UPDATE CASCADE
 );
 
+CREATE TABLE `customer` (
+	`customerId` INT(11) NOT NULL AUTO_INCREMENT,
+	`personRegistry` CHAR(11) NOT NULL,
+	`name` VARCHAR(255) NOT NULL,
+	`sex` CHAR(9) NOT NULL,
+	`email` VARCHAR(255) NULL, 
+	`phone` VARCHAR(11) NULL, 
+	`zipCode` CHAR(8) NULL,
+	`address` VARCHAR(255) NULL, 
+	`addressComplement` VARCHAR(255) NULL, 
+	`district` VARCHAR(255) NULL, 
+	`city` VARCHAR(255) NULL, 
+	`federativeUnit` CHAR(2) NULL,
+	`createdAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`updatedAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	PRIMARY KEY (`customerId`),
+	UNIQUE KEY `customerUnique` (`personRegistry`) USING BTREE
+);
+
 DELIMITER $$
 CREATE TRIGGER `triggerAddProductAmountAfterStockEntry` AFTER INSERT ON `stockentry_product`
 FOR EACH ROW BEGIN

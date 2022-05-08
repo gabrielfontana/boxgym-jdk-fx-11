@@ -37,8 +37,8 @@ public class SupplierDao {
         this.conn = new ConnectionFactory().getConnection();
     }
 
-    public boolean checkExistingSupplier(Supplier supplier) {
-        String cnpj = supplier.getCompanyRegistry();
+    public boolean checkExistingSupplier(String companyRegistry) {
+        String cnpj = companyRegistry;
         String sql = "SELECT `companyRegistry` FROM `supplier` WHERE `companyRegistry` = '" + cnpj + "';";
 
         try {

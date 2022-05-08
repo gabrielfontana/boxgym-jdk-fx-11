@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import currencyfield.CurrencyField?>
+<?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -11,124 +12,139 @@
 <?import javafx.scene.layout.VBox?>
 <?import limitedtextfield.LimitedTextField?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.ProductsUpdateController">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.ProductsUpdateController">
    <children>
-      <VBox layoutX="15.0" layoutY="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
+      <AnchorPane layoutX="15.0" layoutY="15.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox prefWidth="397.0" VBox.vgrow="ALWAYS">
+            <VBox AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
                <children>
-                  <VBox HBox.hgrow="ALWAYS">
+                  <HBox prefWidth="397.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <Label text="Nome *">
-                           <VBox.margin>
-                              <Insets bottom="5.0" />
-                           </VBox.margin>
-                        </Label>
-                        <LimitedTextField fx:id="nameTextField" prefHeight="30.0" prefWidth="550.0" />
+                        <VBox prefWidth="275.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label text="Nome *">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <LimitedTextField fx:id="nameTextField" prefHeight="30.0" prefWidth="550.0" />
+                           </children>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </VBox>
+                        <VBox prefWidth="275.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label text="Categoria">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <LimitedTextField fx:id="categoryTextField" prefHeight="30.0" prefWidth="550.0" />
+                           </children>
+                        </VBox>
                      </children>
-                     <HBox.margin>
-                        <Insets right="10.0" />
-                     </HBox.margin>
-                  </VBox>
-                  <VBox HBox.hgrow="ALWAYS">
-                     <children>
-                        <Label text="Categoria">
-                           <VBox.margin>
-                              <Insets bottom="5.0" />
-                           </VBox.margin>
-                        </Label>
-                        <LimitedTextField fx:id="categoryTextField" prefHeight="30.0" prefWidth="550.0" />
-                     </children>
-                  </VBox>
-               </children>
-               <VBox.margin>
-                  <Insets bottom="10.0" />
-               </VBox.margin>
-            </HBox>
-            <VBox prefHeight="120.0" prefWidth="623.0" VBox.vgrow="ALWAYS">
-               <children>
-                  <Label text="Descrição">
                      <VBox.margin>
-                        <Insets bottom="5.0" />
+                        <Insets bottom="20.0" />
                      </VBox.margin>
-                  </Label>
-                  <TextArea fx:id="descriptionTextArea" prefHeight="97.0" prefWidth="623.0" wrapText="true" />
+                  </HBox>
+                  <VBox prefHeight="120.0" prefWidth="560.0" VBox.vgrow="ALWAYS">
+                     <children>
+                        <Label text="Descrição">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TextArea fx:id="descriptionTextArea" prefHeight="97.0" prefWidth="623.0" wrapText="true" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </VBox>
+                  <HBox>
+                     <children>
+                        <VBox prefWidth="132.5" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label text="Estoque Inicial *">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <LimitedTextField fx:id="amountTextField" prefHeight="30.0" prefWidth="80.0" />
+                           </children>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </VBox>
+                        <VBox prefHeight="47.0" prefWidth="132.5" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label text="Estoque Mínimo *">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <LimitedTextField fx:id="minimumStockTextField" prefHeight="30.0" prefWidth="80.0" />
+                           </children>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </VBox>
+                        <VBox prefWidth="132.5" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label text="Preço de Custo">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <CurrencyField fx:id="costPriceTextField" prefHeight="30.0" prefWidth="110.0" />
+                           </children>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </VBox>
+                        <VBox prefWidth="132.5" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label text="Preço de Venda">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <CurrencyField fx:id="sellingPriceTextField" prefHeight="30.0" prefWidth="110.0" />
+                           </children>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </VBox>
+                     </children>
+                  </HBox>
                </children>
-               <VBox.margin>
-                  <Insets bottom="10.0" />
-               </VBox.margin>
             </VBox>
-            <HBox>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutY="284.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <ImageView fx:id="productImage" fitHeight="160.0" fitWidth="160.0" layoutX="220.0" onMouseClicked="#chooseImage" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="220.0" AnchorPane.topAnchor="20.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutY="495.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <HBox AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
                <children>
-                  <VBox prefWidth="97.0" HBox.hgrow="ALWAYS">
-                     <children>
-                        <Label text="Estoque Atual">
-                           <VBox.margin>
-                              <Insets bottom="5.0" />
-                           </VBox.margin>
-                        </Label>
-                        <LimitedTextField fx:id="amountTextField" disable="true" editable="false" prefHeight="30.0" prefWidth="80.0" />
-                     </children>
+                  <Button fx:id="saveButton" mnemonicParsing="false" onAction="#save" prefHeight="30.0" prefWidth="89.0" text="Salvar">
                      <HBox.margin>
-                        <Insets right="10.0" />
+                        <Insets right="15.0" />
                      </HBox.margin>
-                  </VBox>
-                  <VBox prefHeight="47.0" prefWidth="97.0" HBox.hgrow="ALWAYS">
-                     <children>
-                        <Label text="Estoque Mínimo *">
-                           <VBox.margin>
-                              <Insets bottom="5.0" />
-                           </VBox.margin>
-                        </Label>
-                        <LimitedTextField fx:id="minimumStockTextField" prefHeight="30.0" prefWidth="80.0" />
-                     </children>
-                     <HBox.margin>
-                        <Insets right="10.0" />
-                     </HBox.margin>
-                  </VBox>
-                  <VBox prefWidth="97.0" HBox.hgrow="ALWAYS">
-                     <children>
-                        <Label text="Preço de Custo">
-                           <VBox.margin>
-                              <Insets bottom="5.0" />
-                           </VBox.margin>
-                        </Label>
-                        <CurrencyField fx:id="costPriceTextField" prefHeight="30.0" prefWidth="110.0" />
-                     </children>
-                     <HBox.margin>
-                        <Insets right="10.0" />
-                     </HBox.margin>
-                  </VBox>
-                  <VBox prefWidth="97.0" HBox.hgrow="ALWAYS">
-                     <children>
-                        <Label text="Preço de Venda">
-                           <VBox.margin>
-                              <Insets bottom="5.0" />
-                           </VBox.margin>
-                        </Label>
-                        <CurrencyField fx:id="sellingPriceTextField" prefHeight="30.0" prefWidth="110.0" />
-                     </children>
-                     <HBox.margin>
-                        <Insets right="10.0" />
-                     </HBox.margin>
-                  </VBox>
+                     <graphic>
+                        <MaterialDesignIconView fill="WHITE" glyphName="CONTENT_SAVE" size="15" />
+                     </graphic>
+                  </Button>
+                  <Button fx:id="clearButton" mnemonicParsing="false" onAction="#clear" prefHeight="30.0" prefWidth="89.0" text="Limpar">
+                     <graphic>
+                        <MaterialDesignIconView glyphName="BROOM" size="15" />
+                     </graphic></Button>
                </children>
-               <VBox.margin>
-                  <Insets bottom="10.0" />
-               </VBox.margin>
             </HBox>
          </children>
-      </VBox>
-      <ImageView fx:id="productImage" fitHeight="160.0" fitWidth="160.0" layoutX="247.0" layoutY="295.0" onMouseClicked="#chooseImage" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="247.0" AnchorPane.rightAnchor="247.0" />
-      <HBox layoutX="14.0" layoutY="417.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0">
-         <children>
-            <Button fx:id="saveButton" mnemonicParsing="false" onAction="#save" prefHeight="30.0" prefWidth="89.0" text="Salvar">
-               <HBox.margin>
-                  <Insets right="15.0" />
-               </HBox.margin>
-            </Button>
-            <Button fx:id="clearButton" mnemonicParsing="false" onAction="#clear" prefHeight="30.0" prefWidth="89.0" text="Limpar" />
-         </children>
-      </HBox>
+      </AnchorPane>
    </children>
 </AnchorPane>
