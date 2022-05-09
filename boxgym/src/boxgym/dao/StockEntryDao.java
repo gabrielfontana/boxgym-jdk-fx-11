@@ -134,10 +134,10 @@ public class StockEntryDao {
         try {
             XSSFWorkbook workbook = new XSSFWorkbook();
 
-            XSSFCellStyle infoStyle = ExcelFileHelper.excelStyle(workbook, "Arial", true, BorderStyle.NONE, IndexedColors.WHITE);
-            XSSFCellStyle headerStyle = ExcelFileHelper.excelStyle(workbook, "Arial", true, BorderStyle.THIN, IndexedColors.GREY_25_PERCENT);
-            XSSFCellStyle subHeaderStyle = ExcelFileHelper.excelStyle(workbook, "Arial", true, BorderStyle.THIN, IndexedColors.WHITE);
-            XSSFCellStyle defaultStyle = ExcelFileHelper.excelStyle(workbook, "Arial", false, BorderStyle.THIN, IndexedColors.WHITE);
+            XSSFCellStyle infoStyle = ExcelFileHelper.excelStyle(workbook, "Arial", true, BorderStyle.NONE, new byte[]{(byte) 255, (byte) 255, (byte) 255});
+            XSSFCellStyle headerStyle = ExcelFileHelper.excelStyle(workbook, "Arial", true, BorderStyle.THIN, new byte[]{(byte) 235, (byte) 235, (byte) 235});
+            XSSFCellStyle subHeaderStyle = ExcelFileHelper.excelStyle(workbook, "Arial", true, BorderStyle.THIN, new byte[]{(byte) 255, (byte) 255, (byte) 255});
+            XSSFCellStyle defaultStyle = ExcelFileHelper.excelStyle(workbook, "Arial", false, BorderStyle.THIN, new byte[]{(byte) 255, (byte) 255, (byte) 255});
 
             XSSFSheet sheet = workbook.createSheet("Entradas de Estoque");
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 3));

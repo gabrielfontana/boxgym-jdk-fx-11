@@ -135,7 +135,7 @@
                   <TableColumn fx:id="phoneTableColumn" minWidth="108.0" prefWidth="108.0" text="Telefone" />
                   <TableColumn fx:id="addressTableColumn" minWidth="200.0" prefWidth="200.0" text="Endereço" />
                   <TableColumn fx:id="cityTableColumn" minWidth="130.0" prefWidth="130.0" text="Cidade" />
-                  <TableColumn fx:id="federativeUnitTableColumn" minWidth="53.0" prefWidth="53.0" text="UF" />
+                  <TableColumn fx:id="federativeUnitTableColumn" minWidth="55.0" prefWidth="55.0" text="UF" />
                </columns>
             </TableView>
             <BorderPane prefHeight="20.0" prefWidth="900.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">

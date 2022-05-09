@@ -1,16 +1,30 @@
 package boxgym.dao;
 
+import boxgym.helper.ExcelFileHelper;
 import boxgym.jdbc.ConnectionFactory;
 import boxgym.model.Customer;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.dbutils.DbUtils;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class CustomerDao {
 
@@ -144,6 +158,69 @@ public class CustomerDao {
             ps.execute();
             return true;
         } catch (SQLException ex) {
+            Logger.getLogger(CustomerDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return false;
+    }
+    
+    public boolean createExcelFile(String filePath) {
+        String sql = "SELECT * FROM `customer`";
+
+        try {
+            XSSFWorkbook workbook = new XSSFWorkbook();
+
+            XSSFCellStyle infoStyle = ExcelFileHelper.excelStyle(workbook, "Arial", true, BorderStyle.NONE, new byte[]{(byte) 255, (byte) 255, (byte) 255});
+            XSSFCellStyle headerStyle = ExcelFileHelper.excelStyle(workbook, "Arial", true, BorderStyle.THIN, new byte[]{(byte) 235, (byte) 235, (byte) 235});
+            XSSFCellStyle defaultStyle = ExcelFileHelper.excelStyle(workbook, "Arial", false, BorderStyle.THIN, new byte[]{(byte) 255, (byte) 255, (byte) 255});
+
+            XSSFSheet sheet = workbook.createSheet("Clientes");
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 3));
+            ExcelFileHelper.createStyledCell(sheet.createRow(0), 0, "Relatório gerado em: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")), infoStyle);
+
+            List<String> fields = Arrays.asList("ID", "CPF", "Nome", "Sexo", "E-mail", "Telefone", "CEP",
+                    "Endereço", "Complemento", "Bairro", "Cidade", "UF", "Criação", "Modificação");
+            XSSFRow headerRow = sheet.createRow(2);
+            for (int i = 0; i < fields.size(); i++) {
+                ExcelFileHelper.createStyledCell(headerRow, i, fields.get(i), headerStyle);
+            }
+
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            int rowIndex = 3;
+            while (rs.next()) {
+                XSSFRow row = sheet.createRow(rowIndex);
+                ExcelFileHelper.createStyledCell(row, 0, rs.getInt("customerId"), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 1, rs.getString("personRegistry"), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 2, rs.getString("name"), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 3, rs.getString("sex"), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 4, rs.getString("email"), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 5, rs.getString("phone"), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 6, rs.getString("zipCode"), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 7, rs.getString("address"), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 8, rs.getString("addressComplement"), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 9, rs.getString("district"), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 10, rs.getString("city"), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 11, rs.getString("federativeUnit"), defaultStyle);
+                ExcelFileHelper.createStyledDateTimeCell(row, 12, rs.getString("createdAt"), DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"), defaultStyle);
+                ExcelFileHelper.createStyledDateTimeCell(row, 13, rs.getString("updatedAt"), DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"), defaultStyle);
+                rowIndex++;
+            }
+            for (int i = 0; i < fields.size(); i++) {
+                sheet.autoSizeColumn(i);
+            }
+
+            FileOutputStream fileOut = new FileOutputStream(filePath);
+            workbook.write(fileOut);
+            fileOut.close();
+            workbook.close();
+            return true;
+        } catch (SQLException | FileNotFoundException ex) {
+            Logger.getLogger(CustomerDao.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
             Logger.getLogger(CustomerDao.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DbUtils.closeQuietly(conn);
