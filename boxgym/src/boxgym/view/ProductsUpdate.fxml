@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import limitedtextfield.LimitedTextField?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.ProductsUpdateController">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.ProductsUpdateController">
    <children>
       <AnchorPane layoutX="15.0" layoutY="15.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -65,12 +65,12 @@
                      <children>
                         <VBox prefWidth="132.5" HBox.hgrow="ALWAYS">
                            <children>
-                              <Label text="Estoque Inicial *">
+                              <Label text="Estoque Atual">
                                  <VBox.margin>
                                     <Insets bottom="5.0" />
                                  </VBox.margin>
                               </Label>
-                              <LimitedTextField fx:id="amountTextField" prefHeight="30.0" prefWidth="80.0" />
+                              <LimitedTextField fx:id="amountTextField" disable="true" prefHeight="30.0" prefWidth="80.0" />
                            </children>
                            <HBox.margin>
                               <Insets right="10.0" />

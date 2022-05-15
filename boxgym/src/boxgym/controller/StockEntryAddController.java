@@ -201,6 +201,8 @@ public class StockEntryAddController implements Initializable {
             productsEntryArea.setDisable(false);
             firstRow.setDisable(false);
             lastRow.setDisable(false);
+            saveButton.setDisable(false);
+            clearButton.setDisable(false);
             StockEntry stockEntry = new StockEntry(getKeyFromSupplierComboBox(), invoiceIssueDateDatePicker.getValue(), invoiceNumberTextField.getText());
             StockEntryDao stockEntryDao = new StockEntryDao();
             stockEntryDao.create(stockEntry);
@@ -292,7 +294,7 @@ public class StockEntryAddController implements Initializable {
 
     @FXML
     void save() {
-        if (!(list == null)) {
+        if (!(list == null || list.isEmpty())) {
             for (StockEntryProduct item : list) {
                 StockEntryProductDao dao = new StockEntryProductDao();
                 dao.create(item);

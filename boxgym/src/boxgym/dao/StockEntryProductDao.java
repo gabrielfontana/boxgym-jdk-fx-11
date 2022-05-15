@@ -1,6 +1,7 @@
 package boxgym.dao;
 
 import boxgym.jdbc.ConnectionFactory;
+import boxgym.model.StockEntry;
 import boxgym.model.StockEntryProduct;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -69,6 +70,24 @@ public class StockEntryProductDao {
             DbUtils.closeQuietly(rs);
         }
         return productsList;
+    }
+    
+    public boolean delete(StockEntry entry) {
+        String sql = "DELETE FROM `stockentry_product` WHERE `fkStockEntry` = ?;";
+
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, entry.getStockEntryId());
+            ps.execute();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(StockEntryProductDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return false;
     }
 
 }

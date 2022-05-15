@@ -1,6 +1,7 @@
 package boxgym.controller;
 
 import boxgym.dao.StockEntryDao;
+import boxgym.dao.StockEntryProductDao;
 import boxgym.helper.AlertHelper;
 import boxgym.helper.ButtonHelper;
 import boxgym.helper.StageHelper;
@@ -30,6 +31,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
@@ -78,6 +80,9 @@ public class StockEntryController implements Initializable {
 
     @FXML
     private Button addButton;
+    
+    @FXML
+    private Button deleteButton;
 
     @FXML
     private MenuButton exportButton;
@@ -133,7 +138,7 @@ public class StockEntryController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         resetDetails();
-        ButtonHelper.buttonCursor(filterButton, exportButton, addButton, listButton);
+        ButtonHelper.buttonCursor(filterButton, exportButton, addButton, deleteButton, listButton);
         ButtonHelper.iconButton(firstRow, lastRow);
         initSupplierTableView();
         listeners();
@@ -160,6 +165,25 @@ public class StockEntryController implements Initializable {
             }
         } catch (IOException ex) {
             Logger.getLogger(StockEntryController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    @FXML
+    void deleteStockEntry(ActionEvent event) {
+        StockEntryDao stockEntryDao = new StockEntryDao();
+        StockEntryProductDao stockEntryProductDao = new StockEntryProductDao();
+
+        if (selected == null) {
+            alert.customAlert(Alert.AlertType.WARNING, "Selecione uma entrada de estoque para excluir!", "");
+        } else {
+            alert.confirmationAlert("Tem certeza que deseja excluir esta entrada de estoque?", "Esta ação é irreversível!");
+            if (alert.getResult().get() == ButtonType.YES) {
+                stockEntryProductDao.delete(selected);
+                stockEntryDao.delete(selected);
+                refreshTableView();
+                resetDetails();
+                alert.customAlert(Alert.AlertType.WARNING, "A entrada de estoque foi excluída com sucesso!", "");
+            }
         }
     }
 

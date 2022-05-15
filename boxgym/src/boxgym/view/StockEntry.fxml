@@ -20,7 +20,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="695.0" prefWidth="1280.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.StockEntryController">
+<AnchorPane prefHeight="695.0" prefWidth="1280.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.StockEntryController">
    <children>
       <AnchorPane layoutX="30.0" layoutY="35.0" prefHeight="80.0" prefWidth="1280.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -86,6 +86,14 @@
                      <graphic>
                         <MaterialDesignIconView glyphName="PLUS" size="15.0" />
                      </graphic>
+                  </Button>
+                  <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteStockEntry" prefHeight="30.0" prefWidth="90.0" text="Excluir">
+                     <graphic>
+                        <MaterialDesignIconView glyphName="DELETE" size="15.0" />
+                     </graphic>
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
                   </Button>
                   <MenuButton fx:id="exportButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="105.0" text="Exportar">
                      <items>
