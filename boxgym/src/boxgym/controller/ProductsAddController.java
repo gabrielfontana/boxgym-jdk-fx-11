@@ -128,7 +128,6 @@ public class ProductsAddController implements Initializable {
     }
     
     private void buttonsProperties() {
-        ButtonHelper.defaultButton(saveButton);
         ButtonHelper.buttonCursor(saveButton, clearButton);
         ButtonHelper.imageButton(productImage);
     }

@@ -14,17 +14,17 @@
 
 .login-btn {
     -fx-background-color: -main-theme-color !important;
-    -fx-text-fill: -light-text-color !important;
+    -fx-text-fill: #ffffff !important;
 }
 
-.login-btn:hover {
-    -fx-border-color: -button-border-color !important;
-}
+/*.login-btn:hover {
+    -fx-border-color: #666666 !important;
+}*/
 
 .login-btn:pressed {
     -fx-background-color: derive(-main-theme-color, -40%) !important;
 }
 
 .normal-label {
-    -fx-text-fill: -dark-text-color;
+    -fx-text-fill: #000000;
 }

@@ -146,8 +146,7 @@ public class StockEntryAddController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        ButtonHelper.buttonCursor(addStockEntryButton, addProductEntryButton, saveButton, clearButton);
-        ButtonHelper.iconButton(firstRow, lastRow);
+        buttonsProperties();
         
         setStockEntryCreationFlag(false);
         setProductsEntryCreationFlag(false);
@@ -160,6 +159,11 @@ public class StockEntryAddController implements Initializable {
         initProductEntryTableView();
         countLabel.setText("Exibindo nenhum produto");
         TextFieldFormat.currencyFormat(totalPriceTextField, BigDecimal.ZERO);
+    }
+    
+    private void buttonsProperties() {
+        ButtonHelper.buttonCursor(addStockEntryButton, addProductEntryButton, saveButton, clearButton);
+        ButtonHelper.iconButton(firstRow, lastRow);
     }
 
     private void inputRestrictions() {

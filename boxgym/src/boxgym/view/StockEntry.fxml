@@ -20,7 +20,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="695.0" prefWidth="1280.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.StockEntryController">
+<AnchorPane prefHeight="695.0" prefWidth="1280.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.StockEntryController">
    <children>
       <AnchorPane layoutX="30.0" layoutY="35.0" prefHeight="80.0" prefWidth="1280.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -242,7 +242,7 @@
                         <Insets bottom="10.0" />
                      </VBox.margin>
                   </HBox>
-                  <Button fx:id="listButton" mnemonicParsing="false" onAction="#listProducts" prefHeight="30.0" prefWidth="131.0" text="Listar produtos">
+                  <Button fx:id="listButton" mnemonicParsing="false" onAction="#listProducts" prefHeight="30.0" prefWidth="131.0" text="Listar Produtos">
                      <graphic>
                         <MaterialDesignIconView glyphName="SITEMAP" size="15.0" />
                      </graphic>

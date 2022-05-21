@@ -1,13 +1,65 @@
-.table-row-cell:odd {
-    -fx-background-color: #f3f3f3;
-}
+@import "base.css";
 
 .table-view .column-header {
-   -fx-border-style: solid;
-   -fx-border-color: #f3f3f3;
-   -fx-border-width: 1;
+    -fx-border-style: solid;
+    -fx-border-color: #f2f2f2;
+    -fx-border-width: 1;
 }
 
 .table-view .column-header:hover {
     -fx-background-color: transparent;
 }
+
+/* cell hover background color */
+/*.table-cell:filled:hover {
+    -fx-background-color: #f2f2f2 !important;
+}*/
+
+/* row hover background color */
+/*.table-view:row-selection > .virtual-flow > .clipped-container > .sheet > .table-row-cell:filled:hover {
+    -fx-background-color: #f2f2f2 !important;
+}*/
+
+/* selected row background color */
+/*.table-row-cell:selected .table-cell {
+    -fx-background-color: -main-theme-color !important;
+}*/
+
+/* selected row text color */
+/*.table-row-cell:selected .text {
+    -fx-fill: #ffffff !important;
+}*/
+
+/*.scroll-bar > .thumb{
+    -fx-background-color: derive(-main-theme-color, 40%) !important;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+}
+
+.scroll-bar > .thumb:hover {
+    -fx-background-color: derive(-main-theme-color, 20%) !important;
+}
+
+.scroll-bar > .thumb:pressed {
+    -fx-background-color: -main-theme-color !important;
+}
+
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track{
+    -fx-background-color: #f2f2f2 !important;
+}
+
+.scroll-bar > .increment-button,
+.scroll-bar > .decrement-button {
+    -fx-background-color: #f2f2f2 !important;
+}
+
+.scroll-bar > .increment-button:hover,
+.scroll-bar > .decrement-button:hover  {
+    -fx-background-color: derive(#f2f2f2, -20%) !important;
+}
+
+.scroll-bar > .increment-button:pressed,
+.scroll-bar > .decrement-button:pressed {
+    -fx-background-color: derive(#f2f2f2, -40%) !important;
+}*/

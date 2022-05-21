@@ -10,7 +10,7 @@
 <?import limitedtextfield.LimitedTextField?>
 <?import org.controlsfx.control.PrefixSelectionComboBox?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="358.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.CustomersAddController">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="358.0" prefWidth="600.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.CustomersAddController">
    <children>
       <AnchorPane layoutX="15.0" layoutY="15.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -188,7 +188,7 @@
                         <Insets right="15.0" />
                      </HBox.margin>
                      <graphic>
-                        <MaterialDesignIconView fill="WHITE" glyphName="CONTENT_SAVE" size="15" />
+                        <MaterialDesignIconView fill="BLACK" glyphName="CONTENT_SAVE" size="15" />
                      </graphic>
                   </Button>
                   <Button fx:id="clearButton" mnemonicParsing="false" onAction="#clear" prefHeight="30.0" prefWidth="89.0" text="Limpar">

@@ -174,7 +174,6 @@ public class SuppliersUpdateController implements Initializable {
     }
 
     private void buttonsProperties() {
-        ButtonHelper.defaultButton(saveButton);
         ButtonHelper.buttonCursor(saveButton, clearButton);
     }
 }
