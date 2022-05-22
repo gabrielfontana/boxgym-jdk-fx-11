@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -11,9 +12,9 @@
 <?import javafx.scene.text.Font?>
 <?import limitedtextfield.LimitedTextField?>
 
-<AnchorPane fx:id="content" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="350.0" styleClass="right-anchor-pane" stylesheets="@../css/login-style.css" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.RegisterController">
+<AnchorPane fx:id="content" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="350.0" styleClass="right-anchor-pane" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.RegisterController">
     <children>
-        <MaterialDesignIconView fx:id="backArrow" fill="#903131" glyphName="ARROW_LEFT" layoutX="10.0" layoutY="10.0" onMouseClicked="#backToLogin" size="21.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
+        <MaterialDesignIconView fx:id="backArrow" fill="#903131" glyphName="ARROW_LEFT" layoutX="10.0" layoutY="10.0" onMouseClicked="#backToLogin" size="21.0" styleClass="icon" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
         <VBox layoutX="50.0" layoutY="70.0">
             <children>
                 <Label styleClass="normal-label" text="Cadastro">
@@ -29,20 +30,12 @@
                         <Insets bottom="10.0" />
                     </VBox.margin>
                     <children>
-                        <LimitedTextField fx:id="usernameTextField" prefHeight="30.0" prefWidth="250.0" promptText="Usuário">
-                            <font>
-                                <Font size="15.0" />
-                            </font>
-                        </LimitedTextField>
+                        <LimitedTextField fx:id="usernameTextField" prefHeight="30.0" prefWidth="250.0" promptText="Usuário" />
                     </children>
                 </HBox>
                 <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="250.0">
                     <children>
-                        <PasswordField fx:id="passwordTextField" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="45.0" promptText="Senha" HBox.hgrow="ALWAYS">
-                            <font>
-                                <Font size="15.0" />
-                            </font>
-                        </PasswordField>
+                        <PasswordField fx:id="passwordTextField" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="45.0" promptText="Senha" HBox.hgrow="ALWAYS" />
                     </children>
                     <VBox.margin>
                         <Insets bottom="10.0" />
@@ -50,11 +43,7 @@
                 </HBox>
                 <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="250.0">
                     <children>
-                        <PasswordField fx:id="confirmPasswordTextField" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="45.0" promptText="Confirmar Senha" HBox.hgrow="ALWAYS">
-                            <font>
-                                <Font size="15.0" />
-                            </font>
-                        </PasswordField>
+                        <PasswordField fx:id="confirmPasswordTextField" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="45.0" promptText="Confirmar Senha" HBox.hgrow="ALWAYS" />
                     </children>
                     <VBox.margin>
                         <Insets bottom="10.0" />
@@ -62,9 +51,13 @@
                 </HBox>
                 <Button fx:id="registerButton" mnemonicParsing="false" onAction="#register" prefHeight="30.0" prefWidth="250.0" styleClass="login-btn" text="Cadastrar">
                <graphic>
-                  <MaterialDesignIconView fill="WHITE" glyphName="CLIPBOARD_CHECK" size="15.0" />
+                  <MaterialDesignIconView fill="WHITE" glyphName="CLIPBOARD_CHECK" size="15.0" styleClass="button-icon-color" />
                </graphic></Button>
             </children>
         </VBox>
-    </children>    
+    </children>
+   <stylesheets>
+      <URL value="@../css/login-style.css" />
+      <URL value="@../css/theme.css" />
+   </stylesheets>    
 </AnchorPane>

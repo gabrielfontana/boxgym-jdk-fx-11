@@ -140,7 +140,7 @@
             </TableView>
             <BorderPane prefHeight="20.0" prefWidth="900.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
                <left>
-                  <Label fx:id="countLabel" prefHeight="20.0" prefWidth="150.0" styleClass="attribute-value-label" BorderPane.alignment="CENTER">
+                  <Label fx:id="countLabel" prefHeight="20.0" prefWidth="150.0" BorderPane.alignment="CENTER">
                      <BorderPane.margin>
                         <Insets right="15.0" />
                      </BorderPane.margin>
@@ -149,17 +149,17 @@
                <right>
                   <HBox BorderPane.alignment="CENTER">
                      <children>
-                        <MaterialDesignIconView fx:id="firstRow" glyphName="ARROW_UP" onMouseClicked="#goToFirstRow" size="20">
+                        <MaterialDesignIconView fx:id="firstRow" glyphName="ARROW_UP" onMouseClicked="#goToFirstRow" size="20" styleClass="up-down-icon">
                            <HBox.margin>
                               <Insets right="15.0" />
                            </HBox.margin>
                         </MaterialDesignIconView>
-                        <MaterialDesignIconView fx:id="lastRow" glyphName="ARROW_DOWN" onMouseClicked="#goToLastRow" size="20" />
+                        <MaterialDesignIconView fx:id="lastRow" glyphName="ARROW_DOWN" onMouseClicked="#goToLastRow" size="20" styleClass="up-down-icon" />
                      </children>
                   </HBox>
                </right>
                <center>
-                  <Label fx:id="selectedRowLabel" prefHeight="20.0" prefWidth="150.0" styleClass="attribute-value-label" BorderPane.alignment="CENTER_LEFT">
+                  <Label fx:id="selectedRowLabel" prefHeight="20.0" prefWidth="150.0" BorderPane.alignment="CENTER_LEFT">
                      <BorderPane.margin>
                         <Insets right="15.0" />
                      </BorderPane.margin>

@@ -1,0 +1,92 @@
+@import "base.css";
+
+.label {
+    -fx-text-fill: #111 !important;
+}
+
+.text-input:focused {
+    -fx-background-color: -main-theme-color, white !important;
+    -fx-text-fill: #111 !important;
+}
+
+.text-field > .right-button:hover > .right-button-graphic {
+    -fx-background-color: -main-theme-color;
+}
+
+.text-area:hover .content {
+    -fx-background-color: #666666, white !important;
+}
+
+.text-area:focused .content {
+    -fx-background-color: -main-theme-color, white !important;
+    -fx-text-fill: #111 !important;
+}
+
+.password-field > .right-button:hover > .right-button-graphic {
+    -fx-background-color: -main-theme-color;
+}
+
+.password-field > .right-button:pressed {
+    -fx-background-color: -main-theme-color;
+}
+
+.password-field > .right-button:pressed > .right-button-graphic {
+    -fx-background-color: white;
+}
+
+.hyperlink{
+    -fx-text-fill: -main-theme-color;
+}
+
+.hyperlink:hover {
+    -fx-text-fill: derive(-main-theme-color, -25%);
+}
+
+.hyperlink:pressed {
+    -fx-text-fill: derive(-main-theme-color, -70%);
+}
+
+.date-picker.combo-box-base:focused, .date-picker.combo-box-base:focused:hover {
+    -fx-background-color: -main-theme-color, white !important;
+}
+
+.date-picker > .arrow-button:hover > .arrow {
+    -fx-background-color: -main-theme-color !important;
+}
+
+.date-picker > .arrow-button:pressed {
+    -fx-background-color: -main-theme-color !important;
+}
+
+.date-picker > .arrow-button:pressed > .arrow {
+    -fx-background-color: white !important;
+}
+
+.date-picker-popup > * > .day-cell.selected {
+    -fx-background-color: -main-theme-color !important;
+    -fx-text-fill: #111 !important;
+}
+
+.date-picker-popup > * > .day-cell.selected:hover {
+    -fx-background-color: derive(-main-theme-color, 70%) !important;
+}
+
+.date-picker-popup > * > .today {
+    -fx-background-color: derive(-main-theme-color, 90%), derive(-main-theme-color, 90%), #e6e6e6 !important;
+}
+
+.combo-box-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell:filled:selected{
+    -fx-background-color: -main-theme-color !important;
+}
+
+.up-down-icon{
+    -fx-fill: #838689 !important;
+}
+
+.up-down-icon:hover{
+    -fx-fill: #585a5c !important;
+}
+
+.up-down-icon:pressed {
+    -fx-fill: #111 !important;
+}

@@ -1,30 +1,40 @@
 @import "base.css";
 
 .left-anchor-pane {
-    -fx-background-color: -main-theme-color;
+    -fx-background-color: -main-theme-color !important;
 }
 
 .right-anchor-pane {
-    -fx-background-color: -secundary-theme-color;
+    -fx-background-color: -secundary-theme-color !important;
 }
 
 .icon {
-    -fx-fill: -main-theme-color;
+    -fx-fill: #838689 !important;
+}
+
+.icon:hover {
+    -fx-fill: #585a5c !important;
+}
+
+.icon:pressed {
+    -fx-fill: #111 !important;
+}
+
+.button-icon-color {
+    -fx-fill: #111
 }
 
 .login-btn {
     -fx-background-color: -main-theme-color !important;
-    -fx-text-fill: #ffffff !important;
+    -fx-text-fill: #111 !important;
 }
 
-/*.login-btn:hover {
+.login-btn:hover {
     -fx-border-color: #666666 !important;
-}*/
+    -fx-border-width: 2 !important;
+}
 
 .login-btn:pressed {
     -fx-background-color: derive(-main-theme-color, -40%) !important;
-}
-
-.normal-label {
-    -fx-text-fill: #000000;
+    -fx-border-color: derive(-main-theme-color, -40%) !important;
 }
