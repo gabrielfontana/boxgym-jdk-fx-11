@@ -21,12 +21,12 @@
 }
 
 .button-icon-color {
-    -fx-fill: #111
+    -fx-fill: white;
 }
 
 .login-btn {
     -fx-background-color: -main-theme-color !important;
-    -fx-text-fill: #111 !important;
+    -fx-text-fill: white !important;
 }
 
 .login-btn:hover {
