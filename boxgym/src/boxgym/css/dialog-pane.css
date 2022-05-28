@@ -14,7 +14,7 @@
 
 .myDialog .button:default{
     -fx-background-color: -main-theme-color !important;
-    -fx-text-fill: #111 !important;
+    -fx-text-fill: white !important;
 }
 
 .myDialog .button:default:hover {
