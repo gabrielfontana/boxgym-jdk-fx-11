@@ -27,9 +27,8 @@ public class ButtonHelper {
         }
     }
 
-    public static void buttonCursor(MenuButton menuButton1, MenuButton menuButton2, Button... buttons) {
+    public static void buttonCursor(MenuButton menuButton1, Button... buttons) {
         menuButton1.setCursor(Cursor.HAND);
-        menuButton2.setCursor(Cursor.HAND);
         for (Button b : buttons) {
             b.setCursor(Cursor.HAND);
         }

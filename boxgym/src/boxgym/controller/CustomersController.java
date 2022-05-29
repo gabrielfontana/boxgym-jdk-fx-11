@@ -7,7 +7,6 @@ import boxgym.helper.StageHelper;
 import boxgym.helper.TableViewCount;
 import boxgym.model.Customer;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
@@ -39,9 +38,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
-import javafx.stage.Stage;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
 
@@ -83,9 +79,6 @@ public class CustomersController implements Initializable {
 
     @FXML
     private Button deleteButton;
-
-    @FXML
-    private MenuButton exportButton;
     
     @FXML
     private TableView<Customer> customerTableView;
@@ -174,7 +167,7 @@ public class CustomersController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         resetDetails();
-        ButtonHelper.buttonCursor(exportButton, filterButton, addButton, updateButton, deleteButton);
+        ButtonHelper.buttonCursor(filterButton, addButton, updateButton, deleteButton);
         ButtonHelper.iconButton(firstRow, lastRow);
         initCustomerTableView();
         listeners();
@@ -204,7 +197,7 @@ public class CustomersController implements Initializable {
     @FXML
     void updateCustomer(ActionEvent event) {
         if (selected == null) {
-            alert.customAlert(Alert.AlertType.WARNING, "Selecione um cliente para editar!", "");
+            alert.customAlert(Alert.AlertType.WARNING, "Selecione um cliente para atualizar!", "");
         } else {
             int index = customerTableView.getSelectionModel().getSelectedIndex();
             try {
@@ -215,7 +208,7 @@ public class CustomersController implements Initializable {
                 CustomersUpdateController controller = loader.getController();
                 controller.setLoadCustomer(selected);
 
-                StageHelper.createAddOrUpdateStage("Editando Cliente", root);
+                StageHelper.createAddOrUpdateStage("Atualizando Cliente", root);
 
                 if (controller.isUpdated()) {
                     refreshTableView();
@@ -431,24 +424,6 @@ public class CustomersController implements Initializable {
             searchBox.setText("");
             searchBox.requestFocus();
         });
-    }
-
-    @FXML
-    void exportToExcel(ActionEvent event) {
-        FileChooser chooser = new FileChooser();
-        chooser.getExtensionFilters().add(new ExtensionFilter("Pasta de Trabalho do Excel", "*.xlsx"));
-        File file = chooser.showSaveDialog(new Stage());
-
-        CustomerDao customerDao = new CustomerDao();
-
-        if (file != null) {
-            customerDao.createExcelFile(file.getAbsolutePath());
-        }
-    }
-
-    @FXML
-    void generatePdf(ActionEvent event) {
-
     }
 
     @FXML

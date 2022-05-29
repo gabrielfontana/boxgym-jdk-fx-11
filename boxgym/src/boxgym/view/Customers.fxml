@@ -7,7 +7,6 @@
 <?import javafx.scene.control.CheckMenuItem?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.RadioMenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.TableColumn?>
@@ -97,32 +96,12 @@
                   </Button>
                   <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteCustomer" prefHeight="30.0" prefWidth="90.0" text="Excluir">
                      <HBox.margin>
-                        <Insets right="15.0" />
+                        <Insets />
                      </HBox.margin>
                      <graphic>
                         <MaterialDesignIconView glyphName="DELETE" size="15.0" />
                      </graphic>
                   </Button>
-                  <MenuButton fx:id="exportButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="105.0" text="Exportar">
-                     <items>
-                        <MenuItem fx:id="generatePdfButton" mnemonicParsing="false" onAction="#generatePdf" text="PDF">
-                           <graphic>
-                              <MaterialDesignIconView glyphName="FILE_PDF" size="15.0" />
-                           </graphic>
-                        </MenuItem>
-                        <MenuItem fx:id="exportExcelButton" mnemonicParsing="false" onAction="#exportToExcel" text="Excel">
-                           <graphic>
-                              <MaterialDesignIconView glyphName="FILE_EXCEL" size="15.0" />
-                           </graphic>
-                        </MenuItem>
-                     </items>
-                     <graphic>
-                        <MaterialDesignIconView glyphName="FILE_EXPORT" size="15" />
-                     </graphic>
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </MenuButton>
                </children>
             </HBox>
             <TableView fx:id="customerTableView" prefHeight="550.0" prefWidth="900.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="40.0">

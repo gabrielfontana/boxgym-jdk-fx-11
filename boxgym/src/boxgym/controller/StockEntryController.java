@@ -9,7 +9,6 @@ import boxgym.helper.TableViewCount;
 import boxgym.helper.TextFieldFormat;
 import boxgym.model.StockEntry;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -42,9 +41,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
-import javafx.stage.Stage;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
 
@@ -83,9 +79,6 @@ public class StockEntryController implements Initializable {
     
     @FXML
     private Button deleteButton;
-
-    @FXML
-    private MenuButton exportButton;
 
     @FXML
     private TableView<StockEntry> stockEntryTableView;
@@ -138,7 +131,7 @@ public class StockEntryController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         resetDetails();
-        ButtonHelper.buttonCursor(filterButton, exportButton, addButton, deleteButton, listButton);
+        ButtonHelper.buttonCursor(filterButton, addButton, deleteButton, listButton);
         ButtonHelper.iconButton(firstRow, lastRow);
         initSupplierTableView();
         listeners();
@@ -352,24 +345,6 @@ public class StockEntryController implements Initializable {
             searchBox.setText("");
             searchBox.requestFocus();
         });
-    }
-
-    @FXML
-    void exportToExcel(ActionEvent event) {
-        FileChooser chooser = new FileChooser();
-        chooser.getExtensionFilters().add(new ExtensionFilter("Pasta de Trabalho do Excel", "*.xlsx"));
-        File file = chooser.showSaveDialog(new Stage());
-
-        StockEntryDao stockEntryDao = new StockEntryDao();
-
-        if (file != null) {
-            stockEntryDao.createExcelFile(file.getAbsolutePath());
-        }
-    }
-
-    @FXML
-    void generatePdf(ActionEvent event) {
-
     }
 
     @FXML

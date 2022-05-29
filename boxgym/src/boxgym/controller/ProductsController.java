@@ -9,7 +9,6 @@ import boxgym.helper.TableViewCount;
 import boxgym.helper.TextFieldFormat;
 import boxgym.model.Product;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
-import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
@@ -45,8 +44,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
 
@@ -88,9 +85,6 @@ public class ProductsController implements Initializable {
 
     @FXML
     private Button deleteButton;
-
-    @FXML
-    private MenuButton exportButton;
     
     @FXML
     private TableView<Product> productTableView;
@@ -164,7 +158,7 @@ public class ProductsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         resetDetails();
-        ButtonHelper.buttonCursor(exportButton, filterButton, addButton, updateButton, deleteButton);
+        ButtonHelper.buttonCursor(filterButton, addButton, updateButton, deleteButton);
         ButtonHelper.iconButton(firstRow, lastRow);
         initProductTableView();
         listeners();
@@ -194,7 +188,7 @@ public class ProductsController implements Initializable {
     @FXML
     void updateProduct(ActionEvent event) {
         if (selected == null) {
-            alert.customAlert(Alert.AlertType.WARNING, "Selecione um produto para editar!", "");
+            alert.customAlert(Alert.AlertType.WARNING, "Selecione um produto para atualizar!", "");
         } else {
             int index = productTableView.getSelectionModel().getSelectedIndex();
             try {
@@ -205,7 +199,7 @@ public class ProductsController implements Initializable {
                 ProductsUpdateController controller = loader.getController();
                 controller.setLoadProduct(selected);
 
-                StageHelper.createAddOrUpdateStage("Editando Produto", root);
+                StageHelper.createAddOrUpdateStage("Atualizando Produto", root);
 
                 if (controller.isUpdated()) {
                     refreshTableView();
@@ -416,24 +410,6 @@ public class ProductsController implements Initializable {
         });
     }
 
-    @FXML
-    void exportToExcel(ActionEvent event) {
-        FileChooser chooser = new FileChooser();
-        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Pasta de Trabalho do Excel", "*.xlsx"));
-        File file = chooser.showSaveDialog(new Stage());
-        
-        ProductDao productDao = new ProductDao();
-
-        if (file != null) {
-            productDao.createExcelFile(file.getAbsolutePath());
-        }
-    }
-
-    @FXML
-    void generatePdf(ActionEvent event) {
-
-    }
-    
     @FXML
     void goToFirstRow(MouseEvent event) {
         productTableView.scrollTo(0);

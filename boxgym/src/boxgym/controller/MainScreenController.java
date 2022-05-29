@@ -1,7 +1,12 @@
 package boxgym.controller;
 
+import boxgym.dao.CustomerDao;
+import boxgym.dao.ProductDao;
+import boxgym.dao.StockEntryDao;
+import boxgym.dao.SupplierDao;
 import boxgym.helper.AlertHelper;
 import boxgym.helper.StageHelper;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -12,9 +17,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
 
@@ -69,7 +77,7 @@ public class MainScreenController implements Initializable {
     }
 
     @FXML
-    void handleClients(ActionEvent event) throws IOException {
+    void handleCustomers(ActionEvent event) throws IOException {
         changeContentArea("/boxgym/view/Customers.fxml");
     }
 
@@ -128,4 +136,64 @@ public class MainScreenController implements Initializable {
         changeContentArea("/boxgym/view/About.fxml");
     }
 
+    @FXML
+    void exportCustomersToExcel(ActionEvent event) {
+        FileChooser chooser = new FileChooser();
+        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Pasta de Trabalho do Excel", "*.xlsx"));
+        File file = chooser.showSaveDialog(new Stage());
+
+        CustomerDao customerDao = new CustomerDao();
+
+        if (file != null) {
+            customerDao.createExcelFile(file.getAbsolutePath());
+            alert.customAlert(Alert.AlertType.WARNING, "Relatório gerado com sucesso!", "");
+        }
+    }
+
+    @FXML
+    void exportSuppliersToExcel(ActionEvent event) {
+        FileChooser chooser = new FileChooser();
+        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Pasta de Trabalho do Excel", "*.xlsx"));
+        File file = chooser.showSaveDialog(new Stage());
+
+        SupplierDao supplierDao = new SupplierDao();
+
+        if (file != null) {
+            supplierDao.createExcelFile(file.getAbsolutePath());
+            alert.customAlert(Alert.AlertType.WARNING, "Relatório gerado com sucesso!", "");
+        }
+    }
+
+    @FXML
+    void exportSalesToExcel(ActionEvent event) {
+
+    }
+
+    @FXML
+    void exportProductsToExcel(ActionEvent event) {
+        FileChooser chooser = new FileChooser();
+        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Pasta de Trabalho do Excel", "*.xlsx"));
+        File file = chooser.showSaveDialog(new Stage());
+        
+        ProductDao productDao = new ProductDao();
+
+        if (file != null) {
+            productDao.createExcelFile(file.getAbsolutePath());
+            alert.customAlert(Alert.AlertType.WARNING, "Relatório gerado com sucesso!", "");
+        }
+    }
+
+    @FXML
+    void exportStockEntriesToExcel(ActionEvent event) {
+        FileChooser chooser = new FileChooser();
+        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Pasta de Trabalho do Excel", "*.xlsx"));
+        File file = chooser.showSaveDialog(new Stage());
+
+        StockEntryDao stockEntryDao = new StockEntryDao();
+
+        if (file != null) {
+            stockEntryDao.createExcelFile(file.getAbsolutePath());
+            alert.customAlert(Alert.AlertType.WARNING, "Relatório gerado com sucesso!", "");
+        }
+    }
 }

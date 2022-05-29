@@ -7,7 +7,6 @@ import boxgym.helper.StageHelper;
 import boxgym.helper.TableViewCount;
 import boxgym.model.Supplier;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
@@ -39,9 +38,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
-import javafx.stage.Stage;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
 
@@ -83,9 +79,6 @@ public class SuppliersController implements Initializable {
 
     @FXML
     private Button deleteButton;
-
-    @FXML
-    private MenuButton exportButton;
 
     @FXML
     private TableView<Supplier> supplierTableView;
@@ -174,7 +167,7 @@ public class SuppliersController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         resetDetails();
-        ButtonHelper.buttonCursor(exportButton, filterButton, addButton, updateButton, deleteButton);
+        ButtonHelper.buttonCursor(filterButton, addButton, updateButton, deleteButton);
         ButtonHelper.iconButton(firstRow, lastRow);
         initSupplierTableView();
         listeners();
@@ -204,7 +197,7 @@ public class SuppliersController implements Initializable {
     @FXML
     void updateSupplier(ActionEvent event) {
         if (selected == null) {
-            alert.customAlert(Alert.AlertType.WARNING, "Selecione um fornecedor para editar!", "");
+            alert.customAlert(Alert.AlertType.WARNING, "Selecione um fornecedor para atualizar!", "");
         } else {
             int index = supplierTableView.getSelectionModel().getSelectedIndex();
             try {
@@ -215,7 +208,7 @@ public class SuppliersController implements Initializable {
                 SuppliersUpdateController controller = loader.getController();
                 controller.setLoadSupplier(selected);
 
-                StageHelper.createAddOrUpdateStage("Editando Fornecedor", root);
+                StageHelper.createAddOrUpdateStage("Atualizando Fornecedor", root);
 
                 if (controller.isUpdated()) {
                     refreshTableView();
@@ -431,24 +424,6 @@ public class SuppliersController implements Initializable {
             searchBox.setText("");
             searchBox.requestFocus();
         });
-    }
-
-    @FXML
-    void exportToExcel(ActionEvent event) throws IOException {
-        FileChooser chooser = new FileChooser();
-        chooser.getExtensionFilters().add(new ExtensionFilter("Pasta de Trabalho do Excel", "*.xlsx"));
-        File file = chooser.showSaveDialog(new Stage());
-
-        SupplierDao supplierDao = new SupplierDao();
-
-        if (file != null) {
-            supplierDao.createExcelFile(file.getAbsolutePath());
-        }
-    }
-
-    @FXML
-    void generatePdf(ActionEvent event) {
-
     }
 
     @FXML
