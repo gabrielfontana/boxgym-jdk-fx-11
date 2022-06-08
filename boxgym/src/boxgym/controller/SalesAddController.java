@@ -1,17 +1,17 @@
 package boxgym.controller;
 
+import boxgym.dao.CustomerDao;
 import boxgym.dao.ProductDao;
-import boxgym.dao.StockEntryDao;
-import boxgym.dao.StockEntryProductDao;
-import boxgym.dao.SupplierDao;
+import boxgym.dao.SaleDao;
+import boxgym.dao.SaleProductDao;
 import boxgym.helper.ActionButtonTableCell;
 import boxgym.helper.AlertHelper;
 import boxgym.helper.ButtonHelper;
 import boxgym.helper.TableViewCount;
 import boxgym.helper.TextFieldFormat;
 import boxgym.helper.TextValidationHelper;
-import boxgym.model.StockEntry;
-import boxgym.model.StockEntryProduct;
+import boxgym.model.Sale;
+import boxgym.model.SaleProduct;
 import currencyfield.CurrencyField;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import java.math.BigDecimal;
@@ -40,16 +40,16 @@ import javafx.scene.layout.AnchorPane;
 import limitedtextfield.LimitedTextField;
 import org.controlsfx.control.PrefixSelectionComboBox;
 
-public class StockEntryAddController implements Initializable {
+public class SalesAddController implements Initializable {
 
-    SupplierDao supplierDao = new SupplierDao();
-    LinkedHashMap<Integer, String> supplierMap = supplierDao.getSupplierForHashMap();
+    CustomerDao customerDao = new CustomerDao();
+    LinkedHashMap<Integer, String> customerMap = customerDao.getCustomerForHashMap();
 
     ProductDao produtDao = new ProductDao();
     LinkedHashMap<Integer, String> productMap = produtDao.getProductForHashMap();
 
-    List<StockEntryProduct> list = new ArrayList<>();
-    ObservableList<StockEntryProduct> obsListItens;
+    List<SaleProduct> list = new ArrayList<>();
+    ObservableList<SaleProduct> obsListItens;
 
     AlertHelper ah = new AlertHelper();
 
@@ -57,25 +57,22 @@ public class StockEntryAddController implements Initializable {
     private AnchorPane anchorPane;
 
     @FXML
-    private AnchorPane stockEntryArea;
+    private AnchorPane saleArea;
 
     @FXML
-    private PrefixSelectionComboBox<String> supplierComboBox;
+    private PrefixSelectionComboBox<String> customerComboBox;
 
     @FXML
-    private DatePicker invoiceIssueDateDatePicker;
+    private DatePicker saleDateDatePicker;
 
     @FXML
-    private LimitedTextField invoiceNumberTextField;
-
-    @FXML
-    private Button addStockEntryButton;
+    private Button addSaleButton;
 
     @FXML
     private AnchorPane productsEntryArea;
 
     @FXML
-    private TextField stockEntryIdTextField;
+    private TextField saleIdTextField;
 
     @FXML
     private PrefixSelectionComboBox<String> productComboBox;
@@ -84,35 +81,35 @@ public class StockEntryAddController implements Initializable {
     private LimitedTextField amountTextField;
 
     @FXML
-    private CurrencyField costPriceTextField;
+    private CurrencyField unitPriceTextField;
 
     @FXML
     private Button addProductEntryButton;
 
     @FXML
-    private TableView<StockEntryProduct> productEntryTableView;
+    private TableView<SaleProduct> productEntryTableView;
 
     @FXML
-    private TableColumn<StockEntryProduct, String> productTableColumn;
+    private TableColumn<SaleProduct, String> productTableColumn;
 
     @FXML
-    private TableColumn<StockEntryProduct, Integer> amountTableColumn;
+    private TableColumn<SaleProduct, Integer> amountTableColumn;
 
     @FXML
-    private TableColumn<StockEntryProduct, BigDecimal> costPriceTableColumn;
+    private TableColumn<SaleProduct, BigDecimal> unitPriceTableColumn;
 
     @FXML
-    private TableColumn<StockEntryProduct, BigDecimal> subtotalTableColumn;
+    private TableColumn<SaleProduct, BigDecimal> subtotalTableColumn;
 
     @FXML
-    private TableColumn<StockEntryProduct, Button> actionButtonTableColumn;
+    private TableColumn<SaleProduct, Button> actionButtonTableColumn;
 
     @FXML
     private Label countLabel;
-    
+
     @FXML
     private MaterialDesignIconView firstRow;
-    
+
     @FXML
     private MaterialDesignIconView lastRow;
 
@@ -125,15 +122,15 @@ public class StockEntryAddController implements Initializable {
     @FXML
     private Button clearButton;
 
-    private boolean stockEntryCreationFlag;
+    private boolean saleCreationFlag;
     private boolean productsEntryCreationFlag;
 
-    public boolean isStockEntryCreationFlag() {
-        return stockEntryCreationFlag;
+    public boolean isSaleCreationFlag() {
+        return saleCreationFlag;
     }
 
-    public void setStockEntryCreationFlag(boolean stockEntryCreationFlag) {
-        this.stockEntryCreationFlag = stockEntryCreationFlag;
+    public void setSaleCreationFlag(boolean saleCreationFlag) {
+        this.saleCreationFlag = saleCreationFlag;
     }
 
     public boolean isProductsEntryCreationFlag() {
@@ -148,11 +145,11 @@ public class StockEntryAddController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         buttonsProperties();
         
-        setStockEntryCreationFlag(false);
+        setSaleCreationFlag(false);
         setProductsEntryCreationFlag(false);
         inputRestrictions();
-        loadSupplierNameComboBox();
-        invoiceIssueDateDatePicker.setEditable(false);
+        loadCustomerNameComboBox();
+        saleDateDatePicker.setEditable(false);
         
         loadProductNameComboBox();
         productNameComboBoxListener();
@@ -162,28 +159,27 @@ public class StockEntryAddController implements Initializable {
     }
     
     private void buttonsProperties() {
-        ButtonHelper.buttonCursor(addStockEntryButton, addProductEntryButton, saveButton, clearButton);
+        ButtonHelper.buttonCursor(addSaleButton, addProductEntryButton, saveButton, clearButton);
         ButtonHelper.iconButton(firstRow, lastRow);
     }
-
+    
     private void inputRestrictions() {
-        invoiceNumberTextField.setValidationPattern("[0-9]", 10);
         amountTextField.setValidationPattern("[0-9]", 10);
     }
-
-    private void loadSupplierNameComboBox() {
+    
+    private void loadCustomerNameComboBox() {
         ObservableList<String> obsList = FXCollections.observableArrayList();
-        for (String s : supplierMap.values()) {
+        for (String s : customerMap.values()) {
             obsList.add(s);
         }
-        supplierComboBox.setPromptText("Selecione");
-        supplierComboBox.setItems(obsList);
+        customerComboBox.setPromptText("Selecione");
+        customerComboBox.setItems(obsList);
     }
-
-    private int getKeyFromSupplierComboBox() {
+    
+    private int getKeyFromCustomerComboBox() {
         int key = 0;
-        for (Map.Entry<Integer, String> entry : supplierMap.entrySet()) {
-            if (supplierComboBox.getSelectionModel().getSelectedItem().equals(entry.getValue())) {
+        for (Map.Entry<Integer, String> entry : customerMap.entrySet()) {
+            if (customerComboBox.getSelectionModel().getSelectedItem().equals(entry.getValue())) {
                 key = entry.getKey();
                 break;
             }
@@ -192,28 +188,28 @@ public class StockEntryAddController implements Initializable {
     }
 
     @FXML
-    void addStockEntry(ActionEvent event) {
+    private void addSale(ActionEvent event) {
         TextValidationHelper validation = new TextValidationHelper("Atenção: \n\n");
-        validation.invalidComboBox(supplierComboBox, "Fornecedor inválido! \n");
-        validation.nullDatePicker(invoiceIssueDateDatePicker, "Data inválida! \n");
+        validation.invalidComboBox(customerComboBox, "Cliente inválido! \n");
+        validation.nullDatePicker(saleDateDatePicker, "Data inválida! \n");
 
         if (!(validation.getEmptyCounter() == 0)) {
-            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível adicionar essa entrada de estoque!", validation.getMessage());
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível adicionar essa venda!", validation.getMessage());
         } else {
-            stockEntryArea.setDisable(true);
+            saleArea.setDisable(true);
             productsEntryArea.setDisable(false);
             firstRow.setDisable(false);
             lastRow.setDisable(false);
             saveButton.setDisable(false);
             clearButton.setDisable(false);
-            StockEntry stockEntry = new StockEntry(getKeyFromSupplierComboBox(), invoiceIssueDateDatePicker.getValue(), invoiceNumberTextField.getText());
-            StockEntryDao stockEntryDao = new StockEntryDao();
-            stockEntryDao.create(stockEntry);
-            stockEntryIdTextField.setText(String.valueOf(stockEntryDao.getStockEntryId()));
-            setStockEntryCreationFlag(true);
+            Sale sale = new Sale(getKeyFromCustomerComboBox(), saleDateDatePicker.getValue());
+            SaleDao saleDao = new SaleDao();
+            saleDao.create(sale);
+            saleIdTextField.setText(String.valueOf(saleDao.getSaleId()));
+            setSaleCreationFlag(true);
         }
     }
-
+    
     private void loadProductNameComboBox() {
         ObservableList<String> obsList = FXCollections.observableArrayList();
         for (String s : productMap.values()) {
@@ -238,13 +234,13 @@ public class StockEntryAddController implements Initializable {
         productComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
             if (productComboBox.getSelectionModel().getSelectedItem() != null) {
                 ProductDao dao = new ProductDao();
-                costPriceTextField.setPrice(dao.getProductCostPrice(getKeyFromProductComboBox()).doubleValue());
+                unitPriceTextField.setPrice(dao.getProductCostPrice(getKeyFromProductComboBox()).doubleValue());
             }
         });
     }
 
     @FXML
-    void addProductEntry(ActionEvent event) {
+    private void addProductEntry(ActionEvent event) {
         TextValidationHelper validation = new TextValidationHelper("Atenção: \n\n");
         validation.invalidComboBox(productComboBox, "Produto inválido! \n");
         validation.emptyTextField(amountTextField.getText(), "Quantidade inválida! \n");
@@ -252,8 +248,8 @@ public class StockEntryAddController implements Initializable {
         if (!(validation.getEmptyCounter() == 0)) {
             ah.customAlert(Alert.AlertType.WARNING, "Não foi possível adicionar esse produto!", validation.getMessage());
         } else {
-            StockEntryProduct item = new StockEntryProduct(Integer.valueOf(stockEntryIdTextField.getText()), getKeyFromProductComboBox(),
-                    Integer.valueOf(amountTextField.getText()), new BigDecimal(costPriceTextField.getPrice()));
+            SaleProduct item = new SaleProduct(Integer.valueOf(saleIdTextField.getText()), getKeyFromProductComboBox(),
+                    Integer.valueOf(amountTextField.getText()), new BigDecimal(unitPriceTextField.getPrice()));
             item.setTempProductName(productComboBox.getSelectionModel().getSelectedItem());
             list.add(item);
             obsListItens = FXCollections.observableArrayList(list);
@@ -264,15 +260,15 @@ public class StockEntryAddController implements Initializable {
             clear();
         }
     }
-
+    
     private void initProductEntryTableView() {
         productTableColumn.setCellValueFactory(new PropertyValueFactory("tempProductName"));
         amountTableColumn.setCellValueFactory(new PropertyValueFactory("amount"));
-        costPriceTableColumn.setCellValueFactory(new PropertyValueFactory("costPrice"));
-        TextFieldFormat.stockEntryProductTableCellCurrencyFormat(costPriceTableColumn);
+        unitPriceTableColumn.setCellValueFactory(new PropertyValueFactory("unitPrice"));
+        TextFieldFormat.saleProductTableCellCurrencyFormat(unitPriceTableColumn);
         subtotalTableColumn.setCellValueFactory(new PropertyValueFactory("subtotal"));
-        TextFieldFormat.stockEntryProductTableCellCurrencyFormat(subtotalTableColumn);
-        actionButtonTableColumn.setCellFactory(ActionButtonTableCell.<StockEntryProduct>forTableColumn("", (StockEntryProduct p) -> {
+        TextFieldFormat.saleProductTableCellCurrencyFormat(subtotalTableColumn);
+        actionButtonTableColumn.setCellFactory(ActionButtonTableCell.<SaleProduct>forTableColumn("", (SaleProduct p) -> {
             list.remove(p);
             obsListItens.remove(p);
             productEntryTableView.getItems().remove(p);
@@ -280,7 +276,7 @@ public class StockEntryAddController implements Initializable {
             return p;
         }));
     }
-
+    
     private void initCount() {
         int count = obsListItens.size();
         countLabel.setText(TableViewCount.footerMessage(count, "produto"));
@@ -289,32 +285,32 @@ public class StockEntryAddController implements Initializable {
     private void textFieldBinding() {
         totalPriceTextField.textProperty().bind(Bindings.createObjectBinding(()
                 -> productEntryTableView.getItems().stream()
-                        .map(StockEntryProduct::getSubtotal)
+                        .map(SaleProduct::getSubtotal)
                         .reduce(BigDecimal.ZERO, BigDecimal::add),
                 productEntryTableView.getItems()).asString("R$ %.2f")
         );
     }
 
     @FXML
-    void save() {
+    private void save(ActionEvent event) {
         if (!(list == null || list.isEmpty())) {
-            for (StockEntryProduct item : list) {
-                StockEntryProductDao dao = new StockEntryProductDao();
+            for (SaleProduct item : list) {
+                SaleProductDao dao = new SaleProductDao();
                 dao.create(item);
             }
             setProductsEntryCreationFlag(true);
-            ah.customAlert(Alert.AlertType.INFORMATION, "A entrada de estoque foi realizada com sucesso!", "");
+            ah.customAlert(Alert.AlertType.INFORMATION, "A venda foi realizada com sucesso!", "");
             anchorPane.getScene().getWindow().hide();
         } else {
             ah.customAlert(Alert.AlertType.INFORMATION, "Lista de produtos vazia!", "");
         }
     }
-
+    
     @FXML
     void clear() {
         productComboBox.valueProperty().set(null);
         amountTextField.setText("");
-        costPriceTextField.setPrice(0.0);
+        unitPriceTextField.setPrice(0.0);
     }
     
     @FXML

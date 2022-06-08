@@ -23,6 +23,12 @@ public class Customer {
 
     }
     
+    //Construtor da CombBox
+    public Customer(int customerId, String name) {
+        this.customerId = customerId;
+        this.name = name;
+    }
+    
     //Construtor CREATE
     public Customer(String personRegistry, String name, String sex, String email, String phone, String zipCode, String address,
             String addressComplement, String district, String city, String federativeUnit) {

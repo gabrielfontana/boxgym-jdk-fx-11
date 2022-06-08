@@ -214,9 +214,9 @@ public class StockEntryDao {
             workbook.close();
             return true;
         } catch (SQLException | FileNotFoundException ex) {
-            Logger.getLogger(SupplierDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(StockEntryDao.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(SupplierDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(StockEntryDao.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DbUtils.closeQuietly(conn);
             DbUtils.closeQuietly(ps);

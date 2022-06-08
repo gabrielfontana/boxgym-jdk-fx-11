@@ -14,12 +14,12 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.poi.ss.usermodel.BorderStyle;
-import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -83,6 +83,28 @@ public class CustomerDao {
             DbUtils.closeQuietly(rs);
         }
         return false;
+    }
+    
+    public LinkedHashMap<Integer, String> getCustomerForHashMap() {
+        LinkedHashMap<Integer, String> map = new LinkedHashMap<>();
+        String sql = "SELECT `customerId`, `name` FROM `customer`;";
+
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            Customer c;
+            while (rs.next()) {
+                c = new Customer(rs.getInt("customerId"), rs.getString("name"));
+                map.put(c.getCustomerId(), c.getName());
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return map;
     }
     
     public List<Customer> read() {

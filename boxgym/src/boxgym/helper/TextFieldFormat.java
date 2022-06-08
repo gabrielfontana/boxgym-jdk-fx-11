@@ -1,6 +1,8 @@
 package boxgym.helper;
 
 import boxgym.model.Product;
+import boxgym.model.Sale;
+import boxgym.model.SaleProduct;
 import boxgym.model.StockEntry;
 import boxgym.model.StockEntryProduct;
 import java.math.BigDecimal;
@@ -57,6 +59,36 @@ public class TextFieldFormat {
     public static void stockEntryTableCellDateFormat(TableColumn column) {
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         column.setCellFactory(tc -> new TableCell<StockEntry, LocalDate>() {
+            @Override
+            protected void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                if (empty) {
+                    setText(null);
+                } else {
+                    setText(date.format(dateFormat));
+                }
+            }
+        });
+    }
+    
+    public static void saleProductTableCellCurrencyFormat(TableColumn column) {
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
+        column.setCellFactory(tc -> new TableCell<SaleProduct, BigDecimal>() {
+            @Override
+            protected void updateItem(BigDecimal price, boolean empty) {
+                super.updateItem(price, empty);
+                if (empty) {
+                    setText(null);
+                } else {
+                    setText(currencyFormat.format(price));
+                }
+            }
+        });
+    }
+    
+    public static void saleTableCellDateFormat(TableColumn column) {
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        column.setCellFactory(tc -> new TableCell<Sale, LocalDate>() {
             @Override
             protected void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);

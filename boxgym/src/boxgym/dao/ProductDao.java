@@ -21,7 +21,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.poi.ss.usermodel.BorderStyle;
-import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -229,9 +228,9 @@ public class ProductDao {
             workbook.close();
             return true;
         } catch (SQLException | FileNotFoundException ex) {
-            Logger.getLogger(SupplierDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductDao.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(SupplierDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductDao.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DbUtils.closeQuietly(conn);
             DbUtils.closeQuietly(ps);
