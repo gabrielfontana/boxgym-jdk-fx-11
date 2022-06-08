@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.MainScreenController">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.MainScreenController">
     <top>
         <MenuBar prefHeight="25.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
             <menus>
@@ -59,27 +59,21 @@
                                 <MaterialDesignIconView fill="BLACK" glyphName="CURRENCY_USD" size="15.0" />
                             </graphic>
                         </MenuItem>
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem accelerator="Ctrl+6" mnemonicParsing="false" onAction="#handleBanks" text="Bancos">
-                            <graphic>
-                                <MaterialDesignIconView fill="BLACK" glyphName="BANK" size="15.0" />
-                            </graphic>
-                        </MenuItem>
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Vendas">
                     <items>
-                        <MenuItem accelerator="Ctrl+7" mnemonicParsing="false" onAction="#handleSales" text="Vendas">
+                        <MenuItem accelerator="Ctrl+6" mnemonicParsing="false" onAction="#handleSales" text="Vendas">
                             <graphic>
                                 <MaterialDesignIconView fill="BLACK" glyphName="CART" size="15.0" />
                             </graphic>
                         </MenuItem>
-                        <MenuItem accelerator="Ctrl+8" mnemonicParsing="false" onAction="#handleProducts" text="Produtos">
+                        <MenuItem accelerator="Ctrl+7" mnemonicParsing="false" onAction="#handleProducts" text="Produtos">
                             <graphic>
                                 <MaterialDesignIconView fill="BLACK" glyphName="PACKAGE" size="15.0" />
                             </graphic>
                         </MenuItem>
-                        <MenuItem accelerator="Ctrl+9" mnemonicParsing="false" onAction="#handleStockEntry" text="Entradas de Estoque">
+                        <MenuItem accelerator="Ctrl+8" mnemonicParsing="false" onAction="#handleStockEntry" text="Entradas de Estoque">
                             <graphic>
                                 <MaterialDesignIconView fill="BLACK" glyphName="PACKAGE_UP" size="15.0" />
                             </graphic>
@@ -100,7 +94,7 @@
                         </MenuItem>
                     </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Avaliações">
+                <Menu mnemonicParsing="false" text="Avaliações Físicas">
                     <items>
                         <MenuItem accelerator="Ctrl+M" mnemonicParsing="false" onAction="#handleMeasurements" text="Medidas">
                             <graphic>

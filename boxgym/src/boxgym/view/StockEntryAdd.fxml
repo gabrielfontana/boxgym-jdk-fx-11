@@ -16,7 +16,7 @@
 <?import limitedtextfield.LimitedTextField?>
 <?import org.controlsfx.control.PrefixSelectionComboBox?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="616.0" prefWidth="680.0" style="-fx-background-color: #f2f2f2;" stylesheets="@../css/theme.css" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.StockEntryAddController">
+<AnchorPane fx:id="anchorPane" prefHeight="616.0" prefWidth="680.0" style="-fx-background-color: #f2f2f2;" stylesheets="@../css/theme.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.StockEntryAddController">
     <children>
         <AnchorPane fx:id="stockEntryArea" layoutX="15.0" layoutY="24.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -183,11 +183,11 @@
             </VBox>
             </children>
         </AnchorPane>
-      <AnchorPane layoutX="15.0" layoutY="560.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <AnchorPane disable="true" layoutX="15.0" layoutY="560.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
                 <HBox AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
                     <children>
-                        <Button fx:id="saveButton" disable="true" mnemonicParsing="false" onAction="#save" prefHeight="30.0" prefWidth="89.0" text="Salvar">
+                        <Button fx:id="saveButton" mnemonicParsing="false" onAction="#save" prefHeight="30.0" prefWidth="89.0" text="Salvar">
                             <HBox.margin>
                                 <Insets right="15.0" />
                             </HBox.margin>
@@ -195,7 +195,7 @@
                                 <MaterialDesignIconView fill="BLACK" glyphName="CONTENT_SAVE" size="15" />
                             </graphic>
                         </Button>
-                        <Button fx:id="clearButton" disable="true" mnemonicParsing="false" onAction="#clear" prefHeight="30.0" prefWidth="89.0" text="Limpar">
+                        <Button fx:id="clearButton" mnemonicParsing="false" onAction="#clear" prefHeight="30.0" prefWidth="89.0" text="Limpar">
                             <graphic>
                                 <MaterialDesignIconView glyphName="BROOM" size="15" />
                             </graphic>
