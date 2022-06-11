@@ -50,6 +50,8 @@ public class SalesAddController implements Initializable {
 
     List<SaleProduct> list = new ArrayList<>();
     ObservableList<SaleProduct> obsListItens;
+    
+    boolean productAlreadyInserted;
 
     AlertHelper ah = new AlertHelper();
 
@@ -144,29 +146,29 @@ public class SalesAddController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         buttonsProperties();
-        
+
         setSaleCreationFlag(false);
         setProductsEntryCreationFlag(false);
         inputRestrictions();
         loadCustomerNameComboBox();
         saleDateDatePicker.setEditable(false);
-        
+
         loadProductNameComboBox();
         productNameComboBoxListener();
         initProductEntryTableView();
         countLabel.setText("Exibindo nenhum produto");
         TextFieldFormat.currencyFormat(totalPriceTextField, BigDecimal.ZERO);
     }
-    
+
     private void buttonsProperties() {
         ButtonHelper.buttonCursor(addSaleButton, addProductEntryButton, saveButton, clearButton);
         ButtonHelper.iconButton(firstRow, lastRow);
     }
-    
+
     private void inputRestrictions() {
         amountTextField.setValidationPattern("[0-9]", 10);
     }
-    
+
     private void loadCustomerNameComboBox() {
         ObservableList<String> obsList = FXCollections.observableArrayList();
         for (String s : customerMap.values()) {
@@ -175,7 +177,7 @@ public class SalesAddController implements Initializable {
         customerComboBox.setPromptText("Selecione");
         customerComboBox.setItems(obsList);
     }
-    
+
     private int getKeyFromCustomerComboBox() {
         int key = 0;
         for (Map.Entry<Integer, String> entry : customerMap.entrySet()) {
@@ -209,7 +211,7 @@ public class SalesAddController implements Initializable {
             setSaleCreationFlag(true);
         }
     }
-    
+
     private void loadProductNameComboBox() {
         ObservableList<String> obsList = FXCollections.observableArrayList();
         for (String s : productMap.values()) {
@@ -241,12 +243,20 @@ public class SalesAddController implements Initializable {
 
     @FXML
     private void addProductEntry(ActionEvent event) {
+        ProductDao productDao = new ProductDao();
+        int currentProductAmount = productDao.getProductAmount(getKeyFromProductComboBox());
+
         TextValidationHelper validation = new TextValidationHelper("Atenção: \n\n");
         validation.invalidComboBox(productComboBox, "Produto inválido! \n");
         validation.emptyTextField(amountTextField.getText(), "Quantidade inválida! \n");
-
-        if (!(validation.getEmptyCounter() == 0)) {
+        
+        if (list.stream().anyMatch(p -> p.getFkProduct() == getKeyFromProductComboBox())) {
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível adicionar esse produto!", "O produto em questão já foi adicionado na lista!");
+            clear();
+        } else if (!(validation.getEmptyCounter() == 0)) {
             ah.customAlert(Alert.AlertType.WARNING, "Não foi possível adicionar esse produto!", validation.getMessage());
+        } else if (currentProductAmount < Integer.valueOf(amountTextField.getText())) {
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível adicionar esse produto!", "O produto em questão possui apenas " + currentProductAmount + " unidade(s) em estoque!");
         } else {
             SaleProduct item = new SaleProduct(Integer.valueOf(saleIdTextField.getText()), getKeyFromProductComboBox(),
                     Integer.valueOf(amountTextField.getText()), new BigDecimal(unitPriceTextField.getPrice()));
@@ -260,7 +270,7 @@ public class SalesAddController implements Initializable {
             clear();
         }
     }
-    
+
     private void initProductEntryTableView() {
         productTableColumn.setCellValueFactory(new PropertyValueFactory("tempProductName"));
         amountTableColumn.setCellValueFactory(new PropertyValueFactory("amount"));
@@ -276,7 +286,7 @@ public class SalesAddController implements Initializable {
             return p;
         }));
     }
-    
+
     private void initCount() {
         int count = obsListItens.size();
         countLabel.setText(TableViewCount.footerMessage(count, "produto"));
@@ -305,14 +315,14 @@ public class SalesAddController implements Initializable {
             ah.customAlert(Alert.AlertType.INFORMATION, "Lista de produtos vazia!", "");
         }
     }
-    
+
     @FXML
     void clear() {
         productComboBox.valueProperty().set(null);
         amountTextField.setText("");
         unitPriceTextField.setPrice(0.0);
     }
-    
+
     @FXML
     void goToFirstRow(MouseEvent event) {
         productEntryTableView.scrollTo(0);

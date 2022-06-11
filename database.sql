@@ -127,3 +127,19 @@ CREATE TABLE `sale_product` (
   FOREIGN KEY (`fkSale`) REFERENCES `sale`(`saleId`) ON UPDATE CASCADE,
   FOREIGN KEY (`fkProduct`) REFERENCES `product`(`productId`) ON UPDATE CASCADE
 );
+
+DELIMITER $$
+CREATE TRIGGER `triggerRemoveProductAmountAfterSale` AFTER INSERT ON `sale_product`
+FOR EACH ROW BEGIN
+	UPDATE product SET amount = amount - NEW.amount WHERE productId = NEW.fkProduct;
+END
+$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE TRIGGER `triggerAddProductAmountAfterSaleExclusion` AFTER DELETE ON `sale_product`
+FOR EACH ROW BEGIN
+	UPDATE product SET amount = amount + OLD.amount WHERE productId = OLD.fkProduct;
+END
+$$
+DELIMITER ;

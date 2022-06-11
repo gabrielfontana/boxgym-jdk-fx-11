@@ -103,6 +103,26 @@ public class ProductDao {
         }
         return costPrice;
     }
+    
+    public int getProductAmount(int key) {
+        String sql = "SELECT `amount` FROM `product` WHERE `productId` = '" + key + "';";
+        int amount = 0;
+        
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                amount = rs.getInt("amount");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return amount;
+    }
 
     public List<Product> read() {
         List<Product> productsList = new ArrayList<>();

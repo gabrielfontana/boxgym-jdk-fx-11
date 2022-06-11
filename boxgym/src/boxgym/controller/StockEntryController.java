@@ -133,7 +133,7 @@ public class StockEntryController implements Initializable {
         resetDetails();
         ButtonHelper.buttonCursor(filterButton, addButton, deleteButton, listButton);
         ButtonHelper.iconButton(firstRow, lastRow);
-        initSupplierTableView();
+        initStockEntryTableView();
         listeners();
         Platform.runLater(() -> searchBox.requestFocus());
     }
@@ -235,7 +235,7 @@ public class StockEntryController implements Initializable {
         countLabel.setText(TableViewCount.footerMessage(stockEntryTableView.getItems().size(), "resultado"));
     }
 
-    private void initSupplierTableView() {
+    private void initStockEntryTableView() {
         stockIdTableColumn.setCellValueFactory(new PropertyValueFactory("stockEntryId"));
         fkSupplierTableColumn.setCellValueFactory(new PropertyValueFactory("tempSupplierName"));
 
