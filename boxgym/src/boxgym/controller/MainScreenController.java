@@ -2,6 +2,7 @@ package boxgym.controller;
 
 import boxgym.dao.CustomerDao;
 import boxgym.dao.ProductDao;
+import boxgym.dao.SaleDao;
 import boxgym.dao.StockEntryDao;
 import boxgym.dao.SupplierDao;
 import boxgym.helper.AlertHelper;
@@ -161,7 +162,16 @@ public class MainScreenController implements Initializable {
 
     @FXML
     void exportSalesToExcel(ActionEvent event) {
+        FileChooser chooser = new FileChooser();
+        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Pasta de Trabalho do Excel", "*.xlsx"));
+        File file = chooser.showSaveDialog(new Stage());
+        
+        SaleDao saleDao = new SaleDao();
 
+        if (file != null) {
+            saleDao.createExcelFile(file.getAbsolutePath());
+            alert.customAlert(Alert.AlertType.WARNING, "Relatório gerado com sucesso!", "");
+        }
     }
 
     @FXML
