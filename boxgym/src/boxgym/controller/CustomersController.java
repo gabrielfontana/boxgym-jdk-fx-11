@@ -43,7 +43,7 @@ import jfxtras.styles.jmetro.Style;
 
 public class CustomersController implements Initializable {
 
-     AlertHelper alert = new AlertHelper();
+    AlertHelper alert = new AlertHelper();
 
     private Customer selected;
     

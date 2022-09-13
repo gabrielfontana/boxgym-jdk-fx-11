@@ -76,6 +76,9 @@ public class ProductsController implements Initializable {
     
     @FXML
     private TextField searchBox;
+    
+    @FXML
+    private Button minimumStockAlertButton;
 
     @FXML
     private Button addButton;
@@ -158,11 +161,12 @@ public class ProductsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         resetDetails();
-        ButtonHelper.buttonCursor(filterButton, addButton, updateButton, deleteButton);
+        ButtonHelper.buttonCursor(filterButton, minimumStockAlertButton, addButton, updateButton, deleteButton);
         ButtonHelper.iconButton(firstRow, lastRow);
         initProductTableView();
         listeners();
         Platform.runLater(() -> searchBox.requestFocus());
+        disableMinimumStockButton();
     }
 
     @FXML
@@ -408,6 +412,23 @@ public class ProductsController implements Initializable {
             searchBox.setText("");
             searchBox.requestFocus();
         });
+    }
+    
+    private void disableMinimumStockButton() {
+        ProductDao productDao = new ProductDao();
+        List<String> list = productDao.checkProductsBelowMinimumStock();
+        if (list.isEmpty()) {
+            minimumStockAlertButton.setDisable(true);
+        } else {
+            minimumStockAlertButton.setDisable(false);
+        }
+    }
+    
+    @FXML
+    void minimumStockAlert(ActionEvent event) {
+        ProductDao productDao = new ProductDao();
+        String listString = String.join("\n", productDao.checkProductsBelowMinimumStock());
+        alert.customAlert(Alert.AlertType.INFORMATION, "Produto(s) com estoque abaixo da quantidade mínima:", listString);
     }
 
     @FXML

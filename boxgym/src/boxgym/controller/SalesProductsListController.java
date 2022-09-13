@@ -19,6 +19,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import limitedtextfield.LimitedTextField;
 
 public class SalesProductsListController implements Initializable {
 
@@ -40,6 +41,9 @@ public class SalesProductsListController implements Initializable {
     
     @FXML
     private TableColumn<SaleProduct, BigDecimal> subtotalTableColumn;
+    
+    @FXML
+    private LimitedTextField totalPriceTextField;
     
     @FXML
     private Label countLabel;
@@ -70,6 +74,7 @@ public class SalesProductsListController implements Initializable {
     private void initMethods() {
         initProductsListTableView();
         listeners();
+        TextFieldFormat.currencyFormat(totalPriceTextField, total());
         countLabel.setText(TableViewCount.footerMessage(productsListTableView.getItems().size(), "produto"));
     }
 
@@ -97,6 +102,14 @@ public class SalesProductsListController implements Initializable {
                 selectedRowLabel.setText("Linha " + String.valueOf(productsListTableView.getSelectionModel().getSelectedIndex() + 1) + " selecionada");
             }
         });
+    }
+    
+    private BigDecimal total() {
+        BigDecimal total = new BigDecimal("0");
+        for (SaleProduct sp : productsListTableView.getItems()) {
+            total = total.add(sp.getSubtotal());
+        }
+        return total;
     }
 
     @FXML

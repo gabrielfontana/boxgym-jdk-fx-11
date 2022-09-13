@@ -29,6 +29,11 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
+            <Button fx:id="minimumStockAlertButton" layoutX="190.0" layoutY="25.0" mnemonicParsing="false" onAction="#minimumStockAlert" prefHeight="30.0" prefWidth="30.0">
+               <graphic>
+                  <MaterialDesignIconView glyphName="EXCLAMATION" size="17" />
+               </graphic>
+            </Button>
          </children>
       </AnchorPane>
       <AnchorPane layoutX="155.0" layoutY="113.0" prefHeight="695.0" prefWidth="940.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="340.0" AnchorPane.topAnchor="80.0">
