@@ -255,8 +255,10 @@ public class SalesAddController implements Initializable {
             clear();
         } else if (!(validation.getEmptyCounter() == 0)) {
             ah.customAlert(Alert.AlertType.WARNING, "Não foi possível adicionar esse produto!", validation.getMessage());
-        } else if (currentProductAmount < Integer.valueOf(amountTextField.getText())) {
+        } else if (currentProductAmount != 0 && currentProductAmount < Integer.valueOf(amountTextField.getText())) {
             ah.customAlert(Alert.AlertType.WARNING, "Não foi possível adicionar esse produto!", "O produto em questão possui apenas " + currentProductAmount + " unidade(s) em estoque!");
+        } else if (currentProductAmount == 0) {
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível adicionar esse produto!", "O produto em questão não possui nenhuma unidade em estoque!");
         } else {
             SaleProduct item = new SaleProduct(Integer.valueOf(saleIdTextField.getText()), getKeyFromProductComboBox(),
                     Integer.valueOf(amountTextField.getText()), new BigDecimal(unitPriceTextField.getPrice()));
