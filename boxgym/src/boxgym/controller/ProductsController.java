@@ -166,7 +166,7 @@ public class ProductsController implements Initializable {
         initProductTableView();
         listeners();
         Platform.runLater(() -> searchBox.requestFocus());
-        disableMinimumStockButton();
+        enableOrDisableMinimumStockButton();
     }
 
     @FXML
@@ -414,7 +414,7 @@ public class ProductsController implements Initializable {
         });
     }
     
-    private void disableMinimumStockButton() {
+    private void enableOrDisableMinimumStockButton() {
         ProductDao productDao = new ProductDao();
         List<String> list = productDao.checkProductsBelowMinimumStock();
         if (list.isEmpty()) {

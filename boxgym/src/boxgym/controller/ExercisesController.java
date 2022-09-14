@@ -143,11 +143,34 @@ public class ExercisesController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         resetDetails();
-        ButtonHelper.buttonCursor(filterButton, addButton, updateButton, deleteButton);
+        ButtonHelper.buttonCursor(filterButton, importExercisesButton, addButton, updateButton, deleteButton);
         ButtonHelper.iconButton(firstRow, lastRow);
         initExerciseTableView();
         listeners();
         Platform.runLater(() -> searchBox.requestFocus());
+        enableOrDisableImportExercisesButton();
+    }
+
+    private void enableOrDisableImportExercisesButton() {
+        ExerciseDao exerciseDao = new ExerciseDao();
+        if (exerciseDao.checkExistingExercises() != 0) {
+            importExercisesButton.setDisable(true);
+        } else {
+            importExercisesButton.setDisable(false);
+        }
+    }
+
+    @FXML
+    private void importExercises(ActionEvent event) {
+        ExerciseDao exerciseDao = new ExerciseDao();
+        alert.confirmationAlert("Desejar importar os exercícios predefinidos?", "");
+        if (alert.getResult().get() == ButtonType.YES) {
+            exerciseDao.importExercises();
+            refreshTableView();
+            resetDetails();
+            importExercisesButton.setDisable(true);
+            alert.customAlert(Alert.AlertType.WARNING, "Os exercícios foram importados com sucesso!", "");
+        }
     }
 
     @FXML
@@ -203,7 +226,7 @@ public class ExercisesController implements Initializable {
         if (selected == null) {
             alert.customAlert(Alert.AlertType.WARNING, "Selecione um exercício para excluir!", "");
         } else {
-            alert.confirmationAlert("Tem certeza que deseja excluir \n o exercício '" + selected.getAbbreviation()+ "'?", "Esta ação é irreversível!");
+            alert.confirmationAlert("Tem certeza que deseja excluir \n o exercício '" + selected.getAbbreviation() + "'?", "Esta ação é irreversível!");
             if (alert.getResult().get() == ButtonType.YES) {
                 exerciseDao.delete(selected);
                 refreshTableView();
@@ -269,7 +292,7 @@ public class ExercisesController implements Initializable {
         String exerciseGroup = exercise.getExerciseGroup();
         String description = exercise.getDescription();
         String instruction = exercise.getInstruction();
-        
+
         List<String> fields = Arrays.asList(exerciseId, name, abbreviation, exerciseType, exerciseGroup, description, instruction);
 
         return stringComparasion(fields, searchText, optionOrder);
@@ -283,7 +306,7 @@ public class ExercisesController implements Initializable {
         String exerciseGroup = exercise.getExerciseGroup().toLowerCase();
         String description = exercise.getDescription().toLowerCase();
         String instruction = exercise.getInstruction().toLowerCase();
-        
+
         List<String> fields = Arrays.asList(exerciseId, name, abbreviation, exerciseType, exerciseGroup, description, instruction);
 
         return stringComparasion(fields, searchText, optionOrder);
@@ -370,11 +393,6 @@ public class ExercisesController implements Initializable {
             searchBox.setText("");
             searchBox.requestFocus();
         });
-    }
-    
-    @FXML
-    private void importExercises(ActionEvent event) {
-
     }
 
     @FXML
