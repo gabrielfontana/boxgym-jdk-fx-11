@@ -59,6 +59,28 @@ public class ExerciseDao {
         }
         return false;
     }
+    
+    public LinkedHashMap<Integer, String> getExerciseForHashMap() {
+        LinkedHashMap<Integer, String> map = new LinkedHashMap<>();
+        String sql = "SELECT `exerciseId`, `name` FROM `exercise`;";
+
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            Exercise e;
+            while (rs.next()) {
+                e = new Exercise(rs.getInt("exerciseId"), rs.getString("name"));
+                map.put(e.getExerciseId(), e.getName());
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ExerciseDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return map;
+    }
 
     public List<Exercise> read() {
         List<Exercise> exercisesList = new ArrayList<>();

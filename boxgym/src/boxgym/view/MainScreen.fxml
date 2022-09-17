@@ -87,6 +87,11 @@
                                 <MaterialDesignIconView fill="BLACK" glyphName="FILE_DOCUMENT" size="15.0" />
                             </graphic>
                         </MenuItem>
+                        <MenuItem accelerator="Ctrl+T" mnemonicParsing="false" onAction="#handleWorkouts" text="Treinos Predefinidos">
+                            <graphic>
+                                <MaterialDesignIconView fill="BLACK" glyphName="DUMBBELL" size="15.0" />
+                            </graphic>
+                        </MenuItem>
                         <MenuItem accelerator="Ctrl+E" mnemonicParsing="false" onAction="#handleExercises" text="Exercícios">
                             <graphic>
                                 <MaterialDesignIconView fill="BLACK" glyphName="HUMAN_HANDSUP" size="15.0" />
@@ -103,49 +108,49 @@
                         </MenuItem>
                     </items>
                 </Menu>
-            <Menu mnemonicParsing="false" text="Ferramentas">
-               <items>
-                  <Menu mnemonicParsing="false" text="Exportar">
+                <Menu mnemonicParsing="false" text="Ferramentas">
                     <items>
-                        <Menu mnemonicParsing="false" text="Excel">
-                           <graphic>
-                              <MaterialDesignIconView fill="BLACK" glyphName="FILE_EXCEL" size="15.0" />
-                           </graphic>
-                           <items>
-                            <MenuItem mnemonicParsing="false" onAction="#exportCustomersToExcel" text="Clientes">
-                                 <graphic>
-                                    <MaterialDesignIconView fill="BLACK" glyphName="ACCOUNT_MULTIPLE" size="15.0" />
-                                 </graphic>
-                              </MenuItem>
-                              <MenuItem mnemonicParsing="false" onAction="#exportSuppliersToExcel" text="Fornecedores">
-                                 <graphic>
-                                    <MaterialDesignIconView fill="BLACK" glyphName="TRUCK" size="15.0" />
-                                 </graphic>
-                              </MenuItem>
-                              <MenuItem mnemonicParsing="false" onAction="#exportSalesToExcel" text="Vendas">
-                                 <graphic>
-                                    <MaterialDesignIconView fill="BLACK" glyphName="CART" size="15.0" />
-                                 </graphic>
-                              </MenuItem>
-                              <MenuItem mnemonicParsing="false" onAction="#exportProductsToExcel" text="Produtos">
-                                 <graphic>
-                                    <MaterialDesignIconView fill="BLACK" glyphName="PACKAGE" size="15.0" />
-                                 </graphic>
-                              </MenuItem>
-                              <MenuItem mnemonicParsing="false" onAction="#exportStockEntriesToExcel" text="Entradas de Estoque">
-                                 <graphic>
-                                    <MaterialDesignIconView fill="BLACK" glyphName="PACKAGE_UP" size="15.0" />
-                                 </graphic>
-                              </MenuItem>
-                           </items>
+                        <Menu mnemonicParsing="false" text="Exportar">
+                            <items>
+                                <Menu mnemonicParsing="false" text="Excel">
+                                    <graphic>
+                                        <MaterialDesignIconView fill="BLACK" glyphName="FILE_EXCEL" size="15.0" />
+                                    </graphic>
+                                    <items>
+                                        <MenuItem mnemonicParsing="false" onAction="#exportCustomersToExcel" text="Clientes">
+                                            <graphic>
+                                                <MaterialDesignIconView fill="BLACK" glyphName="ACCOUNT_MULTIPLE" size="15.0" />
+                                            </graphic>
+                                        </MenuItem>
+                                        <MenuItem mnemonicParsing="false" onAction="#exportSuppliersToExcel" text="Fornecedores">
+                                            <graphic>
+                                                <MaterialDesignIconView fill="BLACK" glyphName="TRUCK" size="15.0" />
+                                            </graphic>
+                                        </MenuItem>
+                                        <MenuItem mnemonicParsing="false" onAction="#exportSalesToExcel" text="Vendas">
+                                            <graphic>
+                                                <MaterialDesignIconView fill="BLACK" glyphName="CART" size="15.0" />
+                                            </graphic>
+                                        </MenuItem>
+                                        <MenuItem mnemonicParsing="false" onAction="#exportProductsToExcel" text="Produtos">
+                                            <graphic>
+                                                <MaterialDesignIconView fill="BLACK" glyphName="PACKAGE" size="15.0" />
+                                            </graphic>
+                                        </MenuItem>
+                                        <MenuItem mnemonicParsing="false" onAction="#exportStockEntriesToExcel" text="Entradas de Estoque">
+                                            <graphic>
+                                                <MaterialDesignIconView fill="BLACK" glyphName="PACKAGE_UP" size="15.0" />
+                                            </graphic>
+                                        </MenuItem>
+                                    </items>
+                                </Menu>
+                            </items>
+                            <graphic>
+                                <MaterialDesignIconView fill="BLACK" glyphName="FILE_EXPORT" size="15.0" />
+                            </graphic>
                         </Menu>
                     </items>
-                     <graphic>
-                        <MaterialDesignIconView fill="BLACK" glyphName="FILE_EXPORT" size="15.0" />
-                     </graphic>
-                  </Menu>
-               </items>
-            </Menu>
+                </Menu>
                 <Menu mnemonicParsing="false" text="Ajuda">
                     <items>
                         <MenuItem accelerator="F1" mnemonicParsing="false" onAction="#handleAbout" text="Sobre">

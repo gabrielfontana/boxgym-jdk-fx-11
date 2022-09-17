@@ -17,6 +17,12 @@ public class Exercise {
     public Exercise() {
 
     }
+    
+    //Construtor da CombBox
+    public Exercise(int exerciseId, String name){
+        this.exerciseId = exerciseId;
+        this.name = name;
+    }
 
     //Construtor CREATE
     public Exercise(String name, String abbreviation, String exerciseType, String exerciseGroup, String description, String instruction) {
