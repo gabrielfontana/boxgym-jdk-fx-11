@@ -437,8 +437,8 @@ public class SuppliersController implements Initializable {
          if (supplierTableView.getItems().size() == 1) {
             goToFirstRow(event);
         } else {
-            supplierTableView.scrollTo(supplierTableView.getItems().size() - 1);
             supplierTableView.getSelectionModel().selectLast(); 
+            supplierTableView.scrollTo(supplierTableView.getItems().size() - 1);
          }
     }
 

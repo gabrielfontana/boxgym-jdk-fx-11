@@ -297,8 +297,8 @@ public class WorkoutsAddController implements Initializable {
         if (exerciseEntryTableView.getItems().size() == 1) {
             goToFirstRow(event);
         } else {
-            exerciseEntryTableView.scrollTo(exerciseEntryTableView.getItems().size() - 1);
             exerciseEntryTableView.getSelectionModel().selectLast();
+            exerciseEntryTableView.scrollTo(exerciseEntryTableView.getItems().size() - 1);
         }
     }
 }

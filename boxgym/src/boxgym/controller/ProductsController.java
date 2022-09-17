@@ -442,8 +442,8 @@ public class ProductsController implements Initializable {
         if (productTableView.getItems().size() == 1) {
             goToFirstRow(event);
         } else {
-            productTableView.scrollTo(productTableView.getItems().size() - 1);
             productTableView.getSelectionModel().selectLast();
+            productTableView.scrollTo(productTableView.getItems().size() - 1);
         }
     }
 

@@ -328,8 +328,8 @@ public class StockEntryAddController implements Initializable {
         if (productEntryTableView.getItems().size() == 1) {
             goToFirstRow(event);
         } else {
-            productEntryTableView.scrollTo(productEntryTableView.getItems().size() - 1);
             productEntryTableView.getSelectionModel().selectLast();
+            productEntryTableView.scrollTo(productEntryTableView.getItems().size() - 1);
         }
     }
 

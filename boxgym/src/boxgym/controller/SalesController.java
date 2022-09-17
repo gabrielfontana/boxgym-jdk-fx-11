@@ -350,8 +350,8 @@ public class SalesController implements Initializable {
         if (saleTableView.getItems().size() == 1) {
             goToFirstRow(event);
         } else {
-            saleTableView.scrollTo(saleTableView.getItems().size() - 1);
             saleTableView.getSelectionModel().selectLast();
+            saleTableView.scrollTo(saleTableView.getItems().size() - 1);
         }
     }
     

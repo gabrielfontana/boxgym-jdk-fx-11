@@ -106,8 +106,8 @@ public class WorkoutsExercisesListController implements Initializable {
         if (exerciseListTableView.getItems().size() == 1) {
             goToFirstRow(event);
         } else {
-            exerciseListTableView.scrollTo(exerciseListTableView.getItems().size() - 1);
             exerciseListTableView.getSelectionModel().selectLast();
+            exerciseListTableView.scrollTo(exerciseListTableView.getItems().size() - 1);
         }
     }
     

@@ -353,8 +353,8 @@ public class WorkoutsController implements Initializable {
         if (workoutTableView.getItems().size() == 1) {
             goToFirstRow(event);
         } else {
-            workoutTableView.scrollTo(workoutTableView.getItems().size() - 1);
             workoutTableView.getSelectionModel().selectLast();
+            workoutTableView.scrollTo(workoutTableView.getItems().size() - 1);
         }
     }
 }

@@ -437,8 +437,8 @@ public class CustomersController implements Initializable {
          if (customerTableView.getItems().size() == 1) {
             goToFirstRow(event);
         } else {
-            customerTableView.scrollTo(customerTableView.getItems().size() - 1);
             customerTableView.getSelectionModel().selectLast(); 
+            customerTableView.scrollTo(customerTableView.getItems().size() - 1);
          }
     }
     
