@@ -44,6 +44,34 @@ public class WorkoutExerciseDao {
         return false;
     }
     
+    public List<WorkoutExercise> read(int selectedWorkout) {
+        List<WorkoutExercise> exercisesList = new ArrayList<>();
+        String sql = "SELECT e.name AS `tempExerciseName`, w_e.sets, w_e.reps, w_e.rest "
+                + "FROM `workout_exercise` AS w_e INNER JOIN `exercise` AS e "
+                + "ON w_e.fkExercise = e.exerciseId "
+                + "WHERE w_e.fkWorkout = " + selectedWorkout + ";";
+
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                WorkoutExercise we = new WorkoutExercise();
+                we.setTempExerciseName(rs.getString("tempExerciseName"));
+                we.setSets(rs.getInt("sets"));
+                we.setReps(rs.getInt("reps"));
+                we.setRest(rs.getInt("rest"));
+                exercisesList.add(we);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(WorkoutExerciseDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return exercisesList;
+    }
+    
     public boolean delete(Workout workout) {
         String sql = "DELETE FROM `workout_exercise` WHERE `fkWorkout` = ?;";
 

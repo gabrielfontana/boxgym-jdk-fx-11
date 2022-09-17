@@ -198,7 +198,24 @@ public class WorkoutsController implements Initializable {
 
     @FXML
     private void listExercises(ActionEvent event) {
+        if (selected == null) {
+            alert.customAlert(Alert.AlertType.WARNING, "Selecione um treino para listar os exercícios!", "");
+        } else {
+            int index = workoutTableView.getSelectionModel().getSelectedIndex();
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/boxgym/view/WorkoutsExercisesList.fxml"));
+                Parent root = (Parent) loader.load();
+                JMetro jMetro = new JMetro(root, Style.LIGHT);
 
+                WorkoutsExercisesListController controller = loader.getController();
+                controller.setSelectedWorkout(selected.getWorkoutId());
+
+                StageHelper.createAddOrUpdateStage("Listando Exercícios do Treino", root);
+                workoutTableView.getSelectionModel().select(index);
+            } catch (IOException ex) {
+                Logger.getLogger(WorkoutsController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     private ObservableList<Workout> loadData() {
