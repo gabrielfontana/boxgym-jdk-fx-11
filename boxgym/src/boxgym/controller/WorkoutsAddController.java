@@ -1,9 +1,14 @@
 package boxgym.controller;
 
 import boxgym.dao.ExerciseDao;
+import boxgym.dao.WorkoutDao;
+import boxgym.dao.WorkoutExerciseDao;
+import boxgym.helper.ActionButtonTableCell;
 import boxgym.helper.AlertHelper;
 import boxgym.helper.ButtonHelper;
 import boxgym.helper.TableViewCount;
+import boxgym.helper.TextValidationHelper;
+import boxgym.model.Workout;
 import boxgym.model.WorkoutExercise;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import java.net.URL;
@@ -17,6 +22,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -78,22 +84,22 @@ public class WorkoutsAddController implements Initializable {
     private Button addExerciseEntryButton;
 
     @FXML
-    private TableView<?> exerciseEntryTableView;
+    private TableView<WorkoutExercise> exerciseEntryTableView;
 
     @FXML
-    private TableColumn<?, ?> exerciseNameTableColumn;
+    private TableColumn<WorkoutExercise, String> exerciseNameTableColumn;
 
     @FXML
-    private TableColumn<?, ?> setsTableColumn;
+    private TableColumn<WorkoutExercise, Integer> setsTableColumn;
 
     @FXML
-    private TableColumn<?, ?> repsTableColumn;
+    private TableColumn<WorkoutExercise, Integer> repsTableColumn;
 
     @FXML
-    private TableColumn<?, ?> restTableColumn;
+    private TableColumn<WorkoutExercise, Integer> restTableColumn;
 
     @FXML
-    private TableColumn<?, ?> actionButtonTableColumn;
+    private TableColumn<WorkoutExercise, Button> actionButtonTableColumn;
 
     @FXML
     private Label countLabel;
@@ -175,7 +181,7 @@ public class WorkoutsAddController implements Initializable {
         }
         return key;
     }
-    
+
     private void loadGoalComboBox() {
         String[] goalsList = {"Condicionamento Físico", "Emagrecimento", "Hipertrofia", "Reabilitação Física"};
         goalComboBox.setPromptText("Selecione");
@@ -184,37 +190,100 @@ public class WorkoutsAddController implements Initializable {
 
     @FXML
     private void addWorkout(ActionEvent event) {
-        workoutArea.setDisable(true);
-        exercisesEntryArea.setDisable(false);
-        firstRow.setDisable(false);
-        lastRow.setDisable(false);
-        saveButton.setDisable(false);
-        clearButton.setDisable(false);
-        setWorkoutCreationFlag(true);
+        TextValidationHelper validation = new TextValidationHelper("Atenção: \n\n");
+        validation.emptyTextField(descriptionTextField.getText(), "Descrição inválida! \n");
+        validation.invalidComboBox(goalComboBox, "Objetivo inválido! \n");
+        validation.emptyTextField(sessionsTextField.getText(), "Sessões inválidas! \n");
+
+        if (!(validation.getEmptyCounter() == 0)) {
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível adicionar esse treino!", validation.getMessage());
+        } else {
+            workoutArea.setDisable(true);
+            exercisesEntryArea.setDisable(false);
+            firstRow.setDisable(false);
+            lastRow.setDisable(false);
+            saveButton.setDisable(false);
+            clearButton.setDisable(false);
+            Workout workout = new Workout(descriptionTextField.getText(), goalComboBox.getValue(), Integer.valueOf(sessionsTextField.getText()));
+            WorkoutDao workoutDao = new WorkoutDao();
+            workoutDao.create(workout);
+            workoutIdTextField.setText(String.valueOf(workoutDao.getWorkoutId()));
+            setWorkoutCreationFlag(true);
+        }
     }
 
     @FXML
     private void addExerciseEntry(ActionEvent event) {
+        TextValidationHelper validation = new TextValidationHelper("Atenção: \n\n");
+        validation.invalidComboBox(exerciseNameComboBox, "Exercício inválido! \n");
+
+        if (!(validation.getEmptyCounter() == 0)) {
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível adicionar esse exercício!", validation.getMessage());
+        } else {
+            WorkoutExercise item = new WorkoutExercise(Integer.valueOf(workoutIdTextField.getText()), getKeyFromExerciseNameComboBox(), 
+                    setsRepsRest(setsTextField.getText(), 3), setsRepsRest(repsTextField.getText(), 10), setsRepsRest(restTextField.getText(), 30));
+            item.setTempExerciseName(exerciseNameComboBox.getSelectionModel().getSelectedItem());
+            list.add(item);
+            obsListItens = FXCollections.observableArrayList(list);
+            exerciseEntryTableView.setItems(obsListItens);
+            exerciseEntryTableView.getSelectionModel().selectLast();
+            initCount();
+            clear();
+        }
     }
 
     private void initExerciseEntryTableView() {
+        exerciseNameTableColumn.setCellValueFactory(new PropertyValueFactory("tempExerciseName"));
+        setsTableColumn.setCellValueFactory(new PropertyValueFactory("sets"));
+        repsTableColumn.setCellValueFactory(new PropertyValueFactory("reps"));
+        restTableColumn.setCellValueFactory(new PropertyValueFactory("rest"));
+        actionButtonTableColumn.setCellFactory(ActionButtonTableCell.<WorkoutExercise>forTableColumn("", (WorkoutExercise e) -> {
+            list.remove(e);
+            obsListItens.remove(e);
+            exerciseEntryTableView.getItems().remove(e);
+            initCount();
+            return e;
+        }));
     }
 
     private void initCount() {
         int count = obsListItens.size();
-        countLabel.setText(TableViewCount.footerMessage(count, "produto"));
+        countLabel.setText(TableViewCount.footerMessage(count, "exercício"));
     }
 
     @FXML
-    private void save(ActionEvent event) {
+    private void save() {
+        if (!(list == null || list.isEmpty())) {
+            for (WorkoutExercise item : list) {
+                WorkoutExerciseDao dao = new WorkoutExerciseDao();
+                dao.create(item);
+            }
+            setExercisesEntryCreationFlag(true);
+            ah.customAlert(Alert.AlertType.INFORMATION, "O treino foi criado com sucesso!", "");
+            anchorPane.getScene().getWindow().hide();
+        } else {
+            ah.customAlert(Alert.AlertType.INFORMATION, "Lista de exercícios vazia!", "");
+        }
     }
 
     @FXML
-    private void clear(ActionEvent event) {
+    private void clear() {
         exerciseNameComboBox.valueProperty().set(null);
         setsTextField.setText("");
         repsTextField.setText("");
         restTextField.setText("");
+    }
+
+    private int setsRepsRest(String textField, int value) {
+        int exerciseRelated;
+        
+        if (textField.isEmpty()) {
+            exerciseRelated = value;
+        } else {
+            exerciseRelated = Integer.valueOf(textField);
+        }
+        
+        return exerciseRelated;
     }
 
     @FXML

@@ -166,3 +166,17 @@ CREATE TABLE `workout` (
   `updatedAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`workoutId`)
 );
+
+CREATE TABLE `workout_exercise` (
+  `workoutExerciseId` INT(11) NOT NULL AUTO_INCREMENT,
+  `fkWorkout` INT(11) NOT NULL,
+  `fkExercise` INT(11) NOT NULL,
+  `sets` INT(10) NOT NULL,
+  `reps` INT(10) NOT NULL,
+  `rest` INT(10) NOT NULL,
+  `createdAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`workoutExerciseId`),
+  FOREIGN KEY (`fkWorkout`) REFERENCES `workout`(`workoutId`) ON UPDATE CASCADE,
+  FOREIGN KEY (`fkExercise`) REFERENCES `exercise`(`exerciseId`) ON UPDATE CASCADE
+);

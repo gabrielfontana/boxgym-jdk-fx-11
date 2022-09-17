@@ -1,6 +1,7 @@
 package boxgym.controller;
 
 import boxgym.dao.WorkoutDao;
+import boxgym.dao.WorkoutExerciseDao;
 import boxgym.helper.AlertHelper;
 import boxgym.helper.ButtonHelper;
 import boxgym.helper.StageHelper;
@@ -21,7 +22,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
@@ -36,86 +39,86 @@ import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
 
 public class WorkoutsController implements Initializable {
-    
+
     AlertHelper alert = new AlertHelper();
 
     private Workout selected;
-    
+
     @FXML
     private MenuButton filterButton;
-    
+
     @FXML
     private CheckMenuItem caseSensitiveOp;
-    
+
     @FXML
     private RadioMenuItem containsOp;
-    
+
     @FXML
     private ToggleGroup filterOptions;
-    
+
     @FXML
     private RadioMenuItem alphabeticalEqualsToOp;
-    
+
     @FXML
     private RadioMenuItem startsWithOp;
-    
+
     @FXML
     private RadioMenuItem endsWithOp;
-    
+
     @FXML
     private TextField searchBox;
-    
+
     @FXML
     private Button addButton;
-    
+
     @FXML
     private Button deleteButton;
-    
+
     @FXML
     private TableView<Workout> workoutTableView;
-    
+
     @FXML
     private TableColumn<Workout, Integer> workoutIdTableColumn;
-    
+
     @FXML
     private TableColumn<Workout, String> descriptionTableColumn;
-    
+
     @FXML
     private TableColumn<Workout, String> goalTableColumn;
-    
+
     @FXML
     private TableColumn<Workout, Integer> sessionsTableColumn;
-    
+
     @FXML
     private Label countLabel;
-    
+
     @FXML
     private Label selectedRowLabel;
-    
+
     @FXML
     private MaterialDesignIconView firstRow;
-    
+
     @FXML
     private MaterialDesignIconView lastRow;
-    
+
     @FXML
     private Label workoutIdLabel;
-    
+
     @FXML
     private Label descriptionLabel;
-    
+
     @FXML
     private Label goalLabel;
-    
+
     @FXML
     private Label sessionsLabel;
-    
+
     @FXML
     private Label createdAtLabel;
-    
+
     @FXML
     private Label updatedAtLabel;
-    
+
     @FXML
     private Button listButton;
 
@@ -127,7 +130,7 @@ public class WorkoutsController implements Initializable {
         initWorkoutTableView();
         listeners();
         Platform.runLater(() -> searchBox.requestFocus());
-    }    
+    }
 
     @FXML
     private void addWorkout(ActionEvent event) {
@@ -140,7 +143,7 @@ public class WorkoutsController implements Initializable {
 
             StageHelper.createAddOrUpdateStage("Adicionando Treino", root);
 
-            if (controller.isWorkoutCreationFlag()&& !controller.isExercisesEntryCreationFlag()) {
+            if (controller.isWorkoutCreationFlag() && !controller.isExercisesEntryCreationFlag()) {
                 WorkoutDao workoutDao = new WorkoutDao();
                 workoutDao.deleteLastEntry();
             } else if (controller.isWorkoutCreationFlag() && controller.isExercisesEntryCreationFlag()) {
@@ -154,9 +157,23 @@ public class WorkoutsController implements Initializable {
 
     @FXML
     private void deleteWorkout(ActionEvent event) {
-        
+        WorkoutDao workoutDao = new WorkoutDao();
+        WorkoutExerciseDao workoutExerciseDao = new WorkoutExerciseDao();
+
+        if (selected == null) {
+            alert.customAlert(Alert.AlertType.WARNING, "Selecione um treino para excluir!", "");
+        } else {
+            alert.confirmationAlert("Tem certeza que deseja excluir este treino?", "Esta ação é irreversível!");
+            if (alert.getResult().get() == ButtonType.YES) {
+                workoutExerciseDao.delete(selected);
+                workoutDao.delete(selected);
+                refreshTableView();
+                resetDetails();
+                alert.customAlert(Alert.AlertType.WARNING, "O treino foi excluído com sucesso!", "");
+            }
+        }
     }
-    
+
     private void resetDetails() {
         if (selected == null) {
             workoutIdLabel.setText("");
@@ -181,9 +198,9 @@ public class WorkoutsController implements Initializable {
 
     @FXML
     private void listExercises(ActionEvent event) {
-        
+
     }
-    
+
     private ObservableList<Workout> loadData() {
         WorkoutDao workoutDao = new WorkoutDao();
         return FXCollections.observableArrayList(workoutDao.read());
@@ -194,7 +211,7 @@ public class WorkoutsController implements Initializable {
         search();
         countLabel.setText(TableViewCount.footerMessage(workoutTableView.getItems().size(), "resultado"));
     }
-    
+
     private void initWorkoutTableView() {
         workoutIdTableColumn.setCellValueFactory(new PropertyValueFactory("workoutId"));
         descriptionTableColumn.setCellValueFactory(new PropertyValueFactory("description"));
@@ -202,23 +219,23 @@ public class WorkoutsController implements Initializable {
         sessionsTableColumn.setCellValueFactory(new PropertyValueFactory("sessions"));
         refreshTableView();
     }
-    
-    private void caseSensitiveEnabled(){
-        
+
+    private void caseSensitiveEnabled() {
+
     }
-    
-    private void caseSensitiveDisabled(){
-        
+
+    private void caseSensitiveDisabled() {
+
     }
-    
-    private void stringComparasion(){
-        
+
+    private void stringComparasion() {
+
     }
-    
+
     private void search() {
-        
+
     }
-    
+
     private void listeners() {
         workoutTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             selected = (Workout) newValue;
@@ -240,7 +257,7 @@ public class WorkoutsController implements Initializable {
             searchBox.requestFocus();
         });
     }
-    
+
     @FXML
     void goToFirstRow(MouseEvent event) {
         workoutTableView.scrollTo(0);
