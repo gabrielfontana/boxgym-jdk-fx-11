@@ -11,12 +11,16 @@ import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import java.io.IOException;
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -237,20 +241,83 @@ public class WorkoutsController implements Initializable {
         refreshTableView();
     }
 
-    private void caseSensitiveEnabled() {
+    private boolean caseSensitiveEnabled(Workout workout, String searchText, int optionOrder) {
+        String workoutId = String.valueOf(workout.getWorkoutId());
+        String description = workout.getDescription();
+        String goal = workout.getGoal();
+        String sessions = String.valueOf(workout.getSessions());
 
+        List<String> fields = Arrays.asList(workoutId, description, goal, sessions);
+
+        return stringComparasion(fields, searchText, optionOrder);
     }
 
-    private void caseSensitiveDisabled() {
+    private boolean caseSensitiveDisabled(Workout workout, String searchText, int optionOrder) {
+        String workoutId = String.valueOf(workout.getWorkoutId());
+        String description = workout.getDescription().toLowerCase();
+        String goal = workout.getGoal().toLowerCase();
+        String sessions = String.valueOf(workout.getSessions());
 
+        List<String> fields = Arrays.asList(workoutId, description, goal, sessions);
+
+        return stringComparasion(fields, searchText, optionOrder);
     }
 
-    private void stringComparasion() {
-
+    private boolean stringComparasion(List<String> list, String searchText, int optionOrder) {
+        boolean searchReturn = false;
+        switch (optionOrder) {
+            case 1:
+                searchReturn = (list.get(0).contains(searchText)) || (list.get(1).contains(searchText)) || (list.get(2).contains(searchText))
+                        || (list.get(3).contains(searchText));
+                break;
+            case 2:
+                searchReturn = (list.get(0).equals(searchText)) || (list.get(1).equals(searchText)) || (list.get(2).equals(searchText))
+                        || (list.get(3).equals(searchText));
+                break;
+            case 3:
+                searchReturn = (list.get(0).startsWith(searchText)) || (list.get(1).startsWith(searchText)) || (list.get(2).startsWith(searchText))
+                        || (list.get(3).startsWith(searchText));
+                break;
+            case 4:
+                searchReturn = (list.get(0).endsWith(searchText)) || (list.get(1).endsWith(searchText)) || (list.get(2).endsWith(searchText))
+                        || (list.get(3).endsWith(searchText));
+                break;
+            default:
+                break;
+        }
+        return searchReturn;
     }
 
     private void search() {
+        FilteredList<Workout> filteredData = new FilteredList<>(loadData(), w -> true);
 
+        searchBox.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(workout -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                if (caseSensitiveOp.isSelected()) {
+                    if (containsOp.isSelected()) return caseSensitiveEnabled(workout, newValue, 1);
+                    if (alphabeticalEqualsToOp.isSelected()) return caseSensitiveEnabled(workout, newValue, 2);
+                    if (startsWithOp.isSelected()) return caseSensitiveEnabled(workout, newValue, 3);
+                    if (endsWithOp.isSelected()) return caseSensitiveEnabled(workout, newValue, 4);
+                }
+
+                if (alphabeticalEqualsToOp.isSelected()) return caseSensitiveDisabled(workout, newValue.toLowerCase(), 2);
+                if (startsWithOp.isSelected()) return caseSensitiveDisabled(workout, newValue.toLowerCase(), 3);
+                if (endsWithOp.isSelected()) return caseSensitiveDisabled(workout, newValue.toLowerCase(), 4);
+
+                return caseSensitiveDisabled(workout, newValue.toLowerCase(), 1);
+            });
+            workoutTableView.getSelectionModel().clearSelection();
+            countLabel.setText(TableViewCount.footerMessage(workoutTableView.getItems().size(), "resultado"));
+            selectedRowLabel.setText("");
+        });
+
+        SortedList<Workout> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(workoutTableView.comparatorProperty());
+        workoutTableView.setItems(sortedData);
     }
 
     private void listeners() {
