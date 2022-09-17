@@ -7,6 +7,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
 public class SaleProduct {
+
     private int saleProductId; //Identificador
     private int fkSale; //Entrada de estoque
     private int fkProduct; //Produto
@@ -15,21 +16,21 @@ public class SaleProduct {
     private LocalDateTime createdAt; //Criado em
     private LocalDateTime updatedAt; //Atualizado em
     private final ObjectProperty<BigDecimal> subtotal = new SimpleObjectProperty<>(); //Subotal = Quantidade * Preço unitário
-    
+
     private String tempProductName;
-    
+
     public SaleProduct() {
-        
+
     }
-    
+
     //Construtor ObservableList e CREATE
     public SaleProduct(int fkSale, int fkProduct, int amount, BigDecimal unitPrice) {
         this.fkSale = fkSale;
         this.fkProduct = fkProduct;
         setAmount(amount);
         setUnitPrice(unitPrice);
-        subtotal.bind(Bindings.createObjectBinding(() -> 
-                getUnitPrice().multiply(BigDecimal.valueOf(getAmount()))
+        subtotal.bind(Bindings.createObjectBinding(()
+                -> getUnitPrice().multiply(BigDecimal.valueOf(getAmount()))
         ));
     }
 
@@ -56,7 +57,7 @@ public class SaleProduct {
     public void setFkProduct(int fkProduct) {
         this.fkProduct = fkProduct;
     }
-    
+
     public ObjectProperty<Integer> amountProperty() {
         return this.amount;
     }
@@ -68,7 +69,7 @@ public class SaleProduct {
     public final void setAmount(final Integer amount) {
         this.amountProperty().set(amount);
     }
-    
+
     public ObjectProperty<BigDecimal> unitPriceProperty() {
         return this.unitPrice;
     }
@@ -96,7 +97,7 @@ public class SaleProduct {
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
-    
+
     public ObjectProperty<BigDecimal> subtotalProperty() {
         return this.subtotal;
     }
@@ -116,5 +117,5 @@ public class SaleProduct {
     public void setTempProductName(String tempProductName) {
         this.tempProductName = tempProductName;
     }
-    
+
 }

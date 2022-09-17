@@ -4,18 +4,19 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Sale {
+
     private int saleId; //Identificador
     private int fkCustomer; //Cliente
     private LocalDate saleDate; //Data de venda
     private LocalDateTime createdAt; //Criado em
     private LocalDateTime updatedAt; //Atualizado em
-    
+
     private String tempCustomerName;
-    
+
     public Sale() {
-        
+
     }
-    
+
     //Construtor CREATE
     public Sale(int fkCustomer, LocalDate saleDate) {
         this.fkCustomer = fkCustomer;
@@ -69,5 +70,5 @@ public class Sale {
     public void setTempCustomerName(String tempCustomerName) {
         this.tempCustomerName = tempCustomerName;
     }
-    
+
 }
