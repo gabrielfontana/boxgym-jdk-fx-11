@@ -8,6 +8,7 @@ public class Workout {
     private String description; //Descrição
     private String goal; //Objetivo
     private int sessions; //Sessões
+    private String day; //Dia da semana
     private LocalDateTime createdAt; //Criado em
     private LocalDateTime updatedAt; //Atualizado em
 
@@ -16,10 +17,11 @@ public class Workout {
     }
 
     //Construtor CREATE
-    public Workout(String description, String goal, int sessions) {
+    public Workout(String description, String goal, int sessions, String day) {
         this.description = description;
         this.goal = goal;
         this.sessions = sessions;
+        this.day = day;
     }
 
     public int getWorkoutId() {
@@ -54,6 +56,14 @@ public class Workout {
         this.sessions = sessions;
     }
 
+    public String getDay() {
+        return day;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
+    }
+    
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }

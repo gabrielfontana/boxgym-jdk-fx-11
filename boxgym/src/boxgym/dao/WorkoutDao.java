@@ -36,13 +36,14 @@ public class WorkoutDao {
     }
 
     public boolean create(Workout workout) {
-        String sql = "INSERT INTO `workout` (`description`, `goal`, `sessions`) VALUES (?, ?, ?);";
+        String sql = "INSERT INTO `workout` (`description`, `goal`, `sessions`, `day`) VALUES (?, ?, ?, ?);";
 
         try {
             ps = conn.prepareStatement(sql);
             ps.setString(1, workout.getDescription());
             ps.setString(2, workout.getGoal());
             ps.setInt(3, workout.getSessions());
+            ps.setString(4, workout.getDay());
             ps.execute();
             return true;
         } catch (SQLException ex) {
@@ -105,6 +106,7 @@ public class WorkoutDao {
                 w.setDescription(rs.getString("description"));
                 w.setGoal(rs.getString("goal"));
                 w.setSessions(rs.getInt("sessions"));
+                w.setDay(rs.getString("day"));
                 w.setCreatedAt(rs.getTimestamp("createdAt").toLocalDateTime());
                 w.setUpdatedAt(rs.getTimestamp("updatedAt").toLocalDateTime());
                 workoutsList.add(w);

@@ -60,6 +60,9 @@ public class WorkoutsAddController implements Initializable {
     private LimitedTextField sessionsTextField;
 
     @FXML
+    private PrefixSelectionComboBox<String> dayComboBox;
+    
+    @FXML
     private Button addWorkoutButton;
 
     @FXML
@@ -67,6 +70,9 @@ public class WorkoutsAddController implements Initializable {
 
     @FXML
     private TextField workoutIdTextField;
+
+    @FXML
+    private PrefixSelectionComboBox<String> exerciseGroupComboBox;
 
     @FXML
     private PrefixSelectionComboBox<String> exerciseNameComboBox;
@@ -142,8 +148,11 @@ public class WorkoutsAddController implements Initializable {
         setWorkoutCreationFlag(false);
         setExercisesEntryCreationFlag(false);
         inputRestrictions();
-        loadExerciseNameComboBox();
         loadGoalComboBox();
+        loadDayComboBox();
+        loadExerciseGroupComboBox();
+        exerciseNameComboBoxListener();
+        exerciseNameComboBox.setPromptText("---");
 
         initExerciseEntryTableView();
         countLabel.setText("Exibindo nenhum exercício");
@@ -162,15 +171,76 @@ public class WorkoutsAddController implements Initializable {
         restTextField.setValidationPattern("[0-9]", 10);
     }
 
-    private void loadExerciseNameComboBox() {
+    private void loadGoalComboBox() {
+        String[] goalsList = {"Condicionamento Físico", "Emagrecimento", "Hipertrofia", "Reabilitação Física"};
+        goalComboBox.setPromptText("Selecione");
+        goalComboBox.setItems(FXCollections.observableArrayList(goalsList));
+    }
+    
+    private void loadDayComboBox() {
+        String[] days = {"Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"};
+        dayComboBox.setPromptText("Selecione");
+        dayComboBox.setItems(FXCollections.observableArrayList(days));
+    }
+
+    private void loadExerciseGroupComboBox() {
+        String[] groupsList = {"Abdome", "Antebraço", "Bíceps", "Corpo", "Costas", "Glúteo", "Ombro", "Peito", "Perna", "Tríceps"};
+        exerciseGroupComboBox.setPromptText("Selecione");
+        exerciseGroupComboBox.setItems(FXCollections.observableArrayList(groupsList));
+    }
+
+    private void exerciseNameComboBoxListener() {
+        exerciseGroupComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
+            switch (exerciseGroupComboBox.getSelectionModel().getSelectedItem()) {
+                case "Abdome":
+                    loadExerciseNameComboBox("Abdome");
+                    break;
+                case "Antebraço":
+                    loadExerciseNameComboBox("Antebraço");
+                    break;
+                case "Bíceps":
+                    loadExerciseNameComboBox("Bíceps");
+                    break;
+                case "Corpo":
+                    loadExerciseNameComboBox("Corpo");
+                    break;
+                case "Costas":
+                    loadExerciseNameComboBox("Costas");
+                    break;
+                case "Glúteo":
+                    loadExerciseNameComboBox("Glúteo");
+                    break;
+                case "Ombro":
+                    loadExerciseNameComboBox("Ombro");
+                    break;
+                case "Peito":
+                    loadExerciseNameComboBox("Peito");
+                    break;
+                case "Perna":
+                    loadExerciseNameComboBox("Perna");
+                    break;
+                case "Tríceps":
+                    loadExerciseNameComboBox("Tríceps");
+                    break;
+            }
+        });
+    }
+
+    private void loadExerciseNameComboBox(String exerciseGroup) {
+        ExerciseDao dao = new ExerciseDao();
+        ObservableList<String> obsList = FXCollections.observableList(dao.filterExercisesByGroup(exerciseGroup));
+        exerciseNameComboBox.setItems(obsList);
+    }
+
+    /*private void loadExerciseNameComboBox() {
         ObservableList<String> obsList = FXCollections.observableArrayList();
         for (String e : exerciseMap.values()) {
             obsList.add(e);
         }
         exerciseNameComboBox.setPromptText("Selecione");
         exerciseNameComboBox.setItems(obsList);
-    }
-
+    }*/
+    
     private int getKeyFromExerciseNameComboBox() {
         int key = 0;
         for (Map.Entry<Integer, String> entry : exerciseMap.entrySet()) {
@@ -182,18 +252,13 @@ public class WorkoutsAddController implements Initializable {
         return key;
     }
 
-    private void loadGoalComboBox() {
-        String[] goalsList = {"Condicionamento Físico", "Emagrecimento", "Hipertrofia", "Reabilitação Física"};
-        goalComboBox.setPromptText("Selecione");
-        goalComboBox.setItems(FXCollections.observableArrayList(goalsList));
-    }
-
     @FXML
     private void addWorkout(ActionEvent event) {
         TextValidationHelper validation = new TextValidationHelper("Atenção: \n\n");
         validation.emptyTextField(descriptionTextField.getText(), "Descrição inválida! \n");
         validation.invalidComboBox(goalComboBox, "Objetivo inválido! \n");
         validation.emptyTextField(sessionsTextField.getText(), "Sessões inválidas! \n");
+        validation.invalidComboBox(goalComboBox, "Dia da semana inválido! \n");
 
         if (!(validation.getEmptyCounter() == 0)) {
             ah.customAlert(Alert.AlertType.WARNING, "Não foi possível adicionar esse treino!", validation.getMessage());
@@ -204,7 +269,8 @@ public class WorkoutsAddController implements Initializable {
             lastRow.setDisable(false);
             saveButton.setDisable(false);
             clearButton.setDisable(false);
-            Workout workout = new Workout(descriptionTextField.getText(), goalComboBox.getValue(), Integer.valueOf(sessionsTextField.getText()));
+            Workout workout = new Workout(descriptionTextField.getText(), goalComboBox.getValue(), 
+                    Integer.valueOf(sessionsTextField.getText()), dayComboBox.getSelectionModel().getSelectedItem());
             WorkoutDao workoutDao = new WorkoutDao();
             workoutDao.create(workout);
             workoutIdTextField.setText(String.valueOf(workoutDao.getWorkoutId()));
@@ -276,13 +342,13 @@ public class WorkoutsAddController implements Initializable {
 
     private int setsRepsRest(String textField, int value) {
         int exerciseRelated;
-        
+
         if (textField.isEmpty()) {
             exerciseRelated = value;
         } else {
             exerciseRelated = Integer.valueOf(textField);
         }
-        
+
         return exerciseRelated;
     }
 

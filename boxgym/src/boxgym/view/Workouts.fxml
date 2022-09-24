@@ -99,9 +99,10 @@
             <TableView fx:id="workoutTableView" prefHeight="550.0" prefWidth="900.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="40.0">
                <columns>
                   <TableColumn fx:id="workoutIdTableColumn" minWidth="90.0" prefWidth="90.0" text="ID" />
-                  <TableColumn fx:id="descriptionTableColumn" minWidth="425.0" prefWidth="425.0" text="Descrição" />
-                  <TableColumn fx:id="goalTableColumn" minWidth="192.0" prefWidth="192.0" text="Objetivo" />
-                  <TableColumn fx:id="sessionsTableColumn" minWidth="191.0" prefWidth="191.0" text="Sessões" />
+                  <TableColumn fx:id="descriptionTableColumn" minWidth="333.0" prefWidth="333.0" text="Descrição" />
+                  <TableColumn fx:id="goalTableColumn" minWidth="175.0" prefWidth="175.0" text="Objetivo" />
+                  <TableColumn fx:id="sessionsTableColumn" minWidth="150.0" prefWidth="150.0" text="Sessões" />
+                  <TableColumn fx:id="dayTableColumn" minWidth="150.0" prefWidth="150.0" text="Dia da Semana" />
                </columns>
             </TableView>
             <BorderPane prefHeight="20.0" prefWidth="900.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
@@ -190,6 +191,19 @@
                            </HBox.margin>
                         </Label>
                         <Label fx:id="sessionsLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="274.0" styleClass="attribute-value-label" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox layoutX="21.0" layoutY="161.0">
+                     <children>
+                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Dia da Semana: ">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="dayLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="274.0" styleClass="attribute-value-label" />
                      </children>
                      <VBox.margin>
                         <Insets bottom="10.0" />
