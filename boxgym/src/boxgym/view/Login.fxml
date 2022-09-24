@@ -45,9 +45,9 @@
                     <VBox.margin>
                         <Insets bottom="10.0" />
                     </VBox.margin>
-               <graphic>
-                  <MaterialDesignIconView fill="WHITE" glyphName="LOGIN" size="15.0" styleClass="button-icon-color" />
-               </graphic>
+                    <graphic>
+                        <MaterialDesignIconView fill="WHITE" glyphName="LOGIN" size="15.0" styleClass="button-icon-color" />
+                    </graphic>
                 </Button>
                 <HBox alignment="CENTER">
                     <children>
@@ -62,8 +62,8 @@
             </children>
         </VBox>
     </children>
-   <stylesheets>
-      <URL value="@../css/login-style.css" />
-      <URL value="@../css/theme.css" />
-   </stylesheets>
+    <stylesheets>
+        <URL value="@../css/login-style.css" />
+        <URL value="@../css/theme.css" />
+    </stylesheets>
 </AnchorPane>

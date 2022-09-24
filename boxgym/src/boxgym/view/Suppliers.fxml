@@ -20,335 +20,335 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="695.0" prefWidth="1280.0" style="-fx-background-color: #f2f2f2;" styleClass="anchor-pane" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.SuppliersController">
-   <children>
-      <AnchorPane layoutX="20.0" layoutY="25.0" prefHeight="80.0" prefWidth="1280.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <Label text="Administrativo &gt; Fornecedores" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-         </children>
-      </AnchorPane>
-      <AnchorPane layoutX="14.0" layoutY="79.0" prefHeight="615.0" prefWidth="940.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="340.0" AnchorPane.topAnchor="80.0">
-         <children>
-            <HBox alignment="CENTER_RIGHT" layoutX="20.0" layoutY="90.0" prefHeight="30.0" prefWidth="900.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <MenuButton fx:id="filterButton" mnemonicParsing="false" prefHeight="30.0">
-                     <graphic>
-                        <MaterialDesignIconView glyphName="FILTER_VARIANT" size="15.0" />
-                     </graphic>
-                     <items>
-                        <CheckMenuItem fx:id="caseSensitiveOp" mnemonicParsing="false" text="Maiúsculas e minúsculas">
-                           <graphic>
-                              <MaterialDesignIconView glyphName="CASE_SENSITIVE_ALT" size="15.0" />
-                           </graphic>
-                        </CheckMenuItem>
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <RadioMenuItem fx:id="containsOp" mnemonicParsing="false" selected="true" text="Contém">
-                           <graphic>
-                              <MaterialDesignIconView glyphName="ALPHABETICAL" size="15.0" />
-                           </graphic>
-                           <toggleGroup>
-                              <ToggleGroup fx:id="filterOptions" />
-                           </toggleGroup>
-                        </RadioMenuItem>
-                        <RadioMenuItem fx:id="alphabeticalEqualsToOp" mnemonicParsing="false" text="Igual a" toggleGroup="$filterOptions">
-                           <graphic>
-                              <MaterialDesignIconView glyphName="ALPHABETICAL" size="15.0" />
-                           </graphic>
-                        </RadioMenuItem>
-                        <RadioMenuItem fx:id="startsWithOp" mnemonicParsing="false" text="Inicia com" toggleGroup="$filterOptions">
-                           <graphic>
-                              <MaterialDesignIconView glyphName="ALPHABETICAL" size="15.0" />
-                           </graphic>
-                        </RadioMenuItem>
-                        <RadioMenuItem fx:id="endsWithOp" mnemonicParsing="false" text="Termina com" toggleGroup="$filterOptions">
-                           <graphic>
-                              <MaterialDesignIconView glyphName="ALPHABETICAL" size="15.0" />
-                           </graphic>
-                        </RadioMenuItem>
-                     </items>
-                     <HBox.margin>
-                        <Insets right="15.0" />
-                     </HBox.margin>
-                  </MenuButton>
-                  <TextField fx:id="searchBox" prefHeight="30.0" prefWidth="200.0" promptText="Pesquisar..." HBox.hgrow="ALWAYS">
-                     <HBox.margin>
-                        <Insets right="15.0" />
-                     </HBox.margin>
-                  </TextField>
-                  <Button fx:id="addButton" mnemonicParsing="false" onAction="#addSupplier" prefHeight="30.0" prefWidth="90.0" text="Cadastrar">
-                     <HBox.margin>
-                        <Insets right="15.0" />
-                     </HBox.margin>
-                     <graphic>
-                        <MaterialDesignIconView glyphName="PLUS" size="15.0" />
-                     </graphic>
-                  </Button>
-                  <Button fx:id="updateButton" mnemonicParsing="false" onAction="#updateSupplier" prefHeight="30.0" prefWidth="90.0" text="Atualizar">
-                     <HBox.margin>
-                        <Insets right="15.0" />
-                     </HBox.margin>
-                     <graphic>
-                        <MaterialDesignIconView glyphName="PENCIL" size="15.0" />
-                     </graphic>
-                  </Button>
-                  <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteSupplier" prefHeight="30.0" prefWidth="90.0" text="Excluir">
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                     <graphic>
-                        <MaterialDesignIconView glyphName="DELETE" size="15.0" />
-                     </graphic>
-                  </Button>
-               </children>
-            </HBox>
-            <TableView fx:id="supplierTableView" prefHeight="550.0" prefWidth="900.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="40.0">
-              <columns>
-                  <TableColumn fx:id="supplierIdTableColumn" minWidth="90.0" prefWidth="90.0" text="ID" />
-                  <TableColumn fx:id="companyRegistryTableColumn" minWidth="127.0" prefWidth="127.0" text="CNPJ" />
-                  <TableColumn fx:id="corporateNameTableColumn" minWidth="250.0" prefWidth="250.0" text="Razão Social" />
-                  <TableColumn fx:id="tradeNameTableColumn" minWidth="200.0" prefWidth="200.0" text="Nome Fantasia" />
-                  <TableColumn fx:id="emailTableColumn" minWidth="250.0" prefWidth="250.0" text="E-mail" />
-                  <TableColumn fx:id="phoneTableColumn" minWidth="108.0" prefWidth="108.0" text="Telefone" />
-                  <TableColumn fx:id="addressTableColumn" minWidth="200.0" prefWidth="200.0" text="Endereço" />
-                  <TableColumn fx:id="cityTableColumn" minWidth="130.0" prefWidth="130.0" text="Cidade" />
-                  <TableColumn fx:id="federativeUnitTableColumn" minWidth="55.0" prefWidth="55.0" text="UF" />
-              </columns>
-            </TableView>
-            <BorderPane prefHeight="20.0" prefWidth="900.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
-               <left>
-                  <Label fx:id="countLabel" prefHeight="20.0" prefWidth="150.0" BorderPane.alignment="CENTER">
-                     <BorderPane.margin>
-                        <Insets right="15.0" />
-                     </BorderPane.margin>
-                  </Label>
-               </left>
-               <right>
-                  <HBox BorderPane.alignment="CENTER">
-                     <children>
-                        <MaterialDesignIconView fx:id="firstRow" glyphName="ARROW_UP" onMouseClicked="#goToFirstRow" size="20" styleClass="up-down-icon">
-                           <HBox.margin>
-                              <Insets right="15.0" />
-                           </HBox.margin>
-                        </MaterialDesignIconView>
-                        <MaterialDesignIconView fx:id="lastRow" glyphName="ARROW_DOWN" onMouseClicked="#goToLastRow" size="20" styleClass="up-down-icon" />
-                     </children>
-                  </HBox>
-               </right>
-               <center>
-                  <Label fx:id="selectedRowLabel" prefHeight="20.0" prefWidth="150.0" BorderPane.alignment="CENTER_LEFT">
-                     <BorderPane.margin>
-                        <Insets right="15.0" />
-                     </BorderPane.margin>
-                  </Label>
-               </center>
-            </BorderPane>
-         </children>
-      </AnchorPane>
-      <AnchorPane layoutX="944.0" layoutY="79.0" prefHeight="615.0" prefWidth="340.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
-         <children>
-            <VBox styleClass="vbox-border" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <Label alignment="CENTER" minWidth="-Infinity" prefHeight="20.0" prefWidth="300.0" styleClass="details-section-title" text="Detalhes">
-                     <VBox.margin>
-                        <Insets bottom="30.0" />
-                     </VBox.margin>
-                  </Label>
-                  <HBox>
-                     <children>
-                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="ID: ">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
+    <children>
+        <AnchorPane layoutX="20.0" layoutY="25.0" prefHeight="80.0" prefWidth="1280.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <Label text="Administrativo &gt; Fornecedores" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                </Label>
+            </children>
+        </AnchorPane>
+        <AnchorPane layoutX="14.0" layoutY="79.0" prefHeight="615.0" prefWidth="940.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="340.0" AnchorPane.topAnchor="80.0">
+            <children>
+                <HBox alignment="CENTER_RIGHT" layoutX="20.0" layoutY="90.0" prefHeight="30.0" prefWidth="900.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
+                    <children>
+                        <MenuButton fx:id="filterButton" mnemonicParsing="false" prefHeight="30.0">
+                            <graphic>
+                                <MaterialDesignIconView glyphName="FILTER_VARIANT" size="15.0" />
+                            </graphic>
+                            <items>
+                                <CheckMenuItem fx:id="caseSensitiveOp" mnemonicParsing="false" text="Maiúsculas e minúsculas">
+                                    <graphic>
+                                        <MaterialDesignIconView glyphName="CASE_SENSITIVE_ALT" size="15.0" />
+                                    </graphic>
+                                </CheckMenuItem>
+                                <SeparatorMenuItem mnemonicParsing="false" />
+                                <RadioMenuItem fx:id="containsOp" mnemonicParsing="false" selected="true" text="Contém">
+                                    <graphic>
+                                        <MaterialDesignIconView glyphName="ALPHABETICAL" size="15.0" />
+                                    </graphic>
+                                    <toggleGroup>
+                                        <ToggleGroup fx:id="filterOptions" />
+                                    </toggleGroup>
+                                </RadioMenuItem>
+                                <RadioMenuItem fx:id="alphabeticalEqualsToOp" mnemonicParsing="false" text="Igual a" toggleGroup="$filterOptions">
+                                    <graphic>
+                                        <MaterialDesignIconView glyphName="ALPHABETICAL" size="15.0" />
+                                    </graphic>
+                                </RadioMenuItem>
+                                <RadioMenuItem fx:id="startsWithOp" mnemonicParsing="false" text="Inicia com" toggleGroup="$filterOptions">
+                                    <graphic>
+                                        <MaterialDesignIconView glyphName="ALPHABETICAL" size="15.0" />
+                                    </graphic>
+                                </RadioMenuItem>
+                                <RadioMenuItem fx:id="endsWithOp" mnemonicParsing="false" text="Termina com" toggleGroup="$filterOptions">
+                                    <graphic>
+                                        <MaterialDesignIconView glyphName="ALPHABETICAL" size="15.0" />
+                                    </graphic>
+                                </RadioMenuItem>
+                            </items>
+                            <HBox.margin>
+                                <Insets right="15.0" />
+                            </HBox.margin>
+                        </MenuButton>
+                        <TextField fx:id="searchBox" prefHeight="30.0" prefWidth="200.0" promptText="Pesquisar..." HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets right="15.0" />
+                            </HBox.margin>
+                        </TextField>
+                        <Button fx:id="addButton" mnemonicParsing="false" onAction="#addSupplier" prefHeight="30.0" prefWidth="90.0" text="Cadastrar">
+                            <HBox.margin>
+                                <Insets right="15.0" />
+                            </HBox.margin>
+                            <graphic>
+                                <MaterialDesignIconView glyphName="PLUS" size="15.0" />
+                            </graphic>
+                        </Button>
+                        <Button fx:id="updateButton" mnemonicParsing="false" onAction="#updateSupplier" prefHeight="30.0" prefWidth="90.0" text="Atualizar">
+                            <HBox.margin>
+                                <Insets right="15.0" />
+                            </HBox.margin>
+                            <graphic>
+                                <MaterialDesignIconView glyphName="PENCIL" size="15.0" />
+                            </graphic>
+                        </Button>
+                        <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteSupplier" prefHeight="30.0" prefWidth="90.0" text="Excluir">
+                            <HBox.margin>
+                                <Insets />
+                            </HBox.margin>
+                            <graphic>
+                                <MaterialDesignIconView glyphName="DELETE" size="15.0" />
+                            </graphic>
+                        </Button>
+                    </children>
+                </HBox>
+                <TableView fx:id="supplierTableView" prefHeight="550.0" prefWidth="900.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="40.0">
+                    <columns>
+                        <TableColumn fx:id="supplierIdTableColumn" minWidth="90.0" prefWidth="90.0" text="ID" />
+                        <TableColumn fx:id="companyRegistryTableColumn" minWidth="127.0" prefWidth="127.0" text="CNPJ" />
+                        <TableColumn fx:id="corporateNameTableColumn" minWidth="250.0" prefWidth="250.0" text="Razão Social" />
+                        <TableColumn fx:id="tradeNameTableColumn" minWidth="200.0" prefWidth="200.0" text="Nome Fantasia" />
+                        <TableColumn fx:id="emailTableColumn" minWidth="250.0" prefWidth="250.0" text="E-mail" />
+                        <TableColumn fx:id="phoneTableColumn" minWidth="108.0" prefWidth="108.0" text="Telefone" />
+                        <TableColumn fx:id="addressTableColumn" minWidth="200.0" prefWidth="200.0" text="Endereço" />
+                        <TableColumn fx:id="cityTableColumn" minWidth="130.0" prefWidth="130.0" text="Cidade" />
+                        <TableColumn fx:id="federativeUnitTableColumn" minWidth="55.0" prefWidth="55.0" text="UF" />
+                    </columns>
+                </TableView>
+                <BorderPane prefHeight="20.0" prefWidth="900.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+                    <left>
+                        <Label fx:id="countLabel" prefHeight="20.0" prefWidth="150.0" BorderPane.alignment="CENTER">
+                            <BorderPane.margin>
+                                <Insets right="15.0" />
+                            </BorderPane.margin>
                         </Label>
-                        <Label fx:id="supplierIdLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="280.0" styleClass="attribute-value-label" />
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox>
-                     <children>
-                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="CNPJ: ">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
+                    </left>
+                    <right>
+                        <HBox BorderPane.alignment="CENTER">
+                            <children>
+                                <MaterialDesignIconView fx:id="firstRow" glyphName="ARROW_UP" onMouseClicked="#goToFirstRow" size="20" styleClass="up-down-icon">
+                                    <HBox.margin>
+                                        <Insets right="15.0" />
+                                    </HBox.margin>
+                                </MaterialDesignIconView>
+                                <MaterialDesignIconView fx:id="lastRow" glyphName="ARROW_DOWN" onMouseClicked="#goToLastRow" size="20" styleClass="up-down-icon" />
+                            </children>
+                        </HBox>
+                    </right>
+                    <center>
+                        <Label fx:id="selectedRowLabel" prefHeight="20.0" prefWidth="150.0" BorderPane.alignment="CENTER_LEFT">
+                            <BorderPane.margin>
+                                <Insets right="15.0" />
+                            </BorderPane.margin>
                         </Label>
-                        <Label fx:id="companyRegistryLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="263.0" styleClass="attribute-value-label" />
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox>
-                     <children>
-                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Razão Social: ">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
+                    </center>
+                </BorderPane>
+            </children>
+        </AnchorPane>
+        <AnchorPane layoutX="944.0" layoutY="79.0" prefHeight="615.0" prefWidth="340.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
+            <children>
+                <VBox styleClass="vbox-border" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
+                    <children>
+                        <Label alignment="CENTER" minWidth="-Infinity" prefHeight="20.0" prefWidth="300.0" styleClass="details-section-title" text="Detalhes">
+                            <VBox.margin>
+                                <Insets bottom="30.0" />
+                            </VBox.margin>
                         </Label>
-                        <Label fx:id="corporateNameLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="223.0" styleClass="attribute-value-label" />
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox>
-                     <children>
-                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Nome Fantasia: ">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </Label>
-                        <Label fx:id="tradeNameLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="209.0" styleClass="attribute-value-label" />
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox>
-                     <children>
-                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="E-mail: ">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </Label>
-                        <Label fx:id="emailLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="257.0" styleClass="attribute-value-label" />
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox>
-                     <children>
-                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Telefone: ">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </Label>
-                        <Label fx:id="phoneLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="244.0" styleClass="attribute-value-label" />
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox>
-                     <children>
-                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="CEP: ">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </Label>
-                        <Label fx:id="zipCodeLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="272.0" styleClass="attribute-value-label" />
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox>
-                     <children>
-                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Endereço: ">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </Label>
-                        <Label fx:id="addressLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="241.0" styleClass="attribute-value-label" />
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox>
-                     <children>
-                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Complemento: ">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </Label>
-                        <Label fx:id="addressComplementLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="213.0" styleClass="attribute-value-label" />
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox>
-                     <children>
-                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Bairro: ">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </Label>
-                        <Label fx:id="districtLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="258.0" styleClass="attribute-value-label" />
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox>
-                     <children>
-                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Cidade: ">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </Label>
-                        <Label fx:id="cityLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="254.0" styleClass="attribute-value-label" />
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox>
-                     <children>
-                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="UF: ">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </Label>
-                        <Label fx:id="federativeUnitLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="278.0" styleClass="attribute-value-label" />
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox>
-                     <children>
-                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Criação: ">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </Label>
-                        <Label fx:id="createdAtLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="251.0" styleClass="attribute-value-label" />
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox>
-                     <children>
-                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Modificação: ">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </Label>
-                        <Label fx:id="updatedAtLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="223.0" styleClass="attribute-value-label" />
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </HBox>
-               </children>
-               <padding>
-                  <Insets bottom="10.0" left="10.0" right="5.0" top="10.0" />
-               </padding>
-            </VBox>
-         </children>
-      </AnchorPane>
-   </children>
-   <stylesheets>
-      <URL value="@../css/details.css" />
-      <URL value="@../css/table-view-style.css" />
-      <URL value="@../css/theme.css" />
-   </stylesheets>
+                        <HBox>
+                            <children>
+                                <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="ID: ">
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                </Label>
+                                <Label fx:id="supplierIdLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="280.0" styleClass="attribute-value-label" />
+                            </children>
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </HBox>
+                        <HBox>
+                            <children>
+                                <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="CNPJ: ">
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                </Label>
+                                <Label fx:id="companyRegistryLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="263.0" styleClass="attribute-value-label" />
+                            </children>
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </HBox>
+                        <HBox>
+                            <children>
+                                <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Razão Social: ">
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                </Label>
+                                <Label fx:id="corporateNameLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="223.0" styleClass="attribute-value-label" />
+                            </children>
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </HBox>
+                        <HBox>
+                            <children>
+                                <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Nome Fantasia: ">
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                </Label>
+                                <Label fx:id="tradeNameLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="209.0" styleClass="attribute-value-label" />
+                            </children>
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </HBox>
+                        <HBox>
+                            <children>
+                                <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="E-mail: ">
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                </Label>
+                                <Label fx:id="emailLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="257.0" styleClass="attribute-value-label" />
+                            </children>
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </HBox>
+                        <HBox>
+                            <children>
+                                <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Telefone: ">
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                </Label>
+                                <Label fx:id="phoneLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="244.0" styleClass="attribute-value-label" />
+                            </children>
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </HBox>
+                        <HBox>
+                            <children>
+                                <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="CEP: ">
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                </Label>
+                                <Label fx:id="zipCodeLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="272.0" styleClass="attribute-value-label" />
+                            </children>
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </HBox>
+                        <HBox>
+                            <children>
+                                <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Endereço: ">
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                </Label>
+                                <Label fx:id="addressLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="241.0" styleClass="attribute-value-label" />
+                            </children>
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </HBox>
+                        <HBox>
+                            <children>
+                                <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Complemento: ">
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                </Label>
+                                <Label fx:id="addressComplementLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="213.0" styleClass="attribute-value-label" />
+                            </children>
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </HBox>
+                        <HBox>
+                            <children>
+                                <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Bairro: ">
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                </Label>
+                                <Label fx:id="districtLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="258.0" styleClass="attribute-value-label" />
+                            </children>
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </HBox>
+                        <HBox>
+                            <children>
+                                <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Cidade: ">
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                </Label>
+                                <Label fx:id="cityLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="254.0" styleClass="attribute-value-label" />
+                            </children>
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </HBox>
+                        <HBox>
+                            <children>
+                                <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="UF: ">
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                </Label>
+                                <Label fx:id="federativeUnitLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="278.0" styleClass="attribute-value-label" />
+                            </children>
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </HBox>
+                        <HBox>
+                            <children>
+                                <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Criação: ">
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                </Label>
+                                <Label fx:id="createdAtLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="251.0" styleClass="attribute-value-label" />
+                            </children>
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </HBox>
+                        <HBox>
+                            <children>
+                                <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Modificação: ">
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                </Label>
+                                <Label fx:id="updatedAtLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="223.0" styleClass="attribute-value-label" />
+                            </children>
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </HBox>
+                    </children>
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="5.0" top="10.0" />
+                    </padding>
+                </VBox>
+            </children>
+        </AnchorPane>
+    </children>
+    <stylesheets>
+        <URL value="@../css/details.css" />
+        <URL value="@../css/table-view-style.css" />
+        <URL value="@../css/theme.css" />
+    </stylesheets>
 </AnchorPane>

@@ -29,7 +29,7 @@
                                         <Insets bottom="5.0" />
                                     </VBox.margin>
                                 </Label>
-                        <PrefixSelectionComboBox fx:id="supplierComboBox" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="185.0" />
+                                <PrefixSelectionComboBox fx:id="supplierComboBox" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="185.0" />
                             </children>
                             <HBox.margin>
                                 <Insets right="10.0" />
@@ -73,118 +73,118 @@
         <Separator layoutY="84.0" prefHeight="17.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
         <AnchorPane fx:id="productsEntryArea" disable="true" layoutY="112.0" prefHeight="454.0" prefWidth="680.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="92.0">
             <children>
-            <VBox layoutX="14.0" layoutY="15.0" prefHeight="435.0" prefWidth="640.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
-               <children>
-                      <HBox prefHeight="52.0" prefWidth="570.0">
-                          <children>
-                              <VBox prefHeight="52.0" prefWidth="105.0">
-                                  <children>
-                                      <Label text="Entrada de Estoque">
-                                          <VBox.margin>
-                                              <Insets bottom="5.0" />
-                                          </VBox.margin>
-                                      </Label>
-                                      <TextField fx:id="stockEntryIdTextField" disable="true" editable="false" prefHeight="30.0" prefWidth="57.0" />
-                                  </children>
-                                  <HBox.margin>
-                                      <Insets right="10.0" />
-                                  </HBox.margin>
-                              </VBox>
-                              <VBox prefHeight="52.0" prefWidth="230.0">
-                                  <children>
-                                      <Label text="Produto *">
-                                          <VBox.margin>
-                                              <Insets bottom="5.0" />
-                                          </VBox.margin>
-                                      </Label>
-                              <PrefixSelectionComboBox fx:id="productComboBox" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="185.0" />
-                                  </children>
-                                  <HBox.margin>
-                                      <Insets right="10.0" />
-                                  </HBox.margin>
-                              </VBox>
-                              <VBox prefHeight="52.0" prefWidth="105.0">
-                                  <children>
-                                      <Label text="Quantidade *">
-                                          <VBox.margin>
-                                              <Insets bottom="5.0" />
-                                          </VBox.margin>
-                                      </Label>
-                                      <LimitedTextField fx:id="amountTextField" prefHeight="30.0" prefWidth="150.0" />
-                                  </children>
-                                  <HBox.margin>
-                                      <Insets right="10.0" />
-                                  </HBox.margin>
-                              </VBox>
-                              <VBox prefHeight="52.0" prefWidth="105.0">
-                                  <children>
-                                      <Label text="Preço de Custo">
-                                          <VBox.margin>
-                                              <Insets bottom="5.0" />
-                                          </VBox.margin>
-                                      </Label>
-                                      <CurrencyField fx:id="costPriceTextField" prefHeight="30.0" prefWidth="150.0" />
-                                  </children>
-                                  <HBox.margin>
-                                      <Insets right="10.0" />
-                                  </HBox.margin>
-                              </VBox>
-                              <Button fx:id="addProductEntryButton" mnemonicParsing="false" onAction="#addProductEntry" prefHeight="52.0" prefWidth="55.0">
-                                  <graphic>
-                                      <MaterialDesignIconView glyphName="PLUS" size="21" />
-                                  </graphic>
-                              </Button>
-                          </children>
-                     <VBox.margin>
-                        <Insets bottom="20.0" />
-                     </VBox.margin>
-                      </HBox>
-                      <TableView fx:id="productEntryTableView" prefHeight="267.0" prefWidth="640.0" stylesheets="@../css/table-view-style.css">
-                          <columns>
-                              <TableColumn fx:id="productTableColumn" minWidth="230.0" prefWidth="230.0" resizable="false" text="Produto" />
-                              <TableColumn fx:id="amountTableColumn" minWidth="100.0" prefWidth="100.0" resizable="false" text="Qtde." />
-                              <TableColumn fx:id="costPriceTableColumn" minWidth="115.0" prefWidth="115.0" resizable="false" text="Preço &#10;de Custo" />
-                              <TableColumn fx:id="subtotalTableColumn" minWidth="115.0" prefWidth="115.0" resizable="false" text="Subtotal" />
-                              <TableColumn fx:id="actionButtonTableColumn" editable="false" maxWidth="65.0" minWidth="65.0" prefWidth="65.0" resizable="false" sortable="false" />
-                          </columns>
-                     <VBox.margin>
-                        <Insets bottom="5.0" />
-                     </VBox.margin>
-                      </TableView>
-                  <HBox prefHeight="20.0" prefWidth="570.0">
-                     <children>
-                        <Label fx:id="countLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="830.0">
-                           <HBox.margin>
-                              <Insets right="15.0" />
-                           </HBox.margin>
-                        </Label>
-                        <MaterialDesignIconView fx:id="firstRow" disable="true" glyphName="ARROW_UP" onMouseClicked="#goToFirstRow" size="20" styleClass="up-down-icon">
-                           <HBox.margin>
-                              <Insets right="15.0" />
-                           </HBox.margin>
-                        </MaterialDesignIconView>
-                        <MaterialDesignIconView fx:id="lastRow" disable="true" glyphName="ARROW_DOWN" onMouseClicked="#goToLastRow" size="20" styleClass="up-down-icon" />
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="20.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <VBox prefHeight="54.0" prefWidth="640.0">
-                     <children>
-                        <Label text="Total">
-                           <VBox.margin>
-                              <Insets bottom="5.0" />
-                           </VBox.margin>
-                        </Label>
-                        <LimitedTextField fx:id="totalPriceTextField" editable="false" maxWidth="-Infinity" prefHeight="30.0" prefWidth="105.0" />
-                     </children>
-                  </VBox>
-               </children>
-            </VBox>
+                <VBox layoutX="14.0" layoutY="15.0" prefHeight="435.0" prefWidth="640.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+                    <children>
+                        <HBox prefHeight="52.0" prefWidth="570.0">
+                            <children>
+                                <VBox prefHeight="52.0" prefWidth="105.0">
+                                    <children>
+                                        <Label text="Entrada de Estoque">
+                                            <VBox.margin>
+                                                <Insets bottom="5.0" />
+                                            </VBox.margin>
+                                        </Label>
+                                        <TextField fx:id="stockEntryIdTextField" disable="true" editable="false" prefHeight="30.0" prefWidth="57.0" />
+                                    </children>
+                                    <HBox.margin>
+                                        <Insets right="10.0" />
+                                    </HBox.margin>
+                                </VBox>
+                                <VBox prefHeight="52.0" prefWidth="230.0">
+                                    <children>
+                                        <Label text="Produto *">
+                                            <VBox.margin>
+                                                <Insets bottom="5.0" />
+                                            </VBox.margin>
+                                        </Label>
+                                        <PrefixSelectionComboBox fx:id="productComboBox" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="185.0" />
+                                    </children>
+                                    <HBox.margin>
+                                        <Insets right="10.0" />
+                                    </HBox.margin>
+                                </VBox>
+                                <VBox prefHeight="52.0" prefWidth="105.0">
+                                    <children>
+                                        <Label text="Quantidade *">
+                                            <VBox.margin>
+                                                <Insets bottom="5.0" />
+                                            </VBox.margin>
+                                        </Label>
+                                        <LimitedTextField fx:id="amountTextField" prefHeight="30.0" prefWidth="150.0" />
+                                    </children>
+                                    <HBox.margin>
+                                        <Insets right="10.0" />
+                                    </HBox.margin>
+                                </VBox>
+                                <VBox prefHeight="52.0" prefWidth="105.0">
+                                    <children>
+                                        <Label text="Preço de Custo">
+                                            <VBox.margin>
+                                                <Insets bottom="5.0" />
+                                            </VBox.margin>
+                                        </Label>
+                                        <CurrencyField fx:id="costPriceTextField" prefHeight="30.0" prefWidth="150.0" />
+                                    </children>
+                                    <HBox.margin>
+                                        <Insets right="10.0" />
+                                    </HBox.margin>
+                                </VBox>
+                                <Button fx:id="addProductEntryButton" mnemonicParsing="false" onAction="#addProductEntry" prefHeight="52.0" prefWidth="55.0">
+                                    <graphic>
+                                        <MaterialDesignIconView glyphName="PLUS" size="21" />
+                                    </graphic>
+                                </Button>
+                            </children>
+                            <VBox.margin>
+                                <Insets bottom="20.0" />
+                            </VBox.margin>
+                        </HBox>
+                        <TableView fx:id="productEntryTableView" prefHeight="267.0" prefWidth="640.0" stylesheets="@../css/table-view-style.css">
+                            <columns>
+                                <TableColumn fx:id="productTableColumn" minWidth="230.0" prefWidth="230.0" resizable="false" text="Produto" />
+                                <TableColumn fx:id="amountTableColumn" minWidth="100.0" prefWidth="100.0" resizable="false" text="Qtde." />
+                                <TableColumn fx:id="costPriceTableColumn" minWidth="115.0" prefWidth="115.0" resizable="false" text="Preço &#10;de Custo" />
+                                <TableColumn fx:id="subtotalTableColumn" minWidth="115.0" prefWidth="115.0" resizable="false" text="Subtotal" />
+                                <TableColumn fx:id="actionButtonTableColumn" editable="false" maxWidth="65.0" minWidth="65.0" prefWidth="65.0" resizable="false" sortable="false" />
+                            </columns>
+                            <VBox.margin>
+                                <Insets bottom="5.0" />
+                            </VBox.margin>
+                        </TableView>
+                        <HBox prefHeight="20.0" prefWidth="570.0">
+                            <children>
+                                <Label fx:id="countLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="830.0">
+                                    <HBox.margin>
+                                        <Insets right="15.0" />
+                                    </HBox.margin>
+                                </Label>
+                                <MaterialDesignIconView fx:id="firstRow" disable="true" glyphName="ARROW_UP" onMouseClicked="#goToFirstRow" size="20" styleClass="up-down-icon">
+                                    <HBox.margin>
+                                        <Insets right="15.0" />
+                                    </HBox.margin>
+                                </MaterialDesignIconView>
+                                <MaterialDesignIconView fx:id="lastRow" disable="true" glyphName="ARROW_DOWN" onMouseClicked="#goToLastRow" size="20" styleClass="up-down-icon" />
+                            </children>
+                            <VBox.margin>
+                                <Insets bottom="20.0" />
+                            </VBox.margin>
+                        </HBox>
+                        <VBox prefHeight="54.0" prefWidth="640.0">
+                            <children>
+                                <Label text="Total">
+                                    <VBox.margin>
+                                        <Insets bottom="5.0" />
+                                    </VBox.margin>
+                                </Label>
+                                <LimitedTextField fx:id="totalPriceTextField" editable="false" maxWidth="-Infinity" prefHeight="30.0" prefWidth="105.0" />
+                            </children>
+                        </VBox>
+                    </children>
+                </VBox>
             </children>
         </AnchorPane>
-      <AnchorPane layoutX="15.0" layoutY="560.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-         <children>
+        <AnchorPane layoutX="15.0" layoutY="560.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <children>
                 <HBox AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
                     <children>
                         <Button fx:id="saveButton" disable="true" mnemonicParsing="false" onAction="#save" prefHeight="30.0" prefWidth="89.0" text="Salvar">
@@ -202,7 +202,7 @@
                         </Button>
                     </children>
                 </HBox>
-         </children>
-      </AnchorPane>
+            </children>
+        </AnchorPane>
     </children>
 </AnchorPane>

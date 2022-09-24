@@ -10,42 +10,42 @@
 <?import javafx.scene.layout.HBox?>
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="730.0" style="-fx-background-color: #f2f2f2;" stylesheets="@../css/theme.css" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.WorkoutsExercisesListController">
-   <children>
-      <TableView fx:id="exerciseListTableView" layoutX="10.0" layoutY="10.0" prefHeight="335.0" prefWidth="690.0" stylesheets="@../css/table-view-style.css" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
-         <columns>
-            <TableColumn fx:id="exerciseNameTableColumn" minWidth="345.0" prefWidth="345.0" resizable="false" text="Nome do Exercício" />
-            <TableColumn fx:id="setsTableColumn" minWidth="100.0" prefWidth="100.0" resizable="false" text="Séries" />
-            <TableColumn fx:id="repsTableColumn" minWidth="100.0" prefWidth="100.0" resizable="false" text="Repetições" />
-            <TableColumn fx:id="restTableColumn" minWidth="130.0" prefWidth="130.0" resizable="false" text="Descanso&#10;(em segundos)" />
-         </columns>
-      </TableView>
-      <BorderPane prefHeight="20.0" prefWidth="690.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
-         <left>
-            <Label fx:id="countLabel" prefHeight="20.0" prefWidth="150.0" BorderPane.alignment="CENTER">
-               <BorderPane.margin>
-                  <Insets right="15.0" />
-               </BorderPane.margin>
-            </Label>
-         </left>
-         <right>
-            <HBox BorderPane.alignment="CENTER">
-               <children>
-                  <MaterialDesignIconView fx:id="firstRow" glyphName="ARROW_UP" onMouseClicked="#goToFirstRow" size="20" styleClass="up-down-icon">
-                     <HBox.margin>
+    <children>
+        <TableView fx:id="exerciseListTableView" layoutX="10.0" layoutY="10.0" prefHeight="335.0" prefWidth="690.0" stylesheets="@../css/table-view-style.css" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+            <columns>
+                <TableColumn fx:id="exerciseNameTableColumn" minWidth="345.0" prefWidth="345.0" resizable="false" text="Nome do Exercício" />
+                <TableColumn fx:id="setsTableColumn" minWidth="100.0" prefWidth="100.0" resizable="false" text="Séries" />
+                <TableColumn fx:id="repsTableColumn" minWidth="100.0" prefWidth="100.0" resizable="false" text="Repetições" />
+                <TableColumn fx:id="restTableColumn" minWidth="130.0" prefWidth="130.0" resizable="false" text="Descanso&#10;(em segundos)" />
+            </columns>
+        </TableView>
+        <BorderPane prefHeight="20.0" prefWidth="690.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+            <left>
+                <Label fx:id="countLabel" prefHeight="20.0" prefWidth="150.0" BorderPane.alignment="CENTER">
+                    <BorderPane.margin>
                         <Insets right="15.0" />
-                     </HBox.margin>
-                  </MaterialDesignIconView>
-                  <MaterialDesignIconView fx:id="lastRow" glyphName="ARROW_DOWN" onMouseClicked="#goToLastRow" size="20" styleClass="up-down-icon" />
-               </children>
-            </HBox>
-         </right>
-         <center>
-            <Label fx:id="selectedRowLabel" prefHeight="20.0" prefWidth="150.0" BorderPane.alignment="CENTER_LEFT">
-               <BorderPane.margin>
-                  <Insets right="15.0" />
-               </BorderPane.margin>
-            </Label>
-         </center>
-      </BorderPane>
-   </children>
+                    </BorderPane.margin>
+                </Label>
+            </left>
+            <right>
+                <HBox BorderPane.alignment="CENTER">
+                    <children>
+                        <MaterialDesignIconView fx:id="firstRow" glyphName="ARROW_UP" onMouseClicked="#goToFirstRow" size="20" styleClass="up-down-icon">
+                            <HBox.margin>
+                                <Insets right="15.0" />
+                            </HBox.margin>
+                        </MaterialDesignIconView>
+                        <MaterialDesignIconView fx:id="lastRow" glyphName="ARROW_DOWN" onMouseClicked="#goToLastRow" size="20" styleClass="up-down-icon" />
+                    </children>
+                </HBox>
+            </right>
+            <center>
+                <Label fx:id="selectedRowLabel" prefHeight="20.0" prefWidth="150.0" BorderPane.alignment="CENTER_LEFT">
+                    <BorderPane.margin>
+                        <Insets right="15.0" />
+                    </BorderPane.margin>
+                </Label>
+            </center>
+        </BorderPane>
+    </children>
 </AnchorPane>

@@ -12,118 +12,118 @@
 <?import org.controlsfx.control.PrefixSelectionComboBox?>
 
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="600.0" style="-fx-background-color: #f2f2f2;" stylesheets="@../css/theme.css" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.ExercisesAddController">
-   <children>
-      <AnchorPane layoutX="15.0" layoutY="15.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <VBox AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
-               <children>
-                  <HBox prefWidth="397.0" VBox.vgrow="ALWAYS">
-                     <children>
-                        <VBox prefWidth="275.0" HBox.hgrow="ALWAYS">
-                           <children>
-                              <Label text="Nome *">
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <LimitedTextField fx:id="nameTextField" prefHeight="30.0" prefWidth="550.0" />
-                           </children>
-                           <HBox.margin>
-                              <Insets right="10.0" />
-                           </HBox.margin>
+    <children>
+        <AnchorPane layoutX="15.0" layoutY="15.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <VBox AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+                    <children>
+                        <HBox prefWidth="397.0" VBox.vgrow="ALWAYS">
+                            <children>
+                                <VBox prefWidth="275.0" HBox.hgrow="ALWAYS">
+                                    <children>
+                                        <Label text="Nome *">
+                                            <VBox.margin>
+                                                <Insets bottom="5.0" />
+                                            </VBox.margin>
+                                        </Label>
+                                        <LimitedTextField fx:id="nameTextField" prefHeight="30.0" prefWidth="550.0" />
+                                    </children>
+                                    <HBox.margin>
+                                        <Insets right="10.0" />
+                                    </HBox.margin>
+                                </VBox>
+                                <VBox prefWidth="275.0" HBox.hgrow="ALWAYS">
+                                    <children>
+                                        <Label text="Abreviação *">
+                                            <VBox.margin>
+                                                <Insets bottom="5.0" />
+                                            </VBox.margin>
+                                        </Label>
+                                        <LimitedTextField fx:id="abbreviationTextField" prefHeight="30.0" prefWidth="550.0" />
+                                    </children>
+                                </VBox>
+                            </children>
+                            <VBox.margin>
+                                <Insets bottom="20.0" />
+                            </VBox.margin>
+                        </HBox>
+                        <HBox prefWidth="397.0">
+                            <children>
+                                <VBox prefWidth="275.0" HBox.hgrow="ALWAYS">
+                                    <children>
+                                        <Label text="Tipo *">
+                                            <VBox.margin>
+                                                <Insets bottom="5.0" />
+                                            </VBox.margin>
+                                        </Label>
+                                        <PrefixSelectionComboBox fx:id="exerciseTypeComboBox" prefHeight="30.0" prefWidth="550.0" />
+                                    </children>
+                                    <HBox.margin>
+                                        <Insets right="10.0" />
+                                    </HBox.margin>
+                                </VBox>
+                                <VBox prefWidth="275.0" HBox.hgrow="ALWAYS">
+                                    <children>
+                                        <Label text="Grupo *">
+                                            <VBox.margin>
+                                                <Insets bottom="5.0" />
+                                            </VBox.margin>
+                                        </Label>
+                                        <PrefixSelectionComboBox fx:id="exerciseGroupComboBox" prefHeight="30.0" prefWidth="550.0" />
+                                    </children>
+                                </VBox>
+                            </children>
+                            <VBox.margin>
+                                <Insets bottom="20.0" />
+                            </VBox.margin>
+                        </HBox>
+                        <VBox prefHeight="120.0" prefWidth="560.0" VBox.vgrow="ALWAYS">
+                            <children>
+                                <Label text="Descrição">
+                                    <VBox.margin>
+                                        <Insets bottom="5.0" />
+                                    </VBox.margin>
+                                </Label>
+                                <TextArea fx:id="descriptionTextArea" prefHeight="97.0" prefWidth="623.0" wrapText="true" />
+                            </children>
+                            <VBox.margin>
+                                <Insets bottom="20.0" />
+                            </VBox.margin>
                         </VBox>
-                        <VBox prefWidth="275.0" HBox.hgrow="ALWAYS">
-                           <children>
-                              <Label text="Abreviação *">
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <LimitedTextField fx:id="abbreviationTextField" prefHeight="30.0" prefWidth="550.0" />
-                           </children>
+                        <VBox prefHeight="120.0" prefWidth="560.0">
+                            <children>
+                                <Label text="Instrução">
+                                    <VBox.margin>
+                                        <Insets bottom="5.0" />
+                                    </VBox.margin>
+                                </Label>
+                                <TextArea fx:id="instructionTextArea" prefHeight="97.0" prefWidth="623.0" wrapText="true" />
+                            </children>
                         </VBox>
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="20.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox prefWidth="397.0">
-                     <children>
-                        <VBox prefWidth="275.0" HBox.hgrow="ALWAYS">
-                           <children>
-                              <Label text="Tipo *">
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <PrefixSelectionComboBox fx:id="exerciseTypeComboBox" prefHeight="30.0" prefWidth="550.0" />
-                           </children>
-                           <HBox.margin>
-                              <Insets right="10.0" />
-                           </HBox.margin>
-                        </VBox>
-                        <VBox prefWidth="275.0" HBox.hgrow="ALWAYS">
-                           <children>
-                              <Label text="Grupo *">
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <PrefixSelectionComboBox fx:id="exerciseGroupComboBox" prefHeight="30.0" prefWidth="550.0" />
-                           </children>
-                        </VBox>
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="20.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <VBox prefHeight="120.0" prefWidth="560.0" VBox.vgrow="ALWAYS">
-                     <children>
-                        <Label text="Descrição">
-                           <VBox.margin>
-                              <Insets bottom="5.0" />
-                           </VBox.margin>
-                        </Label>
-                        <TextArea fx:id="descriptionTextArea" prefHeight="97.0" prefWidth="623.0" wrapText="true" />
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="20.0" />
-                     </VBox.margin>
-                  </VBox>
-                  <VBox prefHeight="120.0" prefWidth="560.0">
-                     <children>
-                        <Label text="Instrução">
-                           <VBox.margin>
-                              <Insets bottom="5.0" />
-                           </VBox.margin>
-                        </Label>
-                        <TextArea fx:id="instructionTextArea" prefHeight="97.0" prefWidth="623.0" wrapText="true" />
-                     </children>
-                  </VBox>
-               </children>
-            </VBox>
-         </children>
-      </AnchorPane>
-      <AnchorPane layoutY="495.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-         <children>
-            <HBox AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
-               <children>
-                  <Button fx:id="saveButton" mnemonicParsing="false" onAction="#save" prefHeight="30.0" prefWidth="89.0" text="Salvar">
-                     <HBox.margin>
-                        <Insets right="15.0" />
-                     </HBox.margin>
-                     <graphic>
-                        <MaterialDesignIconView fill="BLACK" glyphName="CONTENT_SAVE" size="15" />
-                     </graphic>
-                  </Button>
-                  <Button fx:id="clearButton" mnemonicParsing="false" onAction="#clear" prefHeight="30.0" prefWidth="89.0" text="Limpar">
-                     <graphic>
-                        <MaterialDesignIconView glyphName="BROOM" size="15" />
-                     </graphic>
-                  </Button>
-               </children>
-            </HBox>
-         </children>
-      </AnchorPane>
-   </children>
+                    </children>
+                </VBox>
+            </children>
+        </AnchorPane>
+        <AnchorPane layoutY="495.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <children>
+                <HBox AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+                    <children>
+                        <Button fx:id="saveButton" mnemonicParsing="false" onAction="#save" prefHeight="30.0" prefWidth="89.0" text="Salvar">
+                            <HBox.margin>
+                                <Insets right="15.0" />
+                            </HBox.margin>
+                            <graphic>
+                                <MaterialDesignIconView fill="BLACK" glyphName="CONTENT_SAVE" size="15" />
+                            </graphic>
+                        </Button>
+                        <Button fx:id="clearButton" mnemonicParsing="false" onAction="#clear" prefHeight="30.0" prefWidth="89.0" text="Limpar">
+                            <graphic>
+                                <MaterialDesignIconView glyphName="BROOM" size="15" />
+                            </graphic>
+                        </Button>
+                    </children>
+                </HBox>
+            </children>
+        </AnchorPane>
+    </children>
 </AnchorPane>

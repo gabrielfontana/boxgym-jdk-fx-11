@@ -15,221 +15,221 @@
 <?import org.controlsfx.control.PrefixSelectionComboBox?>
 
 <AnchorPane fx:id="anchorPane" prefHeight="616.0" prefWidth="680.0" style="-fx-background-color: #f2f2f2;" stylesheets="@../css/theme.css" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.WorkoutsAddController">
-   <children>
-      <AnchorPane fx:id="workoutArea" layoutX="15.0" layoutY="24.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <HBox AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
-               <children>
-                  <VBox prefHeight="52.0" prefWidth="170.0">
-                     <children>
-                        <Label text="Descrição *">
-                           <VBox.margin>
-                              <Insets bottom="5.0" />
-                           </VBox.margin>
-                        </Label>
-                        <LimitedTextField fx:id="descriptionTextField" prefHeight="30.0" prefWidth="170.0" />
-                     </children>
-                     <HBox.margin>
-                        <Insets right="10.0" />
-                     </HBox.margin>
-                  </VBox>
-                  <VBox maxHeight="-Infinity" prefHeight="52.0" prefWidth="175.0">
-                     <children>
-                        <Label text="Objetivo *" VBox.vgrow="ALWAYS">
-                           <VBox.margin>
-                              <Insets bottom="5.0" />
-                           </VBox.margin>
-                        </Label>
-                        <PrefixSelectionComboBox fx:id="goalComboBox" prefHeight="30.0" prefWidth="175.0" />
-                     </children>
-                     <HBox.margin>
-                        <Insets right="10.0" />
-                     </HBox.margin>
-                  </VBox>
-                  <VBox prefHeight="52.0" prefWidth="60.0">
-                     <children>
-                        <Label text="Sessões *">
-                           <VBox.margin>
-                              <Insets bottom="5.0" />
-                           </VBox.margin>
-                        </Label>
-                        <LimitedTextField fx:id="sessionsTextField" prefHeight="30.0" prefWidth="60.0" />
-                     </children>
-                     <HBox.margin>
-                        <Insets right="10.0" />
-                     </HBox.margin>
-                  </VBox>
-                  <VBox prefHeight="52.0" prefWidth="140.0">
-                     <children>
-                        <Label text="Dia da Semana *">
-                           <VBox.margin>
-                              <Insets bottom="5.0" />
-                           </VBox.margin>
-                        </Label>
-                        <PrefixSelectionComboBox fx:id="dayComboBox" prefHeight="30.0" prefWidth="140.0" />
-                     </children>
-                     <HBox.margin>
-                        <Insets right="10.0" />
-                     </HBox.margin>
-                  </VBox>
-                  <Button fx:id="addWorkoutButton" mnemonicParsing="false" onAction="#addWorkout" prefHeight="52.0" prefWidth="55.0">
-                     <graphic>
-                        <MaterialDesignIconView glyphName="PLUS" size="21" />
-                     </graphic>
-                  </Button>
-               </children>
-            </HBox>
-         </children>
-      </AnchorPane>
-      <Separator layoutY="84.0" prefHeight="17.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-      <AnchorPane fx:id="exercisesEntryArea" disable="true" layoutY="112.0" prefHeight="454.0" prefWidth="680.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="92.0">
-         <children>
-            <VBox layoutX="14.0" layoutY="15.0" prefHeight="435.0" prefWidth="640.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
-               <children>
-                  <HBox prefHeight="52.0" prefWidth="570.0">
-                     <children>
-                        <VBox prefHeight="52.0" prefWidth="60.0">
-                           <children>
-                              <Label text="Treino">
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <TextField fx:id="workoutIdTextField" disable="true" editable="false" prefHeight="30.0" prefWidth="60.0" />
-                           </children>
-                           <HBox.margin>
-                              <Insets right="10.0" />
-                           </HBox.margin>
+    <children>
+        <AnchorPane fx:id="workoutArea" layoutX="15.0" layoutY="24.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <HBox AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+                    <children>
+                        <VBox prefHeight="52.0" prefWidth="170.0">
+                            <children>
+                                <Label text="Descrição *">
+                                    <VBox.margin>
+                                        <Insets bottom="5.0" />
+                                    </VBox.margin>
+                                </Label>
+                                <LimitedTextField fx:id="descriptionTextField" prefHeight="30.0" prefWidth="170.0" />
+                            </children>
+                            <HBox.margin>
+                                <Insets right="10.0" />
+                            </HBox.margin>
                         </VBox>
-                        <VBox prefHeight="52.0" prefWidth="100.0">
-                           <children>
-                              <Label text="Grupo *">
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <PrefixSelectionComboBox fx:id="exerciseGroupComboBox" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="100.0" />
-                           </children>
-                           <HBox.margin>
-                              <Insets right="10.0" />
-                           </HBox.margin>
-                        </VBox>
-                        <VBox prefHeight="52.0" prefWidth="175.0">
-                           <children>
-                              <Label text="Nome do Exercício *">
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <PrefixSelectionComboBox fx:id="exerciseNameComboBox" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="175.0" />
-                           </children>
-                           <HBox.margin>
-                              <Insets right="10.0" />
-                           </HBox.margin>
+                        <VBox maxHeight="-Infinity" prefHeight="52.0" prefWidth="175.0">
+                            <children>
+                                <Label text="Objetivo *" VBox.vgrow="ALWAYS">
+                                    <VBox.margin>
+                                        <Insets bottom="5.0" />
+                                    </VBox.margin>
+                                </Label>
+                                <PrefixSelectionComboBox fx:id="goalComboBox" prefHeight="30.0" prefWidth="175.0" />
+                            </children>
+                            <HBox.margin>
+                                <Insets right="10.0" />
+                            </HBox.margin>
                         </VBox>
                         <VBox prefHeight="52.0" prefWidth="60.0">
-                           <children>
-                              <Label text="Séries">
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <LimitedTextField fx:id="setsTextField" prefHeight="30.0" />
-                           </children>
-                           <HBox.margin>
-                              <Insets right="10.0" />
-                           </HBox.margin>
+                            <children>
+                                <Label text="Sessões *">
+                                    <VBox.margin>
+                                        <Insets bottom="5.0" />
+                                    </VBox.margin>
+                                </Label>
+                                <LimitedTextField fx:id="sessionsTextField" prefHeight="30.0" prefWidth="60.0" />
+                            </children>
+                            <HBox.margin>
+                                <Insets right="10.0" />
+                            </HBox.margin>
                         </VBox>
-                        <VBox prefHeight="52.0" prefWidth="70.0">
-                           <children>
-                              <Label text="Repetições">
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <LimitedTextField fx:id="repsTextField" prefHeight="30.0" />
-                           </children>
-                           <HBox.margin>
-                              <Insets right="10.0" />
-                           </HBox.margin>
+                        <VBox prefHeight="52.0" prefWidth="140.0">
+                            <children>
+                                <Label text="Dia da Semana *">
+                                    <VBox.margin>
+                                        <Insets bottom="5.0" />
+                                    </VBox.margin>
+                                </Label>
+                                <PrefixSelectionComboBox fx:id="dayComboBox" prefHeight="30.0" prefWidth="140.0" />
+                            </children>
+                            <HBox.margin>
+                                <Insets right="10.0" />
+                            </HBox.margin>
                         </VBox>
-                        <VBox prefHeight="52.0" prefWidth="60.0">
-                           <children>
-                              <Label text="Descanso">
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <LimitedTextField fx:id="restTextField" prefHeight="30.0" />
-                           </children>
-                           <HBox.margin>
-                              <Insets right="10.0" />
-                           </HBox.margin>
-                        </VBox>
-                        <Button fx:id="addExerciseEntryButton" mnemonicParsing="false" onAction="#addExerciseEntry" prefHeight="52.0" prefWidth="55.0">
-                           <graphic>
-                              <MaterialDesignIconView glyphName="PLUS" size="21" />
-                           </graphic>
+                        <Button fx:id="addWorkoutButton" mnemonicParsing="false" onAction="#addWorkout" prefHeight="52.0" prefWidth="55.0">
+                            <graphic>
+                                <MaterialDesignIconView glyphName="PLUS" size="21" />
+                            </graphic>
                         </Button>
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="20.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <TableView fx:id="exerciseEntryTableView" prefHeight="338.0" prefWidth="640.0" stylesheets="@../css/table-view-style.css">
-                     <columns>
-                        <TableColumn fx:id="exerciseNameTableColumn" minWidth="230.0" prefWidth="230.0" resizable="false" text="Nome do Exercício" />
-                        <TableColumn fx:id="setsTableColumn" minWidth="100.0" prefWidth="100.0" resizable="false" text="Séries" />
-                        <TableColumn fx:id="repsTableColumn" minWidth="100.0" prefWidth="100.0" resizable="false" text="Repetições" />
-                        <TableColumn fx:id="restTableColumn" minWidth="130.0" prefWidth="130.0" resizable="false" text="Descanso&#10;(em segundos)" />
-                        <TableColumn fx:id="actionButtonTableColumn" editable="false" maxWidth="65.0" minWidth="65.0" prefWidth="65.0" resizable="false" sortable="false" />
-                     </columns>
-                     <VBox.margin>
-                        <Insets bottom="5.0" />
-                     </VBox.margin>
-                  </TableView>
-                  <HBox prefHeight="20.0" prefWidth="570.0">
-                     <children>
-                        <Label fx:id="countLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="830.0">
-                           <HBox.margin>
-                              <Insets right="15.0" />
-                           </HBox.margin>
-                        </Label>
-                        <MaterialDesignIconView fx:id="firstRow" disable="true" glyphName="ARROW_UP" onMouseClicked="#goToFirstRow" size="20" styleClass="up-down-icon">
-                           <HBox.margin>
-                              <Insets right="15.0" />
-                           </HBox.margin>
-                        </MaterialDesignIconView>
-                        <MaterialDesignIconView fx:id="lastRow" disable="true" glyphName="ARROW_DOWN" onMouseClicked="#goToLastRow" size="20" styleClass="up-down-icon" />
-                     </children>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </HBox>
-               </children>
-            </VBox>
-         </children>
-      </AnchorPane>
-      <AnchorPane layoutX="15.0" layoutY="560.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-         <children>
-            <HBox AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
-               <children>
-                  <Button fx:id="saveButton" disable="true" mnemonicParsing="false" onAction="#save" prefHeight="30.0" prefWidth="89.0" text="Salvar">
-                     <HBox.margin>
-                        <Insets right="15.0" />
-                     </HBox.margin>
-                     <graphic>
-                        <MaterialDesignIconView fill="BLACK" glyphName="CONTENT_SAVE" size="15" />
-                     </graphic>
-                  </Button>
-                  <Button fx:id="clearButton" disable="true" mnemonicParsing="false" onAction="#clear" prefHeight="30.0" prefWidth="89.0" text="Limpar">
-                     <graphic>
-                        <MaterialDesignIconView glyphName="BROOM" size="15" />
-                     </graphic>
-                  </Button>
-               </children>
-            </HBox>
-         </children>
-      </AnchorPane>
-   </children>
+                    </children>
+                </HBox>
+            </children>
+        </AnchorPane>
+        <Separator layoutY="84.0" prefHeight="17.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+        <AnchorPane fx:id="exercisesEntryArea" disable="true" layoutY="112.0" prefHeight="454.0" prefWidth="680.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="92.0">
+            <children>
+                <VBox layoutX="14.0" layoutY="15.0" prefHeight="435.0" prefWidth="640.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+                    <children>
+                        <HBox prefHeight="52.0" prefWidth="570.0">
+                            <children>
+                                <VBox prefHeight="52.0" prefWidth="60.0">
+                                    <children>
+                                        <Label text="Treino">
+                                            <VBox.margin>
+                                                <Insets bottom="5.0" />
+                                            </VBox.margin>
+                                        </Label>
+                                        <TextField fx:id="workoutIdTextField" disable="true" editable="false" prefHeight="30.0" prefWidth="60.0" />
+                                    </children>
+                                    <HBox.margin>
+                                        <Insets right="10.0" />
+                                    </HBox.margin>
+                                </VBox>
+                                <VBox prefHeight="52.0" prefWidth="100.0">
+                                    <children>
+                                        <Label text="Grupo *">
+                                            <VBox.margin>
+                                                <Insets bottom="5.0" />
+                                            </VBox.margin>
+                                        </Label>
+                                        <PrefixSelectionComboBox fx:id="exerciseGroupComboBox" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="100.0" />
+                                    </children>
+                                    <HBox.margin>
+                                        <Insets right="10.0" />
+                                    </HBox.margin>
+                                </VBox>
+                                <VBox prefHeight="52.0" prefWidth="175.0">
+                                    <children>
+                                        <Label text="Nome do Exercício *">
+                                            <VBox.margin>
+                                                <Insets bottom="5.0" />
+                                            </VBox.margin>
+                                        </Label>
+                                        <PrefixSelectionComboBox fx:id="exerciseNameComboBox" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="175.0" />
+                                    </children>
+                                    <HBox.margin>
+                                        <Insets right="10.0" />
+                                    </HBox.margin>
+                                </VBox>
+                                <VBox prefHeight="52.0" prefWidth="60.0">
+                                    <children>
+                                        <Label text="Séries">
+                                            <VBox.margin>
+                                                <Insets bottom="5.0" />
+                                            </VBox.margin>
+                                        </Label>
+                                        <LimitedTextField fx:id="setsTextField" prefHeight="30.0" />
+                                    </children>
+                                    <HBox.margin>
+                                        <Insets right="10.0" />
+                                    </HBox.margin>
+                                </VBox>
+                                <VBox prefHeight="52.0" prefWidth="70.0">
+                                    <children>
+                                        <Label text="Repetições">
+                                            <VBox.margin>
+                                                <Insets bottom="5.0" />
+                                            </VBox.margin>
+                                        </Label>
+                                        <LimitedTextField fx:id="repsTextField" prefHeight="30.0" />
+                                    </children>
+                                    <HBox.margin>
+                                        <Insets right="10.0" />
+                                    </HBox.margin>
+                                </VBox>
+                                <VBox prefHeight="52.0" prefWidth="60.0">
+                                    <children>
+                                        <Label text="Descanso">
+                                            <VBox.margin>
+                                                <Insets bottom="5.0" />
+                                            </VBox.margin>
+                                        </Label>
+                                        <LimitedTextField fx:id="restTextField" prefHeight="30.0" />
+                                    </children>
+                                    <HBox.margin>
+                                        <Insets right="10.0" />
+                                    </HBox.margin>
+                                </VBox>
+                                <Button fx:id="addExerciseEntryButton" mnemonicParsing="false" onAction="#addExerciseEntry" prefHeight="52.0" prefWidth="55.0">
+                                    <graphic>
+                                        <MaterialDesignIconView glyphName="PLUS" size="21" />
+                                    </graphic>
+                                </Button>
+                            </children>
+                            <VBox.margin>
+                                <Insets bottom="20.0" />
+                            </VBox.margin>
+                        </HBox>
+                        <TableView fx:id="exerciseEntryTableView" prefHeight="338.0" prefWidth="640.0" stylesheets="@../css/table-view-style.css">
+                            <columns>
+                                <TableColumn fx:id="exerciseNameTableColumn" minWidth="230.0" prefWidth="230.0" resizable="false" text="Nome do Exercício" />
+                                <TableColumn fx:id="setsTableColumn" minWidth="100.0" prefWidth="100.0" resizable="false" text="Séries" />
+                                <TableColumn fx:id="repsTableColumn" minWidth="100.0" prefWidth="100.0" resizable="false" text="Repetições" />
+                                <TableColumn fx:id="restTableColumn" minWidth="130.0" prefWidth="130.0" resizable="false" text="Descanso&#10;(em segundos)" />
+                                <TableColumn fx:id="actionButtonTableColumn" editable="false" maxWidth="65.0" minWidth="65.0" prefWidth="65.0" resizable="false" sortable="false" />
+                            </columns>
+                            <VBox.margin>
+                                <Insets bottom="5.0" />
+                            </VBox.margin>
+                        </TableView>
+                        <HBox prefHeight="20.0" prefWidth="570.0">
+                            <children>
+                                <Label fx:id="countLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="830.0">
+                                    <HBox.margin>
+                                        <Insets right="15.0" />
+                                    </HBox.margin>
+                                </Label>
+                                <MaterialDesignIconView fx:id="firstRow" disable="true" glyphName="ARROW_UP" onMouseClicked="#goToFirstRow" size="20" styleClass="up-down-icon">
+                                    <HBox.margin>
+                                        <Insets right="15.0" />
+                                    </HBox.margin>
+                                </MaterialDesignIconView>
+                                <MaterialDesignIconView fx:id="lastRow" disable="true" glyphName="ARROW_DOWN" onMouseClicked="#goToLastRow" size="20" styleClass="up-down-icon" />
+                            </children>
+                            <VBox.margin>
+                                <Insets />
+                            </VBox.margin>
+                        </HBox>
+                    </children>
+                </VBox>
+            </children>
+        </AnchorPane>
+        <AnchorPane layoutX="15.0" layoutY="560.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <children>
+                <HBox AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+                    <children>
+                        <Button fx:id="saveButton" disable="true" mnemonicParsing="false" onAction="#save" prefHeight="30.0" prefWidth="89.0" text="Salvar">
+                            <HBox.margin>
+                                <Insets right="15.0" />
+                            </HBox.margin>
+                            <graphic>
+                                <MaterialDesignIconView fill="BLACK" glyphName="CONTENT_SAVE" size="15" />
+                            </graphic>
+                        </Button>
+                        <Button fx:id="clearButton" disable="true" mnemonicParsing="false" onAction="#clear" prefHeight="30.0" prefWidth="89.0" text="Limpar">
+                            <graphic>
+                                <MaterialDesignIconView glyphName="BROOM" size="15" />
+                            </graphic>
+                        </Button>
+                    </children>
+                </HBox>
+            </children>
+        </AnchorPane>
+    </children>
 </AnchorPane>

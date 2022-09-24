@@ -50,14 +50,15 @@
                     </VBox.margin>
                 </HBox>
                 <Button fx:id="registerButton" mnemonicParsing="false" onAction="#register" prefHeight="30.0" prefWidth="250.0" styleClass="login-btn" text="Cadastrar">
-               <graphic>
-                  <MaterialDesignIconView fill="WHITE" glyphName="CLIPBOARD_CHECK" size="15.0" styleClass="button-icon-color" />
-               </graphic></Button>
+                    <graphic>
+                        <MaterialDesignIconView fill="WHITE" glyphName="CLIPBOARD_CHECK" size="15.0" styleClass="button-icon-color" />
+                    </graphic>
+                </Button>
             </children>
         </VBox>
     </children>
-   <stylesheets>
-      <URL value="@../css/login-style.css" />
-      <URL value="@../css/theme.css" />
-   </stylesheets>    
+    <stylesheets>
+        <URL value="@../css/login-style.css" />
+        <URL value="@../css/theme.css" />
+    </stylesheets>    
 </AnchorPane>

@@ -20,240 +20,240 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="695.0" prefWidth="1280.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.WorkoutsController">
-   <children>
-      <AnchorPane layoutX="30.0" layoutY="35.0" prefHeight="80.0" prefWidth="1280.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <Label text="Treinos &gt; Treinos Predefinidos" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-         </children>
-      </AnchorPane>
-      <AnchorPane layoutX="165.0" layoutY="123.0" prefHeight="695.0" prefWidth="940.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="340.0" AnchorPane.topAnchor="80.0">
-         <children>
-            <HBox alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="900.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <MenuButton fx:id="filterButton" mnemonicParsing="false" prefHeight="30.0">
-                     <graphic>
-                        <MaterialDesignIconView glyphName="FILTER_VARIANT" size="15.0" />
-                     </graphic>
-                     <items>
-                        <CheckMenuItem fx:id="caseSensitiveOp" mnemonicParsing="false" text="Maiúsculas e minúsculas">
-                           <graphic>
-                              <MaterialDesignIconView glyphName="CASE_SENSITIVE_ALT" size="15.0" />
-                           </graphic>
-                        </CheckMenuItem>
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <RadioMenuItem fx:id="containsOp" mnemonicParsing="false" selected="true" text="Contém">
-                           <graphic>
-                              <MaterialDesignIconView glyphName="ALPHABETICAL" size="15.0" />
-                           </graphic>
-                           <toggleGroup>
-                              <ToggleGroup fx:id="filterOptions" />
-                           </toggleGroup>
-                        </RadioMenuItem>
-                        <RadioMenuItem fx:id="alphabeticalEqualsToOp" mnemonicParsing="false" text="Igual a" toggleGroup="$filterOptions">
-                           <graphic>
-                              <MaterialDesignIconView glyphName="ALPHABETICAL" size="15.0" />
-                           </graphic>
-                        </RadioMenuItem>
-                        <RadioMenuItem fx:id="startsWithOp" mnemonicParsing="false" text="Inicia com" toggleGroup="$filterOptions">
-                           <graphic>
-                              <MaterialDesignIconView glyphName="ALPHABETICAL" size="15.0" />
-                           </graphic>
-                        </RadioMenuItem>
-                        <RadioMenuItem fx:id="endsWithOp" mnemonicParsing="false" text="Termina com" toggleGroup="$filterOptions">
-                           <graphic>
-                              <MaterialDesignIconView glyphName="ALPHABETICAL" size="15.0" />
-                           </graphic>
-                        </RadioMenuItem>
-                     </items>
-                     <HBox.margin>
-                        <Insets right="15.0" />
-                     </HBox.margin>
-                  </MenuButton>
-                  <TextField fx:id="searchBox" prefHeight="30.0" prefWidth="149.0" promptText="Pesquisar..." HBox.hgrow="ALWAYS">
-                     <HBox.margin>
-                        <Insets right="15.0" />
-                     </HBox.margin>
-                  </TextField>
-                  <Button fx:id="addButton" mnemonicParsing="false" onAction="#addWorkout" prefHeight="30.0" prefWidth="90.0" text="Cadastrar">
-                     <HBox.margin>
-                        <Insets right="15.0" />
-                     </HBox.margin>
-                     <graphic>
-                        <MaterialDesignIconView glyphName="PLUS" size="15.0" />
-                     </graphic>
-                  </Button>
-                  <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteWorkout" prefHeight="30.0" prefWidth="90.0" text="Excluir">
-                     <graphic>
-                        <MaterialDesignIconView glyphName="DELETE" size="15.0" />
-                     </graphic>
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </Button>
-               </children>
-            </HBox>
-            <TableView fx:id="workoutTableView" prefHeight="550.0" prefWidth="900.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="40.0">
-               <columns>
-                  <TableColumn fx:id="workoutIdTableColumn" minWidth="90.0" prefWidth="90.0" text="ID" />
-                  <TableColumn fx:id="descriptionTableColumn" minWidth="333.0" prefWidth="333.0" text="Descrição" />
-                  <TableColumn fx:id="goalTableColumn" minWidth="175.0" prefWidth="175.0" text="Objetivo" />
-                  <TableColumn fx:id="sessionsTableColumn" minWidth="150.0" prefWidth="150.0" text="Sessões" />
-                  <TableColumn fx:id="dayTableColumn" minWidth="150.0" prefWidth="150.0" text="Dia da Semana" />
-               </columns>
-            </TableView>
-            <BorderPane prefHeight="20.0" prefWidth="900.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
-               <left>
-                  <Label fx:id="countLabel" prefHeight="20.0" prefWidth="150.0" BorderPane.alignment="CENTER">
-                     <BorderPane.margin>
-                        <Insets right="15.0" />
-                     </BorderPane.margin>
-                  </Label>
-               </left>
-               <right>
-                  <HBox BorderPane.alignment="CENTER">
-                     <children>
-                        <MaterialDesignIconView fx:id="firstRow" glyphName="ARROW_UP" onMouseClicked="#goToFirstRow" size="20" styleClass="up-down-icon">
-                           <HBox.margin>
-                              <Insets right="15.0" />
-                           </HBox.margin>
-                        </MaterialDesignIconView>
-                        <MaterialDesignIconView fx:id="lastRow" glyphName="ARROW_DOWN" onMouseClicked="#goToLastRow" size="20" styleClass="up-down-icon" />
-                     </children>
-                  </HBox>
-               </right>
-               <center>
-                  <Label fx:id="selectedRowLabel" prefHeight="20.0" prefWidth="150.0" BorderPane.alignment="CENTER_LEFT">
-                     <BorderPane.margin>
-                        <Insets right="15.0" />
-                     </BorderPane.margin>
-                  </Label>
-               </center>
-            </BorderPane>
-         </children>
-      </AnchorPane>
-      <AnchorPane layoutX="954.0" layoutY="89.0" prefHeight="615.0" prefWidth="340.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
-         <children>
-            <VBox styleClass="vbox-border" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <Label alignment="CENTER" minWidth="-Infinity" prefHeight="20.0" prefWidth="300.0" styleClass="details-section-title" text="Detalhes">
-                     <VBox.margin>
-                        <Insets bottom="30.0" />
-                     </VBox.margin>
-                  </Label>
-                  <HBox>
-                     <children>
-                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="ID: ">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
+    <children>
+        <AnchorPane layoutX="30.0" layoutY="35.0" prefHeight="80.0" prefWidth="1280.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <Label text="Treinos &gt; Treinos Predefinidos" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                </Label>
+            </children>
+        </AnchorPane>
+        <AnchorPane layoutX="165.0" layoutY="123.0" prefHeight="695.0" prefWidth="940.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="340.0" AnchorPane.topAnchor="80.0">
+            <children>
+                <HBox alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="900.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
+                    <children>
+                        <MenuButton fx:id="filterButton" mnemonicParsing="false" prefHeight="30.0">
+                            <graphic>
+                                <MaterialDesignIconView glyphName="FILTER_VARIANT" size="15.0" />
+                            </graphic>
+                            <items>
+                                <CheckMenuItem fx:id="caseSensitiveOp" mnemonicParsing="false" text="Maiúsculas e minúsculas">
+                                    <graphic>
+                                        <MaterialDesignIconView glyphName="CASE_SENSITIVE_ALT" size="15.0" />
+                                    </graphic>
+                                </CheckMenuItem>
+                                <SeparatorMenuItem mnemonicParsing="false" />
+                                <RadioMenuItem fx:id="containsOp" mnemonicParsing="false" selected="true" text="Contém">
+                                    <graphic>
+                                        <MaterialDesignIconView glyphName="ALPHABETICAL" size="15.0" />
+                                    </graphic>
+                                    <toggleGroup>
+                                        <ToggleGroup fx:id="filterOptions" />
+                                    </toggleGroup>
+                                </RadioMenuItem>
+                                <RadioMenuItem fx:id="alphabeticalEqualsToOp" mnemonicParsing="false" text="Igual a" toggleGroup="$filterOptions">
+                                    <graphic>
+                                        <MaterialDesignIconView glyphName="ALPHABETICAL" size="15.0" />
+                                    </graphic>
+                                </RadioMenuItem>
+                                <RadioMenuItem fx:id="startsWithOp" mnemonicParsing="false" text="Inicia com" toggleGroup="$filterOptions">
+                                    <graphic>
+                                        <MaterialDesignIconView glyphName="ALPHABETICAL" size="15.0" />
+                                    </graphic>
+                                </RadioMenuItem>
+                                <RadioMenuItem fx:id="endsWithOp" mnemonicParsing="false" text="Termina com" toggleGroup="$filterOptions">
+                                    <graphic>
+                                        <MaterialDesignIconView glyphName="ALPHABETICAL" size="15.0" />
+                                    </graphic>
+                                </RadioMenuItem>
+                            </items>
+                            <HBox.margin>
+                                <Insets right="15.0" />
+                            </HBox.margin>
+                        </MenuButton>
+                        <TextField fx:id="searchBox" prefHeight="30.0" prefWidth="149.0" promptText="Pesquisar..." HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets right="15.0" />
+                            </HBox.margin>
+                        </TextField>
+                        <Button fx:id="addButton" mnemonicParsing="false" onAction="#addWorkout" prefHeight="30.0" prefWidth="90.0" text="Cadastrar">
+                            <HBox.margin>
+                                <Insets right="15.0" />
+                            </HBox.margin>
+                            <graphic>
+                                <MaterialDesignIconView glyphName="PLUS" size="15.0" />
+                            </graphic>
+                        </Button>
+                        <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteWorkout" prefHeight="30.0" prefWidth="90.0" text="Excluir">
+                            <graphic>
+                                <MaterialDesignIconView glyphName="DELETE" size="15.0" />
+                            </graphic>
+                            <HBox.margin>
+                                <Insets />
+                            </HBox.margin>
+                        </Button>
+                    </children>
+                </HBox>
+                <TableView fx:id="workoutTableView" prefHeight="550.0" prefWidth="900.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="40.0">
+                    <columns>
+                        <TableColumn fx:id="workoutIdTableColumn" minWidth="90.0" prefWidth="90.0" text="ID" />
+                        <TableColumn fx:id="descriptionTableColumn" minWidth="333.0" prefWidth="333.0" text="Descrição" />
+                        <TableColumn fx:id="goalTableColumn" minWidth="175.0" prefWidth="175.0" text="Objetivo" />
+                        <TableColumn fx:id="sessionsTableColumn" minWidth="150.0" prefWidth="150.0" text="Sessões" />
+                        <TableColumn fx:id="dayTableColumn" minWidth="150.0" prefWidth="150.0" text="Dia da Semana" />
+                    </columns>
+                </TableView>
+                <BorderPane prefHeight="20.0" prefWidth="900.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+                    <left>
+                        <Label fx:id="countLabel" prefHeight="20.0" prefWidth="150.0" BorderPane.alignment="CENTER">
+                            <BorderPane.margin>
+                                <Insets right="15.0" />
+                            </BorderPane.margin>
                         </Label>
-                        <Label fx:id="workoutIdLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="280.0" styleClass="attribute-value-label" />
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox>
-                     <children>
-                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Descrição: ">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
+                    </left>
+                    <right>
+                        <HBox BorderPane.alignment="CENTER">
+                            <children>
+                                <MaterialDesignIconView fx:id="firstRow" glyphName="ARROW_UP" onMouseClicked="#goToFirstRow" size="20" styleClass="up-down-icon">
+                                    <HBox.margin>
+                                        <Insets right="15.0" />
+                                    </HBox.margin>
+                                </MaterialDesignIconView>
+                                <MaterialDesignIconView fx:id="lastRow" glyphName="ARROW_DOWN" onMouseClicked="#goToLastRow" size="20" styleClass="up-down-icon" />
+                            </children>
+                        </HBox>
+                    </right>
+                    <center>
+                        <Label fx:id="selectedRowLabel" prefHeight="20.0" prefWidth="150.0" BorderPane.alignment="CENTER_LEFT">
+                            <BorderPane.margin>
+                                <Insets right="15.0" />
+                            </BorderPane.margin>
                         </Label>
-                        <Label fx:id="descriptionLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="263.0" styleClass="attribute-value-label" />
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox>
-                     <children>
-                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Objetivo: ">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
+                    </center>
+                </BorderPane>
+            </children>
+        </AnchorPane>
+        <AnchorPane layoutX="954.0" layoutY="89.0" prefHeight="615.0" prefWidth="340.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
+            <children>
+                <VBox styleClass="vbox-border" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
+                    <children>
+                        <Label alignment="CENTER" minWidth="-Infinity" prefHeight="20.0" prefWidth="300.0" styleClass="details-section-title" text="Detalhes">
+                            <VBox.margin>
+                                <Insets bottom="30.0" />
+                            </VBox.margin>
                         </Label>
-                        <Label fx:id="goalLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="271.0" styleClass="attribute-value-label" />
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox>
-                     <children>
-                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Sessões: ">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </Label>
-                        <Label fx:id="sessionsLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="274.0" styleClass="attribute-value-label" />
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox layoutX="21.0" layoutY="161.0">
-                     <children>
-                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Dia da Semana: ">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </Label>
-                        <Label fx:id="dayLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="274.0" styleClass="attribute-value-label" />
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox>
-                     <children>
-                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Criação: ">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </Label>
-                        <Label fx:id="createdAtLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="251.0" styleClass="attribute-value-label" />
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox>
-                     <children>
-                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Modificação: ">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </Label>
-                        <Label fx:id="updatedAtLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="223.0" styleClass="attribute-value-label" />
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <Button fx:id="listButton" mnemonicParsing="false" onAction="#listExercises" prefHeight="30.0" prefWidth="131.0" text="Listar Exercícios">
-                     <graphic>
-                        <MaterialDesignIconView glyphName="SITEMAP" size="15.0" />
-                     </graphic>
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </Button>
-               </children>
-               <padding>
-                  <Insets bottom="10.0" left="10.0" right="5.0" top="10.0" />
-               </padding>
-            </VBox>
-         </children>
-      </AnchorPane>
-   </children>
-   <stylesheets>
-      <URL value="@../css/details.css" />
-      <URL value="@../css/table-view-style.css" />
-      <URL value="@../css/theme.css" />
-   </stylesheets>
+                        <HBox>
+                            <children>
+                                <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="ID: ">
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                </Label>
+                                <Label fx:id="workoutIdLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="280.0" styleClass="attribute-value-label" />
+                            </children>
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </HBox>
+                        <HBox>
+                            <children>
+                                <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Descrição: ">
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                </Label>
+                                <Label fx:id="descriptionLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="263.0" styleClass="attribute-value-label" />
+                            </children>
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </HBox>
+                        <HBox>
+                            <children>
+                                <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Objetivo: ">
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                </Label>
+                                <Label fx:id="goalLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="271.0" styleClass="attribute-value-label" />
+                            </children>
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </HBox>
+                        <HBox>
+                            <children>
+                                <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Sessões: ">
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                </Label>
+                                <Label fx:id="sessionsLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="274.0" styleClass="attribute-value-label" />
+                            </children>
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </HBox>
+                        <HBox layoutX="21.0" layoutY="161.0">
+                            <children>
+                                <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Dia da Semana: ">
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                </Label>
+                                <Label fx:id="dayLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="274.0" styleClass="attribute-value-label" />
+                            </children>
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </HBox>
+                        <HBox>
+                            <children>
+                                <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Criação: ">
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                </Label>
+                                <Label fx:id="createdAtLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="251.0" styleClass="attribute-value-label" />
+                            </children>
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </HBox>
+                        <HBox>
+                            <children>
+                                <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Modificação: ">
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                </Label>
+                                <Label fx:id="updatedAtLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="223.0" styleClass="attribute-value-label" />
+                            </children>
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </HBox>
+                        <Button fx:id="listButton" mnemonicParsing="false" onAction="#listExercises" prefHeight="30.0" prefWidth="131.0" text="Listar Exercícios">
+                            <graphic>
+                                <MaterialDesignIconView glyphName="SITEMAP" size="15.0" />
+                            </graphic>
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </Button>
+                    </children>
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="5.0" top="10.0" />
+                    </padding>
+                </VBox>
+            </children>
+        </AnchorPane>
+    </children>
+    <stylesheets>
+        <URL value="@../css/details.css" />
+        <URL value="@../css/table-view-style.css" />
+        <URL value="@../css/theme.css" />
+    </stylesheets>
 </AnchorPane>
