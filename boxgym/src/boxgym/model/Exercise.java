@@ -17,9 +17,9 @@ public class Exercise {
     public Exercise() {
 
     }
-    
+
     //Construtor da CombBox
-    public Exercise(int exerciseId, String name){
+    public Exercise(int exerciseId, String name) {
         this.exerciseId = exerciseId;
         this.name = name;
     }

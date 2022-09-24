@@ -29,7 +29,7 @@ public class TextValidationHelper {
         }
         return false;
     }
-    
+
     public boolean invalidComboBox(ComboBox comboBox, String message) {
         if (comboBox.getItems().size() <= 0 || comboBox.getSelectionModel().getSelectedItem() == null) {
             this.message += message;

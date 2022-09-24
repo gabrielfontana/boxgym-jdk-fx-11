@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import org.apache.commons.dbutils.DbUtils;
 
 public class SaleProductDao {
+
     private Connection conn;
     private PreparedStatement ps;
     private ResultSet rs;
@@ -21,7 +22,7 @@ public class SaleProductDao {
     public SaleProductDao() {
         this.conn = new ConnectionFactory().getConnection();
     }
-    
+
     public boolean create(SaleProduct item) {
         String sql = "INSERT INTO `sale_product` (`fkSale`, `fkProduct`, `amount`, `unitPrice`) VALUES (?, ?, ?, ?);";
 
@@ -42,7 +43,7 @@ public class SaleProductDao {
         }
         return false;
     }
-    
+
     public List<SaleProduct> read(int selectedSale) {
         List<SaleProduct> productsList = new ArrayList<>();
         String sql = "SELECT p.name AS `tempProductName`, s_p.amount, s_p.unitPrice, s_p.amount * s_p.unitPrice AS `subtotal` "
@@ -70,7 +71,7 @@ public class SaleProductDao {
         }
         return productsList;
     }
-    
+
     public boolean delete(Sale sale) {
         String sql = "DELETE FROM `sale_product` WHERE `fkSale` = ?;";
 

@@ -128,7 +128,9 @@ public class SuppliersAddController implements Initializable {
             ah.customAlert(Alert.AlertType.WARNING, "Não foi possível realizar o cadastro deste fornecedor!", "O campo 'CEP' deve conter 8 dígitos.");
         } else {
             String selectedFederativeUnit = federativeUnitComboBox.getSelectionModel().getSelectedItem();
-            if (selectedFederativeUnit == null) selectedFederativeUnit = "";
+            if (selectedFederativeUnit == null) {
+                selectedFederativeUnit = "";
+            }
             Supplier supplier = new Supplier(companyRegistryTextField.getText(), corporateNameTextField.getText(), tradeNameTextField.getText(),
                     emailTextField.getText(), phoneTextField.getText(), zipCodeTextField.getText(), addressTextField.getText(), addressComplementTextField.getText(),
                     districtTextField.getText(), cityTextField.getText(), selectedFederativeUnit);

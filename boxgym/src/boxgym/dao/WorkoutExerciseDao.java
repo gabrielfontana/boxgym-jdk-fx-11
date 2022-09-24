@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import org.apache.commons.dbutils.DbUtils;
 
 public class WorkoutExerciseDao {
+
     private Connection conn;
     private PreparedStatement ps;
     private ResultSet rs;
@@ -21,7 +22,7 @@ public class WorkoutExerciseDao {
     public WorkoutExerciseDao() {
         this.conn = new ConnectionFactory().getConnection();
     }
-    
+
     public boolean create(WorkoutExercise entry) {
         String sql = "INSERT INTO `workout_exercise` (`fkWorkout`, `fkExercise`, `sets`, `reps`, `rest`) VALUES (?, ?, ?, ?, ?);";
 
@@ -43,7 +44,7 @@ public class WorkoutExerciseDao {
         }
         return false;
     }
-    
+
     public List<WorkoutExercise> read(int selectedWorkout) {
         List<WorkoutExercise> exercisesList = new ArrayList<>();
         String sql = "SELECT e.name AS `tempExerciseName`, w_e.sets, w_e.reps, w_e.rest "
@@ -71,7 +72,7 @@ public class WorkoutExerciseDao {
         }
         return exercisesList;
     }
-    
+
     public boolean delete(Workout workout) {
         String sql = "DELETE FROM `workout_exercise` WHERE `fkWorkout` = ?;";
 

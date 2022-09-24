@@ -61,7 +61,7 @@ public class WorkoutsAddController implements Initializable {
 
     @FXML
     private PrefixSelectionComboBox<String> dayComboBox;
-    
+
     @FXML
     private Button addWorkoutButton;
 
@@ -176,7 +176,7 @@ public class WorkoutsAddController implements Initializable {
         goalComboBox.setPromptText("Selecione");
         goalComboBox.setItems(FXCollections.observableArrayList(goalsList));
     }
-    
+
     private void loadDayComboBox() {
         String[] days = {"Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"};
         dayComboBox.setPromptText("Selecione");
@@ -240,7 +240,6 @@ public class WorkoutsAddController implements Initializable {
         exerciseNameComboBox.setPromptText("Selecione");
         exerciseNameComboBox.setItems(obsList);
     }*/
-    
     private int getKeyFromExerciseNameComboBox() {
         int key = 0;
         for (Map.Entry<Integer, String> entry : exerciseMap.entrySet()) {
@@ -269,7 +268,7 @@ public class WorkoutsAddController implements Initializable {
             lastRow.setDisable(false);
             saveButton.setDisable(false);
             clearButton.setDisable(false);
-            Workout workout = new Workout(descriptionTextField.getText(), goalComboBox.getValue(), 
+            Workout workout = new Workout(descriptionTextField.getText(), goalComboBox.getValue(),
                     Integer.valueOf(sessionsTextField.getText()), dayComboBox.getSelectionModel().getSelectedItem());
             WorkoutDao workoutDao = new WorkoutDao();
             workoutDao.create(workout);
@@ -286,7 +285,7 @@ public class WorkoutsAddController implements Initializable {
         if (!(validation.getEmptyCounter() == 0)) {
             ah.customAlert(Alert.AlertType.WARNING, "Não foi possível adicionar esse exercício!", validation.getMessage());
         } else {
-            WorkoutExercise item = new WorkoutExercise(Integer.valueOf(workoutIdTextField.getText()), getKeyFromExerciseNameComboBox(), 
+            WorkoutExercise item = new WorkoutExercise(Integer.valueOf(workoutIdTextField.getText()), getKeyFromExerciseNameComboBox(),
                     setsRepsRest(setsTextField.getText(), 3), setsRepsRest(repsTextField.getText(), 10), setsRepsRest(restTextField.getText(), 30));
             item.setTempExerciseName(exerciseNameComboBox.getSelectionModel().getSelectedItem());
             list.add(item);

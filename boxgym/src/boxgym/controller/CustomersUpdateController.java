@@ -158,7 +158,9 @@ public class CustomersUpdateController implements Initializable {
             ah.customAlert(Alert.AlertType.WARNING, "Não foi possível atualizar o cadastro deste cliente!", "O campo 'CEP' deve conter 8 dígitos.");
         } else {
             String selectedFederativeUnit = federativeUnitComboBox.getSelectionModel().getSelectedItem();
-            if (selectedFederativeUnit == null) selectedFederativeUnit = "";
+            if (selectedFederativeUnit == null) {
+                selectedFederativeUnit = "";
+            }
             Customer customer = new Customer(loadCustomer.getCustomerId(), personRegistryTextField.getText(), nameTextField.getText(), sexComboBox.getSelectionModel().getSelectedItem(),
                     emailTextField.getText(), phoneTextField.getText(), zipCodeTextField.getText(), addressTextField.getText(), addressComplementTextField.getText(),
                     districtTextField.getText(), cityTextField.getText(), selectedFederativeUnit);

@@ -50,7 +50,7 @@ public class SalesAddController implements Initializable {
 
     List<SaleProduct> list = new ArrayList<>();
     ObservableList<SaleProduct> obsListItens;
-    
+
     boolean productAlreadyInserted;
 
     AlertHelper ah = new AlertHelper();
@@ -249,7 +249,7 @@ public class SalesAddController implements Initializable {
         TextValidationHelper validation = new TextValidationHelper("Atenção: \n\n");
         validation.invalidComboBox(productComboBox, "Produto inválido! \n");
         validation.emptyTextField(amountTextField.getText(), "Quantidade inválida! \n");
-        
+
         if (list.stream().anyMatch(p -> p.getFkProduct() == getKeyFromProductComboBox())) {
             ah.customAlert(Alert.AlertType.WARNING, "Não foi possível adicionar esse produto!", "O produto em questão já foi adicionado na lista!");
             clear();

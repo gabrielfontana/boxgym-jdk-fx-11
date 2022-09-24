@@ -19,14 +19,14 @@ public class UserDao {
     public UserDao() {
         this.conn = new ConnectionFactory().getConnection();
     }
-    
+
     public boolean checkExistingUser(String username) {
         String sql = "SELECT * FROM `userRegistration` WHERE `username` = '" + username + "';";
-        
-        try{
+
+        try {
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
-            if(rs.next()) {
+            if (rs.next()) {
                 return true;
             }
         } catch (SQLException ex) {
@@ -61,11 +61,11 @@ public class UserDao {
 
     public boolean authenticate(User user) {
         String sql = "SELECT `username`, `password` FROM `userRegistration` WHERE `username` = '" + user.getUsername() + "' AND `password` = '" + user.getPassword() + "';";
-        
-        try{
+
+        try {
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
-            if(rs.next()) {
+            if (rs.next()) {
                 return true;
             }
         } catch (SQLException ex) {

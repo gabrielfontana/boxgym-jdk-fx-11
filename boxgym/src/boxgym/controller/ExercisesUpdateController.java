@@ -20,36 +20,36 @@ import limitedtextfield.LimitedTextField;
 import org.controlsfx.control.PrefixSelectionComboBox;
 
 public class ExercisesUpdateController implements Initializable {
-    
+
     AlertHelper ah = new AlertHelper();
-    
+
     @FXML
     private AnchorPane anchorPane;
-    
+
     @FXML
     private LimitedTextField nameTextField;
-    
+
     @FXML
     private LimitedTextField abbreviationTextField;
-    
+
     @FXML
     private PrefixSelectionComboBox<String> exerciseTypeComboBox;
-    
+
     @FXML
     private PrefixSelectionComboBox<String> exerciseGroupComboBox;
-    
+
     @FXML
     private TextArea descriptionTextArea;
-    
+
     @FXML
     private TextArea instructionTextArea;
-    
+
     @FXML
     private Button saveButton;
-    
+
     @FXML
     private Button clearButton;
-    
+
     private Exercise loadExercise;
 
     private boolean updated = false;
@@ -69,7 +69,7 @@ public class ExercisesUpdateController implements Initializable {
     public void setUpdated(boolean updated) {
         this.updated = updated;
     }
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         setUpdated(false);
@@ -82,7 +82,7 @@ public class ExercisesUpdateController implements Initializable {
             initExercise();
         });
     }
-    
+
     private void loadExerciseTypeComboBox() {
         String[] typesList = {"Aeróbico", "Alongamento", "Aquecimento", "Crossfit", "Estabilidade", "Funcional", "Mobilidade", "Musculação", "Pilates"};
         exerciseTypeComboBox.setPromptText("Selecione");
@@ -99,7 +99,7 @@ public class ExercisesUpdateController implements Initializable {
         nameTextField.setValidationPattern("[a-zA-Z\\u00C0-\\u00FF0-9 ()%._-]", 255);
         abbreviationTextField.setValidationPattern("[a-zA-Z\\u00C0-\\u00FF0-9 ()%._-]", 255);
     }
-    
+
     private void initExercise() {
         nameTextField.setText(loadExercise.getName());
         abbreviationTextField.setText(loadExercise.getAbbreviation());
@@ -112,19 +112,19 @@ public class ExercisesUpdateController implements Initializable {
     @FXML
     private void save(ActionEvent event) {
         ExerciseDao exerciseDao = new ExerciseDao();
-        
+
         TextValidationHelper validation = new TextValidationHelper("Atenção: \n\n");
         validation.emptyTextField(nameTextField.getText(), "Nome inválido! \n");
         validation.emptyTextField(abbreviationTextField.getText(), "Abreviação inválida! \n");
         validation.invalidComboBox(exerciseTypeComboBox, "Tipo inválido! \n");
         validation.invalidComboBox(exerciseGroupComboBox, "Grupo inválido! \n");
-        
+
         if (!(validation.getEmptyCounter() == 0)) {
             ah.customAlert(Alert.AlertType.WARNING, "Não foi possível atualizar o cadastro deste exercício!", validation.getMessage());
         } else {
             String selectedExerciseType = exerciseTypeComboBox.getSelectionModel().getSelectedItem();
             String selectedExerciseGroup = exerciseGroupComboBox.getSelectionModel().getSelectedItem();
-            Exercise exercise = new Exercise(loadExercise.getExerciseId(), nameTextField.getText(), abbreviationTextField.getText(), selectedExerciseType, selectedExerciseGroup, 
+            Exercise exercise = new Exercise(loadExercise.getExerciseId(), nameTextField.getText(), abbreviationTextField.getText(), selectedExerciseType, selectedExerciseGroup,
                     descriptionTextArea.getText(), instructionTextArea.getText());
             exerciseDao.update(exercise);
             setUpdated(true);
@@ -146,5 +146,5 @@ public class ExercisesUpdateController implements Initializable {
     private void buttonsProperties() {
         ButtonHelper.buttonCursor(saveButton, clearButton);
     }
-    
+
 }

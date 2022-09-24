@@ -12,7 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
 
 public class FirstScreenController implements Initializable {
-    
+
     @FXML
     private AnchorPane content;
 
@@ -25,6 +25,6 @@ public class FirstScreenController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(FirstScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }    
-    
+    }
+
 }

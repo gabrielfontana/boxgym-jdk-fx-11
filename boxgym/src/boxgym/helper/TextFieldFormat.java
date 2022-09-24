@@ -20,7 +20,7 @@ public class TextFieldFormat {
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
         label.setText(currencyFormat.format(value));
     }
-    
+
     public static void currencyFormat(TextField text, BigDecimal value) {
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
         text.setText(currencyFormat.format(value));
@@ -55,7 +55,7 @@ public class TextFieldFormat {
             }
         });
     }
-    
+
     public static void stockEntryTableCellDateFormat(TableColumn column) {
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         column.setCellFactory(tc -> new TableCell<StockEntry, LocalDate>() {
@@ -70,7 +70,7 @@ public class TextFieldFormat {
             }
         });
     }
-    
+
     public static void saleProductTableCellCurrencyFormat(TableColumn column) {
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
         column.setCellFactory(tc -> new TableCell<SaleProduct, BigDecimal>() {
@@ -85,7 +85,7 @@ public class TextFieldFormat {
             }
         });
     }
-    
+
     public static void saleTableCellDateFormat(TableColumn column) {
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         column.setCellFactory(tc -> new TableCell<Sale, LocalDate>() {
@@ -100,5 +100,5 @@ public class TextFieldFormat {
             }
         });
     }
-    
+
 }

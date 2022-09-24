@@ -20,9 +20,9 @@ import javafx.scene.layout.AnchorPane;
 import limitedtextfield.LimitedTextField;
 
 public class RegisterController implements Initializable {
-    
+
     AlertHelper ah = new AlertHelper();
-    
+
     @FXML
     private AnchorPane content;
 

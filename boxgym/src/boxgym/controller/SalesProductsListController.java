@@ -24,36 +24,36 @@ import limitedtextfield.LimitedTextField;
 public class SalesProductsListController implements Initializable {
 
     private int selectedSale;
-    
+
     private SaleProduct selected;
-    
+
     @FXML
     private TableView<SaleProduct> productsListTableView;
-    
+
     @FXML
     private TableColumn<SaleProduct, String> productTableColumn;
-    
+
     @FXML
     private TableColumn<SaleProduct, Integer> amountTableColumn;
-    
+
     @FXML
     private TableColumn<SaleProduct, BigDecimal> unitPriceTableColumn;
-    
+
     @FXML
     private TableColumn<SaleProduct, BigDecimal> subtotalTableColumn;
-    
+
     @FXML
     private LimitedTextField totalPriceTextField;
-    
+
     @FXML
     private Label countLabel;
-    
+
     @FXML
     private Label selectedRowLabel;
-    
+
     @FXML
     private MaterialDesignIconView firstRow;
-    
+
     @FXML
     private MaterialDesignIconView lastRow;
 
@@ -70,7 +70,7 @@ public class SalesProductsListController implements Initializable {
         ButtonHelper.iconButton(firstRow, lastRow);
         Platform.runLater(() -> initMethods());
     }
-    
+
     private void initMethods() {
         initProductsListTableView();
         listeners();
@@ -92,7 +92,7 @@ public class SalesProductsListController implements Initializable {
         TextFieldFormat.productTableCellCurrencyFormat(subtotalTableColumn);
         productsListTableView.setItems(loadData());
     }
-    
+
     private void listeners() {
         productsListTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             selected = (SaleProduct) newValue;
@@ -103,7 +103,7 @@ public class SalesProductsListController implements Initializable {
             }
         });
     }
-    
+
     private BigDecimal total() {
         BigDecimal total = new BigDecimal("0");
         for (SaleProduct sp : productsListTableView.getItems()) {
@@ -127,5 +127,5 @@ public class SalesProductsListController implements Initializable {
             productsListTableView.scrollTo(productsListTableView.getItems().size() - 1);
         }
     }
-    
+
 }

@@ -88,19 +88,19 @@ public class ExercisesAddController implements Initializable {
     @FXML
     private void save(ActionEvent event) {
         ExerciseDao exerciseDao = new ExerciseDao();
-        
+
         TextValidationHelper validation = new TextValidationHelper("Atenção: \n\n");
         validation.emptyTextField(nameTextField.getText(), "Nome inválido! \n");
         validation.emptyTextField(abbreviationTextField.getText(), "Abreviação inválida! \n");
         validation.invalidComboBox(exerciseTypeComboBox, "Tipo inválido! \n");
         validation.invalidComboBox(exerciseGroupComboBox, "Grupo inválido! \n");
-        
+
         if (!(validation.getEmptyCounter() == 0)) {
             ah.customAlert(Alert.AlertType.WARNING, "Não foi possível realizar o cadastro deste exercício!", validation.getMessage());
         } else {
             String selectedExerciseType = exerciseTypeComboBox.getSelectionModel().getSelectedItem();
             String selectedExerciseGroup = exerciseGroupComboBox.getSelectionModel().getSelectedItem();
-            Exercise exercise = new Exercise(nameTextField.getText(), abbreviationTextField.getText(), selectedExerciseType, selectedExerciseGroup, 
+            Exercise exercise = new Exercise(nameTextField.getText(), abbreviationTextField.getText(), selectedExerciseType, selectedExerciseGroup,
                     descriptionTextArea.getText(), instructionTextArea.getText());
             exerciseDao.create(exercise);
             setCreated(true);

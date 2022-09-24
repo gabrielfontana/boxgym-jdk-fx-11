@@ -71,7 +71,7 @@ public class StockEntryProductDao {
         }
         return productsList;
     }
-    
+
     public boolean delete(StockEntry entry) {
         String sql = "DELETE FROM `stockentry_product` WHERE `fkStockEntry` = ?;";
 

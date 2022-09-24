@@ -103,11 +103,11 @@ public class ProductDao {
         }
         return costPrice;
     }
-    
+
     public int getProductAmount(int key) {
         String sql = "SELECT `amount` FROM `product` WHERE `productId` = '" + key + "';";
         int amount = 0;
-        
+
         try {
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -199,7 +199,7 @@ public class ProductDao {
         }
         return false;
     }
-    
+
     public List<String> checkProductsBelowMinimumStock() {
         List<String> productsBelowMinimumStockList = new ArrayList<>();
         String sql = "SELECT name FROM `product` WHERE `amount` < `minimumStock`";
@@ -208,7 +208,7 @@ public class ProductDao {
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
-                productsBelowMinimumStockList.add(rs.getString("name"));                
+                productsBelowMinimumStockList.add(rs.getString("name"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(ProductDao.class.getName()).log(Level.SEVERE, null, ex);

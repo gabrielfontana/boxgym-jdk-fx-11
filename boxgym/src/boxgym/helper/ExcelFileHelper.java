@@ -16,6 +16,7 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ExcelFileHelper {
+
     public static XSSFCellStyle excelStyle(XSSFWorkbook workbook, String fontName, boolean bold, BorderStyle border, byte[] rgb) {
         XSSFFont font = workbook.createFont();
         font.setFontName(fontName);
@@ -47,14 +48,14 @@ public class ExcelFileHelper {
         cell.setCellStyle(style);
         return cell;
     }
-    
+
     public static XSSFCell createStyledCell(XSSFRow row, int cellIndex, Double cellValue, XSSFCellStyle style) {
         XSSFCell cell = row.createCell(cellIndex);
         cell.setCellValue(cellValue);
         cell.setCellStyle(style);
         return cell;
     }
-    
+
     public static XSSFCell createStyledDateCell(XSSFRow row, int cellIndex, String cellValue, DateTimeFormatter dateFormat, XSSFCellStyle style) {
         LocalDate parsed = LocalDate.parse(cellValue, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         XSSFCell cell = row.createCell(cellIndex);
@@ -62,7 +63,7 @@ public class ExcelFileHelper {
         cell.setCellStyle(style);
         return cell;
     }
-    
+
     public static XSSFCell createStyledDateTimeCell(XSSFRow row, int cellIndex, String cellValue, DateTimeFormatter dateTimeFormat, XSSFCellStyle style) {
         String subStr = cellValue.substring(0, cellValue.length() - 2); // Remover o ".0" do final da hora
         LocalDateTime parsed = LocalDateTime.parse(subStr, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));

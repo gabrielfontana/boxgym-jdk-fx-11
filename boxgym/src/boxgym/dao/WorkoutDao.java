@@ -92,7 +92,7 @@ public class WorkoutDao {
         }
         return false;
     }
-    
+
     public List<Workout> read() {
         List<Workout> workoutsList = new ArrayList<>();
         String sql = "SELECT * FROM `workout`;";
@@ -120,7 +120,7 @@ public class WorkoutDao {
         }
         return workoutsList;
     }
-    
+
     public boolean delete(Workout workout) {
         String sql = "DELETE FROM `workout` WHERE `workoutId` = ?;";
 

@@ -20,7 +20,7 @@ public class Product {
     public Product() {
 
     }
-    
+
     //Construtor da CombBox
     public Product(int productId, String name) {
         this.productId = productId;
@@ -125,7 +125,7 @@ public class Product {
         this.image = image;
     }
 
-     public LocalDateTime getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 

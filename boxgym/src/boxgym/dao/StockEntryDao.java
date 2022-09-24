@@ -123,7 +123,7 @@ public class StockEntryDao {
         }
         return stockEntriesList;
     }
-    
+
     public boolean delete(StockEntry entry) {
         String sql = "DELETE FROM `stockentry` WHERE `stockEntryId` = ?;";
 
@@ -182,7 +182,7 @@ public class StockEntryDao {
                 ExcelFileHelper.createStyledDateTimeCell(row, 4, rs.getString("createdAt"), DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"), defaultStyle);
                 ExcelFileHelper.createStyledDateTimeCell(row, 5, rs.getString("updatedAt"), DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"), defaultStyle);
                 rowIndex++;
-                
+
                 // StockEntryProduct
                 XSSFRow row2 = sheet.createRow(rowIndex);
                 StockEntryProductDao dao = new StockEntryProductDao();

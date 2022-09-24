@@ -25,7 +25,7 @@ import limitedtextfield.LimitedTextField;
 public class ProductsAddController implements Initializable {
 
     ImageHelper ih = new ImageHelper();
-    
+
     AlertHelper ah = new AlertHelper();
 
     private boolean created = false;
@@ -126,7 +126,7 @@ public class ProductsAddController implements Initializable {
         productImage.setImage(new Image("boxgym/img/default-no-image.png"));
         ih.setImageBytes(null);
     }
-    
+
     private void buttonsProperties() {
         ButtonHelper.buttonCursor(saveButton, clearButton);
         ButtonHelper.imageButton(productImage);

@@ -24,15 +24,15 @@ public class AlertHelper {
 
     public void customAlert(Alert.AlertType type, String headerText, String contentText) {
         FlatAlert alert = new FlatAlert(type);
-        
+
         alertCss(alert);
-        
+
         alert.setHeaderText(headerText);
         alert.setContentText(contentText);
-        
+
         Scene scene = (Scene) alert.getDialogPane().getScene();
         JMetro jMetro = new JMetro(scene, Style.LIGHT);
-        
+
         alert.showAndWait();
     }
 
@@ -40,9 +40,9 @@ public class AlertHelper {
         FlatAlert alert = new FlatAlert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText(headerText);
         alert.setContentText(contentText);
-        
+
         alertCss(alert);
-        
+
         alert.getButtonTypes().clear();
         alert.getButtonTypes().addAll(ButtonType.YES, ButtonType.NO);
 

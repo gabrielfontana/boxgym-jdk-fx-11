@@ -35,7 +35,7 @@ public class CustomerDao {
     public CustomerDao() {
         this.conn = new ConnectionFactory().getConnection();
     }
-    
+
     public boolean checkExistingCustomer(String personRegistry) {
         String cpf = personRegistry;
         String sql = "SELECT `personRegistry` FROM `customer` WHERE `personRegistry` = '" + cpf + "';";
@@ -84,7 +84,7 @@ public class CustomerDao {
         }
         return false;
     }
-    
+
     public LinkedHashMap<Integer, String> getCustomerForHashMap() {
         LinkedHashMap<Integer, String> map = new LinkedHashMap<>();
         String sql = "SELECT `customerId`, `name` FROM `customer`;";
@@ -106,7 +106,7 @@ public class CustomerDao {
         }
         return map;
     }
-    
+
     public List<Customer> read() {
         List<Customer> customersList = new ArrayList<>();
         String sql = "SELECT * FROM `customer`;";
@@ -141,7 +141,7 @@ public class CustomerDao {
         }
         return customersList;
     }
-    
+
     public boolean update(Customer customer) {
         String sql = "UPDATE `customer` SET `name` = ?, `sex` = ?, `email` = ?, `phone` = ?, `zipCode` = ?, `address` = ?, `addressComplement` = ?, "
                 + "`district` = ?, `city` = ?, `federativeUnit` = ? WHERE `customerId` = ?;";
@@ -188,7 +188,7 @@ public class CustomerDao {
         }
         return false;
     }
-    
+
     public boolean createExcelFile(String filePath) {
         String sql = "SELECT * FROM `customer`";
 

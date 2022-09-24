@@ -7,13 +7,13 @@ import java.sql.SQLException;
 import javafx.scene.control.Alert;
 
 public class ConnectionFactory {
-    
+
     private static final String CONNECTION_URL = "jdbc:mysql://localhost:3306/boxgym";
     private static final String CONNECTION_USERNAME = "root";
     private static final String CONNECTION_USERPASSWORD = "phpMyAdm1n$QLp@sswd";
-    
+
     AlertHelper ah = new AlertHelper();
-    
+
     public Connection getConnection() {
         try {
             String url = CONNECTION_URL;

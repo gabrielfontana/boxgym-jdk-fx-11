@@ -11,13 +11,13 @@ public class StockEntry {
     private String invoiceNumber; //Número da nota fiscal
     private LocalDateTime createdAt; //Criado em
     private LocalDateTime updatedAt; //Atualizado em
-    
+
     private String tempSupplierName;
-    
+
     public StockEntry() {
-        
+
     }
-    
+
     //Construtor CREATE
     public StockEntry(int fkSupplier, LocalDate invoiceIssueDate, String invoiceNumber) {
         this.fkSupplier = fkSupplier;
@@ -32,7 +32,7 @@ public class StockEntry {
     public void setStockEntryId(int stockEntryId) {
         this.stockEntryId = stockEntryId;
     }
-    
+
     public int getFkSupplier() {
         return fkSupplier;
     }
@@ -80,5 +80,5 @@ public class StockEntry {
     public void setTempSupplierName(String tempSupplierName) {
         this.tempSupplierName = tempSupplierName;
     }
-    
+
 }

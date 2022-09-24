@@ -109,10 +109,10 @@ public class StockEntryAddController implements Initializable {
 
     @FXML
     private Label countLabel;
-    
+
     @FXML
     private MaterialDesignIconView firstRow;
-    
+
     @FXML
     private MaterialDesignIconView lastRow;
 
@@ -147,20 +147,20 @@ public class StockEntryAddController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         buttonsProperties();
-        
+
         setStockEntryCreationFlag(false);
         setProductsEntryCreationFlag(false);
         inputRestrictions();
         loadSupplierNameComboBox();
         invoiceIssueDateDatePicker.setEditable(false);
-        
+
         loadProductNameComboBox();
         productNameComboBoxListener();
         initProductEntryTableView();
         countLabel.setText("Exibindo nenhum produto");
         TextFieldFormat.currencyFormat(totalPriceTextField, BigDecimal.ZERO);
     }
-    
+
     private void buttonsProperties() {
         ButtonHelper.buttonCursor(addStockEntryButton, addProductEntryButton, saveButton, clearButton);
         ButtonHelper.iconButton(firstRow, lastRow);
@@ -316,7 +316,7 @@ public class StockEntryAddController implements Initializable {
         amountTextField.setText("");
         costPriceTextField.setPrice(0.0);
     }
-    
+
     @FXML
     void goToFirstRow(MouseEvent event) {
         productEntryTableView.scrollTo(0);

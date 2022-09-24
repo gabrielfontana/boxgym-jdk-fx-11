@@ -20,7 +20,7 @@ public class ButtonHelper {
         registerButton.setCursor(Cursor.HAND);
         backArrow.setCursor(Cursor.HAND);
     }
-    
+
     public static void buttonCursor(Button... buttons) {
         for (Button b : buttons) {
             b.setCursor(Cursor.HAND);
@@ -41,7 +41,7 @@ public class ButtonHelper {
     public static void imageButton(ImageView image) {
         image.setCursor(Cursor.HAND);
     }
-    
+
     public static void iconButton(MaterialDesignIconView... icons) {
         for (MaterialDesignIconView icon : icons) {
             icon.setCursor(Cursor.HAND);

@@ -154,14 +154,14 @@ public class ExerciseDao {
         }
         return false;
     }
-    
+
     public boolean checkDeleteConstraint(int exerciseId) {
         String sql = "SELECT `fkExercise` FROM `workout_exercise` WHERE `fkExercise` = " + exerciseId + ";";
-        
-        try{
+
+        try {
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
-            if(rs.next()) {
+            if (rs.next()) {
                 return true;
             }
         } catch (SQLException ex) {

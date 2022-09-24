@@ -116,7 +116,7 @@ public class MainScreenController implements Initializable {
     void handleFiles(ActionEvent event) throws IOException {
         changeContentArea("/boxgym/view/Files.fxml");
     }
-    
+
     @FXML
     void handleWorkouts(ActionEvent event) throws IOException {
         changeContentArea("/boxgym/view/Workouts.fxml");
@@ -170,7 +170,7 @@ public class MainScreenController implements Initializable {
         FileChooser chooser = new FileChooser();
         chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Pasta de Trabalho do Excel", "*.xlsx"));
         File file = chooser.showSaveDialog(new Stage());
-        
+
         SaleDao saleDao = new SaleDao();
 
         if (file != null) {
@@ -184,7 +184,7 @@ public class MainScreenController implements Initializable {
         FileChooser chooser = new FileChooser();
         chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Pasta de Trabalho do Excel", "*.xlsx"));
         File file = chooser.showSaveDialog(new Stage());
-        
+
         ProductDao productDao = new ProductDao();
 
         if (file != null) {

@@ -22,9 +22,9 @@ import javafx.scene.layout.AnchorPane;
 import limitedtextfield.LimitedTextField;
 
 public class LoginController implements Initializable {
-    
+
     AlertHelper ah = new AlertHelper();
-    
+
     @FXML
     private AnchorPane content;
 
@@ -45,7 +45,7 @@ public class LoginController implements Initializable {
         ButtonHelper.loginButtons(loginButton, registerLabel);
         registerInputRestrictions();
     }
-    
+
     public void registerInputRestrictions() {
         usernameTextField.setValidationPattern("[a-zA-Z\\u00C0-\\u00FF0-9 ._-]", 32);
     }

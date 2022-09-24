@@ -19,35 +19,35 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
 public class WorkoutsExercisesListController implements Initializable {
-    
+
     private int selectedWorkout;
 
     private WorkoutExercise selected;
-    
+
     @FXML
     private TableView<WorkoutExercise> exerciseListTableView;
-    
+
     @FXML
     private TableColumn<WorkoutExercise, String> exerciseNameTableColumn;
-    
+
     @FXML
     private TableColumn<WorkoutExercise, Integer> setsTableColumn;
-    
+
     @FXML
     private TableColumn<WorkoutExercise, Integer> repsTableColumn;
-    
+
     @FXML
     private TableColumn<WorkoutExercise, Integer> restTableColumn;
-    
+
     @FXML
     private Label countLabel;
-    
+
     @FXML
     private Label selectedRowLabel;
-    
+
     @FXML
     private MaterialDesignIconView firstRow;
-    
+
     @FXML
     private MaterialDesignIconView lastRow;
 
@@ -64,7 +64,7 @@ public class WorkoutsExercisesListController implements Initializable {
         ButtonHelper.iconButton(firstRow, lastRow);
         Platform.runLater(() -> initMethods());
     }
-    
+
     private void initMethods() {
         initExercisesListTableView();
         listeners();
@@ -75,7 +75,7 @@ public class WorkoutsExercisesListController implements Initializable {
         WorkoutExerciseDao dao = new WorkoutExerciseDao();
         return FXCollections.observableArrayList(dao.read(getSelectedWorkout()));
     }
-    
+
     private void initExercisesListTableView() {
         exerciseNameTableColumn.setCellValueFactory(new PropertyValueFactory("tempExerciseName"));
         setsTableColumn.setCellValueFactory(new PropertyValueFactory("sets"));
@@ -110,5 +110,5 @@ public class WorkoutsExercisesListController implements Initializable {
             exerciseListTableView.scrollTo(exerciseListTableView.getItems().size() - 1);
         }
     }
-    
+
 }

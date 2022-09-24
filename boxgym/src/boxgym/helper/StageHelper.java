@@ -11,7 +11,7 @@ import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
 
 public class StageHelper {
-            
+
     public void createMainScreenStage(String path, String title) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource(path));
         JMetro jMetro = new JMetro(root, Style.LIGHT);
@@ -22,7 +22,7 @@ public class StageHelper {
         stage.setScene(new Scene(root));
         stage.show();
     }
-    
+
     public static void createAddOrUpdateStage(String title, Parent root) {
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -32,7 +32,7 @@ public class StageHelper {
         stage.setScene(new Scene(root));
         stage.showAndWait();
     }
-    
+
     public static void openFirstScreenAfterLogout(String title, Parent root) {
         Stage stage = new Stage();
         stage.getIcons().add(new Image("boxgym/img/dumbbell.png"));

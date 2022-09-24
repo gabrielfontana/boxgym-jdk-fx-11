@@ -16,21 +16,21 @@ public class StockEntryProduct {
     private LocalDateTime createdAt; //Criado em
     private LocalDateTime updatedAt; //Atualizado em
     private final ObjectProperty<BigDecimal> subtotal = new SimpleObjectProperty<>(); //Subotal = Quantidade * Preço de custo
-    
+
     private String tempProductName;
-    
+
     public StockEntryProduct() {
-        
+
     }
-    
+
     //Construtor ObservableList e CREATE
     public StockEntryProduct(int fkStockEntry, int fkProduct, int amount, BigDecimal costPrice) {
         this.fkStockEntry = fkStockEntry;
         this.fkProduct = fkProduct;
         setAmount(amount);
         setCostPrice(costPrice);
-        subtotal.bind(Bindings.createObjectBinding(() -> 
-                getCostPrice().multiply(BigDecimal.valueOf(getAmount()))
+        subtotal.bind(Bindings.createObjectBinding(()
+                -> getCostPrice().multiply(BigDecimal.valueOf(getAmount()))
         ));
     }
 
@@ -117,5 +117,5 @@ public class StockEntryProduct {
     public void setTempProductName(String tempProductName) {
         this.tempProductName = tempProductName;
     }
-    
+
 }

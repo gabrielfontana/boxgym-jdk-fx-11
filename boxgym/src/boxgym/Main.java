@@ -12,7 +12,7 @@ import jfxtras.styles.jmetro.Style;
 public class Main extends Application {
 
     public static Stage stage;
-    
+
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/boxgym/view/FirstScreen.fxml"));
@@ -20,7 +20,7 @@ public class Main extends Application {
         Main.stage = stage;
         stage.getIcons().add(new Image("boxgym/img/dumbbell.png"));
         stage.setResizable(false);
-        stage.setTitle("Login"); 
+        stage.setTitle("Login");
         stage.setScene(new Scene(root));
         stage.show();
     }
