@@ -163,7 +163,7 @@ public class ExercisesController implements Initializable {
     @FXML
     private void importExercises(ActionEvent event) {
         ExerciseDao exerciseDao = new ExerciseDao();
-        alert.confirmationAlert("Desejar importar os exercícios predefinidos?", "");
+        alert.confirmationAlert("Deseja importar os exercícios predefinidos?", "Temos vários exercícios pré-cadastrados no sistema. Você pode importar todos de uma vez e excluir os que não quiser utilizar.");
         if (alert.getResult().get() == ButtonType.YES) {
             exerciseDao.importExercises();
             refreshTableView();
@@ -228,10 +228,14 @@ public class ExercisesController implements Initializable {
         } else {
             alert.confirmationAlert("Tem certeza que deseja excluir \n o exercício '" + selected.getAbbreviation() + "'?", "Esta ação é irreversível!");
             if (alert.getResult().get() == ButtonType.YES) {
-                exerciseDao.delete(selected);
-                refreshTableView();
-                resetDetails();
-                alert.customAlert(Alert.AlertType.WARNING, "O exercício foi excluído com sucesso!", "");
+                if (exerciseDao.checkDeleteConstraint(selected.getExerciseId())){
+                    alert.customAlert(Alert.AlertType.WARNING, "Este exercício já está cadastrado em um treino!", "Exclua o treino primeiro antes de prosseguir com a ação!");
+                } else {
+                    exerciseDao.delete(selected);
+                    refreshTableView();
+                    resetDetails();
+                    alert.customAlert(Alert.AlertType.WARNING, "O exercício foi excluído com sucesso!", "");
+                }
             }
         }
     }

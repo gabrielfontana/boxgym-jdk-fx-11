@@ -59,7 +59,7 @@ public class ExerciseDao {
         }
         return false;
     }
-    
+
     public LinkedHashMap<Integer, String> getExerciseForHashMap() {
         LinkedHashMap<Integer, String> map = new LinkedHashMap<>();
         String sql = "SELECT `exerciseId`, `name` FROM `exercise`;";
@@ -154,6 +154,45 @@ public class ExerciseDao {
         }
         return false;
     }
+    
+    public boolean checkDeleteConstraint(int exerciseId) {
+        String sql = "SELECT `fkExercise` FROM `workout_exercise` WHERE `fkExercise` = " + exerciseId + ";";
+        
+        try{
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if(rs.next()) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ExerciseDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            //DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return false;
+    }
+
+    public List<String> filterExercisesByGroup(String exerciseGroup) {
+        List<String> exercisesList = new ArrayList<>();
+        String sql = "SELECT `name` FROM `exercise` WHERE `exerciseGroup` = '" + exerciseGroup + "';";
+
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                exercisesList.add(rs.getString("name"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ExerciseDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return exercisesList;
+    }
 
     public boolean importExercises() {
         String sql = "INSERT INTO `exercise` (`name`, `abbreviation`, `exerciseType`, `exerciseGroup`, `description`, `instruction`) VALUES\n"
@@ -209,11 +248,11 @@ public class ExerciseDao {
     public int checkExistingExercises() {
         String sql = "SELECT COUNT(*) AS `amount` FROM `exercise`;";
         int exercisesAmount = 0;
-        
-        try{
+
+        try {
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
-            if(rs.next()) {
+            if (rs.next()) {
                 exercisesAmount = rs.getInt("amount");
                 return exercisesAmount;
             }
