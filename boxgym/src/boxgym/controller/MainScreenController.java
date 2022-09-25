@@ -5,6 +5,7 @@ import boxgym.dao.ProductDao;
 import boxgym.dao.SaleDao;
 import boxgym.dao.StockEntryDao;
 import boxgym.dao.SupplierDao;
+import boxgym.dao.WorkoutDao;
 import boxgym.helper.AlertHelper;
 import boxgym.helper.StageHelper;
 import java.io.File;
@@ -203,6 +204,20 @@ public class MainScreenController implements Initializable {
 
         if (file != null) {
             stockEntryDao.createExcelFile(file.getAbsolutePath());
+            alert.customAlert(Alert.AlertType.WARNING, "Relatório gerado com sucesso!", "");
+        }
+    }
+
+    @FXML
+    void exportWorkoutsToExcel(ActionEvent event) {
+        FileChooser chooser = new FileChooser();
+        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Pasta de Trabalho do Excel", "*.xlsx"));
+        File file = chooser.showSaveDialog(new Stage());
+
+        WorkoutDao workoutDao = new WorkoutDao();
+
+        if (file != null) {
+            workoutDao.createExcelFile(file.getAbsolutePath());
             alert.customAlert(Alert.AlertType.WARNING, "Relatório gerado com sucesso!", "");
         }
     }

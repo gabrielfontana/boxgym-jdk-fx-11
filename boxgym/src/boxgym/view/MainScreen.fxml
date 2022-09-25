@@ -142,6 +142,11 @@
                                                 <MaterialDesignIconView fill="BLACK" glyphName="PACKAGE_UP" size="15.0" />
                                             </graphic>
                                         </MenuItem>
+                                        <MenuItem mnemonicParsing="false" onAction="#exportWorkoutsToExcel" text="Treinos">
+                                            <graphic>
+                                                <MaterialDesignIconView fill="BLACK" glyphName="DUMBBELL" size="15.0" />
+                                            </graphic>
+                                        </MenuItem>
                                     </items>
                                 </Menu>
                             </items>
