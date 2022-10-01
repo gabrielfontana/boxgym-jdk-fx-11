@@ -110,6 +110,7 @@
                         <TableColumn fx:id="personRegistryTableColumn" minWidth="108.0" prefWidth="108.0" text="CPF" />
                         <TableColumn fx:id="nameTableColumn" minWidth="250.0" prefWidth="250.0" text="Nome" />
                         <TableColumn fx:id="sexTableColumn" minWidth="90.0" prefWidth="90.0" text="Sexo" />
+                  <TableColumn fx:id="birthDateTableColumn" minWidth="170.0" prefWidth="170.0" text="Data de Nascimento" />
                         <TableColumn fx:id="emailTableColumn" minWidth="250.0" prefWidth="250.0" text="E-mail" />
                         <TableColumn fx:id="phoneTableColumn" minWidth="108.0" prefWidth="108.0" text="Telefone" />
                         <TableColumn fx:id="addressTableColumn" minWidth="200.0" prefWidth="200.0" text="Endereço" />
@@ -208,6 +209,19 @@
                                 <Insets bottom="10.0" />
                             </VBox.margin>
                         </HBox>
+                  <HBox layoutX="21.0" layoutY="161.0">
+                     <children>
+                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Data de Nascimento: ">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="birthDateLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="266.0" styleClass="attribute-value-label" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </HBox>
                         <HBox>
                             <children>
                                 <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="E-mail: ">

@@ -1,5 +1,6 @@
 package boxgym.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Customer {
@@ -8,6 +9,7 @@ public class Customer {
     private String personRegistry; //CPF
     private String name; //Nome
     private String sex; //Sexo
+    private LocalDate birthDate; //Data de nascimento
     private String email;   //E-mail
     private String phone; //Telefone
     private String zipCode; //CEP
@@ -30,11 +32,12 @@ public class Customer {
     }
 
     //Construtor CREATE
-    public Customer(String personRegistry, String name, String sex, String email, String phone, String zipCode, String address,
+    public Customer(String personRegistry, String name, String sex, LocalDate birthDate, String email, String phone, String zipCode, String address,
             String addressComplement, String district, String city, String federativeUnit) {
         this.personRegistry = personRegistry;
         this.name = name;
         this.sex = sex;
+        this.birthDate = birthDate;
         this.email = email;
         this.phone = phone;
         this.zipCode = zipCode;
@@ -46,12 +49,13 @@ public class Customer {
     }
 
     //Construtor UPDATE
-    public Customer(int customerId, String personRegistry, String name, String sex, String email, String phone, String zipCode, String address,
+    public Customer(int customerId, String personRegistry, String name, String sex, LocalDate birthDate, String email, String phone, String zipCode, String address,
             String addressComplement, String district, String city, String federativeUnit) {
         this.customerId = customerId;
         this.personRegistry = personRegistry;
         this.name = name;
         this.sex = sex;
+        this.birthDate = birthDate;
         this.email = email;
         this.phone = phone;
         this.zipCode = zipCode;
@@ -92,6 +96,14 @@ public class Customer {
 
     public void setSex(String sex) {
         this.sex = sex;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
     }
 
     public String getEmail() {

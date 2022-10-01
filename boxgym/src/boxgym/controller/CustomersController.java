@@ -5,10 +5,12 @@ import boxgym.helper.AlertHelper;
 import boxgym.helper.ButtonHelper;
 import boxgym.helper.StageHelper;
 import boxgym.helper.TableViewCount;
+import boxgym.helper.TextFieldFormat;
 import boxgym.model.Customer;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
@@ -96,6 +98,9 @@ public class CustomersController implements Initializable {
     private TableColumn<Customer, String> sexTableColumn;
     
     @FXML
+    private TableColumn<Customer, LocalDate> birthDateTableColumn;
+    
+    @FXML
     private TableColumn<Customer, String> emailTableColumn;
 
     @FXML
@@ -133,6 +138,9 @@ public class CustomersController implements Initializable {
 
     @FXML
     private Label sexLabel;
+    
+    @FXML
+    private Label birthDateLabel;
 
     @FXML
     private Label emailLabel;
@@ -243,6 +251,7 @@ public class CustomersController implements Initializable {
             personRegistryLabel.setText("");
             nameLabel.setText("");
             sexLabel.setText("");
+            birthDateLabel.setText("");
             emailLabel.setText("");
             phoneLabel.setText("");
             zipCodeLabel.setText("");
@@ -262,6 +271,7 @@ public class CustomersController implements Initializable {
             personRegistryLabel.setText(selected.getPersonRegistry());
             nameLabel.setText(selected.getName());
             sexLabel.setText(selected.getSex());
+            birthDateLabel.setText(selected.getBirthDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
             emailLabel.setText(selected.getEmail());
             phoneLabel.setText(selected.getPhone());
             zipCodeLabel.setText(selected.getZipCode());
@@ -291,6 +301,8 @@ public class CustomersController implements Initializable {
         personRegistryTableColumn.setCellValueFactory(new PropertyValueFactory("personRegistry"));
         nameTableColumn.setCellValueFactory(new PropertyValueFactory("name"));
         sexTableColumn.setCellValueFactory(new PropertyValueFactory("sex"));
+        birthDateTableColumn.setCellValueFactory(new PropertyValueFactory("birthDate"));
+        TextFieldFormat.saleTableCellDateFormat(birthDateTableColumn);
         emailTableColumn.setCellValueFactory(new PropertyValueFactory("email"));
         phoneTableColumn.setCellValueFactory(new PropertyValueFactory("phone"));
         addressTableColumn.setCellValueFactory(new PropertyValueFactory("address"));
@@ -304,6 +316,7 @@ public class CustomersController implements Initializable {
         String personRegistry = customer.getPersonRegistry();
         String name = customer.getName();
         String sex = customer.getSex();
+        String birthDate = customer.getBirthDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         String email = customer.getEmail();
         String phone = customer.getPhone();
         String zipCode = customer.getZipCode();
@@ -313,7 +326,7 @@ public class CustomersController implements Initializable {
         String city = customer.getCity();
         String federativeUnit = customer.getFederativeUnit();
 
-        List<String> fields = Arrays.asList(customerId, personRegistry, name, sex, email,
+        List<String> fields = Arrays.asList(customerId, personRegistry, name, sex, birthDate, email,
                 phone, zipCode, address, addressComplement, district, city, federativeUnit);
 
         return stringComparasion(fields, searchText, optionOrder);
@@ -324,6 +337,7 @@ public class CustomersController implements Initializable {
         String personRegistry = customer.getPersonRegistry();
         String name = customer.getName().toLowerCase();
         String sex = customer.getSex().toLowerCase();
+        String birthDate = customer.getBirthDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         String email = customer.getEmail().toLowerCase();
         String phone = customer.getPhone();
         String zipCode = customer.getZipCode();
@@ -333,7 +347,7 @@ public class CustomersController implements Initializable {
         String city = customer.getCity().toLowerCase();
         String federativeUnit = customer.getFederativeUnit().toLowerCase();
 
-        List<String> fields = Arrays.asList(customerId, personRegistry, name, sex, email,
+        List<String> fields = Arrays.asList(customerId, personRegistry, name, sex, birthDate, email,
                 phone, zipCode, address, addressComplement, district, city, federativeUnit);
 
         return stringComparasion(fields, searchText, optionOrder);
@@ -346,25 +360,29 @@ public class CustomersController implements Initializable {
                 searchReturn = (list.get(0).contains(searchText)) || (list.get(1).contains(searchText)) || (list.get(2).contains(searchText))
                         || (list.get(3).contains(searchText)) || (list.get(4).contains(searchText)) || (list.get(5).contains(searchText))
                         || (list.get(6).contains(searchText)) || (list.get(7).contains(searchText)) || (list.get(8).contains(searchText))
-                        || (list.get(9).contains(searchText)) || (list.get(10).contains(searchText)) || (list.get(11).contains(searchText));
+                        || (list.get(9).contains(searchText)) || (list.get(10).contains(searchText)) || (list.get(11).contains(searchText)
+                        || (list.get(12).contains(searchText)));
                 break;
             case 2:
                 searchReturn = (list.get(0).equals(searchText)) || (list.get(1).equals(searchText)) || (list.get(2).equals(searchText))
                         || (list.get(3).equals(searchText)) || (list.get(4).equals(searchText)) || (list.get(5).equals(searchText))
                         || (list.get(6).equals(searchText)) || (list.get(7).equals(searchText)) || (list.get(8).equals(searchText))
-                        || (list.get(9).equals(searchText)) || (list.get(10).equals(searchText)) || (list.get(11).equals(searchText));
+                        || (list.get(9).equals(searchText)) || (list.get(10).equals(searchText)) || (list.get(11).equals(searchText)
+                        || (list.get(12).contains(searchText)));
                 break;
             case 3:
                 searchReturn = (list.get(0).startsWith(searchText)) || (list.get(1).startsWith(searchText)) || (list.get(2).startsWith(searchText))
                         || (list.get(3).startsWith(searchText)) || (list.get(4).startsWith(searchText)) || (list.get(5).startsWith(searchText))
                         || (list.get(6).startsWith(searchText)) || (list.get(7).startsWith(searchText)) || (list.get(8).startsWith(searchText))
-                        || (list.get(9).startsWith(searchText)) || (list.get(10).startsWith(searchText)) || (list.get(11).startsWith(searchText));
+                        || (list.get(9).startsWith(searchText)) || (list.get(10).startsWith(searchText)) || (list.get(11).startsWith(searchText)
+                        || (list.get(12).contains(searchText)));
                 break;
             case 4:
                 searchReturn = (list.get(0).endsWith(searchText)) || (list.get(1).endsWith(searchText)) || (list.get(2).endsWith(searchText))
                         || (list.get(3).endsWith(searchText)) || (list.get(4).endsWith(searchText)) || (list.get(5).endsWith(searchText))
                         || (list.get(6).endsWith(searchText)) || (list.get(7).endsWith(searchText)) || (list.get(8).endsWith(searchText))
-                        || (list.get(9).endsWith(searchText)) || (list.get(10).endsWith(searchText)) || (list.get(11).endsWith(searchText));
+                        || (list.get(9).endsWith(searchText)) || (list.get(10).endsWith(searchText)) || (list.get(11).endsWith(searchText)
+                        || (list.get(12).contains(searchText)));
                 break;
             default:
                 break;

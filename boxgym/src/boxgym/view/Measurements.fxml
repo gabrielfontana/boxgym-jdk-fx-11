@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import limitedtextfield.LimitedTextField?>
 
-<AnchorPane prefHeight="695.0" prefWidth="1280.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.MeasurementsController">
+<AnchorPane prefHeight="695.0" prefWidth="1280.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.MeasurementsController">
     <children>
         <LimitedTextField fx:id="text1" disable="true" layoutX="292.0" layoutY="208.0" />
         <LimitedTextField fx:id="text2" disable="true" layoutX="292.0" layoutY="251.0" />
@@ -24,5 +24,9 @@
       <TextField fx:id="text0" disable="true" editable="false" layoutX="292.0" layoutY="84.0" />
       <Button layoutX="292.0" layoutY="51.0" mnemonicParsing="false" onAction="#male" text="Masculino" />
       <Button layoutX="371.0" layoutY="51.0" mnemonicParsing="false" onAction="#female" prefHeight="25.0" prefWidth="70.0" text="Feminino" />
+      <LimitedTextField fx:id="teste" layoutX="292.0" layoutY="561.0" />
+      <Button layoutX="292.0" layoutY="599.0" mnemonicParsing="false" onAction="#teste" text="Imprimir" />
+      <Button layoutX="92.0" layoutY="599.0" mnemonicParsing="false" onAction="#data" text="Data" />
+      <LimitedTextField fx:id="data" layoutX="92.0" layoutY="561.0" />
     </children>
 </AnchorPane>

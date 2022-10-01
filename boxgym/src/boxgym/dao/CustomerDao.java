@@ -57,22 +57,23 @@ public class CustomerDao {
     }
 
     public boolean create(Customer customer) {
-        String sql = "INSERT INTO `customer` (`personRegistry`, `name`, `sex`, `email`, `phone`, `zipCode`, `address`, `addressComplement`, "
-                + "`district`, `city`, `federativeUnit`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        String sql = "INSERT INTO `customer` (`personRegistry`, `name`, `sex`, `birthDate`, `email`, `phone`, `zipCode`, `address`, `addressComplement`, "
+                + "`district`, `city`, `federativeUnit`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
         try {
             ps = conn.prepareStatement(sql);
             ps.setString(1, customer.getPersonRegistry());
             ps.setString(2, customer.getName());
             ps.setString(3, customer.getSex());
-            ps.setString(4, customer.getEmail());
-            ps.setString(5, customer.getPhone());
-            ps.setString(6, customer.getZipCode());
-            ps.setString(7, customer.getAddress());
-            ps.setString(8, customer.getAddressComplement());
-            ps.setString(9, customer.getDistrict());
-            ps.setString(10, customer.getCity());
-            ps.setString(11, customer.getFederativeUnit());
+            ps.setDate(4, java.sql.Date.valueOf(customer.getBirthDate()));
+            ps.setString(5, customer.getEmail());
+            ps.setString(6, customer.getPhone());
+            ps.setString(7, customer.getZipCode());
+            ps.setString(8, customer.getAddress());
+            ps.setString(9, customer.getAddressComplement());
+            ps.setString(10, customer.getDistrict());
+            ps.setString(11, customer.getCity());
+            ps.setString(12, customer.getFederativeUnit());
             ps.execute();
             return true;
         } catch (SQLException ex) {
@@ -120,6 +121,7 @@ public class CustomerDao {
                 c.setPersonRegistry(rs.getString("personRegistry"));
                 c.setName(rs.getString("name"));
                 c.setSex(rs.getString("sex"));
+                c.setBirthDate(rs.getDate("birthDate").toLocalDate());
                 c.setEmail(rs.getString("email"));
                 c.setPhone(rs.getString("phone"));
                 c.setZipCode(rs.getString("zipCode"));
@@ -143,22 +145,23 @@ public class CustomerDao {
     }
 
     public boolean update(Customer customer) {
-        String sql = "UPDATE `customer` SET `name` = ?, `sex` = ?, `email` = ?, `phone` = ?, `zipCode` = ?, `address` = ?, `addressComplement` = ?, "
+        String sql = "UPDATE `customer` SET `name` = ?, `sex` = ?, `birthDate` = ?, `email` = ?, `phone` = ?, `zipCode` = ?, `address` = ?, `addressComplement` = ?, "
                 + "`district` = ?, `city` = ?, `federativeUnit` = ? WHERE `customerId` = ?;";
 
         try {
             ps = conn.prepareStatement(sql);
             ps.setString(1, customer.getName());
             ps.setString(2, customer.getSex());
-            ps.setString(3, customer.getEmail());
-            ps.setString(4, customer.getPhone());
-            ps.setString(5, customer.getZipCode());
-            ps.setString(6, customer.getAddress());
-            ps.setString(7, customer.getAddressComplement());
-            ps.setString(8, customer.getDistrict());
-            ps.setString(9, customer.getCity());
-            ps.setString(10, customer.getFederativeUnit());
-            ps.setInt(11, customer.getCustomerId());
+            ps.setDate(3, java.sql.Date.valueOf(customer.getBirthDate()));
+            ps.setString(4, customer.getEmail());
+            ps.setString(5, customer.getPhone());
+            ps.setString(6, customer.getZipCode());
+            ps.setString(7, customer.getAddress());
+            ps.setString(8, customer.getAddressComplement());
+            ps.setString(9, customer.getDistrict());
+            ps.setString(10, customer.getCity());
+            ps.setString(11, customer.getFederativeUnit());
+            ps.setInt(12, customer.getCustomerId());
             ps.execute();
             return true;
         } catch (SQLException ex) {

@@ -31,7 +31,7 @@
                                         <Insets right="10.0" />
                                     </HBox.margin>
                                 </VBox>
-                                <VBox prefHeight="52.0" prefWidth="430.0" HBox.hgrow="ALWAYS">
+                                <VBox prefHeight="52.0" prefWidth="300.0" HBox.hgrow="ALWAYS">
                                     <children>
                                         <Label text="Nome *">
                                             <VBox.margin>
@@ -40,14 +40,10 @@
                                         </Label>
                                         <LimitedTextField fx:id="nameTextField" prefHeight="30.0" prefWidth="300.0" />
                                     </children>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
                                 </VBox>
-                            </children>
-                            <VBox.margin>
-                                <Insets bottom="20.0" />
-                            </VBox.margin>
-                        </HBox>
-                        <HBox VBox.vgrow="ALWAYS">
-                            <children>
                                 <VBox prefHeight="52.0" prefWidth="120.0">
                                     <children>
                                         <Label text="Sexo *">
@@ -58,9 +54,29 @@
                                         <PrefixSelectionComboBox fx:id="sexComboBox" maxWidth="1.7976931348623157E308" prefHeight="30.0" />
                                     </children>
                                     <HBox.margin>
-                                        <Insets right="10.0" />
+                                        <Insets />
                                     </HBox.margin>
                                 </VBox>
+                            </children>
+                            <VBox.margin>
+                                <Insets bottom="20.0" />
+                            </VBox.margin>
+                        </HBox>
+                        <HBox VBox.vgrow="ALWAYS">
+                            <children>
+                        <VBox layoutX="10.0" layoutY="10.0" prefHeight="52.0" prefWidth="120.0">
+                           <children>
+                              <Label text="Data de Nascimento *">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <LimitedTextField fx:id="birthDateTextField" prefHeight="30.0" prefWidth="120.0" />
+                           </children>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </VBox>
                                 <VBox prefHeight="52.0" prefWidth="300.0" HBox.hgrow="ALWAYS">
                                     <children>
                                         <Label text="E-mail">

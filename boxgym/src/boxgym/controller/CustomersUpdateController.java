@@ -3,9 +3,12 @@ package boxgym.controller;
 import boxgym.dao.CustomerDao;
 import boxgym.helper.AlertHelper;
 import boxgym.helper.ButtonHelper;
+import boxgym.helper.DateMask;
 import boxgym.helper.TextValidationHelper;
 import boxgym.model.Customer;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -16,6 +19,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import limitedtextfield.LimitedTextField;
+import org.apache.commons.validator.routines.DateValidator;
 import org.controlsfx.control.PrefixSelectionComboBox;
 
 public class CustomersUpdateController implements Initializable {
@@ -33,6 +37,9 @@ public class CustomersUpdateController implements Initializable {
 
     @FXML
     private PrefixSelectionComboBox<String> sexComboBox;
+    
+    @FXML
+    private LimitedTextField birthDateTextField;
 
     @FXML
     private LimitedTextField emailTextField;
@@ -121,6 +128,7 @@ public class CustomersUpdateController implements Initializable {
 
     private void customersInputRestrictions() {
         nameTextField.setValidationPattern("[a-zA-Z\\u00C0-\\u00FF0-9 ]", 255);
+        DateMask.dateField(birthDateTextField);
         emailTextField.setValidationPattern("[A-Za-z0-9@._-]", 255);
         phoneTextField.setValidationPattern("[0-9]", 11, "Sem pontuação!");
         zipCodeTextField.setValidationPattern("[0-9]", 8, "Sem pontuação!");
@@ -134,6 +142,7 @@ public class CustomersUpdateController implements Initializable {
         personRegistryTextField.setText(loadCustomer.getPersonRegistry());
         nameTextField.setText(loadCustomer.getName());
         sexComboBox.valueProperty().set(loadCustomer.getSex());
+        birthDateTextField.setText(loadCustomer.getBirthDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         emailTextField.setText(loadCustomer.getEmail());
         phoneTextField.setText(loadCustomer.getPhone());
         zipCodeTextField.setText(loadCustomer.getZipCode());
@@ -149,9 +158,12 @@ public class CustomersUpdateController implements Initializable {
         TextValidationHelper validation = new TextValidationHelper("Atenção: \n\n");
         validation.emptyTextField(nameTextField.getText(), "O campo 'Nome' está vazio! \n");
         validation.invalidComboBox(sexComboBox, "O campo 'Sexo' está vazio! \n");
+        validation.emptyTextField(birthDateTextField.getText(), "O campo 'Data de Nascimento' está vazio! \n");
 
         if (!(validation.getEmptyCounter() == 0)) {
             ah.customAlert(Alert.AlertType.WARNING, "Não foi possível atualizar o cadastro deste cliente!", validation.getMessage());
+        } else if (!DateValidator.getInstance().isValid(birthDateTextField.getText())){
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível realizar o cadastro deste cliente!", "O formato do campo 'Data de Nascimento' está incorreto");
         } else if (!(phoneTextField.getText().length() == 0 || phoneTextField.getText().length() == 10 || phoneTextField.getText().length() == 11)) {
             ah.customAlert(Alert.AlertType.WARNING, "Não foi possível atualizar o cadastro deste cliente!", "O formato do campo 'Telefone' está incorreto.");
         } else if (!(zipCodeTextField.getText().length() == 0 || zipCodeTextField.getText().length() == 8)) {
@@ -162,7 +174,7 @@ public class CustomersUpdateController implements Initializable {
                 selectedFederativeUnit = "";
             }
             Customer customer = new Customer(loadCustomer.getCustomerId(), personRegistryTextField.getText(), nameTextField.getText(), sexComboBox.getSelectionModel().getSelectedItem(),
-                    emailTextField.getText(), phoneTextField.getText(), zipCodeTextField.getText(), addressTextField.getText(), addressComplementTextField.getText(),
+                    LocalDate.parse(birthDateTextField.getText().replace("/", ""), DateTimeFormatter.ofPattern("ddMMyyyy")), emailTextField.getText(), phoneTextField.getText(), zipCodeTextField.getText(), addressTextField.getText(), addressComplementTextField.getText(),
                     districtTextField.getText(), cityTextField.getText(), selectedFederativeUnit);
             CustomerDao customerDao = new CustomerDao();
             customerDao.update(customer);
@@ -176,6 +188,7 @@ public class CustomersUpdateController implements Initializable {
     void clear(ActionEvent event) {
         nameTextField.setText("");
         sexComboBox.valueProperty().set(null);
+        birthDateTextField.setText("");
         emailTextField.setText("");
         phoneTextField.setText("");
         zipCodeTextField.setText("");

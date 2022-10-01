@@ -1,6 +1,9 @@
 package boxgym.controller;
 
+import boxgym.helper.DateMask;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,6 +12,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import limitedtextfield.LimitedTextField;
+import org.apache.commons.validator.routines.FloatValidator;
+import org.apache.commons.validator.routines.DateValidator;
 
 public class MeasurementsController implements Initializable {
 
@@ -37,6 +42,12 @@ public class MeasurementsController implements Initializable {
     private LimitedTextField text7;
 
     @FXML
+    private LimitedTextField teste;
+
+    @FXML
+    private LimitedTextField data;
+
+    @FXML
     private ImageView image;
 
     private String sex;
@@ -45,6 +56,8 @@ public class MeasurementsController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         sexTextListener();
         listeners();
+        restriction();
+        DateMask.dateField(data);
     }
 
     @FXML
@@ -59,6 +72,30 @@ public class MeasurementsController implements Initializable {
         enable();
     }
 
+    @FXML
+    void data(ActionEvent event) {
+        if (DateValidator.getInstance().isValid(data.getText())){
+            System.out.println("true");
+        } else {
+            System.out.println("false");
+        }
+    }
+
+    @FXML
+    void teste(ActionEvent event) {
+        if (FloatValidator.getInstance().isValid(teste.getText())) {
+            System.out.println("true");
+            Float var = Float.parseFloat(teste.getText());
+            System.out.println(var + "\n");
+        } else {
+            System.out.println("false");
+        }
+    }
+
+    private void restriction() {
+        teste.setValidationPattern("[0-9.]", 10);
+    }
+
     private void sexTextListener() {
         text0.textProperty().addListener((options, oldValue, newValue) -> {
             if (text0.getText().equals("Masculino")) {
@@ -71,8 +108,8 @@ public class MeasurementsController implements Initializable {
             }
         });
     }
-    
-    private void listeners(){
+
+    private void listeners() {
         changeListener(text1, "m-neck.jpg", "f-neck.jpg");
         changeListener(text2, "m-shoulder.jpg", "f-shoulder.jpg");
         changeListener(text3, "m-right-arm.jpg", "f-right-arm.jpg");
