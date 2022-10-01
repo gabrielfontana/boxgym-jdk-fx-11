@@ -181,3 +181,28 @@ CREATE TABLE `workout_exercise` (
   FOREIGN KEY (`fkWorkout`) REFERENCES `workout`(`workoutId`) ON UPDATE CASCADE,
   FOREIGN KEY (`fkExercise`) REFERENCES `exercise`(`exerciseId`) ON UPDATE CASCADE
 );
+
+CREATE TABLE `measurement` (
+  `measurementId` INT(11) NOT NULL AUTO_INCREMENT,
+  `fkCustomer` INT(11) NOT NULL,
+  `measurementDate` DATE NOT NULL,
+  `age` TINYINT(3) UNSIGNED NOT NULL,
+  `height` INT(3) NOT NULL,
+  `weight` DECIMAL(4, 1) NOT NULL,
+  `neck` DECIMAL(4, 1),
+  `shoulder` DECIMAL(4, 1),
+  `rightArm` DECIMAL(4, 1),
+  `leftArm` DECIMAL(4, 1),
+  `rightForearm` DECIMAL(4, 1),
+  `leftForearm` DECIMAL(4, 1),
+  `thorax` DECIMAL(4, 1),
+  `waist` DECIMAL(4, 1),
+  `abdomen` DECIMAL(4, 1),
+  `hip` DECIMAL(4, 1),
+  `rightThigh` DECIMAL(4, 1),
+  `leftThigh` DECIMAL(4, 1),
+  `rightCalf` DECIMAL(4, 1),
+  `leftCalf` DECIMAL(4, 1),
+  PRIMARY KEY (`measurementId`),
+  FOREIGN KEY (`fkCustomer`) REFERENCES `customer`(`customerId`) ON UPDATE CASCADE
+);
