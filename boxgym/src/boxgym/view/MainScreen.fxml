@@ -99,7 +99,7 @@
                         </MenuItem>
                     </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Avaliações Físicas">
+                <Menu mnemonicParsing="false" text="Avaliações">
                     <items>
                         <MenuItem accelerator="Ctrl+M" mnemonicParsing="false" onAction="#handleMeasurements" text="Medidas">
                             <graphic>

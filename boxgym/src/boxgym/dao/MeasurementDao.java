@@ -37,31 +37,30 @@ public class MeasurementDao {
     }
     
     public boolean create(Measurement measurement) {
-        String sql = "INSERT INTO `measurement` (`fkCustomer`, `measurementDate`, `age`, `height`, `weight`, "
+        String sql = "INSERT INTO `measurement` (`fkCustomer`, `measurementDate`, `height`, `weight`, "
                 + "`neck`, `shoulder`, `rightArm`, `leftArm`, `rightForearm`, `leftForearm`, `thorax`, `waist`, `abdomen`, `hip`, "
-                + "`rightThigh`, `leftThigh`, `rightCalf`, `leftCalf`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                + "`rightThigh`, `leftThigh`, `rightCalf`, `leftCalf`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
         
         try {
             ps = conn.prepareStatement(sql);
             ps.setInt(1, measurement.getFkCustomer());
             ps.setDate(2, java.sql.Date.valueOf(measurement.getMeasurementDate()));
-            ps.setInt(3, measurement.getAge());
-            ps.setInt(4, measurement.getHeight());
-            ps.setFloat(5, measurement.getWeight());
-            ps.setFloat(6, measurement.getNeck());
-            ps.setFloat(7, measurement.getShoulder());
-            ps.setFloat(8, measurement.getRightArm());
-            ps.setFloat(9, measurement.getLeftArm());
-            ps.setFloat(10, measurement.getRightForearm());
-            ps.setFloat(11, measurement.getLeftForearm());
-            ps.setFloat(12, measurement.getThorax());
-            ps.setFloat(13, measurement.getWaist());
-            ps.setFloat(14, measurement.getAbdomen());
-            ps.setFloat(15, measurement.getHip());
-            ps.setFloat(16, measurement.getRightThigh());
-            ps.setFloat(17, measurement.getLeftThigh());
-            ps.setFloat(18, measurement.getRightCalf());
-            ps.setFloat(19, measurement.getLeftCalf());
+            ps.setInt(3, measurement.getHeight());
+            ps.setFloat(4, measurement.getWeight());
+            ps.setFloat(5, measurement.getNeck());
+            ps.setFloat(6, measurement.getShoulder());
+            ps.setFloat(7, measurement.getRightArm());
+            ps.setFloat(8, measurement.getLeftArm());
+            ps.setFloat(9, measurement.getRightForearm());
+            ps.setFloat(10, measurement.getLeftForearm());
+            ps.setFloat(11, measurement.getThorax());
+            ps.setFloat(12, measurement.getWaist());
+            ps.setFloat(13, measurement.getAbdomen());
+            ps.setFloat(14, measurement.getHip());
+            ps.setFloat(15, measurement.getRightThigh());
+            ps.setFloat(16, measurement.getLeftThigh());
+            ps.setFloat(17, measurement.getRightCalf());
+            ps.setFloat(18, measurement.getLeftCalf());
             ps.execute();
             return true;
         } catch (SQLException ex) {
@@ -86,7 +85,6 @@ public class MeasurementDao {
                 m.setFkCustomer(rs.getInt("fkCustomer"));
                 m.setTempCustomerName(rs.getString("tempCustomerName"));
                 m.setMeasurementDate(rs.getDate("measurementDate").toLocalDate());
-                m.setAge(rs.getInt("age"));
                 m.setHeight(rs.getInt("height"));
                 m.setWeight(rs.getFloat("weight"));
                 m.setNeck(rs.getFloat("neck"));
@@ -118,7 +116,7 @@ public class MeasurementDao {
     }
     
     public boolean update(Measurement measurement) {
-        String sql = "UPDATE `measurement` SET `measurementDate` = ?, `age` = ?, `height` = ?, `weight` = ?, "
+        String sql = "UPDATE `measurement` SET `measurementDate` = ?, `height` = ?, `weight` = ?, "
                 + "`neck` = ?, `shoulder` = ?, `rightArm` = ?, `leftArm` = ?, `rightForearm` = ?, `leftForearm` = ?, "
                 + "`thorax` = ?, `waist` = ?, `abdomen` = ?, `hip` = ?, `rightThigh` = ?, `leftThigh` = ?, "
                 + "`rightCalf` = ?, `leftCalf` = ? WHERE `measurementId` = ?;";
@@ -126,24 +124,23 @@ public class MeasurementDao {
         try {
             ps = conn.prepareStatement(sql);
             ps.setDate(1, java.sql.Date.valueOf(measurement.getMeasurementDate()));
-            ps.setInt(2, measurement.getAge());
-            ps.setInt(3, measurement.getHeight());
-            ps.setFloat(4, measurement.getWeight());
-            ps.setFloat(5, measurement.getNeck());
-            ps.setFloat(6, measurement.getShoulder());
-            ps.setFloat(7, measurement.getRightArm());
-            ps.setFloat(8, measurement.getLeftArm());
-            ps.setFloat(9, measurement.getRightForearm());
-            ps.setFloat(10, measurement.getLeftForearm());
-            ps.setFloat(11, measurement.getThorax());
-            ps.setFloat(12, measurement.getWaist());
-            ps.setFloat(13, measurement.getAbdomen());
-            ps.setFloat(14, measurement.getHip());
-            ps.setFloat(15, measurement.getRightThigh());
-            ps.setFloat(16, measurement.getLeftThigh());
-            ps.setFloat(17, measurement.getRightCalf());
-            ps.setFloat(18, measurement.getLeftCalf());
-            ps.setInt(19, measurement.getMeasurementId());
+            ps.setInt(2, measurement.getHeight());
+            ps.setFloat(3, measurement.getWeight());
+            ps.setFloat(4, measurement.getNeck());
+            ps.setFloat(5, measurement.getShoulder());
+            ps.setFloat(6, measurement.getRightArm());
+            ps.setFloat(7, measurement.getLeftArm());
+            ps.setFloat(8, measurement.getRightForearm());
+            ps.setFloat(9, measurement.getLeftForearm());
+            ps.setFloat(10, measurement.getThorax());
+            ps.setFloat(11, measurement.getWaist());
+            ps.setFloat(12, measurement.getAbdomen());
+            ps.setFloat(13, measurement.getHip());
+            ps.setFloat(14, measurement.getRightThigh());
+            ps.setFloat(15, measurement.getLeftThigh());
+            ps.setFloat(16, measurement.getRightCalf());
+            ps.setFloat(17, measurement.getLeftCalf());
+            ps.setInt(18, measurement.getMeasurementId());
             ps.execute();
             return true;
         } catch (SQLException ex) {

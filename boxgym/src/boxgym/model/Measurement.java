@@ -8,7 +8,6 @@ public class Measurement {
     private int measurementId; //Identificador
     private int fkCustomer; //Cliente
     private LocalDate measurementDate; //Data
-    private int age; //Idade
     private int height; //Altura
     private float weight; //Peso
     private float neck; //Pescoço
@@ -35,12 +34,11 @@ public class Measurement {
     }
     
     //Construtor CREATE
-    public Measurement(int fkCustomer, LocalDate measurementDate, int age, int height, float weight,
+    public Measurement(int fkCustomer, LocalDate measurementDate, int height, float weight,
             float neck, float shoulder, float rightArm, float leftArm, float rightForearm, float leftForearm, float thorax,
             float waist, float abdomen, float hip, float rightThigh, float leftThigh, float rightCalf, float leftCalf) {
         this.fkCustomer = fkCustomer;
         this.measurementDate = measurementDate;
-        this.age = age;
         this.height = height;
         this.weight = weight;
         this.neck = neck;
@@ -81,14 +79,6 @@ public class Measurement {
 
     public void setMeasurementDate(LocalDate measurementDate) {
         this.measurementDate = measurementDate;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
     }
 
     public int getHeight() {

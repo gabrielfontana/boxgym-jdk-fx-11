@@ -1,32 +1,445 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckMenuItem?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.RadioMenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import limitedtextfield.LimitedTextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="695.0" prefWidth="1280.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.MeasurementsController">
-    <children>
-        <LimitedTextField fx:id="text1" disable="true" layoutX="292.0" layoutY="208.0" />
-        <LimitedTextField fx:id="text2" disable="true" layoutX="292.0" layoutY="251.0" />
-        <LimitedTextField fx:id="text3" disable="true" layoutX="292.0" layoutY="295.0" />
-        <LimitedTextField fx:id="text4" disable="true" layoutX="292.0" layoutY="339.0" />
-        <LimitedTextField fx:id="text5" disable="true" layoutX="292.0" layoutY="381.0" />
-        <LimitedTextField fx:id="text6" disable="true" layoutX="292.0" layoutY="422.0" />
-        <LimitedTextField fx:id="text7" disable="true" layoutX="292.0" layoutY="463.0" />
-        <Pane layoutX="502.0" layoutY="25.0" prefHeight="622.0" prefWidth="242.0" style="-fx-background-color: white;">
-            <children>
-                <ImageView fx:id="image" fitHeight="479.0" fitWidth="222.0" layoutX="10.0" layoutY="72.0" pickOnBounds="true" />
-            </children>
-        </Pane>
-      <TextField fx:id="text0" disable="true" editable="false" layoutX="292.0" layoutY="84.0" />
-      <Button layoutX="292.0" layoutY="51.0" mnemonicParsing="false" onAction="#male" text="Masculino" />
-      <Button layoutX="371.0" layoutY="51.0" mnemonicParsing="false" onAction="#female" prefHeight="25.0" prefWidth="70.0" text="Feminino" />
-      <LimitedTextField fx:id="teste" layoutX="292.0" layoutY="561.0" />
-      <Button layoutX="292.0" layoutY="599.0" mnemonicParsing="false" onAction="#teste" text="Imprimir" />
-      <Button layoutX="92.0" layoutY="599.0" mnemonicParsing="false" onAction="#data" text="Data" />
-      <LimitedTextField fx:id="data" layoutX="92.0" layoutY="561.0" />
-    </children>
+<AnchorPane prefHeight="695.0" prefWidth="1280.0" style="-fx-background-color: #f2f2f2;" styleClass="anchor-pane" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.MeasurementsController">
+   <children>
+      <AnchorPane layoutX="20.0" layoutY="25.0" prefHeight="80.0" prefWidth="1280.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label text="Avaliações &gt; Medidas" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="14.0" layoutY="79.0" prefHeight="615.0" prefWidth="940.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="340.0" AnchorPane.topAnchor="80.0">
+         <children>
+            <HBox alignment="CENTER_RIGHT" layoutX="20.0" layoutY="90.0" prefHeight="30.0" prefWidth="900.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <MenuButton fx:id="filterButton" mnemonicParsing="false" prefHeight="30.0">
+                     <graphic>
+                        <MaterialDesignIconView glyphName="FILTER_VARIANT" size="15.0" />
+                     </graphic>
+                     <items>
+                        <CheckMenuItem fx:id="caseSensitiveOp" mnemonicParsing="false" text="Maiúsculas e minúsculas">
+                           <graphic>
+                              <MaterialDesignIconView glyphName="CASE_SENSITIVE_ALT" size="15.0" />
+                           </graphic>
+                        </CheckMenuItem>
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <RadioMenuItem fx:id="containsOp" mnemonicParsing="false" selected="true" text="Contém">
+                           <graphic>
+                              <MaterialDesignIconView glyphName="ALPHABETICAL" size="15.0" />
+                           </graphic>
+                           <toggleGroup>
+                              <ToggleGroup fx:id="filterOptions" />
+                           </toggleGroup>
+                        </RadioMenuItem>
+                        <RadioMenuItem fx:id="alphabeticalEqualsToOp" mnemonicParsing="false" text="Igual a" toggleGroup="$filterOptions">
+                           <graphic>
+                              <MaterialDesignIconView glyphName="ALPHABETICAL" size="15.0" />
+                           </graphic>
+                        </RadioMenuItem>
+                        <RadioMenuItem fx:id="startsWithOp" mnemonicParsing="false" text="Inicia com" toggleGroup="$filterOptions">
+                           <graphic>
+                              <MaterialDesignIconView glyphName="ALPHABETICAL" size="15.0" />
+                           </graphic>
+                        </RadioMenuItem>
+                        <RadioMenuItem fx:id="endsWithOp" mnemonicParsing="false" text="Termina com" toggleGroup="$filterOptions">
+                           <graphic>
+                              <MaterialDesignIconView glyphName="ALPHABETICAL" size="15.0" />
+                           </graphic>
+                        </RadioMenuItem>
+                     </items>
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+                  </MenuButton>
+                  <TextField fx:id="searchBox" prefHeight="30.0" prefWidth="200.0" promptText="Pesquisar..." HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Button fx:id="addButton" mnemonicParsing="false" onAction="#addMeasurement" prefHeight="30.0" prefWidth="90.0" text="Cadastrar">
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+                     <graphic>
+                        <MaterialDesignIconView glyphName="PLUS" size="15.0" />
+                     </graphic>
+                  </Button>
+                  <Button fx:id="updateButton" mnemonicParsing="false" onAction="#updateMeasurement" prefHeight="30.0" prefWidth="90.0" text="Atualizar">
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+                     <graphic>
+                        <MaterialDesignIconView glyphName="PENCIL" size="15.0" />
+                     </graphic>
+                  </Button>
+                  <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteMeasurement" prefHeight="30.0" prefWidth="90.0" text="Excluir">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <graphic>
+                        <MaterialDesignIconView glyphName="DELETE" size="15.0" />
+                     </graphic>
+                  </Button>
+               </children>
+            </HBox>
+            <TableView fx:id="measurementTableView" prefHeight="550.0" prefWidth="900.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="40.0">
+               <columns>
+                  <TableColumn fx:id="measurementIdTableColumn" minWidth="90.0" prefWidth="90.0" text="ID" />
+                  <TableColumn fx:id="fkCustomerTableColumn" minWidth="398.0" prefWidth="398.0" text="Cliente" />
+                  <TableColumn fx:id="measurementDateTableColumn" minWidth="150.0" prefWidth="150.0" text=" Data de Medição" />
+                  <TableColumn fx:id="heightTableColumn" minWidth="130.0" prefWidth="130.0" text="Altura (em cm)" />
+                  <TableColumn fx:id="weightTableColumn" minWidth="130.0" prefWidth="130.0" text="Peso (em kg)" />
+               </columns>
+            </TableView>
+            <BorderPane prefHeight="20.0" prefWidth="900.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+               <left>
+                  <Label fx:id="countLabel" prefHeight="20.0" prefWidth="150.0" BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets right="15.0" />
+                     </BorderPane.margin>
+                  </Label>
+               </left>
+               <right>
+                  <HBox BorderPane.alignment="CENTER">
+                     <children>
+                        <MaterialDesignIconView fx:id="firstRow" glyphName="ARROW_UP" onMouseClicked="#goToFirstRow" size="20" styleClass="up-down-icon">
+                           <HBox.margin>
+                              <Insets right="15.0" />
+                           </HBox.margin>
+                        </MaterialDesignIconView>
+                        <MaterialDesignIconView fx:id="lastRow" glyphName="ARROW_DOWN" onMouseClicked="#goToLastRow" size="20" styleClass="up-down-icon" />
+                     </children>
+                  </HBox>
+               </right>
+               <center>
+                  <Label fx:id="selectedRowLabel" prefHeight="20.0" prefWidth="150.0" BorderPane.alignment="CENTER_LEFT">
+                     <BorderPane.margin>
+                        <Insets right="15.0" />
+                     </BorderPane.margin>
+                  </Label>
+               </center>
+            </BorderPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="944.0" layoutY="79.0" prefHeight="615.0" prefWidth="340.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
+         <children>
+            <VBox styleClass="vbox-border" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Label alignment="CENTER" minWidth="-Infinity" prefHeight="20.0" prefWidth="300.0" styleClass="details-section-title" text="Detalhes">
+                     <VBox.margin>
+                        <Insets bottom="30.0" />
+                     </VBox.margin>
+                  </Label>
+                  <HBox>
+                     <children>
+                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="ID: ">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="measurementIdLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="280.0" styleClass="attribute-value-label" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Cliente: ">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="fkCustomerLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="263.0" styleClass="attribute-value-label" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Data de Medição: ">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="measurementDateLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="223.0" styleClass="attribute-value-label" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Altura: ">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="heightLabel" maxWidth="-Infinity" prefHeight="19.0" prefWidth="275.0" styleClass="attribute-value-label" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Peso: ">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="weightLabel" maxWidth="-Infinity" prefHeight="19.0" prefWidth="280.0" styleClass="attribute-value-label" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Pescoço: ">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="neckLabel" maxWidth="-Infinity" prefHeight="19.0" prefWidth="272.0" styleClass="attribute-value-label" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Ombro: ">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="shoulderLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="272.0" styleClass="attribute-value-label" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <HBox>
+                           <children>
+                              <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Braço Dir.: ">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </Label>
+                              <Label fx:id="rightArmLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="241.0" styleClass="attribute-value-label" />
+                           </children>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Braço Esq.: ">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </Label>
+                              <Label fx:id="leftArmLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="241.0" styleClass="attribute-value-label" />
+                           </children>
+                        </HBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <HBox>
+                           <children>
+                              <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Antebraço Dir.: ">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </Label>
+                              <Label fx:id="rightForearmLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="213.0" styleClass="attribute-value-label" />
+                           </children>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Antebraço Esq.: ">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </Label>
+                              <Label fx:id="leftForearmLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="213.0" styleClass="attribute-value-label" />
+                           </children>
+                        </HBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Tórax: ">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="thoraxLabel" maxWidth="-Infinity" prefHeight="19.0" prefWidth="286.0" styleClass="attribute-value-label" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Cintura: ">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="waistLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="254.0" styleClass="attribute-value-label" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Abdome: ">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="abdomenLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="278.0" styleClass="attribute-value-label" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox layoutX="21.0" layoutY="401.0">
+                     <children>
+                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Quadril: ">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="hipLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="278.0" styleClass="attribute-value-label" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <HBox>
+                           <children>
+                              <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Coxa Dir.: ">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </Label>
+                              <Label fx:id="rightThighLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="278.0" styleClass="attribute-value-label" />
+                           </children>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Coxa Esq.: ">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </Label>
+                              <Label fx:id="leftThighLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="278.0" styleClass="attribute-value-label" />
+                           </children>
+                        </HBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <HBox>
+                           <children>
+                              <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Panturrilha Dir.: ">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </Label>
+                              <Label fx:id="rightCalfLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="278.0" styleClass="attribute-value-label" />
+                           </children>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Panturrilha Esq.: ">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </Label>
+                              <Label fx:id="leftCalfLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="278.0" styleClass="attribute-value-label" />
+                           </children>
+                        </HBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Criação: ">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="createdAtLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="251.0" styleClass="attribute-value-label" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Modificação: ">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="updatedAtLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="223.0" styleClass="attribute-value-label" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="5.0" top="10.0" />
+               </padding>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </children>
+   <stylesheets>
+      <URL value="@../css/details.css" />
+      <URL value="@../css/table-view-style.css" />
+      <URL value="@../css/theme.css" />
+   </stylesheets>
 </AnchorPane>
