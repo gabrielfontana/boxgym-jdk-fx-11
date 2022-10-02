@@ -302,7 +302,7 @@ public class CustomersController implements Initializable {
         nameTableColumn.setCellValueFactory(new PropertyValueFactory("name"));
         sexTableColumn.setCellValueFactory(new PropertyValueFactory("sex"));
         birthDateTableColumn.setCellValueFactory(new PropertyValueFactory("birthDate"));
-        TextFieldFormat.saleTableCellDateFormat(birthDateTableColumn);
+        TextFieldFormat.customerTableCellDateFormat(birthDateTableColumn);
         emailTableColumn.setCellValueFactory(new PropertyValueFactory("email"));
         phoneTableColumn.setCellValueFactory(new PropertyValueFactory("phone"));
         addressTableColumn.setCellValueFactory(new PropertyValueFactory("address"));
@@ -368,21 +368,21 @@ public class CustomersController implements Initializable {
                         || (list.get(3).equals(searchText)) || (list.get(4).equals(searchText)) || (list.get(5).equals(searchText))
                         || (list.get(6).equals(searchText)) || (list.get(7).equals(searchText)) || (list.get(8).equals(searchText))
                         || (list.get(9).equals(searchText)) || (list.get(10).equals(searchText)) || (list.get(11).equals(searchText)
-                        || (list.get(12).contains(searchText)));
+                        || (list.get(12).equals(searchText)));
                 break;
             case 3:
                 searchReturn = (list.get(0).startsWith(searchText)) || (list.get(1).startsWith(searchText)) || (list.get(2).startsWith(searchText))
                         || (list.get(3).startsWith(searchText)) || (list.get(4).startsWith(searchText)) || (list.get(5).startsWith(searchText))
                         || (list.get(6).startsWith(searchText)) || (list.get(7).startsWith(searchText)) || (list.get(8).startsWith(searchText))
                         || (list.get(9).startsWith(searchText)) || (list.get(10).startsWith(searchText)) || (list.get(11).startsWith(searchText)
-                        || (list.get(12).contains(searchText)));
+                        || (list.get(12).startsWith(searchText)));
                 break;
             case 4:
                 searchReturn = (list.get(0).endsWith(searchText)) || (list.get(1).endsWith(searchText)) || (list.get(2).endsWith(searchText))
                         || (list.get(3).endsWith(searchText)) || (list.get(4).endsWith(searchText)) || (list.get(5).endsWith(searchText))
                         || (list.get(6).endsWith(searchText)) || (list.get(7).endsWith(searchText)) || (list.get(8).endsWith(searchText))
                         || (list.get(9).endsWith(searchText)) || (list.get(10).endsWith(searchText)) || (list.get(11).endsWith(searchText)
-                        || (list.get(12).contains(searchText)));
+                        || (list.get(12).endsWith(searchText)));
                 break;
             default:
                 break;

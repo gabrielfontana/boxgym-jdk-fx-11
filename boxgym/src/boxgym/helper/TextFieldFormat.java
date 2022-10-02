@@ -1,5 +1,7 @@
 package boxgym.helper;
 
+import boxgym.model.Customer;
+import boxgym.model.Measurement;
 import boxgym.model.Product;
 import boxgym.model.Sale;
 import boxgym.model.SaleProduct;
@@ -55,6 +57,21 @@ public class TextFieldFormat {
             }
         });
     }
+    
+    public static void saleProductTableCellCurrencyFormat(TableColumn column) {
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
+        column.setCellFactory(tc -> new TableCell<SaleProduct, BigDecimal>() {
+            @Override
+            protected void updateItem(BigDecimal price, boolean empty) {
+                super.updateItem(price, empty);
+                if (empty) {
+                    setText(null);
+                } else {
+                    setText(currencyFormat.format(price));
+                }
+            }
+        });
+    }
 
     public static void stockEntryTableCellDateFormat(TableColumn column) {
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -71,16 +88,16 @@ public class TextFieldFormat {
         });
     }
 
-    public static void saleProductTableCellCurrencyFormat(TableColumn column) {
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
-        column.setCellFactory(tc -> new TableCell<SaleProduct, BigDecimal>() {
+    public static void customerTableCellDateFormat(TableColumn column) {
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        column.setCellFactory(tc -> new TableCell<Customer, LocalDate>() {
             @Override
-            protected void updateItem(BigDecimal price, boolean empty) {
-                super.updateItem(price, empty);
+            protected void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
                 if (empty) {
                     setText(null);
                 } else {
-                    setText(currencyFormat.format(price));
+                    setText(date.format(dateFormat));
                 }
             }
         });
@@ -89,6 +106,21 @@ public class TextFieldFormat {
     public static void saleTableCellDateFormat(TableColumn column) {
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         column.setCellFactory(tc -> new TableCell<Sale, LocalDate>() {
+            @Override
+            protected void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                if (empty) {
+                    setText(null);
+                } else {
+                    setText(date.format(dateFormat));
+                }
+            }
+        });
+    }
+    
+    public static void measurementTableCellDateFormat(TableColumn column) {
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        column.setCellFactory(tc -> new TableCell<Measurement, LocalDate>() {
             @Override
             protected void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
