@@ -4,7 +4,7 @@ import boxgym.dao.CustomerDao;
 import boxgym.helper.AlertHelper;
 import boxgym.helper.ButtonHelper;
 import boxgym.helper.CpfValidator;
-import boxgym.helper.DateMask;
+import boxgym.helper.InputMasks;
 import boxgym.helper.TextValidationHelper;
 import boxgym.model.Customer;
 import java.net.URL;
@@ -111,7 +111,7 @@ public class CustomersAddController implements Initializable {
     private void customersInputRestrictions() {
         personRegistryTextField.setValidationPattern("[0-9]", 11, "Sem pontuação!");
         nameTextField.setValidationPattern("[a-zA-Z\\u00C0-\\u00FF0-9 ]", 255);
-        DateMask.dateField(birthDateTextField);
+        InputMasks.dateField(birthDateTextField);
         emailTextField.setValidationPattern("[A-Za-z0-9@._-]", 255);
         phoneTextField.setValidationPattern("[0-9]", 11, "Sem pontuação!");
         zipCodeTextField.setValidationPattern("[0-9]", 8, "Sem pontuação!");

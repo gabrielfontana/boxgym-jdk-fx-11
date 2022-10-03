@@ -3,9 +3,10 @@ package boxgym.helper;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.geometry.Pos;
 import limitedtextfield.LimitedTextField;
 
-public class DateMask {
+public class InputMasks {
 
     public static void dateField(final LimitedTextField textField) {
         maxField(textField, 10);
@@ -21,6 +22,30 @@ public class DateMask {
                         value = value.replaceFirst("(\\d{2})\\/(\\d{2})(\\d)", "$1/$2/$3");
                         textField.setText(value);
                         positionCaret(textField);
+                    }
+                });
+            }
+        });
+    }
+    
+    public static void floatField(final LimitedTextField textField) {
+        textField.setAlignment(Pos.CENTER_RIGHT);
+        textField.lengthProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                Platform.runLater(() -> {
+                    String value = textField.getText();
+                    value = value.replaceAll("[^0-9]", "");
+                    value = value.replaceAll("([0-9]{1})([0-9]{1})$", "$1,$2");
+                    textField.setText(value);
+                    positionCaret(textField);
+                });
+
+                textField.textProperty().addListener(new ChangeListener<String>() {
+                    @Override
+                    public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
+                        if (newValue.length() > 5)
+                            textField.setText(oldValue);
                     }
                 });
             }
