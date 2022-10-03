@@ -108,7 +108,7 @@
                <columns>
                   <TableColumn fx:id="measurementIdTableColumn" minWidth="90.0" prefWidth="90.0" text="ID" />
                   <TableColumn fx:id="fkCustomerTableColumn" minWidth="398.0" prefWidth="398.0" text="Cliente" />
-                  <TableColumn fx:id="measurementDateTableColumn" minWidth="150.0" prefWidth="150.0" text=" Data de Medição" />
+                  <TableColumn fx:id="measurementDateTableColumn" minWidth="150.0" prefWidth="150.0" text="Data de Medição" />
                   <TableColumn fx:id="heightTableColumn" minWidth="130.0" prefWidth="130.0" text="Altura (em cm)" />
                   <TableColumn fx:id="weightTableColumn" minWidth="130.0" prefWidth="130.0" text="Peso (em kg)" />
                </columns>

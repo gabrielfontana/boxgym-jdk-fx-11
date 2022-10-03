@@ -203,6 +203,8 @@ CREATE TABLE `measurement` (
   `leftThigh` DECIMAL(4, 1),
   `rightCalf` DECIMAL(4, 1),
   `leftCalf` DECIMAL(4, 1),
+  `createdAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`measurementId`),
   FOREIGN KEY (`fkCustomer`) REFERENCES `customer`(`customerId`) ON UPDATE CASCADE
 );

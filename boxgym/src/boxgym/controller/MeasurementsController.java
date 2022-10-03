@@ -3,16 +3,20 @@ package boxgym.controller;
 import boxgym.dao.MeasurementDao;
 import boxgym.helper.AlertHelper;
 import boxgym.helper.ButtonHelper;
+import boxgym.helper.StageHelper;
 import boxgym.helper.TableViewCount;
 import boxgym.helper.TextFieldFormat;
 import boxgym.model.Measurement;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,7 +24,9 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -34,6 +40,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import jfxtras.styles.jmetro.JMetro;
+import jfxtras.styles.jmetro.Style;
+
 
 public class MeasurementsController implements Initializable {
 
@@ -179,7 +188,22 @@ public class MeasurementsController implements Initializable {
 
     @FXML
     private void addMeasurement(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/boxgym/view/MeasurementsAdd.fxml"));
+            Parent root = (Parent) loader.load();
+            JMetro jMetro = new JMetro(root, Style.LIGHT);
 
+            MeasurementsAddController controller = loader.getController();
+
+            StageHelper.createAddOrUpdateStage("Adicionando Medidas", root);
+
+            if (controller.isCreated()) {
+                refreshTableView();
+                measurementTableView.getSelectionModel().selectLast();
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(MeasurementsController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
@@ -235,22 +259,22 @@ public class MeasurementsController implements Initializable {
             measurementIdLabel.setText(String.valueOf(selected.getMeasurementId()));
             fkCustomerLabel.setText(selected.getTempCustomerName());
             measurementDateLabel.setText(selected.getMeasurementDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-            heightLabel.setText(String.valueOf(selected.getHeight()));
-            weightLabel.setText(String.valueOf(selected.getWeight()));
-            neckLabel.setText(String.valueOf(selected.getNeck()));
-            shoulderLabel.setText(String.valueOf(selected.getShoulder()));
-            rightArmLabel.setText(String.valueOf(selected.getRightArm()));
-            leftArmLabel.setText(String.valueOf(selected.getLeftArm()));
-            rightForearmLabel.setText(String.valueOf(selected.getRightForearm()));
-            leftForearmLabel.setText(String.valueOf(selected.getLeftForearm()));
-            thoraxLabel.setText(String.valueOf(selected.getThorax()));
-            waistLabel.setText(String.valueOf(selected.getWaist()));
-            abdomenLabel.setText(String.valueOf(selected.getAbdomen()));
-            hipLabel.setText(String.valueOf(selected.getHip()));
-            rightThighLabel.setText(String.valueOf(selected.getRightThigh()));
-            leftThighLabel.setText(String.valueOf(selected.getLeftThigh()));
-            rightCalfLabel.setText(String.valueOf(selected.getRightCalf()));
-            leftCalfLabel.setText(String.valueOf(selected.getLeftCalf()));
+            heightLabel.setText(String.valueOf(selected.getHeight()) + " cm");
+            weightLabel.setText(String.valueOf(selected.getWeight()).replace(".", ",") + " kg");
+            neckLabel.setText(String.valueOf(selected.getNeck()).replace(".", ",") + " cm");
+            shoulderLabel.setText(String.valueOf(selected.getShoulder()).replace(".", ",") + " cm");
+            rightArmLabel.setText(String.valueOf(selected.getRightArm()).replace(".", ",") + " cm");
+            leftArmLabel.setText(String.valueOf(selected.getLeftArm()).replace(".", ",") + " cm");
+            rightForearmLabel.setText(String.valueOf(selected.getRightForearm()).replace(".", ",") + " cm");
+            leftForearmLabel.setText(String.valueOf(selected.getLeftForearm()).replace(".", ",") + " cm");
+            thoraxLabel.setText(String.valueOf(selected.getThorax()).replace(".", ",") + " cm");
+            waistLabel.setText(String.valueOf(selected.getWaist()).replace(".", ",") + " cm");
+            abdomenLabel.setText(String.valueOf(selected.getAbdomen()).replace(".", ",") + " cm");
+            hipLabel.setText(String.valueOf(selected.getHip()).replace(".", ",") + " cm");
+            rightThighLabel.setText(String.valueOf(selected.getRightThigh()).replace(".", ",") + " cm");
+            leftThighLabel.setText(String.valueOf(selected.getLeftThigh()).replace(".", ",") + " cm");
+            rightCalfLabel.setText(String.valueOf(selected.getRightCalf()).replace(".", ",") + " cm");
+            leftCalfLabel.setText(String.valueOf(selected.getLeftCalf()).replace(".", ",") + " cm");
             createdAtLabel.setText(selected.getCreatedAt().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
             updatedAtLabel.setText(selected.getUpdatedAt().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
         }

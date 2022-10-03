@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -190,6 +191,46 @@ public class CustomerDao {
             DbUtils.closeQuietly(rs);
         }
         return false;
+    }
+    
+    public String getCustomerSex(int customerId){
+        String sql = "SELECT `sex` FROM `customer` WHERE `customerId` = " + customerId + ";";
+        String customerSex = "";
+
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                customerSex = rs.getString("sex");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return customerSex;
+    }
+    
+    public LocalDate getCustomerBirthDate(int customerId){
+        String sql = "SELECT `birthDate` FROM `customer` WHERE `customerId` = " + customerId + ";";
+        LocalDate customerBirthDate = LocalDate.now();
+
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                customerBirthDate = rs.getDate("birthDate").toLocalDate();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return customerBirthDate;
     }
 
     public boolean createExcelFile(String filePath) {

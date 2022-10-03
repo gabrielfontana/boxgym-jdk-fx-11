@@ -28,6 +28,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class MeasurementDao {
+
     private Connection conn;
     private PreparedStatement ps;
     private ResultSet rs;
@@ -35,12 +36,12 @@ public class MeasurementDao {
     public MeasurementDao() {
         this.conn = new ConnectionFactory().getConnection();
     }
-    
+
     public boolean create(Measurement measurement) {
         String sql = "INSERT INTO `measurement` (`fkCustomer`, `measurementDate`, `height`, `weight`, "
                 + "`neck`, `shoulder`, `rightArm`, `leftArm`, `rightForearm`, `leftForearm`, `thorax`, `waist`, `abdomen`, `hip`, "
                 + "`rightThigh`, `leftThigh`, `rightCalf`, `leftCalf`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-        
+
         try {
             ps = conn.prepareStatement(sql);
             ps.setInt(1, measurement.getFkCustomer());
@@ -72,16 +73,17 @@ public class MeasurementDao {
         }
         return false;
     }
-    
+
     public List<Measurement> read() {
         List<Measurement> measurementsList = new ArrayList<>();
-        String sql = "SELECT * FROM `measurement`;";
-    
+        String sql = "SELECT m.measurementId, m.fkCustomer, c.name AS `tempCustomerName`, m.measurementDate, m.height, m.weight, m.neck, m.shoulder, m.rightArm, m.leftArm, m.rightForearm, m.leftForearm, m.thorax, m.waist, m.abdomen, m.hip, m.rightThigh, m.leftThigh, m.rightCalf, m.leftCalf, m.createdAt, m.updatedAt FROM `measurement` AS m INNER JOIN `customer` AS c ON m.fkCustomer = c.customerId ORDER BY m.measurementId ASC;";
+
         try {
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
                 Measurement m = new Measurement();
+                m.setMeasurementId(rs.getInt("measurementId"));
                 m.setFkCustomer(rs.getInt("fkCustomer"));
                 m.setTempCustomerName(rs.getString("tempCustomerName"));
                 m.setMeasurementDate(rs.getDate("measurementDate").toLocalDate());
@@ -114,7 +116,7 @@ public class MeasurementDao {
         }
         return measurementsList;
     }
-    
+
     public boolean update(Measurement measurement) {
         String sql = "UPDATE `measurement` SET `measurementDate` = ?, `height` = ?, `weight` = ?, "
                 + "`neck` = ?, `shoulder` = ?, `rightArm` = ?, `leftArm` = ?, `rightForearm` = ?, `leftForearm` = ?, "
@@ -152,7 +154,7 @@ public class MeasurementDao {
         }
         return false;
     }
-    
+
     public boolean delete(Measurement measurement) {
         String sql = "DELETE FROM `measurement` WHERE `measurementId` = ?;";
 
