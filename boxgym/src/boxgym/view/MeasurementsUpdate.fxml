@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import limitedtextfield.LimitedTextField?>
+<?import org.controlsfx.control.PrefixSelectionComboBox?>
+
+<AnchorPane fx:id="anchorPane" prefHeight="572.0" prefWidth="714.0" style="-fx-background-color: #f2f2f2;" stylesheets="@../css/theme.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.MeasurementsUpdateController">
+   <children>
+      <AnchorPane layoutX="15.0" layoutY="24.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+               <children>
+                  <VBox prefHeight="52.0" prefWidth="300.0">
+                     <children>
+                        <Label text="Cliente *">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <PrefixSelectionComboBox fx:id="customerComboBox" disable="true" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="185.0" />
+                     </children>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox prefHeight="52.0" prefWidth="80.0">
+                     <children>
+                        <Label text="Sexo">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <LimitedTextField fx:id="sexTextField" disable="true" editable="false" prefHeight="30.0" prefWidth="105.0" />
+                     </children>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox layoutX="405.0" layoutY="10.0" prefHeight="52.0" prefWidth="55.0">
+                     <children>
+                        <Label text="Idade">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <LimitedTextField fx:id="ageTextField" disable="true" editable="false" prefHeight="30.0" prefWidth="105.0" />
+                     </children>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox prefHeight="52.0" prefWidth="80.0">
+                     <children>
+                        <Label text="Data *">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <LimitedTextField fx:id="measurementDateTextField" prefHeight="30.0" prefWidth="105.0" />
+                     </children>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox prefHeight="52.0" prefWidth="55.0">
+                     <children>
+                        <Label text="Altura *">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <LimitedTextField fx:id="heightTextField" prefHeight="30.0" prefWidth="105.0" promptText="em cm" />
+                     </children>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox prefHeight="52.0" prefWidth="55.0">
+                     <children>
+                        <Label text="Peso *">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <LimitedTextField fx:id="weightTextField" prefHeight="30.0" prefWidth="105.0" promptText="em kg" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
+      <Separator layoutY="84.0" prefHeight="17.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <AnchorPane fx:id="measurementAnchorPane" layoutY="112.0" prefHeight="410.0" prefWidth="630.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="92.0">
+         <children>
+            <VBox layoutX="23.0" layoutY="23.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+               <children>
+                  <HBox>
+                     <children>
+                        <Label alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="120.0" text="Pescoço">
+                           <padding>
+                              <Insets left="5.0" right="5.0" />
+                           </padding>
+                        </Label>
+                        <LimitedTextField fx:id="neckTextField" prefHeight="30.0" prefWidth="65.0" />
+                     </children>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="120.0" text="Ombro">
+                           <padding>
+                              <Insets left="5.0" right="5.0" />
+                           </padding>
+                        </Label>
+                        <LimitedTextField fx:id="shoulderTextField" prefHeight="30.0" prefWidth="65.0" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <HBox>
+                           <children>
+                              <Label alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="120.0" text="Braço Direito">
+                                 <padding>
+                                    <Insets left="5.0" right="5.0" />
+                                 </padding>
+                              </Label>
+                              <LimitedTextField fx:id="rightArmTextField" prefHeight="30.0" prefWidth="65.0" />
+                           </children>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <Label alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="120.0" text="Braço Esquerdo">
+                                 <padding>
+                                    <Insets left="5.0" right="5.0" />
+                                 </padding>
+                              </Label>
+                              <LimitedTextField fx:id="leftArmTextField" prefHeight="30.0" prefWidth="65.0" />
+                           </children>
+                        </HBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <HBox>
+                           <children>
+                              <Label alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="120.0" text="Antebraço Direito">
+                                 <padding>
+                                    <Insets left="5.0" right="5.0" />
+                                 </padding>
+                              </Label>
+                              <LimitedTextField fx:id="rightForearmTextField" prefHeight="30.0" prefWidth="65.0" />
+                           </children>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <Label alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="120.0" text="Antebraço Esquerdo">
+                                 <padding>
+                                    <Insets left="5.0" right="5.0" />
+                                 </padding>
+                              </Label>
+                              <LimitedTextField fx:id="leftForearmTextField" prefHeight="30.0" prefWidth="65.0" />
+                           </children>
+                        </HBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="120.0" text="Tórax">
+                           <padding>
+                              <Insets left="5.0" right="5.0" />
+                           </padding>
+                        </Label>
+                        <LimitedTextField fx:id="thoraxTextField" prefHeight="30.0" prefWidth="65.0" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="120.0" text="Cintura">
+                           <padding>
+                              <Insets left="5.0" right="5.0" />
+                           </padding>
+                        </Label>
+                        <LimitedTextField fx:id="waistTextField" prefHeight="30.0" prefWidth="65.0" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="120.0" text="Abdome">
+                           <padding>
+                              <Insets left="5.0" right="5.0" />
+                           </padding>
+                        </Label>
+                        <LimitedTextField fx:id="abdomenTextField" prefHeight="30.0" prefWidth="65.0" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="120.0" text="Quadril">
+                           <padding>
+                              <Insets left="5.0" right="5.0" />
+                           </padding>
+                        </Label>
+                        <LimitedTextField fx:id="hipTextField" prefHeight="30.0" prefWidth="65.0" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <HBox>
+                           <children>
+                              <Label alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="120.0" text="Coxa Direita">
+                                 <padding>
+                                    <Insets left="5.0" right="5.0" />
+                                 </padding>
+                              </Label>
+                              <LimitedTextField fx:id="rightThighTextField" prefHeight="30.0" prefWidth="65.0" />
+                           </children>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <Label alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="120.0" text="Coxa Esquerda">
+                                 <padding>
+                                    <Insets left="5.0" right="5.0" />
+                                 </padding>
+                              </Label>
+                              <LimitedTextField fx:id="leftThighTextField" prefHeight="30.0" prefWidth="65.0" />
+                           </children>
+                        </HBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <HBox>
+                           <children>
+                              <Label alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="120.0" text="Panturrilha Direita">
+                                 <padding>
+                                    <Insets left="5.0" right="5.0" />
+                                 </padding>
+                              </Label>
+                              <LimitedTextField fx:id="rightCalfTextField" prefHeight="30.0" prefWidth="65.0" />
+                           </children>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <Label alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="120.0" text="Panturrilha Esquerda">
+                                 <padding>
+                                    <Insets left="5.0" right="5.0" />
+                                 </padding>
+                              </Label>
+                              <LimitedTextField fx:id="leftCalfTextField" prefHeight="30.0" prefWidth="65.0" />
+                           </children>
+                        </HBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+            </VBox>
+            <AnchorPane layoutX="455.0" layoutY="20.0" prefHeight="390.0" prefWidth="274.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+               <children>
+                  <ImageView fx:id="image" fitHeight="390.0" fitWidth="216.0" layoutX="56.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="56.0" AnchorPane.rightAnchor="56.6561279296875" AnchorPane.topAnchor="0.0">
+                     <image>
+                        <Image url="@../img/no-body.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutY="502.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <HBox AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+               <children>
+                  <Button fx:id="saveButton" mnemonicParsing="false" onAction="#save" prefHeight="30.0" prefWidth="89.0" text="Salvar">
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+                     <graphic>
+                        <MaterialDesignIconView fill="BLACK" glyphName="CONTENT_SAVE" size="15" />
+                     </graphic>
+                  </Button>
+                  <Button fx:id="clearButton" mnemonicParsing="false" onAction="#clear" prefHeight="30.0" prefWidth="89.0" text="Limpar">
+                     <graphic>
+                        <MaterialDesignIconView glyphName="BROOM" size="15" />
+                     </graphic>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

@@ -208,7 +208,28 @@ public class MeasurementsController implements Initializable {
 
     @FXML
     private void updateMeasurement(ActionEvent event) {
+        if (selected == null) {
+            alert.customAlert(Alert.AlertType.WARNING, "Selecione uma medição para atualizar!", "");
+        } else {
+            int index = measurementTableView.getSelectionModel().getSelectedIndex();
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/boxgym/view/MeasurementsUpdate.fxml"));
+                Parent root = (Parent) loader.load();
+                JMetro jMetro = new JMetro(root, Style.LIGHT);
 
+                MeasurementsUpdateController controller = loader.getController();
+                controller.setLoadMeasurement(selected);
+
+                StageHelper.createAddOrUpdateStage("Atualizando Medidas", root);
+
+                if (controller.isUpdated()) {
+                    refreshTableView();
+                    measurementTableView.getSelectionModel().select(index);
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(MeasurementsController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     @FXML

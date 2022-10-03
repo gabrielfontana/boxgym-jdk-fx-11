@@ -56,6 +56,30 @@ public class Measurement {
         this.rightCalf = rightCalf;
         this.leftCalf = leftCalf;
     }
+    
+    //Construtor UPDATE
+    public Measurement(LocalDate measurementDate, int height, float weight,
+            float neck, float shoulder, float rightArm, float leftArm, float rightForearm, float leftForearm, float thorax,
+            float waist, float abdomen, float hip, float rightThigh, float leftThigh, float rightCalf, float leftCalf, int measurementId) {
+        this.measurementId = measurementId;
+        this.measurementDate = measurementDate;
+        this.height = height;
+        this.weight = weight;
+        this.neck = neck;
+        this.shoulder = shoulder;
+        this.rightArm = rightArm;
+        this.leftArm = leftArm;
+        this.rightForearm = rightForearm;
+        this.leftForearm = leftForearm;
+        this.thorax = thorax;
+        this.waist = waist;
+        this.abdomen = abdomen;
+        this.hip = hip;
+        this.rightThigh = rightThigh;
+        this.leftThigh = leftThigh;
+        this.rightCalf = rightCalf;
+        this.leftCalf = leftCalf;
+    }
 
     public int getMeasurementId() {
         return measurementId;
