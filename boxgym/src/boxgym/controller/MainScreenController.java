@@ -1,6 +1,7 @@
 package boxgym.controller;
 
 import boxgym.dao.CustomerDao;
+import boxgym.dao.MeasurementDao;
 import boxgym.dao.ProductDao;
 import boxgym.dao.SaleDao;
 import boxgym.dao.StockEntryDao;
@@ -148,7 +149,7 @@ public class MainScreenController implements Initializable {
 
         if (file != null) {
             customerDao.createExcelFile(file.getAbsolutePath());
-            alert.customAlert(Alert.AlertType.WARNING, "Relatório gerado com sucesso!", "");
+            alert.customAlert(Alert.AlertType.WARNING, "Relatório gerado com sucesso em '" + file.getAbsolutePath() + "'.", "");
         }
     }
 
@@ -162,7 +163,7 @@ public class MainScreenController implements Initializable {
 
         if (file != null) {
             supplierDao.createExcelFile(file.getAbsolutePath());
-            alert.customAlert(Alert.AlertType.WARNING, "Relatório gerado com sucesso!", "");
+            alert.customAlert(Alert.AlertType.WARNING, "Relatório gerado com sucesso em '" + file.getAbsolutePath() + "'.", "");
         }
     }
 
@@ -176,7 +177,7 @@ public class MainScreenController implements Initializable {
 
         if (file != null) {
             saleDao.createExcelFile(file.getAbsolutePath());
-            alert.customAlert(Alert.AlertType.WARNING, "Relatório gerado com sucesso!", "");
+            alert.customAlert(Alert.AlertType.WARNING, "Relatório gerado com sucesso em '" + file.getAbsolutePath() + "'.", "");
         }
     }
 
@@ -190,7 +191,7 @@ public class MainScreenController implements Initializable {
 
         if (file != null) {
             productDao.createExcelFile(file.getAbsolutePath());
-            alert.customAlert(Alert.AlertType.WARNING, "Relatório gerado com sucesso!", "");
+            alert.customAlert(Alert.AlertType.WARNING, "Relatório gerado com sucesso em '" + file.getAbsolutePath() + "'.", "");
         }
     }
 
@@ -204,7 +205,7 @@ public class MainScreenController implements Initializable {
 
         if (file != null) {
             stockEntryDao.createExcelFile(file.getAbsolutePath());
-            alert.customAlert(Alert.AlertType.WARNING, "Relatório gerado com sucesso!", "");
+            alert.customAlert(Alert.AlertType.WARNING, "Relatório gerado com sucesso em '" + file.getAbsolutePath() + "'.", "");
         }
     }
 
@@ -218,7 +219,22 @@ public class MainScreenController implements Initializable {
 
         if (file != null) {
             workoutDao.createExcelFile(file.getAbsolutePath());
-            alert.customAlert(Alert.AlertType.WARNING, "Relatório gerado com sucesso!", "");
+            alert.customAlert(Alert.AlertType.WARNING, "Relatório gerado com sucesso em '" + file.getAbsolutePath() + "'.", "");
         }
     }
+
+    @FXML
+    void exportMeasurementsToExcel(ActionEvent event) {
+        FileChooser chooser = new FileChooser();
+        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Pasta de Trabalho do Excel", "*.xlsx"));
+        File file = chooser.showSaveDialog(new Stage());
+
+        MeasurementDao measurementDao = new MeasurementDao();
+
+        if (file != null) {
+            measurementDao.createExcelFile(file.getAbsolutePath());
+            alert.customAlert(Alert.AlertType.WARNING, "Relatório gerado com sucesso em '" + file.getAbsolutePath() + "'.", "");
+        }
+    }
+
 }

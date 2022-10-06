@@ -147,6 +147,11 @@
                                                 <MaterialDesignIconView fill="BLACK" glyphName="DUMBBELL" size="15.0" />
                                             </graphic>
                                         </MenuItem>
+                              <MenuItem mnemonicParsing="false" onAction="#exportMeasurementsToExcel" text="Medidas">
+                                 <graphic>
+                                    <MaterialDesignIconView fill="BLACK" glyphName="RULER" size="15.0" />
+                                 </graphic>
+                              </MenuItem>
                                     </items>
                                 </Menu>
                             </items>

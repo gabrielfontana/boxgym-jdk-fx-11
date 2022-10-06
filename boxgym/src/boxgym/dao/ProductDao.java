@@ -250,10 +250,10 @@ public class ProductDao {
                 ExcelFileHelper.createStyledCell(row, 1, rs.getString("name"), defaultStyle);
                 ExcelFileHelper.createStyledCell(row, 2, rs.getString("category"), defaultStyle);
                 ExcelFileHelper.createStyledCell(row, 3, rs.getString("description"), defaultStyle);
-                ExcelFileHelper.createStyledCell(row, 4, Integer.valueOf(rs.getString("amount")), defaultStyle);
-                ExcelFileHelper.createStyledCell(row, 5, Integer.valueOf(rs.getString("minimumStock")), defaultStyle);
-                ExcelFileHelper.createStyledCell(row, 6, Double.valueOf(rs.getString("costPrice")), defaultStyle);
-                ExcelFileHelper.createStyledCell(row, 7, Double.valueOf(rs.getString("sellingPrice")), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 4, rs.getInt("amount"), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 5, rs.getInt("minimumStock"), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 6, rs.getDouble("costPrice"), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 7, rs.getDouble("sellingPrice"), defaultStyle);
                 ExcelFileHelper.createStyledDateTimeCell(row, 8, rs.getString("createdAt"), DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"), defaultStyle);
                 ExcelFileHelper.createStyledDateTimeCell(row, 9, rs.getString("updatedAt"), DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"), defaultStyle);
                 rowIndex++;

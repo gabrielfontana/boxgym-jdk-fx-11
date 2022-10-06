@@ -6,7 +6,6 @@ import boxgym.model.Measurement;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,7 +14,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -76,7 +74,12 @@ public class MeasurementDao {
 
     public List<Measurement> read() {
         List<Measurement> measurementsList = new ArrayList<>();
-        String sql = "SELECT m.measurementId, m.fkCustomer, c.name AS `tempCustomerName`, m.measurementDate, m.height, m.weight, m.neck, m.shoulder, m.rightArm, m.leftArm, m.rightForearm, m.leftForearm, m.thorax, m.waist, m.abdomen, m.hip, m.rightThigh, m.leftThigh, m.rightCalf, m.leftCalf, m.createdAt, m.updatedAt FROM `measurement` AS m INNER JOIN `customer` AS c ON m.fkCustomer = c.customerId ORDER BY m.measurementId ASC;";
+        String sql = "SELECT m.measurementId, m.fkCustomer, c.name AS `tempCustomerName`, m.measurementDate, m.height, m.weight, "
+                + "m.neck, m.shoulder, m.rightArm, m.leftArm, m.rightForearm, m.leftForearm, m.thorax, "
+                + "m.waist, m.abdomen, m.hip, m.rightThigh, m.leftThigh, m.rightCalf, m.leftCalf, m.createdAt, m.updatedAt "
+                + "FROM `measurement` AS m INNER JOIN `customer` AS c "
+                + "ON m.fkCustomer = c.customerId "
+                + "ORDER BY m.measurementId ASC;";
 
         try {
             ps = conn.prepareStatement(sql);
@@ -164,6 +167,83 @@ public class MeasurementDao {
             ps.execute();
             return true;
         } catch (SQLException ex) {
+            Logger.getLogger(MeasurementDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return false;
+    }
+
+    public boolean createExcelFile(String filePath) {
+        String sql = "SELECT m.measurementId, m.fkCustomer, c.name AS `tempCustomerName`, m.measurementDate, m.height, m.weight, "
+                + "m.neck, m.shoulder, m.rightArm, m.leftArm, m.rightForearm, m.leftForearm, m.thorax, "
+                + "m.waist, m.abdomen, m.hip, m.rightThigh, m.leftThigh, m.rightCalf, m.leftCalf, m.createdAt, m.updatedAt "
+                + "FROM `measurement` AS m INNER JOIN `customer` AS c "
+                + "ON m.fkCustomer = c.customerId "
+                + "ORDER BY m.measurementId ASC;";
+
+        try {
+            XSSFWorkbook workbook = new XSSFWorkbook();
+
+            XSSFCellStyle infoStyle = ExcelFileHelper.excelStyle(workbook, "Arial", true, BorderStyle.NONE, new byte[]{(byte) 255, (byte) 255, (byte) 255});
+            XSSFCellStyle headerStyle = ExcelFileHelper.excelStyle(workbook, "Arial", true, BorderStyle.THIN, new byte[]{(byte) 205, (byte) 205, (byte) 205});
+            XSSFCellStyle defaultStyle = ExcelFileHelper.excelStyle(workbook, "Arial", false, BorderStyle.THIN, new byte[]{(byte) 255, (byte) 255, (byte) 255});
+
+            XSSFSheet sheet = workbook.createSheet("Medidas");
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 3));
+            ExcelFileHelper.createStyledCell(sheet.createRow(0), 0, "Relatório gerado em: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")), infoStyle);
+
+            List<String> fields = Arrays.asList("ID", "Cliente", "Data", "Altura (em cm)", "Peso (em kg)",
+                    "Pescoço", "Ombro", "Braço Direito", "Braço Esquerdo", "Antebraço Direito", "Antebraço Esquerdo",
+                    "Tórax", "Cintura", "Abdome", "Quadril", "Coxa Direita", "Coxa Esquerda",
+                    "Panturrilha Direita", "Panturrilha Esquerda", "Criação", "Modificação");
+            XSSFRow headerRow = sheet.createRow(2);
+            for (int i = 0; i < fields.size(); i++) {
+                ExcelFileHelper.createStyledCell(headerRow, i, fields.get(i), headerStyle);
+            }
+
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            int rowIndex = 3;
+            while (rs.next()) {
+                XSSFRow row = sheet.createRow(rowIndex);
+                ExcelFileHelper.createStyledCell(row, 0, rs.getInt("measurementId"), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 1, rs.getString("tempCustomerName"), defaultStyle);
+                ExcelFileHelper.createStyledDateCell(row, 2, rs.getString("measurementDate"), DateTimeFormatter.ofPattern("dd/MM/yyyy"), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 3, rs.getInt("height"), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 4, rs.getDouble("weight"), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 5, rs.getDouble("neck"), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 6, rs.getDouble("shoulder"), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 7, rs.getDouble("rightArm"), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 8, rs.getDouble("leftArm"), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 9, rs.getDouble("rightForearm"), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 10, rs.getDouble("leftForearm"), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 11, rs.getDouble("thorax"), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 12, rs.getDouble("waist"), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 13, rs.getDouble("abdomen"), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 14, rs.getDouble("hip"), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 15, rs.getDouble("rightThigh"), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 16, rs.getDouble("leftThigh"), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 17, rs.getDouble("rightCalf"), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 18, rs.getDouble("leftCalf"), defaultStyle);
+                ExcelFileHelper.createStyledDateTimeCell(row, 19, rs.getString("createdAt"), DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"), defaultStyle);
+                ExcelFileHelper.createStyledDateTimeCell(row, 20, rs.getString("updatedAt"), DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"), defaultStyle);
+                rowIndex++;
+            }
+            for (int i = 0; i < fields.size(); i++) {
+                sheet.autoSizeColumn(i);
+            }
+
+            FileOutputStream fileOut = new FileOutputStream(filePath);
+            workbook.write(fileOut);
+            fileOut.close();
+            workbook.close();
+            return true;
+        } catch (SQLException | FileNotFoundException ex) {
+            Logger.getLogger(MeasurementDao.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
             Logger.getLogger(MeasurementDao.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DbUtils.closeQuietly(conn);
