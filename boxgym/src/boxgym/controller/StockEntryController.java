@@ -170,7 +170,7 @@ public class StockEntryController implements Initializable {
             alert.customAlert(Alert.AlertType.WARNING, "Selecione uma entrada de estoque para cancelar", "");
         } else {
             alert.confirmationAlert("Cancelar Entrada de Estoque", "Tem certeza que deseja cancelar esta entrada de estoque? "
-                    + "\n\nA entrada de estoque será excluída de forma definitiva e não poderá ser recuperada. Após isso, a entrada dos produtos no estoque será desfeita.");
+                    + "\n\nA entrada de estoque será cancelada de forma definitiva e não poderá ser recuperada. Após isso, a entrada dos produtos no estoque será desfeita.");
             if (alert.getResult().get() == ButtonType.YES) {
                 stockEntryProductDao.delete(selected);
                 stockEntryDao.delete(selected);

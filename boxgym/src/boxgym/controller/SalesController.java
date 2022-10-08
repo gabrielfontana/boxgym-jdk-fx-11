@@ -166,7 +166,7 @@ public class SalesController implements Initializable {
             alert.customAlert(Alert.AlertType.WARNING, "Selecione uma venda para cancelar", "");
         } else {
             alert.confirmationAlert("Cancelar Venda", "Tem certeza que deseja cancelar esta venda? "
-                    + "\n\nA venda será excluída de forma definitiva e não poderá ser recuperada. Após isso, os produtos entrarão no estoque novamente.");
+                    + "\n\nA venda será cancelada de forma definitiva e não poderá ser recuperada. Após isso, os produtos entrarão no estoque novamente.");
             if (alert.getResult().get() == ButtonType.YES) {
                 saleProductDao.delete(selected);
                 saleDao.delete(selected);
