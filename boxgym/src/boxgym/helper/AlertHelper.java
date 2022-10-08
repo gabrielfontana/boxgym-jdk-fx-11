@@ -47,10 +47,12 @@ public class AlertHelper {
         alert.getButtonTypes().addAll(ButtonType.YES, ButtonType.NO);
 
         Button yesButton = (Button) alert.getDialogPane().lookupButton(ButtonType.YES);
-        yesButton.setDefaultButton(false);
+        yesButton.setDefaultButton(true);
 
         Button noButton = (Button) alert.getDialogPane().lookupButton(ButtonType.NO);
-        noButton.setDefaultButton(true);
+        noButton.setDefaultButton(false);
+        
+        ButtonHelper.buttonCursor(yesButton, noButton);
 
         Scene scene = (Scene) alert.getDialogPane().getScene();
         JMetro jMetro = new JMetro(scene, Style.LIGHT);
