@@ -53,7 +53,7 @@ public class LoginController implements Initializable {
     @FXML
     void login(ActionEvent event) throws IOException {
         if (usernameTextField.getText().isEmpty() || passwordTextField.getText().isEmpty()) {
-            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível efetuar o login!", "Por favor, preencha todos os campos!");
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível efetuar o login", "Por favor, preencha todos os campos.");
         } else {
             String passwordSha256 = org.apache.commons.codec.digest.DigestUtils.sha256Hex(passwordTextField.getText());
 
@@ -65,7 +65,7 @@ public class LoginController implements Initializable {
                 StageHelper sh = new StageHelper();
                 sh.createMainScreenStage("/boxgym/view/MainScreen.fxml", "BoxGym");
             } else {
-                ah.customAlert(Alert.AlertType.WARNING, "Não foi possível efetuar o login!", "Usuário e/ou senha inválido(s)!");
+                ah.customAlert(Alert.AlertType.WARNING, "Não foi possível efetuar o login", "Usuário e/ou senha inválidos.");
                 usernameTextField.setText("");
                 passwordTextField.setText("");
             }

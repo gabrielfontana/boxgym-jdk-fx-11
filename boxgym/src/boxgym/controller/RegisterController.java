@@ -64,14 +64,14 @@ public class RegisterController implements Initializable {
         UserDao userDao = new UserDao();
 
         if (usernameTextField.getText().isEmpty() || passwordTextField.getText().isEmpty() || confirmPasswordTextField.getText().isEmpty()) {
-            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível efetuar o cadastro!", "Por favor, preencha todos os campos!");
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível efetuar o cadastro", "Por favor, preencha todos os campos.");
         } else if (!passwordTextField.getText().equals(confirmPasswordTextField.getText())) {
-            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível efetuar o cadastro!", "As senhas não coincidem!");
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível efetuar o cadastro", "As senhas não coincidem.");
             passwordTextField.setText("");
             confirmPasswordTextField.setText("");
         } else if (userDao.checkExistingUser(usernameTextField.getText())) {
             usernameTextField.setText("");
-            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível efetuar o cadastro!", "Nome de usuário já cadastrado!");
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível efetuar o cadastro", "Nome de usuário já cadastrado.");
         } else {
             String passwordSha256 = org.apache.commons.codec.digest.DigestUtils.sha256Hex(passwordTextField.getText());
             String confirmPasswordSha256 = org.apache.commons.codec.digest.DigestUtils.sha256Hex(confirmPasswordTextField.getText());
@@ -79,7 +79,7 @@ public class RegisterController implements Initializable {
             User user = new User(usernameTextField.getText(), passwordSha256, confirmPasswordSha256);
 
             userDao.create(user);
-            ah.customAlert(Alert.AlertType.INFORMATION, "O cadastro foi realizado com sucesso!", "");
+            ah.customAlert(Alert.AlertType.INFORMATION, "Cadastro realizado com sucesso", "");
             backToLogin();
         }
     }
