@@ -195,7 +195,7 @@ public class MeasurementsController implements Initializable {
 
             MeasurementsAddController controller = loader.getController();
 
-            StageHelper.createAddOrUpdateStage("Adicionando Medidas", root);
+            StageHelper.createAddOrUpdateStage("Cadastrar Medidas", root);
 
             if (controller.isCreated()) {
                 refreshTableView();
@@ -209,7 +209,7 @@ public class MeasurementsController implements Initializable {
     @FXML
     private void updateMeasurement(ActionEvent event) {
         if (selected == null) {
-            alert.customAlert(Alert.AlertType.WARNING, "Selecione uma medição para atualizar!", "");
+            alert.customAlert(Alert.AlertType.WARNING, "Selecione uma medição para atualizar", "");
         } else {
             int index = measurementTableView.getSelectionModel().getSelectedIndex();
             try {
@@ -220,7 +220,7 @@ public class MeasurementsController implements Initializable {
                 MeasurementsUpdateController controller = loader.getController();
                 controller.setLoadMeasurement(selected);
 
-                StageHelper.createAddOrUpdateStage("Atualizando Medidas", root);
+                StageHelper.createAddOrUpdateStage("Atualizar Medidas", root);
 
                 if (controller.isUpdated()) {
                     refreshTableView();
@@ -237,14 +237,15 @@ public class MeasurementsController implements Initializable {
         MeasurementDao measurementDao = new MeasurementDao();
 
         if (selected == null) {
-            alert.customAlert(Alert.AlertType.WARNING, "Selecione uma medição para excluir!", "");
+            alert.customAlert(Alert.AlertType.WARNING, "Selecione uma medição para excluir", "");
         } else {
-            alert.confirmationAlert("Tem certeza que deseja excluir esta medição?", "Esta ação é irreversível!");
+            alert.confirmationAlert("Excluir Medidas", "Tem certeza que deseja excluir as medidas do(a) cliente '" + selected.getTempCustomerName()+ "'? "
+                    + "\n\nAs medidas serão excluídas de forma definitiva e não poderão ser recuperadas.");
             if (alert.getResult().get() == ButtonType.YES) {
                 measurementDao.delete(selected);
                 refreshTableView();
                 resetDetails();
-                alert.customAlert(Alert.AlertType.WARNING, "A medição foi excluída com sucesso!", "");
+                alert.customAlert(Alert.AlertType.WARNING, "Medidas excluídas com sucesso", "");
             }
         }
     }

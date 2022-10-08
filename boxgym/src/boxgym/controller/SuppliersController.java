@@ -183,7 +183,7 @@ public class SuppliersController implements Initializable {
 
             SuppliersAddController controller = loader.getController();
 
-            StageHelper.createAddOrUpdateStage("Adicionando Fornecedor", root);
+            StageHelper.createAddOrUpdateStage("Cadastrar Fornecedor", root);
 
             if (controller.isCreated()) {
                 refreshTableView();
@@ -197,7 +197,7 @@ public class SuppliersController implements Initializable {
     @FXML
     void updateSupplier(ActionEvent event) {
         if (selected == null) {
-            alert.customAlert(Alert.AlertType.WARNING, "Selecione um fornecedor para atualizar!", "");
+            alert.customAlert(Alert.AlertType.WARNING, "Selecione um fornecedor para atualizar", "");
         } else {
             int index = supplierTableView.getSelectionModel().getSelectedIndex();
             try {
@@ -208,7 +208,7 @@ public class SuppliersController implements Initializable {
                 SuppliersUpdateController controller = loader.getController();
                 controller.setLoadSupplier(selected);
 
-                StageHelper.createAddOrUpdateStage("Atualizando Fornecedor", root);
+                StageHelper.createAddOrUpdateStage("Atualizar Fornecedor", root);
 
                 if (controller.isUpdated()) {
                     refreshTableView();
@@ -225,14 +225,15 @@ public class SuppliersController implements Initializable {
         SupplierDao supplierDao = new SupplierDao();
 
         if (selected == null) {
-            alert.customAlert(Alert.AlertType.WARNING, "Selecione um fornecedor para excluir!", "");
+            alert.customAlert(Alert.AlertType.WARNING, "Selecione um fornecedor para excluir", "");
         } else {
-            alert.confirmationAlert("Tem certeza que deseja excluir \n o fornecedor '" + selected.getTradeName() + "'?", "Esta ação é irreversível!");
+            alert.confirmationAlert("Excluir Fornecedor", "Tem certeza que deseja excluir o fornecedor '" + selected.getTradeName() + "'? "
+                    + "\n\nO fornecedor será excluído de forma definitiva e não poderá ser recuperado.");
             if (alert.getResult().get() == ButtonType.YES) {
                 supplierDao.delete(selected);
                 refreshTableView();
                 resetDetails();
-                alert.customAlert(Alert.AlertType.WARNING, "O fornecedor foi excluído com sucesso!", "");
+                alert.customAlert(Alert.AlertType.WARNING, "Fornecedor excluído com sucesso", "");
             }
         }
     }

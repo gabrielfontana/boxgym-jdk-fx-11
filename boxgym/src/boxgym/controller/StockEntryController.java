@@ -147,7 +147,7 @@ public class StockEntryController implements Initializable {
 
             StockEntryAddController controller = loader.getController();
 
-            StageHelper.createAddOrUpdateStage("Adicionando Entrada de Estoque", root);
+            StageHelper.createAddOrUpdateStage("Cadastrar Entrada de Estoque", root);
 
             if (controller.isStockEntryCreationFlag() && !controller.isProductsEntryCreationFlag()) {
                 StockEntryDao stockEntryDao = new StockEntryDao();
@@ -167,15 +167,16 @@ public class StockEntryController implements Initializable {
         StockEntryProductDao stockEntryProductDao = new StockEntryProductDao();
 
         if (selected == null) {
-            alert.customAlert(Alert.AlertType.WARNING, "Selecione uma entrada de estoque para excluir!", "");
+            alert.customAlert(Alert.AlertType.WARNING, "Selecione uma entrada de estoque para cancelar", "");
         } else {
-            alert.confirmationAlert("Tem certeza que deseja excluir esta entrada de estoque?", "Esta ação é irreversível!");
+            alert.confirmationAlert("Cancelar Entrada de Estoque", "Tem certeza que deseja cancelar esta entrada de estoque? "
+                    + "\n\nA entrada de estoque será excluída de forma definitiva e não poderá ser recuperada. Após isso, a entrada dos produtos no estoque será desfeita.");
             if (alert.getResult().get() == ButtonType.YES) {
                 stockEntryProductDao.delete(selected);
                 stockEntryDao.delete(selected);
                 refreshTableView();
                 resetDetails();
-                alert.customAlert(Alert.AlertType.WARNING, "A entrada de estoque foi excluída com sucesso!", "");
+                alert.customAlert(Alert.AlertType.WARNING, "Entrada de estoque cancelada com sucesso", "");
             }
         }
     }
@@ -205,7 +206,7 @@ public class StockEntryController implements Initializable {
     @FXML
     void listProducts(ActionEvent event) {
         if (selected == null) {
-            alert.customAlert(Alert.AlertType.WARNING, "Selecione uma entrada de estoque para listar os produtos!", "");
+            alert.customAlert(Alert.AlertType.WARNING, "Selecione uma entrada de estoque para listar os produtos inseridos nela", "");
         } else {
             int index = stockEntryTableView.getSelectionModel().getSelectedIndex();
             try {
@@ -216,7 +217,7 @@ public class StockEntryController implements Initializable {
                 StockEntryProductsListController controller = loader.getController();
                 controller.setSelectedStockEntry(selected.getStockEntryId());
 
-                StageHelper.createAddOrUpdateStage("Listando Produtos da Entrada de Estoque", root);
+                StageHelper.createAddOrUpdateStage("Listar Produtos da Entrada de Estoque", root);
                 stockEntryTableView.getSelectionModel().select(index);
             } catch (IOException ex) {
                 Logger.getLogger(StockEntryController.class.getName()).log(Level.SEVERE, null, ex);

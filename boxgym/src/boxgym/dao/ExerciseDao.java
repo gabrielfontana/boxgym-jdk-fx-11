@@ -155,7 +155,7 @@ public class ExerciseDao {
         return false;
     }
 
-    public boolean checkDeleteConstraint(int exerciseId) {
+    public boolean checkWorkoutDeleteConstraint(int exerciseId) {
         String sql = "SELECT `fkExercise` FROM `workout_exercise` WHERE `fkExercise` = " + exerciseId + ";";
 
         try {

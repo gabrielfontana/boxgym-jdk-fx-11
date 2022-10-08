@@ -191,7 +191,7 @@ public class CustomersController implements Initializable {
 
             CustomersAddController controller = loader.getController();
 
-            StageHelper.createAddOrUpdateStage("Adicionando Cliente", root);
+            StageHelper.createAddOrUpdateStage("Cadastrar Cliente", root);
 
             if (controller.isCreated()) {
                 refreshTableView();
@@ -205,7 +205,7 @@ public class CustomersController implements Initializable {
     @FXML
     void updateCustomer(ActionEvent event) {
         if (selected == null) {
-            alert.customAlert(Alert.AlertType.WARNING, "Selecione um cliente para atualizar!", "");
+            alert.customAlert(Alert.AlertType.WARNING, "Selecione um cliente para atualizar", "");
         } else {
             int index = customerTableView.getSelectionModel().getSelectedIndex();
             try {
@@ -216,7 +216,7 @@ public class CustomersController implements Initializable {
                 CustomersUpdateController controller = loader.getController();
                 controller.setLoadCustomer(selected);
 
-                StageHelper.createAddOrUpdateStage("Atualizando Cliente", root);
+                StageHelper.createAddOrUpdateStage("Atualizar Cliente", root);
 
                 if (controller.isUpdated()) {
                     refreshTableView();
@@ -233,14 +233,15 @@ public class CustomersController implements Initializable {
         CustomerDao customerDao = new CustomerDao();
 
         if (selected == null) {
-            alert.customAlert(Alert.AlertType.WARNING, "Selecione um cliente para excluir!", "");
+            alert.customAlert(Alert.AlertType.WARNING, "Selecione um cliente para excluir", "");
         } else {
-            alert.confirmationAlert("Tem certeza que deseja excluir \n o cliente '" + selected.getName()+ "'?", "Esta ação é irreversível!");
+            alert.confirmationAlert("Excluir Cliente", "Tem certeza que deseja excluir o(a) cliente '" + selected.getName()+ "'? "
+                    + "\n\nO(A) cliente será excluído(a) de forma definitiva e não poderá ser recuperado(a).");
             if (alert.getResult().get() == ButtonType.YES) {
                 customerDao.delete(selected);
                 refreshTableView();
                 resetDetails();
-                alert.customAlert(Alert.AlertType.WARNING, "O cliente foi excluído com sucesso!", "");
+                alert.customAlert(Alert.AlertType.WARNING, "Cliente excluído(a) com sucesso", "");
             }
         }
     }

@@ -178,7 +178,7 @@ public class ProductsController implements Initializable {
 
             ProductsAddController controller = loader.getController();
 
-            StageHelper.createAddOrUpdateStage("Adicionando Produto", root);
+            StageHelper.createAddOrUpdateStage("Cadastrar Produto", root);
 
             if (controller.isCreated()) {
                 refreshTableView();
@@ -192,7 +192,7 @@ public class ProductsController implements Initializable {
     @FXML
     void updateProduct(ActionEvent event) {
         if (selected == null) {
-            alert.customAlert(Alert.AlertType.WARNING, "Selecione um produto para atualizar!", "");
+            alert.customAlert(Alert.AlertType.WARNING, "Selecione um produto para atualizar", "");
         } else {
             int index = productTableView.getSelectionModel().getSelectedIndex();
             try {
@@ -203,7 +203,7 @@ public class ProductsController implements Initializable {
                 ProductsUpdateController controller = loader.getController();
                 controller.setLoadProduct(selected);
 
-                StageHelper.createAddOrUpdateStage("Atualizando Produto", root);
+                StageHelper.createAddOrUpdateStage("Atualizar Produto", root);
 
                 if (controller.isUpdated()) {
                     refreshTableView();
@@ -220,14 +220,25 @@ public class ProductsController implements Initializable {
         ProductDao productDao = new ProductDao();
 
         if (selected == null) {
-            alert.customAlert(Alert.AlertType.WARNING, "Selecione um produto para excluir!", "");
+            alert.customAlert(Alert.AlertType.WARNING, "Selecione um produto para excluir", "");
         } else {
-            alert.confirmationAlert("Tem certeza que deseja excluir o produto '" + selected.getName() + "'?", "Esta ação é irreversível!");
+            alert.confirmationAlert("Excluir Produto", "Tem certeza que deseja excluir o produto '" + selected.getName() + "'? "
+                    + "\n\nO produto será excluído de forma definitiva e não poderá ser recuperado.");
             if (alert.getResult().get() == ButtonType.YES) {
-                productDao.delete(selected);
-                refreshTableView();
-                resetDetails();
-                alert.customAlert(Alert.AlertType.INFORMATION, "O produto foi excluído com sucesso!", "");
+                boolean saleConstraint = productDao.checkSaleDeleteConstraint(selected.getProductId());
+                boolean stockEntryConstraint = productDao.checkStockEntryDeleteConstraint(selected.getProductId());
+                if (saleConstraint && stockEntryConstraint) {
+                    alert.customAlert(Alert.AlertType.WARNING, "Não foi possível excluir", "Existem vendas e entradas de estoque relacionadas a esse produto.");
+                } else if (saleConstraint) {
+                    alert.customAlert(Alert.AlertType.WARNING, "Não foi possível excluir", "Existem vendas relacionadas a esse produto.");
+                } else if (stockEntryConstraint) {
+                    alert.customAlert(Alert.AlertType.WARNING, "Não foi possível excluir", "Existem entradas de estoque relacionadas a esse produto.");
+                } else {
+                    productDao.delete(selected);
+                    refreshTableView();
+                    resetDetails();
+                    alert.customAlert(Alert.AlertType.INFORMATION, "Produto excluído com sucesso", "");
+                }
             }
         }
     }

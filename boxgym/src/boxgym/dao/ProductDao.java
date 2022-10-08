@@ -219,6 +219,44 @@ public class ProductDao {
         }
         return productsBelowMinimumStockList;
     }
+    
+    public boolean checkSaleDeleteConstraint(int productId) {
+        String sql = "SELECT `fkProduct` FROM `sale_product` WHERE `fkProduct` = " + productId + ";";
+
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            //DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return false;
+    }
+    
+    public boolean checkStockEntryDeleteConstraint(int productId) {
+        String sql = "SELECT `fkProduct` FROM `stockentry_product` WHERE `fkProduct` = " + productId + ";";
+
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            //DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return false;
+    }
 
     public boolean createExcelFile(String filePath) {
         String sql = "SELECT * FROM `product`";

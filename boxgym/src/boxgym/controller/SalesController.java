@@ -2,7 +2,6 @@ package boxgym.controller;
 
 import boxgym.dao.SaleDao;
 import boxgym.dao.SaleProductDao;
-import boxgym.dao.StockEntryDao;
 import boxgym.helper.AlertHelper;
 import boxgym.helper.ButtonHelper;
 import boxgym.helper.StageHelper;
@@ -142,7 +141,7 @@ public class SalesController implements Initializable {
             
             SalesAddController controller = loader.getController();
             
-            StageHelper.createAddOrUpdateStage("Adicionando Venda", root);
+            StageHelper.createAddOrUpdateStage("Cadastrar Venda", root);
             
             if (controller.isSaleCreationFlag() && !controller.isProductsEntryCreationFlag()) {
                 SaleDao saleDao = new SaleDao();
@@ -164,15 +163,16 @@ public class SalesController implements Initializable {
         SaleProductDao saleProductDao = new SaleProductDao();
 
         if (selected == null) {
-            alert.customAlert(Alert.AlertType.WARNING, "Selecione uma venda para excluir!", "");
+            alert.customAlert(Alert.AlertType.WARNING, "Selecione uma venda para cancelar", "");
         } else {
-            alert.confirmationAlert("Tem certeza que deseja excluir esta venda?", "Esta ação é irreversível!");
+            alert.confirmationAlert("Cancelar Venda", "Tem certeza que deseja cancelar esta venda? "
+                    + "\n\nA venda será excluída de forma definitiva e não poderá ser recuperada. Após isso, os produtos entrarão no estoque novamente.");
             if (alert.getResult().get() == ButtonType.YES) {
                 saleProductDao.delete(selected);
                 saleDao.delete(selected);
                 refreshTableView();
                 resetDetails();
-                alert.customAlert(Alert.AlertType.WARNING, "A venda foi excluída com sucesso!", "");
+                alert.customAlert(Alert.AlertType.WARNING, "Venda cancelada com sucesso", "");
             }
         }
     }
@@ -200,7 +200,7 @@ public class SalesController implements Initializable {
     @FXML
     void listProducts(ActionEvent event) {
         if (selected == null) {
-            alert.customAlert(Alert.AlertType.WARNING, "Selecione uma venda para listar os produtos!", "");
+            alert.customAlert(Alert.AlertType.WARNING, "Selecione uma venda para listar os produtos vendidos", "");
         } else {
             int index = saleTableView.getSelectionModel().getSelectedIndex();
             try {
@@ -211,7 +211,7 @@ public class SalesController implements Initializable {
                 SalesProductsListController controller = loader.getController();
                 controller.setSelectedSale(selected.getSaleId());
 
-                StageHelper.createAddOrUpdateStage("Listando Produtos da Venda", root);
+                StageHelper.createAddOrUpdateStage("Listar Produtos da Venda", root);
                 saleTableView.getSelectionModel().select(index);
             } catch (IOException ex) {
                 Logger.getLogger(StockEntryController.class.getName()).log(Level.SEVERE, null, ex);

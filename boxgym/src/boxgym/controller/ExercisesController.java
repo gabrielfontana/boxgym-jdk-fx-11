@@ -169,7 +169,7 @@ public class ExercisesController implements Initializable {
             refreshTableView();
             resetDetails();
             importExercisesButton.setDisable(true);
-            alert.customAlert(Alert.AlertType.WARNING, "Os exercícios foram importados com sucesso!", "");
+            alert.customAlert(Alert.AlertType.WARNING, "Os exercícios foram importados com sucesso", "");
         }
     }
 
@@ -182,7 +182,7 @@ public class ExercisesController implements Initializable {
 
             ExercisesAddController controller = loader.getController();
 
-            StageHelper.createAddOrUpdateStage("Adicionando Exercício", root);
+            StageHelper.createAddOrUpdateStage("Cadastrar Exercício", root);
 
             if (controller.isCreated()) {
                 refreshTableView();
@@ -196,7 +196,7 @@ public class ExercisesController implements Initializable {
     @FXML
     private void updateExercise(ActionEvent event) {
         if (selected == null) {
-            alert.customAlert(Alert.AlertType.WARNING, "Selecione um exercício para atualizar!", "");
+            alert.customAlert(Alert.AlertType.WARNING, "Selecione um exercício para atualizar", "");
         } else {
             int index = exerciseTableView.getSelectionModel().getSelectedIndex();
             try {
@@ -207,7 +207,7 @@ public class ExercisesController implements Initializable {
                 ExercisesUpdateController controller = loader.getController();
                 controller.setLoadExercise(selected);
 
-                StageHelper.createAddOrUpdateStage("Atualizando Exercício", root);
+                StageHelper.createAddOrUpdateStage("Atualizar Exercício", root);
 
                 if (controller.isUpdated()) {
                     refreshTableView();
@@ -224,17 +224,18 @@ public class ExercisesController implements Initializable {
         ExerciseDao exerciseDao = new ExerciseDao();
 
         if (selected == null) {
-            alert.customAlert(Alert.AlertType.WARNING, "Selecione um exercício para excluir!", "");
+            alert.customAlert(Alert.AlertType.WARNING, "Selecione um exercício para excluir", "");
         } else {
-            alert.confirmationAlert("Tem certeza que deseja excluir \n o exercício '" + selected.getAbbreviation() + "'?", "Esta ação é irreversível!");
+            alert.confirmationAlert("Excluir Exercício", "Tem certeza que deseja excluir o exercício '" + selected.getAbbreviation() + "'? "
+                    + "\n\nO exercício será excluído de forma definitiva e não poderá ser recuperado.");
             if (alert.getResult().get() == ButtonType.YES) {
-                if (exerciseDao.checkDeleteConstraint(selected.getExerciseId())){
-                    alert.customAlert(Alert.AlertType.WARNING, "Este exercício já está cadastrado em um treino!", "Exclua o treino primeiro antes de prosseguir com a ação!");
+                if (exerciseDao.checkWorkoutDeleteConstraint(selected.getExerciseId())){
+                    alert.customAlert(Alert.AlertType.WARNING, "Não foi possível excluir", "Existem treinos relacionados a esse exercício.");
                 } else {
                     exerciseDao.delete(selected);
                     refreshTableView();
                     resetDetails();
-                    alert.customAlert(Alert.AlertType.WARNING, "O exercício foi excluído com sucesso!", "");
+                    alert.customAlert(Alert.AlertType.WARNING, "Exercício excluído com sucesso", "");
                 }
             }
         }

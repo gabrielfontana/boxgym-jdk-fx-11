@@ -151,7 +151,7 @@ public class WorkoutsController implements Initializable {
 
             WorkoutsAddController controller = loader.getController();
 
-            StageHelper.createAddOrUpdateStage("Adicionando Treino", root);
+            StageHelper.createAddOrUpdateStage("Cadastrar Treino", root);
 
             if (controller.isWorkoutCreationFlag() && !controller.isExercisesEntryCreationFlag()) {
                 WorkoutDao workoutDao = new WorkoutDao();
@@ -171,15 +171,16 @@ public class WorkoutsController implements Initializable {
         WorkoutExerciseDao workoutExerciseDao = new WorkoutExerciseDao();
 
         if (selected == null) {
-            alert.customAlert(Alert.AlertType.WARNING, "Selecione um treino para excluir!", "");
+            alert.customAlert(Alert.AlertType.WARNING, "Selecione um treino para excluir", "");
         } else {
-            alert.confirmationAlert("Tem certeza que deseja excluir este treino?", "Esta ação é irreversível!");
+            alert.confirmationAlert("Excluir Treino", "Tem certeza que deseja excluir o treino '" + selected.getDescription()+ "'? "
+                    + "\n\nO treino será excluído de forma definitiva e não poderá ser recuperado.");
             if (alert.getResult().get() == ButtonType.YES) {
                 workoutExerciseDao.delete(selected);
                 workoutDao.delete(selected);
                 refreshTableView();
                 resetDetails();
-                alert.customAlert(Alert.AlertType.WARNING, "O treino foi excluído com sucesso!", "");
+                alert.customAlert(Alert.AlertType.WARNING, "Treino excluído com sucesso", "");
             }
         }
     }
@@ -211,7 +212,7 @@ public class WorkoutsController implements Initializable {
     @FXML
     private void listExercises(ActionEvent event) {
         if (selected == null) {
-            alert.customAlert(Alert.AlertType.WARNING, "Selecione um treino para listar os exercícios!", "");
+            alert.customAlert(Alert.AlertType.WARNING, "Selecione um treino para listar os exercícios adicionados nele", "");
         } else {
             int index = workoutTableView.getSelectionModel().getSelectedIndex();
             try {
@@ -222,7 +223,7 @@ public class WorkoutsController implements Initializable {
                 WorkoutsExercisesListController controller = loader.getController();
                 controller.setSelectedWorkout(selected.getWorkoutId());
 
-                StageHelper.createAddOrUpdateStage("Listando Exercícios do Treino", root);
+                StageHelper.createAddOrUpdateStage("Listar Exercícios do Treino", root);
                 workoutTableView.getSelectionModel().select(index);
             } catch (IOException ex) {
                 Logger.getLogger(WorkoutsController.class.getName()).log(Level.SEVERE, null, ex);
