@@ -206,5 +206,6 @@ CREATE TABLE `measurement` (
   `createdAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`measurementId`),
-  FOREIGN KEY (`fkCustomer`) REFERENCES `customer`(`customerId`) ON UPDATE CASCADE
+  FOREIGN KEY (`fkCustomer`) REFERENCES `customer`(`customerId`) ON UPDATE CASCADE,
+  UNIQUE KEY `fkCustomerUnique` (`fkCustomer`) USING BTREE
 );
