@@ -240,6 +240,7 @@ public class WorkoutsAddController implements Initializable {
         exerciseNameComboBox.setPromptText("Selecione");
         exerciseNameComboBox.setItems(obsList);
     }*/
+    
     private int getKeyFromExerciseNameComboBox() {
         int key = 0;
         for (Map.Entry<Integer, String> entry : exerciseMap.entrySet()) {
@@ -254,13 +255,13 @@ public class WorkoutsAddController implements Initializable {
     @FXML
     private void addWorkout(ActionEvent event) {
         TextValidationHelper validation = new TextValidationHelper("Atenção: \n\n");
-        validation.emptyTextField(descriptionTextField.getText(), "Descrição inválida! \n");
-        validation.invalidComboBox(goalComboBox, "Objetivo inválido! \n");
-        validation.emptyTextField(sessionsTextField.getText(), "Sessões inválidas! \n");
-        validation.invalidComboBox(goalComboBox, "Dia da semana inválido! \n");
+        validation.emptyTextField(descriptionTextField.getText(), "Preencha o campo Descrição. \n");
+        validation.invalidComboBox(goalComboBox, "Selecione o campo Objetivo. \n");
+        validation.emptyTextField(sessionsTextField.getText(), "Preencha o campo Sessões. \n");
+        validation.invalidComboBox(dayComboBox, "Selecione o campo Dia da Semana. \n");
 
         if (!(validation.getEmptyCounter() == 0)) {
-            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível adicionar esse treino!", validation.getMessage());
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível iniciar o cadastro deste treino", validation.getMessage());
         } else {
             workoutArea.setDisable(true);
             exercisesEntryArea.setDisable(false);
@@ -280,10 +281,10 @@ public class WorkoutsAddController implements Initializable {
     @FXML
     private void addExerciseEntry(ActionEvent event) {
         TextValidationHelper validation = new TextValidationHelper("Atenção: \n\n");
-        validation.invalidComboBox(exerciseNameComboBox, "Exercício inválido! \n");
+        validation.invalidComboBox(exerciseNameComboBox, "Selecione o campo Exercício. \n");
 
         if (!(validation.getEmptyCounter() == 0)) {
-            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível adicionar esse exercício!", validation.getMessage());
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível adicionar o exercício ao treino", validation.getMessage());
         } else {
             WorkoutExercise item = new WorkoutExercise(Integer.valueOf(workoutIdTextField.getText()), getKeyFromExerciseNameComboBox(),
                     setsRepsRest(setsTextField.getText(), 3), setsRepsRest(repsTextField.getText(), 10), setsRepsRest(restTextField.getText(), 30));
@@ -324,10 +325,10 @@ public class WorkoutsAddController implements Initializable {
                 dao.create(item);
             }
             setExercisesEntryCreationFlag(true);
-            ah.customAlert(Alert.AlertType.INFORMATION, "O treino foi criado com sucesso!", "");
+            ah.customAlert(Alert.AlertType.INFORMATION, "Treino cadastrado com sucesso", "");
             anchorPane.getScene().getWindow().hide();
         } else {
-            ah.customAlert(Alert.AlertType.INFORMATION, "Lista de exercícios vazia!", "");
+            ah.customAlert(Alert.AlertType.INFORMATION, "Lista de exercícios vazia", "");
         }
     }
 

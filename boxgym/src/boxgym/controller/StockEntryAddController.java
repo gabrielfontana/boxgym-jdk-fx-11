@@ -194,11 +194,11 @@ public class StockEntryAddController implements Initializable {
     @FXML
     void addStockEntry(ActionEvent event) {
         TextValidationHelper validation = new TextValidationHelper("Atenção: \n\n");
-        validation.invalidComboBox(supplierComboBox, "Fornecedor inválido! \n");
-        validation.nullDatePicker(invoiceIssueDateDatePicker, "Data inválida! \n");
+        validation.invalidComboBox(supplierComboBox, "Selecione o campo Fornecedor. \n");
+        validation.nullDatePicker(invoiceIssueDateDatePicker, "Selecione o campo Data de Emissão. \n");
 
         if (!(validation.getEmptyCounter() == 0)) {
-            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível adicionar essa entrada de estoque!", validation.getMessage());
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível iniciar o cadastro desta entrada de estoque", validation.getMessage());
         } else {
             stockEntryArea.setDisable(true);
             productsEntryArea.setDisable(false);
@@ -246,11 +246,11 @@ public class StockEntryAddController implements Initializable {
     @FXML
     void addProductEntry(ActionEvent event) {
         TextValidationHelper validation = new TextValidationHelper("Atenção: \n\n");
-        validation.invalidComboBox(productComboBox, "Produto inválido! \n");
-        validation.emptyTextField(amountTextField.getText(), "Quantidade inválida! \n");
+        validation.invalidComboBox(productComboBox, "Selecione o campo Produto. \n");
+        validation.emptyTextField(amountTextField.getText(), "Preencha o campo Quantidade. \n");
 
         if (!(validation.getEmptyCounter() == 0)) {
-            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível adicionar esse produto!", validation.getMessage());
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível adicionar o produto à entrada de estoque", validation.getMessage());
         } else {
             StockEntryProduct item = new StockEntryProduct(Integer.valueOf(stockEntryIdTextField.getText()), getKeyFromProductComboBox(),
                     Integer.valueOf(amountTextField.getText()), new BigDecimal(costPriceTextField.getPrice()));
@@ -303,10 +303,10 @@ public class StockEntryAddController implements Initializable {
                 dao.create(item);
             }
             setProductsEntryCreationFlag(true);
-            ah.customAlert(Alert.AlertType.INFORMATION, "A entrada de estoque foi realizada com sucesso!", "");
+            ah.customAlert(Alert.AlertType.INFORMATION, "Entrada de estoque realizada com sucesso", "");
             anchorPane.getScene().getWindow().hide();
         } else {
-            ah.customAlert(Alert.AlertType.INFORMATION, "Lista de produtos vazia!", "");
+            ah.customAlert(Alert.AlertType.INFORMATION, "Lista de produtos vazia", "");
         }
     }
 

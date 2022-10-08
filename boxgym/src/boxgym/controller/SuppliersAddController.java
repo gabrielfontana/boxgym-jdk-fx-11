@@ -111,21 +111,21 @@ public class SuppliersAddController implements Initializable {
     void save(ActionEvent event) {
         SupplierDao supplierDao = new SupplierDao();
 
-        TextValidationHelper validation = new TextValidationHelper("Por favor, preencha o(s) seguinte(s) campo(s) obrigatório(s): \n\n");
-        validation.emptyTextField(companyRegistryTextField.getText(), "'CNPJ'\n");
-        validation.emptyTextField(corporateNameTextField.getText(), "'Razão Social'\n");
+        TextValidationHelper validation = new TextValidationHelper("Atenção: \n\n");
+        validation.emptyTextField(companyRegistryTextField.getText(), "Preencha o campo CNPJ. \n");
+        validation.emptyTextField(corporateNameTextField.getText(), "Preencha o campo Razão Social. \n");
 
         if (!(validation.getEmptyCounter() == 0)) {
-            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível realizar o cadastro deste fornecedor!", validation.getMessage());
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível realizar o cadastro deste fornecedor", validation.getMessage());
         } else if (!(CnpjValidator.isValid(companyRegistryTextField.getText()))) {
-            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível realizar o cadastro deste fornecedor!", "'CNPJ' inválido.");
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível realizar o cadastro deste fornecedor", "O campo CNPJ está inválido.");
         } else if (supplierDao.checkExistingSupplier(companyRegistryTextField.getText())) {
-            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível realizar o cadastro deste fornecedor!", "Este CNPJ já está cadastrado.");
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível realizar o cadastro deste fornecedor", "Este CNPJ já está cadastrado no sistema.");
             companyRegistryTextField.setText("");
         } else if (!(phoneTextField.getText().length() == 0 || phoneTextField.getText().length() == 10 || phoneTextField.getText().length() == 11)) {
-            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível realizar o cadastro deste fornecedor!", "O formato do campo 'Telefone' está incorreto.");
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível realizar o cadastro deste fornecedor", "O formato do campo Telefone está incorreto.");
         } else if (!(zipCodeTextField.getText().length() == 0 || zipCodeTextField.getText().length() == 8)) {
-            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível realizar o cadastro deste fornecedor!", "O campo 'CEP' deve conter 8 dígitos.");
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível realizar o cadastro deste fornecedor", "O formato do campo CEP está incorreto.");
         } else {
             String selectedFederativeUnit = federativeUnitComboBox.getSelectionModel().getSelectedItem();
             if (selectedFederativeUnit == null) {
@@ -136,7 +136,7 @@ public class SuppliersAddController implements Initializable {
                     districtTextField.getText(), cityTextField.getText(), selectedFederativeUnit);
             supplierDao.create(supplier);
             setCreated(true);
-            ah.customAlert(Alert.AlertType.INFORMATION, "O fornecedor foi cadastrado com sucesso!", "");
+            ah.customAlert(Alert.AlertType.INFORMATION, "Fornecedor cadastrado com sucesso", "");
             anchorPane.getScene().getWindow().hide();
         }
     }

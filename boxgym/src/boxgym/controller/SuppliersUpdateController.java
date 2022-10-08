@@ -136,15 +136,15 @@ public class SuppliersUpdateController implements Initializable {
 
     @FXML
     void save(ActionEvent event) {
-        TextValidationHelper validation = new TextValidationHelper("Por favor, preencha o(s) seguinte(s) campo(s) obrigatório(s): \n\n");
-        validation.emptyTextField(corporateNameTextField.getText(), "'Razão Social'\n");
+        TextValidationHelper validation = new TextValidationHelper("Atenção: \n\n");
+        validation.emptyTextField(corporateNameTextField.getText(), "Preencha o campo Razão Social. \n");
 
         if (!(validation.getEmptyCounter() == 0)) {
-            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível atualizar o cadastro deste fornecedor!", validation.getMessage());
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível atualizar o cadastro deste fornecedor", validation.getMessage());
         } else if (!(phoneTextField.getText().length() == 0 || phoneTextField.getText().length() == 10 || phoneTextField.getText().length() == 11)) {
-            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível atualizar o cadastro deste fornecedor!", "O formato do campo 'Telefone' está incorreto.");
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível atualizar o cadastro deste fornecedor", "O formato do campo Telefone está incorreto.");
         } else if (!(zipCodeTextField.getText().length() == 0 || zipCodeTextField.getText().length() == 8)) {
-            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível atualizar o cadastro deste fornecedor!", "O campo 'CEP' deve conter 8 dígitos.");
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível atualizar o cadastro deste fornecedor", "O formato do campo CEP está incorreto.");
         } else {
             String selectedFederativeUnit = federativeUnitComboBox.getSelectionModel().getSelectedItem();
             if (selectedFederativeUnit == null) {
@@ -156,7 +156,7 @@ public class SuppliersUpdateController implements Initializable {
             SupplierDao supplierDao = new SupplierDao();
             supplierDao.update(supplier);
             setUpdated(true);
-            ah.customAlert(Alert.AlertType.INFORMATION, "O fornecedor foi atualizado com sucesso!", "");
+            ah.customAlert(Alert.AlertType.INFORMATION, "Fornecedor atualizado com sucesso", "");
             anchorPane.getScene().getWindow().hide();
         }
     }

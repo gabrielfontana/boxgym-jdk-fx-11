@@ -192,11 +192,11 @@ public class SalesAddController implements Initializable {
     @FXML
     private void addSale(ActionEvent event) {
         TextValidationHelper validation = new TextValidationHelper("Atenção: \n\n");
-        validation.invalidComboBox(customerComboBox, "Cliente inválido! \n");
-        validation.nullDatePicker(saleDateDatePicker, "Data inválida! \n");
+        validation.invalidComboBox(customerComboBox, "Selecione o campo Cliente. \n");
+        validation.nullDatePicker(saleDateDatePicker, "Selecione o campo Data de Venda. \n");
 
         if (!(validation.getEmptyCounter() == 0)) {
-            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível adicionar essa venda!", validation.getMessage());
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível iniciar o cadastro desta venda", validation.getMessage());
         } else {
             saleArea.setDisable(true);
             productsEntryArea.setDisable(false);
@@ -247,18 +247,18 @@ public class SalesAddController implements Initializable {
         int currentProductAmount = productDao.getProductAmount(getKeyFromProductComboBox());
 
         TextValidationHelper validation = new TextValidationHelper("Atenção: \n\n");
-        validation.invalidComboBox(productComboBox, "Produto inválido! \n");
-        validation.emptyTextField(amountTextField.getText(), "Quantidade inválida! \n");
+        validation.invalidComboBox(productComboBox, "Selecione o campo Produto. \n");
+        validation.emptyTextField(amountTextField.getText(), "Preencha o campo Quantidade. \n");
 
         if (list.stream().anyMatch(p -> p.getFkProduct() == getKeyFromProductComboBox())) {
-            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível adicionar esse produto!", "O produto em questão já foi adicionado na lista!");
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível adicionar o produto à venda", "O produto em questão já foi adicionado na lista.");
             clear();
         } else if (!(validation.getEmptyCounter() == 0)) {
-            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível adicionar esse produto!", validation.getMessage());
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível adicionar o produto à venda", validation.getMessage());
         } else if (currentProductAmount != 0 && currentProductAmount < Integer.valueOf(amountTextField.getText())) {
-            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível adicionar esse produto!", "O produto em questão possui apenas " + currentProductAmount + " unidade(s) em estoque!");
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível adicionar o produto à venda", "O produto em questão possui apenas " + currentProductAmount + " unidade(s) em estoque.");
         } else if (currentProductAmount == 0) {
-            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível adicionar esse produto!", "O produto em questão não possui nenhuma unidade em estoque!");
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível adicionar o produto à venda", "O produto em questão não possui nenhuma unidade em estoque.");
         } else {
             SaleProduct item = new SaleProduct(Integer.valueOf(saleIdTextField.getText()), getKeyFromProductComboBox(),
                     Integer.valueOf(amountTextField.getText()), new BigDecimal(unitPriceTextField.getPrice()));
@@ -311,10 +311,10 @@ public class SalesAddController implements Initializable {
                 dao.create(item);
             }
             setProductsEntryCreationFlag(true);
-            ah.customAlert(Alert.AlertType.INFORMATION, "A venda foi realizada com sucesso!", "");
+            ah.customAlert(Alert.AlertType.INFORMATION, "Venda realizada com sucesso", "");
             anchorPane.getScene().getWindow().hide();
         } else {
-            ah.customAlert(Alert.AlertType.INFORMATION, "Lista de produtos vazia!", "");
+            ah.customAlert(Alert.AlertType.INFORMATION, "Lista de produtos vazia", "");
         }
     }
 
