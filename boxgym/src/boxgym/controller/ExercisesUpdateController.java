@@ -114,13 +114,13 @@ public class ExercisesUpdateController implements Initializable {
         ExerciseDao exerciseDao = new ExerciseDao();
 
         TextValidationHelper validation = new TextValidationHelper("Atenção: \n\n");
-        validation.emptyTextField(nameTextField.getText(), "Nome inválido! \n");
-        validation.emptyTextField(abbreviationTextField.getText(), "Abreviação inválida! \n");
-        validation.invalidComboBox(exerciseTypeComboBox, "Tipo inválido! \n");
-        validation.invalidComboBox(exerciseGroupComboBox, "Grupo inválido! \n");
+        validation.emptyTextField(nameTextField.getText(), "Preencha o campo Nome. \n");
+        validation.emptyTextField(abbreviationTextField.getText(), "Preencha o campo Abreviação. \n");
+        validation.invalidComboBox(exerciseTypeComboBox, "Selecione o campo Tipo. \n");
+        validation.invalidComboBox(exerciseGroupComboBox, "Selecione o campo Grupo. \n");
 
         if (!(validation.getEmptyCounter() == 0)) {
-            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível atualizar o cadastro deste exercício!", validation.getMessage());
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível atualizar o cadastro deste exercício", validation.getMessage());
         } else {
             String selectedExerciseType = exerciseTypeComboBox.getSelectionModel().getSelectedItem();
             String selectedExerciseGroup = exerciseGroupComboBox.getSelectionModel().getSelectedItem();
@@ -128,7 +128,7 @@ public class ExercisesUpdateController implements Initializable {
                     descriptionTextArea.getText(), instructionTextArea.getText());
             exerciseDao.update(exercise);
             setUpdated(true);
-            ah.customAlert(Alert.AlertType.INFORMATION, "O exercício foi atualizado com sucesso!", "");
+            ah.customAlert(Alert.AlertType.INFORMATION, "Exercício atualizado com sucesso", "");
             anchorPane.getScene().getWindow().hide();
         }
     }

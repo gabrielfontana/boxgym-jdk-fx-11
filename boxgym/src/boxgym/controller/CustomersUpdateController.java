@@ -156,18 +156,18 @@ public class CustomersUpdateController implements Initializable {
     @FXML
     void save(ActionEvent event) {
         TextValidationHelper validation = new TextValidationHelper("Atenção: \n\n");
-        validation.emptyTextField(nameTextField.getText(), "O campo 'Nome' está vazio! \n");
-        validation.invalidComboBox(sexComboBox, "O campo 'Sexo' está vazio! \n");
-        validation.emptyTextField(birthDateTextField.getText(), "O campo 'Data de Nascimento' está vazio! \n");
+        validation.emptyTextField(nameTextField.getText(), "Preencha o campo Nome. \n");
+        validation.invalidComboBox(sexComboBox, "Selecione o campo Sexo. \n");
+        validation.emptyTextField(birthDateTextField.getText(), "Preencha o campo Data de Nascimento. \n");
 
         if (!(validation.getEmptyCounter() == 0)) {
-            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível atualizar o cadastro deste cliente!", validation.getMessage());
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível atualizar o cadastro deste(a) cliente", validation.getMessage());
         } else if (!DateValidator.getInstance().isValid(birthDateTextField.getText())){
-            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível realizar o cadastro deste cliente!", "O formato do campo 'Data de Nascimento' está incorreto");
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível atualizar o cadastro deste(a) cliente", "O formato do campo Data de Nascimento está incorreto.");
         } else if (!(phoneTextField.getText().length() == 0 || phoneTextField.getText().length() == 10 || phoneTextField.getText().length() == 11)) {
-            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível atualizar o cadastro deste cliente!", "O formato do campo 'Telefone' está incorreto.");
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível atualizar o cadastro deste(a) cliente", "O formato do campo Telefone está incorreto.");
         } else if (!(zipCodeTextField.getText().length() == 0 || zipCodeTextField.getText().length() == 8)) {
-            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível atualizar o cadastro deste cliente!", "O campo 'CEP' deve conter 8 dígitos.");
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível atualizar o cadastro deste(a) cliente", "O formato do campo CEP está incorreto.");
         } else {
             String selectedFederativeUnit = federativeUnitComboBox.getSelectionModel().getSelectedItem();
             if (selectedFederativeUnit == null) {
@@ -179,7 +179,7 @@ public class CustomersUpdateController implements Initializable {
             CustomerDao customerDao = new CustomerDao();
             customerDao.update(customer);
             setUpdated(true);
-            ah.customAlert(Alert.AlertType.INFORMATION, "O cliente foi atualizado com sucesso!", "");
+            ah.customAlert(Alert.AlertType.INFORMATION, "Cliente atualizado(a) com sucesso", "");
             anchorPane.getScene().getWindow().hide();
         }
     }

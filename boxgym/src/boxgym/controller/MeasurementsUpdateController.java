@@ -286,14 +286,14 @@ public class MeasurementsUpdateController implements Initializable {
         MeasurementDao measurementDao = new MeasurementDao();
 
         TextValidationHelper validation = new TextValidationHelper("Atenção: \n\n");
-        validation.emptyTextField(measurementDateTextField.getText(), "Data inválida! \n");
-        validation.emptyTextField(heightTextField.getText(), "Altura inválida! \n");
-        validation.emptyTextField(weightTextField.getText(), "Peso inválido! \n");
+        validation.emptyTextField(measurementDateTextField.getText(), "Preencha o campo Data. \n");
+        validation.emptyTextField(heightTextField.getText(), "Preencha o campo Altura. \n");
+        validation.emptyTextField(weightTextField.getText(), "Preencha o campo Peso. \n");
 
         if (!(validation.getEmptyCounter() == 0)) {
-            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível atualizar o cadastro desta medição!", validation.getMessage());
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível atualizar o cadastro destas medidas", validation.getMessage());
         } else if (!DateValidator.getInstance().isValid(measurementDateTextField.getText())) {
-            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível atualizar o cadastro desta medição!", "O formato do campo 'Data' está incorreto");
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível atualizar o cadastro destas medidas", "O formato do campo Data está incorreto.");
         } else {
             Measurement measurement = new Measurement(LocalDate.parse(measurementDateTextField.getText().replace("/", ""), DateTimeFormatter.ofPattern("ddMMyyyy")),
                     Integer.parseInt(heightTextField.getText()), removeCommaAndFloatParse(weightTextField),
@@ -307,7 +307,7 @@ public class MeasurementsUpdateController implements Initializable {
                     loadMeasurement.getMeasurementId());
             measurementDao.update(measurement);
             setUpdated(true);
-            ah.customAlert(Alert.AlertType.INFORMATION, "As medidas foram atualizadas com sucesso!", "");
+            ah.customAlert(Alert.AlertType.INFORMATION, "Medidas atualizadas com sucesso", "");
             anchorPane.getScene().getWindow().hide();
         }
     }

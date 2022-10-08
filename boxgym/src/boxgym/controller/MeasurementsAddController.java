@@ -245,15 +245,15 @@ public class MeasurementsAddController implements Initializable {
         MeasurementDao measurementDao = new MeasurementDao();
 
         TextValidationHelper validation = new TextValidationHelper("Atenção: \n\n");
-        validation.invalidComboBox(customerComboBox, "Cliente inválido! \n");
-        validation.emptyTextField(measurementDateTextField.getText(), "Data inválida! \n");
-        validation.emptyTextField(heightTextField.getText(), "Altura inválida! \n");
-        validation.emptyTextField(weightTextField.getText(), "Peso inválido! \n");
+        validation.invalidComboBox(customerComboBox, "Selecione o campo Cliente. \n");
+        validation.emptyTextField(measurementDateTextField.getText(), "Preencha o campo Data. \n");
+        validation.emptyTextField(heightTextField.getText(), "Preencha o campo Altura. \n");
+        validation.emptyTextField(weightTextField.getText(), "Preencha o campo Peso. \n");
 
         if (!(validation.getEmptyCounter() == 0)) {
-            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível realizar o cadastro desta medição!", validation.getMessage());
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível realizar o cadastro destas medidas", validation.getMessage());
         } else if (!DateValidator.getInstance().isValid(measurementDateTextField.getText())) {
-            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível realizar o cadastro desta medição!", "O formato do campo 'Data' está incorreto");
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível realizar o cadastro destas medidas", "O formato do campo Data está incorreto.");
         } else {
             Measurement measurement = new Measurement(getKeyFromCustomerComboBox(),
                     LocalDate.parse(measurementDateTextField.getText().replace("/", ""), DateTimeFormatter.ofPattern("ddMMyyyy")),
@@ -267,7 +267,7 @@ public class MeasurementsAddController implements Initializable {
                     removeCommaAndFloatParse(rightCalfTextField), removeCommaAndFloatParse(leftCalfTextField));
             measurementDao.create(measurement);
             setCreated(true);
-            ah.customAlert(Alert.AlertType.INFORMATION, "As medidas foram cadastradas com sucesso!", "");
+            ah.customAlert(Alert.AlertType.INFORMATION, "Medidas cadastradas com sucesso", "");
             anchorPane.getScene().getWindow().hide();
         }
     }

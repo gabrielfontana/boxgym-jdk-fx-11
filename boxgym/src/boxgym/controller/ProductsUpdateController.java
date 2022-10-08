@@ -130,13 +130,12 @@ public class ProductsUpdateController implements Initializable {
 
     @FXML
     void save(ActionEvent event) {
-        TextValidationHelper validation = new TextValidationHelper("Por favor, preencha o(s) seguinte(s) campo(s) obrigatório(s): \n\n");
-        validation.emptyTextField(nameTextField.getText(), "'Nome'\n");
-        validation.emptyTextField(amountTextField.getText(), "'Estoque Inicial'\n");
-        validation.emptyTextField(minimumStockTextField.getText(), "'Estoque Mínimo'\n");
+        TextValidationHelper validation = new TextValidationHelper("Atenção: \n\n");
+        validation.emptyTextField(nameTextField.getText(), "Preencha o campo Nome. \n");
+        validation.emptyTextField(minimumStockTextField.getText(), "Preencha o campo Estoque Mínimo. \n");
 
         if (!(validation.getEmptyCounter() == 0)) {
-            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível atualizar o cadastro deste produto!", validation.getMessage());
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível atualizar o cadastro deste produto", validation.getMessage());
         } else {
             Product product = new Product(loadProduct.getProductId(), nameTextField.getText(), categoryTextField.getText(), descriptionTextArea.getText(),
                     Integer.valueOf(minimumStockTextField.getText()), new BigDecimal(costPriceTextField.getPrice()), new BigDecimal(sellingPriceTextField.getPrice()),
@@ -144,7 +143,7 @@ public class ProductsUpdateController implements Initializable {
             ProductDao productDao = new ProductDao();
             productDao.update(product);
             setUpdated(true);
-            ah.customAlert(Alert.AlertType.INFORMATION, "O produto foi atualizado com sucesso!", "");
+            ah.customAlert(Alert.AlertType.INFORMATION, "Produto atualizado com sucesso!", "");
             anchorPane.getScene().getWindow().hide();
         }
     }

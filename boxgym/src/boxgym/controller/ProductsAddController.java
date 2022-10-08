@@ -94,13 +94,13 @@ public class ProductsAddController implements Initializable {
 
     @FXML
     void save(ActionEvent event) {
-        TextValidationHelper validation = new TextValidationHelper("Por favor, preencha o(s) seguinte(s) campo(s) obrigatório(s): \n\n");
-        validation.emptyTextField(nameTextField.getText(), "'Nome'\n");
-        validation.emptyTextField(amountTextField.getText(), "'Estoque Inicial'\n");
-        validation.emptyTextField(minimumStockTextField.getText(), "'Estoque Mínimo'\n");
+        TextValidationHelper validation = new TextValidationHelper("Atenção: \n\n");
+        validation.emptyTextField(nameTextField.getText(), "Preencha o campo Nome. \n");
+        validation.emptyTextField(amountTextField.getText(), "Preencha o campo Estoque Inicial. \n");
+        validation.emptyTextField(minimumStockTextField.getText(), "Preencha o campo Estoque Mínimo. \n");
 
         if (!(validation.getEmptyCounter() == 0)) {
-            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível realizar o cadastro deste produto!", validation.getMessage());
+            ah.customAlert(Alert.AlertType.WARNING, "Não foi possível realizar o cadastro deste produto", validation.getMessage());
         } else {
             Product product = new Product(nameTextField.getText(), categoryTextField.getText(), descriptionTextArea.getText(), Integer.valueOf(amountTextField.getText()),
                     Integer.valueOf(minimumStockTextField.getText()), new BigDecimal(costPriceTextField.getPrice()), new BigDecimal(sellingPriceTextField.getPrice()),
@@ -108,7 +108,7 @@ public class ProductsAddController implements Initializable {
             ProductDao productDao = new ProductDao();
             productDao.create(product);
             setCreated(true);
-            ah.customAlert(Alert.AlertType.INFORMATION, "O produto foi cadastrado com sucesso!", "");
+            ah.customAlert(Alert.AlertType.INFORMATION, "Produto cadastrado com sucesso!", "");
             anchorPane.getScene().getWindow().hide();
         }
     }
