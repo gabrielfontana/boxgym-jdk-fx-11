@@ -86,9 +86,9 @@
                                 <MaterialDesignIconView glyphName="PLUS" size="15.0" />
                             </graphic>
                         </Button>
-                        <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteSale" prefHeight="30.0" prefWidth="90.0" text="Excluir">
+                        <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteSale" prefHeight="30.0" prefWidth="90.0" text="Cancelar">
                             <graphic>
-                                <MaterialDesignIconView glyphName="DELETE" size="15.0" />
+                                <MaterialDesignIconView glyphName="CANCEL" size="15.0" />
                             </graphic>
                             <HBox.margin>
                                 <Insets />
