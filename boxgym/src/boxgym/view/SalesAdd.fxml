@@ -163,7 +163,7 @@
                                         <Insets bottom="5.0" />
                                     </VBox.margin>
                                 </Label>
-                                <LimitedTextField fx:id="totalPriceTextField" editable="false" maxWidth="-Infinity" prefHeight="30.0" prefWidth="105.0" />
+                                <LimitedTextField fx:id="totalPriceTextField" editable="false" maxWidth="-Infinity" mouseTransparent="true" prefHeight="30.0" prefWidth="105.0" />
                             </children>
                         </VBox>
                     </children>
