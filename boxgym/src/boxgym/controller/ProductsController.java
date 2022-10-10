@@ -228,11 +228,11 @@ public class ProductsController implements Initializable {
                 boolean saleConstraint = productDao.checkSaleDeleteConstraint(selected.getProductId());
                 boolean stockEntryConstraint = productDao.checkStockEntryDeleteConstraint(selected.getProductId());
                 if (saleConstraint && stockEntryConstraint) {
-                    alert.customAlert(Alert.AlertType.WARNING, "Não foi possível excluir", "Existem vendas e entradas de estoque relacionadas a esse produto.");
+                    alert.customAlert(Alert.AlertType.WARNING, "Não foi possível excluir", "Existem vendas e entradas de estoque relacionadas a este produto.");
                 } else if (saleConstraint) {
-                    alert.customAlert(Alert.AlertType.WARNING, "Não foi possível excluir", "Existem vendas relacionadas a esse produto.");
+                    alert.customAlert(Alert.AlertType.WARNING, "Não foi possível excluir", "Existem vendas relacionadas a este produto.");
                 } else if (stockEntryConstraint) {
-                    alert.customAlert(Alert.AlertType.WARNING, "Não foi possível excluir", "Existem entradas de estoque relacionadas a esse produto.");
+                    alert.customAlert(Alert.AlertType.WARNING, "Não foi possível excluir", "Existem entradas de estoque relacionadas a este produto.");
                 } else {
                     productDao.delete(selected);
                     refreshTableView();

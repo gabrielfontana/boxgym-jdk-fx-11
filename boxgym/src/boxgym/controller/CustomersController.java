@@ -236,12 +236,22 @@ public class CustomersController implements Initializable {
             alert.customAlert(Alert.AlertType.WARNING, "Selecione um cliente para excluir", "");
         } else {
             alert.confirmationAlert("Excluir Cliente", "Tem certeza que deseja excluir o(a) cliente '" + selected.getName()+ "'? "
-                    + "\n\nO(A) cliente será excluído(a) de forma definitiva e não poderá ser recuperado(a).");
+                    + "\n\nO(a) cliente será excluído(a) de forma definitiva e não poderá ser recuperado(a).");
             if (alert.getResult().get() == ButtonType.YES) {
-                customerDao.delete(selected);
-                refreshTableView();
-                resetDetails();
-                alert.customAlert(Alert.AlertType.WARNING, "Cliente excluído(a) com sucesso", "");
+                boolean saleConstraint = customerDao.checkSaleDeleteConstraint(selected.getCustomerId());
+                boolean measurementConstraint = customerDao.checkMeasurementDeleteConstraint(selected.getCustomerId());
+                if (saleConstraint && measurementConstraint) {
+                    alert.customAlert(Alert.AlertType.WARNING, "Não foi possível excluir", "Existem vendas e medidas relacionadas a este(a) cliente. ");
+                } else if (saleConstraint) {
+                    alert.customAlert(Alert.AlertType.WARNING, "Não foi possível excluir", "Existem vendas relacionadas a este(a) cliente.");
+                } else if (measurementConstraint) {
+                    alert.customAlert(Alert.AlertType.WARNING, "Não foi possível excluir", "Existem medidas relacionadas a este(a) cliente.");
+                } else {
+                    customerDao.delete(selected);
+                    refreshTableView();
+                    resetDetails();
+                    alert.customAlert(Alert.AlertType.WARNING, "Cliente excluído(a) com sucesso", "");
+                }
             }
         }
     }

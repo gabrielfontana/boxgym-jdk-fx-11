@@ -230,10 +230,14 @@ public class SuppliersController implements Initializable {
             alert.confirmationAlert("Excluir Fornecedor", "Tem certeza que deseja excluir o fornecedor '" + selected.getTradeName() + "'? "
                     + "\n\nO fornecedor será excluído de forma definitiva e não poderá ser recuperado.");
             if (alert.getResult().get() == ButtonType.YES) {
-                supplierDao.delete(selected);
-                refreshTableView();
-                resetDetails();
-                alert.customAlert(Alert.AlertType.WARNING, "Fornecedor excluído com sucesso", "");
+                if (supplierDao.checkStockEntryDeleteConstraint(selected.getSupplierId())) {
+                    alert.customAlert(Alert.AlertType.WARNING, "Não foi possível excluir", "Existem entradas de estoque relacionadas a este(a) fornecedor.");
+                } else {
+                    supplierDao.delete(selected);
+                    refreshTableView();
+                    resetDetails();
+                    alert.customAlert(Alert.AlertType.WARNING, "Fornecedor excluído com sucesso", "");
+                }
             }
         }
     }
