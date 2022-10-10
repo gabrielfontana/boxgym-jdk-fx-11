@@ -14,33 +14,33 @@
 <?import limitedtextfield.LimitedTextField?>
 <?import org.controlsfx.control.PrefixSelectionComboBox?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="616.0" prefWidth="680.0" style="-fx-background-color: #f2f2f2;" stylesheets="@../css/theme.css" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.WorkoutsAddController">
+<AnchorPane fx:id="anchorPane" prefHeight="616.0" prefWidth="680.0" style="-fx-background-color: #f2f2f2;" stylesheets="@../css/theme.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.WorkoutsAddController">
     <children>
         <AnchorPane fx:id="workoutArea" layoutX="15.0" layoutY="24.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <HBox AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
                     <children>
-                        <VBox prefHeight="52.0" prefWidth="170.0">
+                        <VBox prefHeight="52.0" prefWidth="270.0">
                             <children>
                                 <Label text="Descrição *">
                                     <VBox.margin>
                                         <Insets bottom="5.0" />
                                     </VBox.margin>
                                 </Label>
-                                <LimitedTextField fx:id="descriptionTextField" prefHeight="30.0" prefWidth="170.0" />
+                                <LimitedTextField fx:id="descriptionTextField" prefHeight="30.0" prefWidth="270.0" />
                             </children>
                             <HBox.margin>
                                 <Insets right="10.0" />
                             </HBox.margin>
                         </VBox>
-                        <VBox maxHeight="-Infinity" prefHeight="52.0" prefWidth="175.0">
+                        <VBox maxHeight="-Infinity" prefHeight="52.0" prefWidth="225.0">
                             <children>
                                 <Label text="Objetivo *" VBox.vgrow="ALWAYS">
                                     <VBox.margin>
                                         <Insets bottom="5.0" />
                                     </VBox.margin>
                                 </Label>
-                                <PrefixSelectionComboBox fx:id="goalComboBox" prefHeight="30.0" prefWidth="175.0" />
+                                <PrefixSelectionComboBox fx:id="goalComboBox" prefHeight="30.0" prefWidth="225.0" />
                             </children>
                             <HBox.margin>
                                 <Insets right="10.0" />
@@ -54,19 +54,6 @@
                                     </VBox.margin>
                                 </Label>
                                 <LimitedTextField fx:id="sessionsTextField" prefHeight="30.0" prefWidth="60.0" />
-                            </children>
-                            <HBox.margin>
-                                <Insets right="10.0" />
-                            </HBox.margin>
-                        </VBox>
-                        <VBox prefHeight="52.0" prefWidth="140.0">
-                            <children>
-                                <Label text="Dia da Semana *">
-                                    <VBox.margin>
-                                        <Insets bottom="5.0" />
-                                    </VBox.margin>
-                                </Label>
-                                <PrefixSelectionComboBox fx:id="dayComboBox" prefHeight="30.0" prefWidth="140.0" />
                             </children>
                             <HBox.margin>
                                 <Insets right="10.0" />

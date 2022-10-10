@@ -60,9 +60,6 @@ public class WorkoutsAddController implements Initializable {
     private LimitedTextField sessionsTextField;
 
     @FXML
-    private PrefixSelectionComboBox<String> dayComboBox;
-
-    @FXML
     private Button addWorkoutButton;
 
     @FXML
@@ -149,7 +146,6 @@ public class WorkoutsAddController implements Initializable {
         setExercisesEntryCreationFlag(false);
         inputRestrictions();
         loadGoalComboBox();
-        loadDayComboBox();
         loadExerciseGroupComboBox();
         exerciseNameComboBoxListener();
         exerciseNameComboBox.setPromptText("---");
@@ -175,12 +171,6 @@ public class WorkoutsAddController implements Initializable {
         String[] goalsList = {"Condicionamento Físico", "Emagrecimento", "Hipertrofia", "Reabilitação Física"};
         goalComboBox.setPromptText("Selecione");
         goalComboBox.setItems(FXCollections.observableArrayList(goalsList));
-    }
-
-    private void loadDayComboBox() {
-        String[] days = {"Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"};
-        dayComboBox.setPromptText("Selecione");
-        dayComboBox.setItems(FXCollections.observableArrayList(days));
     }
 
     private void loadExerciseGroupComboBox() {
@@ -258,7 +248,6 @@ public class WorkoutsAddController implements Initializable {
         validation.emptyTextField(descriptionTextField.getText(), "Preencha o campo Descrição. \n");
         validation.invalidComboBox(goalComboBox, "Selecione o campo Objetivo. \n");
         validation.emptyTextField(sessionsTextField.getText(), "Preencha o campo Sessões. \n");
-        validation.invalidComboBox(dayComboBox, "Selecione o campo Dia da Semana. \n");
 
         if (!(validation.getEmptyCounter() == 0)) {
             ah.customAlert(Alert.AlertType.WARNING, "Não foi possível iniciar o cadastro deste treino", validation.getMessage());
@@ -270,7 +259,7 @@ public class WorkoutsAddController implements Initializable {
             saveButton.setDisable(false);
             clearButton.setDisable(false);
             Workout workout = new Workout(descriptionTextField.getText(), goalComboBox.getValue(),
-                    Integer.valueOf(sessionsTextField.getText()), dayComboBox.getSelectionModel().getSelectedItem());
+                    Integer.valueOf(sessionsTextField.getText()));
             WorkoutDao workoutDao = new WorkoutDao();
             workoutDao.create(workout);
             workoutIdTextField.setText(String.valueOf(workoutDao.getWorkoutId()));

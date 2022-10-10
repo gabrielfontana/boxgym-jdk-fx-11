@@ -92,9 +92,6 @@ public class WorkoutsController implements Initializable {
 
     @FXML
     private TableColumn<Workout, Integer> sessionsTableColumn;
-    
-    @FXML
-    private TableColumn<Workout, String> dayTableColumn;
 
     @FXML
     private Label countLabel;
@@ -119,9 +116,6 @@ public class WorkoutsController implements Initializable {
 
     @FXML
     private Label sessionsLabel;
-    
-    @FXML
-    private Label dayLabel;
 
     @FXML
     private Label createdAtLabel;
@@ -191,7 +185,6 @@ public class WorkoutsController implements Initializable {
             descriptionLabel.setText("");
             goalLabel.setText("");
             sessionsLabel.setText("");
-            dayLabel.setText("");
             createdAtLabel.setText("");
             updatedAtLabel.setText("");
         }
@@ -203,7 +196,6 @@ public class WorkoutsController implements Initializable {
             descriptionLabel.setText(selected.getDescription());
             goalLabel.setText(selected.getGoal());
             sessionsLabel.setText(String.valueOf(selected.getSessions()));
-            dayLabel.setText(selected.getDay());
             createdAtLabel.setText(selected.getCreatedAt().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
             updatedAtLabel.setText(selected.getUpdatedAt().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
         }
@@ -247,7 +239,6 @@ public class WorkoutsController implements Initializable {
         descriptionTableColumn.setCellValueFactory(new PropertyValueFactory("description"));
         goalTableColumn.setCellValueFactory(new PropertyValueFactory("goal"));
         sessionsTableColumn.setCellValueFactory(new PropertyValueFactory("sessions"));
-        dayTableColumn.setCellValueFactory(new PropertyValueFactory("day"));
         refreshTableView();
     }
 
@@ -256,9 +247,8 @@ public class WorkoutsController implements Initializable {
         String description = workout.getDescription();
         String goal = workout.getGoal();
         String sessions = String.valueOf(workout.getSessions());
-        String day = workout.getDay();
 
-        List<String> fields = Arrays.asList(workoutId, description, goal, sessions, day);
+        List<String> fields = Arrays.asList(workoutId, description, goal, sessions);
 
         return stringComparasion(fields, searchText, optionOrder);
     }
@@ -268,9 +258,8 @@ public class WorkoutsController implements Initializable {
         String description = workout.getDescription().toLowerCase();
         String goal = workout.getGoal().toLowerCase();
         String sessions = String.valueOf(workout.getSessions());
-        String day = workout.getDay().toLowerCase();
 
-        List<String> fields = Arrays.asList(workoutId, description, goal, sessions, day);
+        List<String> fields = Arrays.asList(workoutId, description, goal, sessions);
 
         return stringComparasion(fields, searchText, optionOrder);
     }
@@ -280,19 +269,19 @@ public class WorkoutsController implements Initializable {
         switch (optionOrder) {
             case 1:
                 searchReturn = (list.get(0).contains(searchText)) || (list.get(1).contains(searchText)) || (list.get(2).contains(searchText))
-                        || (list.get(3).contains(searchText) || (list.get(4).contains(searchText)));
+                        || (list.get(3).contains(searchText));
                 break;
             case 2:
                 searchReturn = (list.get(0).equals(searchText)) || (list.get(1).equals(searchText)) || (list.get(2).equals(searchText))
-                        || (list.get(3).equals(searchText) || (list.get(4).contains(searchText)));
+                        || (list.get(3).equals(searchText));
                 break;
             case 3:
                 searchReturn = (list.get(0).startsWith(searchText)) || (list.get(1).startsWith(searchText)) || (list.get(2).startsWith(searchText))
-                        || (list.get(3).startsWith(searchText) || (list.get(4).contains(searchText)));
+                        || (list.get(3).startsWith(searchText));
                 break;
             case 4:
                 searchReturn = (list.get(0).endsWith(searchText)) || (list.get(1).endsWith(searchText)) || (list.get(2).endsWith(searchText))
-                        || (list.get(3).endsWith(searchText) || (list.get(4).contains(searchText)));
+                        || (list.get(3).endsWith(searchText));
                 break;
             default:
                 break;

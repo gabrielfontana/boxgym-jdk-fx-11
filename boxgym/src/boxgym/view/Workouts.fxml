@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="695.0" prefWidth="1280.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.WorkoutsController">
+<AnchorPane prefHeight="695.0" prefWidth="1280.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.WorkoutsController">
     <children>
         <AnchorPane layoutX="30.0" layoutY="35.0" prefHeight="80.0" prefWidth="1280.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -99,10 +99,9 @@
                 <TableView fx:id="workoutTableView" prefHeight="550.0" prefWidth="900.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="40.0">
                     <columns>
                         <TableColumn fx:id="workoutIdTableColumn" minWidth="90.0" prefWidth="90.0" text="ID" />
-                        <TableColumn fx:id="descriptionTableColumn" minWidth="333.0" prefWidth="333.0" text="Descrição" />
-                        <TableColumn fx:id="goalTableColumn" minWidth="175.0" prefWidth="175.0" text="Objetivo" />
+                        <TableColumn fx:id="descriptionTableColumn" minWidth="433.0" prefWidth="433.0" text="Descrição" />
+                        <TableColumn fx:id="goalTableColumn" minWidth="225.0" prefWidth="225.0" text="Objetivo" />
                         <TableColumn fx:id="sessionsTableColumn" minWidth="150.0" prefWidth="150.0" text="Sessões" />
-                        <TableColumn fx:id="dayTableColumn" minWidth="150.0" prefWidth="150.0" text="Dia da Semana" />
                     </columns>
                 </TableView>
                 <BorderPane prefHeight="20.0" prefWidth="900.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
@@ -191,19 +190,6 @@
                                     </HBox.margin>
                                 </Label>
                                 <Label fx:id="sessionsLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="274.0" styleClass="attribute-value-label" />
-                            </children>
-                            <VBox.margin>
-                                <Insets bottom="10.0" />
-                            </VBox.margin>
-                        </HBox>
-                        <HBox layoutX="21.0" layoutY="161.0">
-                            <children>
-                                <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Dia da Semana: ">
-                                    <HBox.margin>
-                                        <Insets />
-                                    </HBox.margin>
-                                </Label>
-                                <Label fx:id="dayLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="274.0" styleClass="attribute-value-label" />
                             </children>
                             <VBox.margin>
                                 <Insets bottom="10.0" />

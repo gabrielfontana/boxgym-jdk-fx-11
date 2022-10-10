@@ -37,14 +37,13 @@ public class WorkoutDao {
     }
 
     public boolean create(Workout workout) {
-        String sql = "INSERT INTO `workout` (`description`, `goal`, `sessions`, `day`) VALUES (?, ?, ?, ?);";
+        String sql = "INSERT INTO `workout` (`description`, `goal`, `sessions`) VALUES (?, ?, ?);";
 
         try {
             ps = conn.prepareStatement(sql);
             ps.setString(1, workout.getDescription());
             ps.setString(2, workout.getGoal());
             ps.setInt(3, workout.getSessions());
-            ps.setString(4, workout.getDay());
             ps.execute();
             return true;
         } catch (SQLException ex) {
@@ -107,7 +106,6 @@ public class WorkoutDao {
                 w.setDescription(rs.getString("description"));
                 w.setGoal(rs.getString("goal"));
                 w.setSessions(rs.getInt("sessions"));
-                w.setDay(rs.getString("day"));
                 w.setCreatedAt(rs.getTimestamp("createdAt").toLocalDateTime());
                 w.setUpdatedAt(rs.getTimestamp("updatedAt").toLocalDateTime());
                 workoutsList.add(w);
@@ -155,7 +153,7 @@ public class WorkoutDao {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 3));
             ExcelFileHelper.createStyledCell(sheet.createRow(0), 0, "Relatório gerado em: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")), infoStyle);
 
-            List<String> fields = Arrays.asList("ID", "Descrição", "Objetivo", "Sessões", "Dia da Semana", "Criação", "Modificação");
+            List<String> fields = Arrays.asList("ID", "Descrição", "Objetivo", "Sessões", "Criação", "Modificação");
             XSSFRow headerRow = sheet.createRow(2);
             for (int i = 0; i < fields.size(); i++) {
                 ExcelFileHelper.createStyledCell(headerRow, i, fields.get(i), headerStyle);
@@ -174,9 +172,8 @@ public class WorkoutDao {
                 ExcelFileHelper.createStyledCell(row, 1, rs.getString("description"), defaultStyle);
                 ExcelFileHelper.createStyledCell(row, 2, rs.getString("goal"), defaultStyle);
                 ExcelFileHelper.createStyledCell(row, 3, rs.getInt("sessions"), defaultStyle);
-                ExcelFileHelper.createStyledCell(row, 4, rs.getString("day"), defaultStyle);
-                ExcelFileHelper.createStyledDateTimeCell(row, 5, rs.getString("createdAt"), DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"), defaultStyle);
-                ExcelFileHelper.createStyledDateTimeCell(row, 6, rs.getString("updatedAt"), DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"), defaultStyle);
+                ExcelFileHelper.createStyledDateTimeCell(row, 4, rs.getString("createdAt"), DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"), defaultStyle);
+                ExcelFileHelper.createStyledDateTimeCell(row, 5, rs.getString("updatedAt"), DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"), defaultStyle);
                 rowIndex++;
 
                 // WorkoutExercise
