@@ -46,7 +46,7 @@ public class SaleProductDao {
 
     public List<SaleProduct> read(int selectedSale) {
         List<SaleProduct> productsList = new ArrayList<>();
-        String sql = "SELECT p.name AS `tempProductName`, s_p.amount, s_p.unitPrice, s_p.amount * s_p.unitPrice AS `subtotal` "
+        String sql = "SELECT p.name AS `tempProductName`, s_p.amount, s_p.unitPrice, s_p.amount * s_p.unitPrice AS `subtotal`, s_p.createdAt, s_p.updatedAt "
                 + "FROM `sale_product` AS s_p INNER JOIN `product` AS p "
                 + "ON s_p.fkProduct = p.productId "
                 + "WHERE s_p.fkSale = " + selectedSale + ";";
@@ -60,6 +60,8 @@ public class SaleProductDao {
                 sp.setAmount(rs.getInt("amount"));
                 sp.setUnitPrice(rs.getBigDecimal("unitPrice"));
                 sp.setSubtotal(rs.getBigDecimal("subtotal"));
+                sp.setCreatedAt(rs.getTimestamp("createdAt").toLocalDateTime());
+                sp.setUpdatedAt(rs.getTimestamp("updatedAt").toLocalDateTime());
                 productsList.add(sp);
             }
         } catch (SQLException ex) {

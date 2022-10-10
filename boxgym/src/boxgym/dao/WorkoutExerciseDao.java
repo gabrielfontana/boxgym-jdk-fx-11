@@ -47,7 +47,7 @@ public class WorkoutExerciseDao {
 
     public List<WorkoutExercise> read(int selectedWorkout) {
         List<WorkoutExercise> exercisesList = new ArrayList<>();
-        String sql = "SELECT e.name AS `tempExerciseName`, w_e.sets, w_e.reps, w_e.rest "
+        String sql = "SELECT e.name AS `tempExerciseName`, w_e.sets, w_e.reps, w_e.rest, w_e.createdAt, w_e.updatedAt "
                 + "FROM `workout_exercise` AS w_e INNER JOIN `exercise` AS e "
                 + "ON w_e.fkExercise = e.exerciseId "
                 + "WHERE w_e.fkWorkout = " + selectedWorkout + ";";
@@ -61,6 +61,8 @@ public class WorkoutExerciseDao {
                 we.setSets(rs.getInt("sets"));
                 we.setReps(rs.getInt("reps"));
                 we.setRest(rs.getInt("rest"));
+                we.setCreatedAt(rs.getTimestamp("createdAt").toLocalDateTime());
+                we.setUpdatedAt(rs.getTimestamp("updatedAt").toLocalDateTime());
                 exercisesList.add(we);
             }
         } catch (SQLException ex) {
