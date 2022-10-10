@@ -1,5 +1,7 @@
 package boxgym.model;
 
+import java.time.LocalDateTime;
+
 public class WorkoutExercise {
 
     private int workoutExerciseId; //Identificador
@@ -8,6 +10,8 @@ public class WorkoutExercise {
     private int sets; //Séries
     private int reps; //Repetições
     private int rest; //Descanso
+    private LocalDateTime createdAt; //Criado em
+    private LocalDateTime updatedAt; //Atualizado em
 
     private String tempExerciseName;
 
@@ -80,4 +84,20 @@ public class WorkoutExercise {
         this.tempExerciseName = tempExerciseName;
     }
 
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+    
 }
