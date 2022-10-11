@@ -147,7 +147,7 @@ public class WorkoutsAddController implements Initializable {
         inputRestrictions();
         loadGoalComboBox();
         loadExerciseGroupComboBox();
-        exerciseNameComboBoxListener();
+        exerciseGroupComboBoxListener();
         exerciseNameComboBox.setPromptText("---");
 
         initExerciseEntryTableView();
@@ -179,50 +179,50 @@ public class WorkoutsAddController implements Initializable {
         exerciseGroupComboBox.setItems(FXCollections.observableArrayList(groupsList));
     }
 
-    private void exerciseNameComboBoxListener() {
+    private void exerciseGroupComboBoxListener() {
         exerciseGroupComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
             switch (exerciseGroupComboBox.getSelectionModel().getSelectedItem()) {
                 case "Abdome":
-                    loadExerciseNameComboBox("Abdome");
+                    filterExercisesByGroup("Abdome");
                     break;
                 case "Antebraço":
-                    loadExerciseNameComboBox("Antebraço");
+                    filterExercisesByGroup("Antebraço");
                     break;
                 case "Bíceps":
-                    loadExerciseNameComboBox("Bíceps");
+                    filterExercisesByGroup("Bíceps");
                     break;
                 case "Corpo":
-                    loadExerciseNameComboBox("Corpo");
+                    filterExercisesByGroup("Corpo");
                     break;
                 case "Costas":
-                    loadExerciseNameComboBox("Costas");
+                    filterExercisesByGroup("Costas");
                     break;
                 case "Glúteo":
-                    loadExerciseNameComboBox("Glúteo");
+                    filterExercisesByGroup("Glúteo");
                     break;
                 case "Ombro":
-                    loadExerciseNameComboBox("Ombro");
+                    filterExercisesByGroup("Ombro");
                     break;
                 case "Peito":
-                    loadExerciseNameComboBox("Peito");
+                    filterExercisesByGroup("Peito");
                     break;
                 case "Perna":
-                    loadExerciseNameComboBox("Perna");
+                    filterExercisesByGroup("Perna");
                     break;
                 case "Tríceps":
-                    loadExerciseNameComboBox("Tríceps");
+                    filterExercisesByGroup("Tríceps");
                     break;
             }
         });
     }
 
-    private void loadExerciseNameComboBox(String exerciseGroup) {
+    private void filterExercisesByGroup(String exerciseGroup) {
         ExerciseDao dao = new ExerciseDao();
         ObservableList<String> obsList = FXCollections.observableList(dao.filterExercisesByGroup(exerciseGroup));
         exerciseNameComboBox.setItems(obsList);
     }
 
-    /*private void loadExerciseNameComboBox() {
+    /*private void filterExercisesByGroup() {
         ObservableList<String> obsList = FXCollections.observableArrayList();
         for (String e : exerciseMap.values()) {
             obsList.add(e);

@@ -147,7 +147,7 @@ public class SheetsAddController implements Initializable {
         expirationDateDatePicker.setEditable(false);
 
         loadWorkoutGoalComboBox();
-        workoutDescriptionComboBoxListener();
+        workoutGoalComboBoxListener();
         workoutDescriptionComboBox.setPromptText("---");
         defaultSheetDescription();
         loadDayOfTheWeekComboBox();
@@ -215,26 +215,26 @@ public class SheetsAddController implements Initializable {
         workoutGoalComboBox.setItems(FXCollections.observableArrayList(goalsList));
     }
 
-    private void workoutDescriptionComboBoxListener() {
+    private void workoutGoalComboBoxListener() {
         workoutGoalComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
             switch (workoutGoalComboBox.getSelectionModel().getSelectedItem()) {
                 case "Condicionamento Físico":
-                    loadWorkoutDescriptionComboBox("Condicionamento Físico");
+                    filterWorkoutsByGoal("Condicionamento Físico");
                     break;
                 case "Emagrecimento":
-                    loadWorkoutDescriptionComboBox("Emagrecimento");
+                    filterWorkoutsByGoal("Emagrecimento");
                     break;
                 case "Hipertrofia":
-                    loadWorkoutDescriptionComboBox("Hipertrofia");
+                    filterWorkoutsByGoal("Hipertrofia");
                     break;
                 case "Reabilitação Física":
-                    loadWorkoutDescriptionComboBox("Reabilitação Física");
+                    filterWorkoutsByGoal("Reabilitação Física");
                     break;
             }
         });
     }
 
-    private void loadWorkoutDescriptionComboBox(String workoutGoal) {
+    private void filterWorkoutsByGoal(String workoutGoal) {
         WorkoutDao dao = new WorkoutDao();
         ObservableList<String> obsList = FXCollections.observableList(dao.filterWorkoutsByGoal(workoutGoal));
         workoutDescriptionComboBox.setItems(obsList);
