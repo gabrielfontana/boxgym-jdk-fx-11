@@ -170,11 +170,15 @@ public class WorkoutsController implements Initializable {
             alert.confirmationAlert("Excluir treino", "Tem certeza que deseja excluir o treino '" + selected.getDescription()+ "'? "
                     + "\n\nO treino será excluído de forma definitiva e não poderá ser recuperado.");
             if (alert.getResult().get() == ButtonType.YES) {
-                workoutExerciseDao.delete(selected);
-                workoutDao.delete(selected);
-                refreshTableView();
-                resetDetails();
-                alert.customAlert(Alert.AlertType.WARNING, "Treino excluído com sucesso", "");
+                if (workoutDao.checkSheetDeleteConstraint(selected.getWorkoutId())){
+                    alert.customAlert(Alert.AlertType.WARNING, "Não foi possível excluir", "Existem fichas relacionadas a esse treino.");
+                } else {
+                    workoutExerciseDao.delete(selected);
+                    workoutDao.delete(selected);
+                    refreshTableView();
+                    resetDetails();
+                    alert.customAlert(Alert.AlertType.WARNING, "Treino excluído com sucesso", "");
+                }
             }
         }
     }

@@ -161,6 +161,25 @@ public class WorkoutDao {
         return false;
     }
     
+    public boolean checkSheetDeleteConstraint(int workoutId) {
+        String sql = "SELECT `fkWorkout` FROM `sheet_workout` WHERE `fkWorkout` = " + workoutId + ";";
+
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(WorkoutDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            //DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return false;
+    }
+    
     public List<String> filterWorkoutsByGoal(String workoutGoal) {
         List<String> workoutsList = new ArrayList<>();
         String sql = "SELECT `description` FROM `workout` WHERE `goal` = '" + workoutGoal + "';";
