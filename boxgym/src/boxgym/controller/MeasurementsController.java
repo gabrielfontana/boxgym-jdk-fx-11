@@ -87,9 +87,6 @@ public class MeasurementsController implements Initializable {
     private TableView<Measurement> measurementTableView;
 
     @FXML
-    private TableColumn<Measurement, Integer> measurementIdTableColumn;
-
-    @FXML
     private TableColumn<Measurement, String> fkCustomerTableColumn;
 
     @FXML
@@ -314,7 +311,6 @@ public class MeasurementsController implements Initializable {
     }
 
     private void initMeasurementTableView() {
-        measurementIdTableColumn.setCellValueFactory(new PropertyValueFactory("measurementId"));
         fkCustomerTableColumn.setCellValueFactory(new PropertyValueFactory("tempCustomerName"));
         measurementDateTableColumn.setCellValueFactory(new PropertyValueFactory("measurementDate"));
         TextFieldFormat.measurementTableCellDateFormat(measurementDateTableColumn);

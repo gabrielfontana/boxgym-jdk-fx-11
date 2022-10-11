@@ -87,9 +87,6 @@ public class ExercisesController implements Initializable {
     private TableView<Exercise> exerciseTableView;
 
     @FXML
-    private TableColumn<Exercise, Integer> exerciseIdTableColumn;
-
-    @FXML
     private TableColumn<Exercise, String> nameTableColumn;
 
     @FXML
@@ -281,7 +278,6 @@ public class ExercisesController implements Initializable {
     }
 
     private void initExerciseTableView() {
-        exerciseIdTableColumn.setCellValueFactory(new PropertyValueFactory("exerciseId"));
         nameTableColumn.setCellValueFactory(new PropertyValueFactory("name"));
         abbreviationTableColumn.setCellValueFactory(new PropertyValueFactory("abbreviation"));
         exerciseTypeTableColumn.setCellValueFactory(new PropertyValueFactory("exerciseType"));

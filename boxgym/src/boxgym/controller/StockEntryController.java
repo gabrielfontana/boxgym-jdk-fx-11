@@ -84,9 +84,6 @@ public class StockEntryController implements Initializable {
     private TableView<StockEntry> stockEntryTableView;
 
     @FXML
-    private TableColumn<StockEntry, Integer> stockIdTableColumn;
-
-    @FXML
     private TableColumn<StockEntry, String> fkSupplierTableColumn;
 
     @FXML
@@ -237,7 +234,6 @@ public class StockEntryController implements Initializable {
     }
 
     private void initStockEntryTableView() {
-        stockIdTableColumn.setCellValueFactory(new PropertyValueFactory("stockEntryId"));
         fkSupplierTableColumn.setCellValueFactory(new PropertyValueFactory("tempSupplierName"));
 
         invoiceIssueDateTableColumn.setCellValueFactory(new PropertyValueFactory("invoiceIssueDate"));

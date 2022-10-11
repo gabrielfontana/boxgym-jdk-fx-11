@@ -82,9 +82,6 @@ public class WorkoutsController implements Initializable {
     private TableView<Workout> workoutTableView;
 
     @FXML
-    private TableColumn<Workout, Integer> workoutIdTableColumn;
-
-    @FXML
     private TableColumn<Workout, String> descriptionTableColumn;
 
     @FXML
@@ -239,7 +236,6 @@ public class WorkoutsController implements Initializable {
     }
 
     private void initWorkoutTableView() {
-        workoutIdTableColumn.setCellValueFactory(new PropertyValueFactory("workoutId"));
         descriptionTableColumn.setCellValueFactory(new PropertyValueFactory("description"));
         goalTableColumn.setCellValueFactory(new PropertyValueFactory("goal"));
         sessionsTableColumn.setCellValueFactory(new PropertyValueFactory("sessions"));

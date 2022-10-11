@@ -93,9 +93,6 @@ public class ProductsController implements Initializable {
     private TableView<Product> productTableView;
 
     @FXML
-    private TableColumn<Product, Integer> productIdTableColumn;
-
-    @FXML
     private TableColumn<Product, String> nameTableColumn;
 
     @FXML
@@ -312,7 +309,6 @@ public class ProductsController implements Initializable {
     }
 
     private void initProductTableView() {
-        productIdTableColumn.setCellValueFactory(new PropertyValueFactory("productId"));
         nameTableColumn.setCellValueFactory(new PropertyValueFactory("name"));
         categoryTableColumn.setCellValueFactory(new PropertyValueFactory("category"));
         amountTableColumn.setCellValueFactory(new PropertyValueFactory("amount"));

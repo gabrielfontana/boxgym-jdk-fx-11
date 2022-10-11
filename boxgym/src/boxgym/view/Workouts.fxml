@@ -98,10 +98,9 @@
                 </HBox>
                 <TableView fx:id="workoutTableView" prefHeight="550.0" prefWidth="900.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="40.0">
                     <columns>
-                        <TableColumn fx:id="workoutIdTableColumn" minWidth="90.0" prefWidth="90.0" text="ID" />
-                        <TableColumn fx:id="descriptionTableColumn" minWidth="433.0" prefWidth="433.0" text="Descrição" />
-                        <TableColumn fx:id="goalTableColumn" minWidth="225.0" prefWidth="225.0" text="Objetivo" />
-                        <TableColumn fx:id="sessionsTableColumn" minWidth="150.0" prefWidth="150.0" text="Sessões" />
+                        <TableColumn fx:id="descriptionTableColumn" minWidth="478.0" prefWidth="478.0" text="Descrição" />
+                        <TableColumn fx:id="goalTableColumn" minWidth="210.0" prefWidth="210.0" text="Objetivo" />
+                        <TableColumn fx:id="sessionsTableColumn" minWidth="210.0" prefWidth="210.0" text="Sessões" />
                     </columns>
                 </TableView>
                 <BorderPane prefHeight="20.0" prefWidth="900.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">

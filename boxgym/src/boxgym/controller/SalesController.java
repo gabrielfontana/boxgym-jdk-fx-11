@@ -84,9 +84,6 @@ public class SalesController implements Initializable {
     private TableView<Sale> saleTableView;
     
     @FXML
-    private TableColumn<Sale, Integer> saleIdTableColumn;
-    
-    @FXML
     private TableColumn<Sale, String> fkCustomerTableColumn;
     
     @FXML
@@ -231,7 +228,6 @@ public class SalesController implements Initializable {
     }
 
     private void initSaleTableView() {
-        saleIdTableColumn.setCellValueFactory(new PropertyValueFactory("saleId"));
         fkCustomerTableColumn.setCellValueFactory(new PropertyValueFactory("tempCustomerName"));
 
         saleDateTableColumn.setCellValueFactory(new PropertyValueFactory("saleDate"));

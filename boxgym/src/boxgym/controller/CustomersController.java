@@ -86,9 +86,6 @@ public class CustomersController implements Initializable {
     private TableView<Customer> customerTableView;
 
     @FXML
-    private TableColumn<Customer, Integer> customerIdTableColumn;
-
-    @FXML
     private TableColumn<Customer, String> personRegistryTableColumn;
 
     @FXML
@@ -308,7 +305,6 @@ public class CustomersController implements Initializable {
     }
 
     private void initCustomerTableView() {
-        customerIdTableColumn.setCellValueFactory(new PropertyValueFactory("customerId"));
         personRegistryTableColumn.setCellValueFactory(new PropertyValueFactory("personRegistry"));
         nameTableColumn.setCellValueFactory(new PropertyValueFactory("name"));
         sexTableColumn.setCellValueFactory(new PropertyValueFactory("sex"));

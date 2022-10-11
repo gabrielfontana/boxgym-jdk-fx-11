@@ -84,9 +84,6 @@ public class SuppliersController implements Initializable {
     private TableView<Supplier> supplierTableView;
 
     @FXML
-    private TableColumn<Supplier, Integer> supplierIdTableColumn;
-
-    @FXML
     private TableColumn<Supplier, String> companyRegistryTableColumn;
 
     @FXML
@@ -292,7 +289,6 @@ public class SuppliersController implements Initializable {
     }
 
     private void initSupplierTableView() {
-        supplierIdTableColumn.setCellValueFactory(new PropertyValueFactory("supplierId"));
         companyRegistryTableColumn.setCellValueFactory(new PropertyValueFactory("companyRegistry"));
         corporateNameTableColumn.setCellValueFactory(new PropertyValueFactory("corporateName"));
         tradeNameTableColumn.setCellValueFactory(new PropertyValueFactory("tradeName"));

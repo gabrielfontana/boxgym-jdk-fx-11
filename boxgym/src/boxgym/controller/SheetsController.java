@@ -86,9 +86,6 @@ public class SheetsController implements Initializable {
     private TableView<Sheet> sheetTableView;
 
     @FXML
-    private TableColumn<Sheet, Integer> sheetIdTableColumn;
-
-    @FXML
     private TableColumn<Sheet, String> fkCustomerTableColumn;
 
     @FXML
@@ -255,7 +252,6 @@ public class SheetsController implements Initializable {
     }
 
     private void initSheetTableView() {
-        sheetIdTableColumn.setCellValueFactory(new PropertyValueFactory("sheetId"));
         fkCustomerTableColumn.setCellValueFactory(new PropertyValueFactory("tempCustomerName"));
         descriptionTableColumn.setCellValueFactory(new PropertyValueFactory("description"));
         expirationDateTableColumn.setCellValueFactory(new PropertyValueFactory("expirationDate"));

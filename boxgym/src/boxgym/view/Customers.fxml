@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="695.0" prefWidth="1280.0" style="-fx-background-color: #f2f2f2;" styleClass="anchor-pane" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.CustomersController">
+<AnchorPane prefHeight="695.0" prefWidth="1280.0" style="-fx-background-color: #f2f2f2;" styleClass="anchor-pane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.CustomersController">
     <children>
         <AnchorPane layoutX="20.0" layoutY="25.0" prefHeight="80.0" prefWidth="1280.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -106,7 +106,6 @@
                 </HBox>
                 <TableView fx:id="customerTableView" prefHeight="550.0" prefWidth="900.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="40.0">
                     <columns>
-                        <TableColumn fx:id="customerIdTableColumn" minWidth="90.0" prefWidth="90.0" text="ID" />
                         <TableColumn fx:id="personRegistryTableColumn" minWidth="108.0" prefWidth="108.0" text="CPF" />
                         <TableColumn fx:id="nameTableColumn" minWidth="250.0" prefWidth="250.0" text="Nome" />
                         <TableColumn fx:id="sexTableColumn" minWidth="90.0" prefWidth="90.0" text="Sexo" />

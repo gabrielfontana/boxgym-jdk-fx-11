@@ -118,11 +118,10 @@
                 </HBox>
                 <TableView fx:id="exerciseTableView" prefHeight="550.0" prefWidth="900.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="40.0">
                     <columns>
-                        <TableColumn fx:id="exerciseIdTableColumn" minWidth="90.0" prefWidth="90.0" text="ID" />
-                        <TableColumn fx:id="nameTableColumn" minWidth="257.0" prefWidth="257.0" text="Nome" />
-                        <TableColumn fx:id="abbreviationTableColumn" minWidth="200.0" prefWidth="200.0" text="Abreviação" />
-                        <TableColumn fx:id="exerciseTypeTableColumn" minWidth="175.0" prefWidth="175.0" text="Tipo" />
-                        <TableColumn fx:id="exerciseGroupTableColumn" minWidth="175.0" prefWidth="175.0" text="Grupo" />
+                        <TableColumn fx:id="nameTableColumn" minWidth="317.0" prefWidth="317.0" text="Nome" />
+                        <TableColumn fx:id="abbreviationTableColumn" minWidth="210.0" prefWidth="210.0" text="Abreviação" />
+                        <TableColumn fx:id="exerciseTypeTableColumn" minWidth="185.0" prefWidth="185.0" text="Tipo" />
+                        <TableColumn fx:id="exerciseGroupTableColumn" minWidth="185.0" prefWidth="185.0" text="Grupo" />
                     </columns>
                 </TableView>
                 <BorderPane prefHeight="20.0" prefWidth="900.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
