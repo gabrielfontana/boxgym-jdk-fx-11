@@ -28,6 +28,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
@@ -46,6 +47,9 @@ public class SheetsController implements Initializable {
     AlertHelper alert = new AlertHelper();
 
     private Sheet selected;
+
+    @FXML
+    private Button statusChangerButton;
 
     @FXML
     private MenuButton filterButton;
@@ -134,11 +138,34 @@ public class SheetsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         resetDetails();
-        ButtonHelper.buttonCursor(filterButton, addButton, deleteButton, listButton);
+        ButtonHelper.buttonCursor(filterButton, statusChangerButton, addButton, deleteButton, listButton);
         ButtonHelper.iconButton(firstRow, lastRow);
         initSheetTableView();
         listeners();
         Platform.runLater(() -> searchBox.requestFocus());
+        enableOrDisableStatusChangerButton();
+    }
+
+    private void enableOrDisableStatusChangerButton() {
+        SheetDao sheetDao = new SheetDao();
+        if (sheetDao.checkExpiredSheets() == 0) {
+            statusChangerButton.setDisable(true);
+        } else {
+            statusChangerButton.setDisable(false);
+        }
+    }
+
+    @FXML
+    void statusChanger(ActionEvent event) {
+        SheetDao sheetDao = new SheetDao();
+        alert.confirmationAlert("Existem fichas de treino vencidas", "Deseja inativá-las?");
+        if (alert.getResult().get() == ButtonType.YES) {
+            sheetDao.updateExpiredSheetsStatus();
+            refreshTableView();
+            resetDetails();
+            statusChangerButton.setDisable(true);
+            alert.customAlert(Alert.AlertType.WARNING, "As fichas de treino foram inativadas com sucesso", "");
+        }
     }
 
     @FXML
@@ -152,7 +179,7 @@ public class SheetsController implements Initializable {
 
             StageHelper.createAddOrUpdateStage("Cadastrar Ficha", root);
 
-            if (controller.isSheetCreationFlag()&& !controller.isWorkoutsEntryCreationFlag()) {
+            if (controller.isSheetCreationFlag() && !controller.isWorkoutsEntryCreationFlag()) {
                 SheetDao sheetDao = new SheetDao();
                 sheetDao.deleteLastEntry();
             } else if (controller.isSheetCreationFlag() && controller.isWorkoutsEntryCreationFlag()) {

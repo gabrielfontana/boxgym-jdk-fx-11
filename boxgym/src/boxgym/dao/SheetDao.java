@@ -164,6 +164,44 @@ public class SheetDao {
         return amount;
     }
     
+    public int checkExpiredSheets() {
+        String sql = "SELECT COUNT(*) AS `expiredSheets` FROM `sheet` WHERE `expirationDate` < now();";
+        int expiredSheets = 0;
+
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                expiredSheets = rs.getInt("expiredSheets");
+                return expiredSheets;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return expiredSheets;
+    }
+    
+    public boolean updateExpiredSheetsStatus() {
+        String sql = "UPDATE `sheet` SET `status` = 0 WHERE `expirationDate` < now();";
+
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.execute();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(SheetDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return false;
+    }
+    
     public boolean delete(Sheet sheet) {
         String sql = "DELETE FROM `sheet` WHERE `sheetId` = ?;";
 
