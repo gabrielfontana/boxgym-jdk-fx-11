@@ -168,6 +168,23 @@ public class ProductsController implements Initializable {
         Platform.runLater(() -> searchBox.requestFocus());
         enableOrDisableMinimumStockButton();
     }
+    
+    private void enableOrDisableMinimumStockButton() {
+        ProductDao productDao = new ProductDao();
+        List<String> list = productDao.checkProductsBelowMinimumStock();
+        if (list.isEmpty()) {
+            minimumStockAlertButton.setDisable(true);
+        } else {
+            minimumStockAlertButton.setDisable(false);
+        }
+    }
+    
+    @FXML
+    void minimumStockAlert(ActionEvent event) {
+        ProductDao productDao = new ProductDao();
+        String listString = String.join("\n", productDao.checkProductsBelowMinimumStock());
+        alert.customAlert(Alert.AlertType.INFORMATION, "Produto(s) com estoque abaixo da quantidade mínima:", listString);
+    }
 
     @FXML
     void addProduct(ActionEvent event) {
@@ -425,23 +442,6 @@ public class ProductsController implements Initializable {
         });
     }
     
-    private void enableOrDisableMinimumStockButton() {
-        ProductDao productDao = new ProductDao();
-        List<String> list = productDao.checkProductsBelowMinimumStock();
-        if (list.isEmpty()) {
-            minimumStockAlertButton.setDisable(true);
-        } else {
-            minimumStockAlertButton.setDisable(false);
-        }
-    }
-    
-    @FXML
-    void minimumStockAlert(ActionEvent event) {
-        ProductDao productDao = new ProductDao();
-        String listString = String.join("\n", productDao.checkProductsBelowMinimumStock());
-        alert.customAlert(Alert.AlertType.INFORMATION, "Produto(s) com estoque abaixo da quantidade mínima:", listString);
-    }
-
     @FXML
     void goToFirstRow(MouseEvent event) {
         productTableView.scrollTo(0);
