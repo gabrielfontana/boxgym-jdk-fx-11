@@ -5,6 +5,7 @@ import boxgym.model.Measurement;
 import boxgym.model.Product;
 import boxgym.model.Sale;
 import boxgym.model.SaleProduct;
+import boxgym.model.Sheet;
 import boxgym.model.StockEntry;
 import boxgym.model.StockEntryProduct;
 import java.math.BigDecimal;
@@ -121,6 +122,21 @@ public class TextFieldFormat {
     public static void measurementTableCellDateFormat(TableColumn column) {
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         column.setCellFactory(tc -> new TableCell<Measurement, LocalDate>() {
+            @Override
+            protected void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                if (empty) {
+                    setText(null);
+                } else {
+                    setText(date.format(dateFormat));
+                }
+            }
+        });
+    }
+    
+    public static void sheetTableCellDateFormat(TableColumn column) {
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        column.setCellFactory(tc -> new TableCell<Sheet, LocalDate>() {
             @Override
             protected void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);

@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -92,6 +93,28 @@ public class WorkoutDao {
         }
         return false;
     }
+    
+    public LinkedHashMap<Integer, String> getWorkoutForHashMap() {
+        LinkedHashMap<Integer, String> map = new LinkedHashMap<>();
+        String sql = "SELECT `workoutId`, `description` FROM `workout`;";
+
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            Workout w;
+            while (rs.next()) {
+                w = new Workout(rs.getInt("workoutId"), rs.getString("description"));
+                map.put(w.getWorkoutId(), w.getDescription());
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(WorkoutDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return map;
+    }
 
     public List<Workout> read() {
         List<Workout> workoutsList = new ArrayList<>();
@@ -136,6 +159,26 @@ public class WorkoutDao {
             DbUtils.closeQuietly(rs);
         }
         return false;
+    }
+    
+    public List<String> filterWorkoutsByGoal(String workoutGoal) {
+        List<String> workoutsList = new ArrayList<>();
+        String sql = "SELECT `description` FROM `workout` WHERE `goal` = '" + workoutGoal + "';";
+
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                workoutsList.add(rs.getString("description"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(WorkoutDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return workoutsList;
     }
 
     public boolean createExcelFile(String filePath) {
