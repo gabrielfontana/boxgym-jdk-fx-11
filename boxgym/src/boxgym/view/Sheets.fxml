@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="695.0" prefWidth="1280.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.SheetsController">
+<AnchorPane prefHeight="695.0" prefWidth="1280.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.SheetsController">
     <children>
         <AnchorPane layoutX="30.0" layoutY="35.0" prefHeight="80.0" prefWidth="1280.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -110,10 +110,10 @@
                 </HBox>
                 <TableView fx:id="sheetTableView" prefHeight="550.0" prefWidth="900.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="40.0">
                     <columns>
-                        <TableColumn fx:id="fkCustomerTableColumn" minWidth="300.0" prefWidth="300.0" text="Cliente" />
+                        <TableColumn fx:id="fkCustomerTableColumn" minWidth="350.0" prefWidth="350.0" text="Cliente" />
                         <TableColumn fx:id="descriptionTableColumn" minWidth="200.0" prefWidth="200.0" text="Descrição da Ficha" />
                         <TableColumn fx:id="expirationDateTableColumn" minWidth="200.0" prefWidth="200.0" text="Data de Validade" />
-                        <TableColumn fx:id="commentsTableColumn" minWidth="300.0" prefWidth="300.0" text="Observações" />
+                        <TableColumn fx:id="commentsTableColumn" minWidth="350.0" prefWidth="350.0" text="Observações" />
                     </columns>
                 </TableView>
                 <BorderPane prefHeight="20.0" prefWidth="900.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">

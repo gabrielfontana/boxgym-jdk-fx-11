@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="695.0" prefWidth="1280.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.WorkoutsController">
+<AnchorPane prefHeight="695.0" prefWidth="1280.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.WorkoutsController">
     <children>
         <AnchorPane layoutX="30.0" layoutY="35.0" prefHeight="80.0" prefWidth="1280.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -98,9 +98,9 @@
                 </HBox>
                 <TableView fx:id="workoutTableView" prefHeight="550.0" prefWidth="900.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="40.0">
                     <columns>
-                        <TableColumn fx:id="descriptionTableColumn" minWidth="478.0" prefWidth="478.0" text="Descrição" />
-                        <TableColumn fx:id="goalTableColumn" minWidth="210.0" prefWidth="210.0" text="Objetivo" />
-                        <TableColumn fx:id="sessionsTableColumn" minWidth="210.0" prefWidth="210.0" text="Sessões" />
+                        <TableColumn fx:id="descriptionTableColumn" minWidth="455.0" prefWidth="455.0" text="Descrição" />
+                        <TableColumn fx:id="goalTableColumn" minWidth="265.0" prefWidth="265.0" text="Objetivo" />
+                        <TableColumn fx:id="sessionsTableColumn" minWidth="165.0" prefWidth="165.0" text="Sessões" />
                     </columns>
                 </TableView>
                 <BorderPane prefHeight="20.0" prefWidth="900.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
