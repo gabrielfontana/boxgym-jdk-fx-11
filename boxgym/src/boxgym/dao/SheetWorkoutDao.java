@@ -42,6 +42,34 @@ public class SheetWorkoutDao {
         return false;
     }
     
+    public List<SheetWorkout> read(int selectedSheet) {
+        List<SheetWorkout> workoutsList = new ArrayList<>();
+        String sql = "SELECT w.description AS `tempWorkoutDescription`, s_w.dayOfTheWeek, s_w.createdAt, s_w.updatedAt "
+                + "FROM `sheet_workout` AS s_w INNER JOIN `workout` AS w "
+                + "ON s_w.fkWorkout = w.workoutId "
+                + "WHERE s_w.fkSheet = " + selectedSheet + ";";
+
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                SheetWorkout sw = new SheetWorkout();
+                sw.setTempWorkoutDescription(rs.getString("tempWorkoutDescription"));
+                sw.setDayOfTheWeek(rs.getString("dayOfTheWeek"));
+                sw.setCreatedAt(rs.getTimestamp("createdAt").toLocalDateTime());
+                sw.setUpdatedAt(rs.getTimestamp("updatedAt").toLocalDateTime());
+                workoutsList.add(sw);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SheetWorkoutDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return workoutsList;
+    }
+    
     public boolean delete(Sheet sheet) {
         String sql = "DELETE FROM `sheet_workout` WHERE `fkSheet` = ?;";
 

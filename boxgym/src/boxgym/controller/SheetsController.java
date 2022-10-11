@@ -237,7 +237,24 @@ public class SheetsController implements Initializable {
 
     @FXML
     void listWorkouts(ActionEvent event) {
+        if (selected == null) {
+            alert.customAlert(Alert.AlertType.WARNING, "Selecione uma ficha para listar os treinos adicionados nela", "");
+        } else {
+            int index = sheetTableView.getSelectionModel().getSelectedIndex();
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/boxgym/view/SheetsWorkoutsList.fxml"));
+                Parent root = (Parent) loader.load();
+                JMetro jMetro = new JMetro(root, Style.LIGHT);
 
+                SheetsWorkoutsListController controller = loader.getController();
+                controller.setSelectedSheet(selected.getSheetId());
+
+                StageHelper.createAddOrUpdateStage("Listar treinos da ficha", root);
+                sheetTableView.getSelectionModel().select(index);
+            } catch (IOException ex) {
+                Logger.getLogger(WorkoutsController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     private ObservableList<Sheet> loadData() {
