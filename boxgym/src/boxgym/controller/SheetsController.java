@@ -1,6 +1,7 @@
 package boxgym.controller;
 
 import boxgym.dao.SheetDao;
+import boxgym.dao.SheetWorkoutDao;
 import boxgym.helper.AlertHelper;
 import boxgym.helper.ButtonHelper;
 import boxgym.helper.StageHelper;
@@ -194,7 +195,23 @@ public class SheetsController implements Initializable {
 
     @FXML
     void deleteSheet(ActionEvent event) {
+        SheetDao sheetDao = new SheetDao();
+        SheetWorkoutDao sheetWorkoutDao = new SheetWorkoutDao();
 
+        if (selected == null) {
+            alert.customAlert(Alert.AlertType.WARNING, "Selecione uma ficha para excluir", "");
+        } else {
+            alert.confirmationAlert("Excluir ficha", "Tem certeza que deseja excluir a ficha '" + selected.getDescription()+ "' "
+                    + "do(a) aluno(a) '" + selected.getTempCustomerName() + "'? "
+                    + "\n\nA ficha será excluída de forma definitiva e não poderá ser recuperada.");
+            if (alert.getResult().get() == ButtonType.YES) {
+                sheetWorkoutDao.delete(selected);
+                sheetDao.delete(selected);
+                refreshTableView();
+                resetDetails();
+                alert.customAlert(Alert.AlertType.WARNING, "Ficha excluída com sucesso", "");
+            }
+        }
     }
 
     private void resetDetails() {
