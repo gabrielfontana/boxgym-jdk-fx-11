@@ -220,8 +220,8 @@ public class SalesController implements Initializable {
     }
     
     private ObservableList<Sale> loadData() {
-        SaleDao stockEntryDao = new SaleDao();
-        return FXCollections.observableArrayList(stockEntryDao.read());
+        SaleDao saleDao = new SaleDao();
+        return FXCollections.observableArrayList(saleDao.read());
     }
 
     private void refreshTableView() {
