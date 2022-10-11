@@ -29,6 +29,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -306,13 +307,17 @@ public class SalesAddController implements Initializable {
     @FXML
     private void save(ActionEvent event) {
         if (!(list == null || list.isEmpty())) {
-            for (SaleProduct item : list) {
-                SaleProductDao dao = new SaleProductDao();
-                dao.create(item);
+            AlertHelper alert = new AlertHelper();
+            alert.confirmationAlert("Finalizar venda", "Deseja confirmar esta venda? Após o fechamento não será mais possível realizar alterações.");
+            if (alert.getResult().get() == ButtonType.YES) {
+                for (SaleProduct item : list) {
+                    SaleProductDao dao = new SaleProductDao();
+                    dao.create(item);
+                }
+                setProductsEntryCreationFlag(true);
+                ah.customAlert(Alert.AlertType.INFORMATION, "Venda realizada com sucesso", "");
+                anchorPane.getScene().getWindow().hide();
             }
-            setProductsEntryCreationFlag(true);
-            ah.customAlert(Alert.AlertType.INFORMATION, "Venda realizada com sucesso", "");
-            anchorPane.getScene().getWindow().hide();
         } else {
             ah.customAlert(Alert.AlertType.INFORMATION, "Lista de produtos vazia", "");
         }

@@ -29,6 +29,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -298,13 +299,17 @@ public class StockEntryAddController implements Initializable {
     @FXML
     void save() {
         if (!(list == null || list.isEmpty())) {
-            for (StockEntryProduct item : list) {
-                StockEntryProductDao dao = new StockEntryProductDao();
-                dao.create(item);
+            AlertHelper alert = new AlertHelper();
+            alert.confirmationAlert("Finalizar entrada de estoque", "Deseja confirmar esta entrada de estoque? Após o fechamento não será mais possível realizar alterações.");
+            if (alert.getResult().get() == ButtonType.YES) {
+                for (StockEntryProduct item : list) {
+                    StockEntryProductDao dao = new StockEntryProductDao();
+                    dao.create(item);
+                }
+                setProductsEntryCreationFlag(true);
+                ah.customAlert(Alert.AlertType.INFORMATION, "Entrada de estoque realizada com sucesso", "");
+                anchorPane.getScene().getWindow().hide();
             }
-            setProductsEntryCreationFlag(true);
-            ah.customAlert(Alert.AlertType.INFORMATION, "Entrada de estoque realizada com sucesso", "");
-            anchorPane.getScene().getWindow().hide();
         } else {
             ah.customAlert(Alert.AlertType.INFORMATION, "Lista de produtos vazia", "");
         }

@@ -26,6 +26,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -250,7 +251,7 @@ public class SheetsAddController implements Initializable {
         }
         return key;
     }
-    
+
     private void defaultSheetDescription() {
         customerComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
             SheetDao sheetDao = new SheetDao();
@@ -305,15 +306,19 @@ public class SheetsAddController implements Initializable {
     @FXML
     private void save() {
         if (!(list == null || list.isEmpty())) {
-            for (SheetWorkout item : list) {
-                SheetWorkoutDao dao = new SheetWorkoutDao();
-                dao.create(item);
+            AlertHelper alert = new AlertHelper();
+            alert.confirmationAlert("Finalizar ficha", "Deseja confirmar esta ficha? Após o fechamento não será mais possível realizar alterações.");
+            if (alert.getResult().get() == ButtonType.YES) {
+                for (SheetWorkout item : list) {
+                    SheetWorkoutDao dao = new SheetWorkoutDao();
+                    dao.create(item);
+                }
+                SheetDao sheetDao = new SheetDao();
+                sheetDao.updateComments(commentsTextArea.getText(), Integer.valueOf(sheetIdTextField.getText()));
+                setWorkoutsEntryCreationFlag(true);
+                ah.customAlert(Alert.AlertType.INFORMATION, "Ficha cadastrada com sucesso", "");
+                anchorPane.getScene().getWindow().hide();
             }
-            SheetDao sheetDao = new SheetDao();
-            sheetDao.updateComments(commentsTextArea.getText(), Integer.valueOf(sheetIdTextField.getText()));
-            setWorkoutsEntryCreationFlag(true);
-            ah.customAlert(Alert.AlertType.INFORMATION, "Ficha cadastrada com sucesso", "");
-            anchorPane.getScene().getWindow().hide();
         } else {
             ah.customAlert(Alert.AlertType.INFORMATION, "Lista de treinos vazia", "");
         }
