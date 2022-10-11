@@ -19,20 +19,27 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="695.0" prefWidth="1280.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.ExercisesController">
+<AnchorPane prefHeight="695.0" prefWidth="1280.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.ExercisesController">
     <children>
         <AnchorPane layoutX="30.0" layoutY="35.0" prefHeight="80.0" prefWidth="1280.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <Label text="Treinos &gt; Exercícios" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
-                    <font>
-                        <Font name="System Bold" size="18.0" />
-                    </font>
-                </Label>
-                <Button fx:id="importExercisesButton" layoutX="197.0" layoutY="25.0" mnemonicParsing="false" onAction="#importExercises" prefHeight="30.0" prefWidth="30.0">
-                    <graphic>
-                        <MaterialDesignIconView glyphName="DOWNLOAD" size="17" />
-                    </graphic>
-                </Button>
+            <HBox alignment="CENTER" layoutX="20.0" layoutY="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+               <children>
+                      <Label text="Treinos &gt; Exercícios">
+                          <font>
+                              <Font name="System Bold" size="18.0" />
+                          </font>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                      </Label>
+                      <Button fx:id="importExercisesButton" mnemonicParsing="false" onAction="#importExercises" prefHeight="30.0" prefWidth="30.0">
+                          <graphic>
+                              <MaterialDesignIconView glyphName="DOWNLOAD" size="17" />
+                          </graphic>
+                      </Button>
+               </children>
+            </HBox>
             </children>
         </AnchorPane>
         <AnchorPane layoutX="165.0" layoutY="123.0" prefHeight="695.0" prefWidth="940.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="340.0" AnchorPane.topAnchor="80.0">

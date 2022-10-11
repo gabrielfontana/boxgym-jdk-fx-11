@@ -23,11 +23,23 @@
     <children>
         <AnchorPane layoutX="30.0" layoutY="35.0" prefHeight="80.0" prefWidth="1280.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <Label text="Treinos &gt; Fichas" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
-                    <font>
-                        <Font name="System Bold" size="18.0" />
-                    </font>
-                </Label>
+            <HBox alignment="CENTER" layoutX="20.0" layoutY="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+               <children>
+                      <Label text="Treinos &gt; Fichas">
+                          <font>
+                              <Font name="System Bold" size="18.0" />
+                          </font>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                      </Label>
+                  <Button fx:id="statusChangerButton" mnemonicParsing="false" onAction="#statusChanger" prefHeight="30.0" prefWidth="30.0">
+                     <graphic>
+                        <MaterialDesignIconView glyphName="REFRESH" size="17" />
+                     </graphic>
+                  </Button>
+               </children>
+            </HBox>
             </children>
         </AnchorPane>
         <AnchorPane layoutX="165.0" layoutY="123.0" prefHeight="695.0" prefWidth="940.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="340.0" AnchorPane.topAnchor="80.0">
