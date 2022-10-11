@@ -208,7 +208,7 @@ public class SalesController implements Initializable {
                 SalesProductsListController controller = loader.getController();
                 controller.setSelectedSale(selected.getSaleId());
 
-                StageHelper.createAddOrUpdateStage("Listar Produtos da Venda", root);
+                StageHelper.createAddOrUpdateStage("Listar produtos da venda", root);
                 saleTableView.getSelectionModel().select(index);
             } catch (IOException ex) {
                 Logger.getLogger(StockEntryController.class.getName()).log(Level.SEVERE, null, ex);

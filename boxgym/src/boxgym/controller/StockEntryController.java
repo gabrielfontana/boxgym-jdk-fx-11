@@ -214,7 +214,7 @@ public class StockEntryController implements Initializable {
                 StockEntryProductsListController controller = loader.getController();
                 controller.setSelectedStockEntry(selected.getStockEntryId());
 
-                StageHelper.createAddOrUpdateStage("Listar Produtos da Entrada de Estoque", root);
+                StageHelper.createAddOrUpdateStage("Listar produtos da entrada de estoque", root);
                 stockEntryTableView.getSelectionModel().select(index);
             } catch (IOException ex) {
                 Logger.getLogger(StockEntryController.class.getName()).log(Level.SEVERE, null, ex);

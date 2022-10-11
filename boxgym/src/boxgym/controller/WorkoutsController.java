@@ -216,7 +216,7 @@ public class WorkoutsController implements Initializable {
                 WorkoutsExercisesListController controller = loader.getController();
                 controller.setSelectedWorkout(selected.getWorkoutId());
 
-                StageHelper.createAddOrUpdateStage("Listar Exercícios do Treino", root);
+                StageHelper.createAddOrUpdateStage("Listar exercícios do treino", root);
                 workoutTableView.getSelectionModel().select(index);
             } catch (IOException ex) {
                 Logger.getLogger(WorkoutsController.class.getName()).log(Level.SEVERE, null, ex);
