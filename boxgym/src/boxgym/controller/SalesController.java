@@ -141,7 +141,7 @@ public class SalesController implements Initializable {
             
             SalesAddController controller = loader.getController();
             
-            StageHelper.createAddOrUpdateStage("Cadastrar Venda", root);
+            StageHelper.createAddOrUpdateStage("Cadastrar venda", root);
             
             if (controller.isSaleCreationFlag() && !controller.isProductsEntryCreationFlag()) {
                 SaleDao saleDao = new SaleDao();
@@ -165,7 +165,7 @@ public class SalesController implements Initializable {
         if (selected == null) {
             alert.customAlert(Alert.AlertType.WARNING, "Selecione uma venda para cancelar", "");
         } else {
-            alert.confirmationAlert("Cancelar Venda", "Tem certeza que deseja cancelar esta venda? "
+            alert.confirmationAlert("Cancelar venda", "Tem certeza que deseja cancelar esta venda? "
                     + "\n\nA venda será cancelada de forma definitiva e não poderá ser recuperada. Após isso, os produtos entrarão no estoque novamente.");
             if (alert.getResult().get() == ButtonType.YES) {
                 saleProductDao.delete(selected);

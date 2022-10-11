@@ -183,7 +183,7 @@ public class SuppliersController implements Initializable {
 
             SuppliersAddController controller = loader.getController();
 
-            StageHelper.createAddOrUpdateStage("Cadastrar Fornecedor", root);
+            StageHelper.createAddOrUpdateStage("Cadastrar fornecedor", root);
 
             if (controller.isCreated()) {
                 refreshTableView();
@@ -208,7 +208,7 @@ public class SuppliersController implements Initializable {
                 SuppliersUpdateController controller = loader.getController();
                 controller.setLoadSupplier(selected);
 
-                StageHelper.createAddOrUpdateStage("Atualizar Fornecedor", root);
+                StageHelper.createAddOrUpdateStage("Atualizar fornecedor", root);
 
                 if (controller.isUpdated()) {
                     refreshTableView();
@@ -227,7 +227,7 @@ public class SuppliersController implements Initializable {
         if (selected == null) {
             alert.customAlert(Alert.AlertType.WARNING, "Selecione um fornecedor para excluir", "");
         } else {
-            alert.confirmationAlert("Excluir Fornecedor", "Tem certeza que deseja excluir o fornecedor '" + selected.getTradeName() + "'? "
+            alert.confirmationAlert("Excluir fornecedor", "Tem certeza que deseja excluir o fornecedor '" + selected.getTradeName() + "'? "
                     + "\n\nO fornecedor será excluído de forma definitiva e não poderá ser recuperado.");
             if (alert.getResult().get() == ButtonType.YES) {
                 if (supplierDao.checkStockEntryDeleteConstraint(selected.getSupplierId())) {

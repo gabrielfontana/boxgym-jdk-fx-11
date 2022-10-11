@@ -178,7 +178,7 @@ public class SheetsController implements Initializable {
 
             SheetsAddController controller = loader.getController();
 
-            StageHelper.createAddOrUpdateStage("Cadastrar Ficha", root);
+            StageHelper.createAddOrUpdateStage("Cadastrar ficha", root);
 
             if (controller.isSheetCreationFlag() && !controller.isWorkoutsEntryCreationFlag()) {
                 SheetDao sheetDao = new SheetDao();

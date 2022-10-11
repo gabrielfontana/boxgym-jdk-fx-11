@@ -182,7 +182,7 @@ public class ExercisesController implements Initializable {
 
             ExercisesAddController controller = loader.getController();
 
-            StageHelper.createAddOrUpdateStage("Cadastrar Exercício", root);
+            StageHelper.createAddOrUpdateStage("Cadastrar exercício", root);
 
             if (controller.isCreated()) {
                 refreshTableView();
@@ -207,7 +207,7 @@ public class ExercisesController implements Initializable {
                 ExercisesUpdateController controller = loader.getController();
                 controller.setLoadExercise(selected);
 
-                StageHelper.createAddOrUpdateStage("Atualizar Exercício", root);
+                StageHelper.createAddOrUpdateStage("Atualizar exercício", root);
 
                 if (controller.isUpdated()) {
                     refreshTableView();
@@ -226,7 +226,7 @@ public class ExercisesController implements Initializable {
         if (selected == null) {
             alert.customAlert(Alert.AlertType.WARNING, "Selecione um exercício para excluir", "");
         } else {
-            alert.confirmationAlert("Excluir Exercício", "Tem certeza que deseja excluir o exercício '" + selected.getAbbreviation() + "'? "
+            alert.confirmationAlert("Excluir exercício", "Tem certeza que deseja excluir o exercício '" + selected.getAbbreviation() + "'? "
                     + "\n\nO exercício será excluído de forma definitiva e não poderá ser recuperado.");
             if (alert.getResult().get() == ButtonType.YES) {
                 if (exerciseDao.checkWorkoutDeleteConstraint(selected.getExerciseId())){

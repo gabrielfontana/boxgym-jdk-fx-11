@@ -191,7 +191,7 @@ public class CustomersController implements Initializable {
 
             CustomersAddController controller = loader.getController();
 
-            StageHelper.createAddOrUpdateStage("Cadastrar Cliente", root);
+            StageHelper.createAddOrUpdateStage("Cadastrar cliente", root);
 
             if (controller.isCreated()) {
                 refreshTableView();
@@ -216,7 +216,7 @@ public class CustomersController implements Initializable {
                 CustomersUpdateController controller = loader.getController();
                 controller.setLoadCustomer(selected);
 
-                StageHelper.createAddOrUpdateStage("Atualizar Cliente", root);
+                StageHelper.createAddOrUpdateStage("Atualizar cliente", root);
 
                 if (controller.isUpdated()) {
                     refreshTableView();
@@ -235,7 +235,7 @@ public class CustomersController implements Initializable {
         if (selected == null) {
             alert.customAlert(Alert.AlertType.WARNING, "Selecione um cliente para excluir", "");
         } else {
-            alert.confirmationAlert("Excluir Cliente", "Tem certeza que deseja excluir o(a) cliente '" + selected.getName()+ "'? "
+            alert.confirmationAlert("Excluir cliente", "Tem certeza que deseja excluir o(a) cliente '" + selected.getName()+ "'? "
                     + "\n\nO(a) cliente será excluído(a) de forma definitiva e não poderá ser recuperado(a).");
             if (alert.getResult().get() == ButtonType.YES) {
                 boolean saleConstraint = customerDao.checkSaleDeleteConstraint(selected.getCustomerId());

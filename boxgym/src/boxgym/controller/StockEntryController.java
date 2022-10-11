@@ -147,7 +147,7 @@ public class StockEntryController implements Initializable {
 
             StockEntryAddController controller = loader.getController();
 
-            StageHelper.createAddOrUpdateStage("Cadastrar Entrada de Estoque", root);
+            StageHelper.createAddOrUpdateStage("Cadastrar entrada de estoque", root);
 
             if (controller.isStockEntryCreationFlag() && !controller.isProductsEntryCreationFlag()) {
                 StockEntryDao stockEntryDao = new StockEntryDao();
@@ -169,7 +169,7 @@ public class StockEntryController implements Initializable {
         if (selected == null) {
             alert.customAlert(Alert.AlertType.WARNING, "Selecione uma entrada de estoque para cancelar", "");
         } else {
-            alert.confirmationAlert("Cancelar Entrada de Estoque", "Tem certeza que deseja cancelar esta entrada de estoque? "
+            alert.confirmationAlert("Cancelar entrada de estoque", "Tem certeza que deseja cancelar esta entrada de estoque? "
                     + "\n\nA entrada de estoque será cancelada de forma definitiva e não poderá ser recuperada. Após isso, a entrada dos produtos no estoque será desfeita.");
             if (alert.getResult().get() == ButtonType.YES) {
                 stockEntryProductDao.delete(selected);

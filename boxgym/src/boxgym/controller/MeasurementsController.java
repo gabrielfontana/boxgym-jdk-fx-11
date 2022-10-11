@@ -195,7 +195,7 @@ public class MeasurementsController implements Initializable {
 
             MeasurementsAddController controller = loader.getController();
 
-            StageHelper.createAddOrUpdateStage("Cadastrar Medidas", root);
+            StageHelper.createAddOrUpdateStage("Cadastrar medidas", root);
 
             if (controller.isCreated()) {
                 refreshTableView();
@@ -220,7 +220,7 @@ public class MeasurementsController implements Initializable {
                 MeasurementsUpdateController controller = loader.getController();
                 controller.setLoadMeasurement(selected);
 
-                StageHelper.createAddOrUpdateStage("Atualizar Medidas", root);
+                StageHelper.createAddOrUpdateStage("Atualizar medidas", root);
 
                 if (controller.isUpdated()) {
                     refreshTableView();
@@ -239,7 +239,7 @@ public class MeasurementsController implements Initializable {
         if (selected == null) {
             alert.customAlert(Alert.AlertType.WARNING, "Selecione uma medição para excluir", "");
         } else {
-            alert.confirmationAlert("Excluir Medidas", "Tem certeza que deseja excluir as medidas do(a) cliente '" + selected.getTempCustomerName()+ "'? "
+            alert.confirmationAlert("Excluir medidas", "Tem certeza que deseja excluir as medidas do(a) cliente '" + selected.getTempCustomerName()+ "'? "
                     + "\n\nAs medidas serão excluídas de forma definitiva e não poderão ser recuperadas.");
             if (alert.getResult().get() == ButtonType.YES) {
                 measurementDao.delete(selected);

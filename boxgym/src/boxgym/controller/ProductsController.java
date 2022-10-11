@@ -195,7 +195,7 @@ public class ProductsController implements Initializable {
 
             ProductsAddController controller = loader.getController();
 
-            StageHelper.createAddOrUpdateStage("Cadastrar Produto", root);
+            StageHelper.createAddOrUpdateStage("Cadastrar produto", root);
 
             if (controller.isCreated()) {
                 refreshTableView();
@@ -220,7 +220,7 @@ public class ProductsController implements Initializable {
                 ProductsUpdateController controller = loader.getController();
                 controller.setLoadProduct(selected);
 
-                StageHelper.createAddOrUpdateStage("Atualizar Produto", root);
+                StageHelper.createAddOrUpdateStage("Atualizar produto", root);
 
                 if (controller.isUpdated()) {
                     refreshTableView();
@@ -239,7 +239,7 @@ public class ProductsController implements Initializable {
         if (selected == null) {
             alert.customAlert(Alert.AlertType.WARNING, "Selecione um produto para excluir", "");
         } else {
-            alert.confirmationAlert("Excluir Produto", "Tem certeza que deseja excluir o produto '" + selected.getName() + "'? "
+            alert.confirmationAlert("Excluir produto", "Tem certeza que deseja excluir o produto '" + selected.getName() + "'? "
                     + "\n\nO produto será excluído de forma definitiva e não poderá ser recuperado.");
             if (alert.getResult().get() == ButtonType.YES) {
                 boolean saleConstraint = productDao.checkSaleDeleteConstraint(selected.getProductId());

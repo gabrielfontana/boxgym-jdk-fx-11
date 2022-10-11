@@ -145,7 +145,7 @@ public class WorkoutsController implements Initializable {
 
             WorkoutsAddController controller = loader.getController();
 
-            StageHelper.createAddOrUpdateStage("Cadastrar Treino", root);
+            StageHelper.createAddOrUpdateStage("Cadastrar treino", root);
 
             if (controller.isWorkoutCreationFlag() && !controller.isExercisesEntryCreationFlag()) {
                 WorkoutDao workoutDao = new WorkoutDao();
@@ -167,7 +167,7 @@ public class WorkoutsController implements Initializable {
         if (selected == null) {
             alert.customAlert(Alert.AlertType.WARNING, "Selecione um treino para excluir", "");
         } else {
-            alert.confirmationAlert("Excluir Treino", "Tem certeza que deseja excluir o treino '" + selected.getDescription()+ "'? "
+            alert.confirmationAlert("Excluir treino", "Tem certeza que deseja excluir o treino '" + selected.getDescription()+ "'? "
                     + "\n\nO treino será excluído de forma definitiva e não poderá ser recuperado.");
             if (alert.getResult().get() == ButtonType.YES) {
                 workoutExerciseDao.delete(selected);
