@@ -324,7 +324,6 @@ public class ProductsController implements Initializable {
     }
 
     private boolean caseSensitiveEnabled(Product product, String searchText, int optionOrder) {
-        String productId = String.valueOf(product.getProductId());
         String name = product.getName();
         String category = product.getCategory();
         String amount = String.valueOf(product.getAmount());
@@ -332,13 +331,12 @@ public class ProductsController implements Initializable {
         String costPrice = "R$ ".concat(String.valueOf(product.getCostPrice()).replace(".", ","));
         String sellingPrice = "R$ ".concat(String.valueOf(product.getSellingPrice()).replace(".", ","));
 
-        List<String> fields = Arrays.asList(productId, name, category, amount, minimumStock, costPrice, sellingPrice);
+        List<String> fields = Arrays.asList(name, category, amount, minimumStock, costPrice, sellingPrice);
 
         return stringComparasion(fields, searchText, optionOrder);
     }
 
     private boolean caseSensitiveDisabled(Product product, String searchText, int optionOrder) {
-        String productId = String.valueOf(product.getProductId());
         String name = product.getName().toLowerCase();
         String category = product.getCategory().toLowerCase();
         String amount = String.valueOf(product.getAmount());
@@ -346,7 +344,7 @@ public class ProductsController implements Initializable {
         String costPrice = "r$ ".concat(String.valueOf(product.getCostPrice()).replace(".", ","));
         String sellingPrice = "r$ ".concat(String.valueOf(product.getSellingPrice()).replace(".", ","));
 
-        List<String> fields = Arrays.asList(productId, name, category, amount, minimumStock, costPrice, sellingPrice);
+        List<String> fields = Arrays.asList(name, category, amount, minimumStock, costPrice, sellingPrice);
 
         return stringComparasion(fields, searchText, optionOrder);
     }
@@ -357,26 +355,22 @@ public class ProductsController implements Initializable {
             case 1:
                 searchReturn = (list.get(0).contains(searchText)) || (list.get(1).contains(searchText))
                         || (list.get(2).contains(searchText)) || (list.get(3).contains(searchText))
-                        || (list.get(4).contains(searchText)) || (list.get(5).contains(searchText))
-                        || (list.get(6).contains(searchText));
+                        || (list.get(4).contains(searchText)) || (list.get(5).contains(searchText));
                 break;
             case 2:
                 searchReturn = (list.get(0).equals(searchText)) || (list.get(1).equals(searchText))
                         || (list.get(2).equals(searchText)) || (list.get(3).equals(searchText))
-                        || (list.get(4).equals(searchText)) || (list.get(5).equals(searchText))
-                        || (list.get(6).equals(searchText));
+                        || (list.get(4).equals(searchText)) || (list.get(5).equals(searchText));
                 break;
             case 3:
                 searchReturn = (list.get(0).startsWith(searchText)) || (list.get(1).startsWith(searchText))
                         || (list.get(2).startsWith(searchText)) || (list.get(3).startsWith(searchText))
-                        || (list.get(4).startsWith(searchText)) || (list.get(5).startsWith(searchText))
-                        || (list.get(6).startsWith(searchText));
+                        || (list.get(4).startsWith(searchText)) || (list.get(5).startsWith(searchText));
                 break;
             case 4:
                 searchReturn = (list.get(0).endsWith(searchText)) || (list.get(1).endsWith(searchText))
                         || (list.get(2).endsWith(searchText)) || (list.get(3).endsWith(searchText))
-                        || (list.get(4).endsWith(searchText)) || (list.get(5).endsWith(searchText))
-                        || (list.get(6).endsWith(searchText));
+                        || (list.get(4).endsWith(searchText)) || (list.get(5).endsWith(searchText));
                 break;
             default:
                 break;

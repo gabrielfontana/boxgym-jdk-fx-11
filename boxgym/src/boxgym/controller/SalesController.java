@@ -237,21 +237,19 @@ public class SalesController implements Initializable {
     }
     
     private boolean caseSensitiveEnabled(Sale sale, String searchText, int optionOrder) {
-        String saleId = String.valueOf(sale.getSaleId());
         String tempCustomerName = sale.getTempCustomerName();
         String saleDate = sale.getSaleDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
-        List<String> fields = Arrays.asList(saleId, tempCustomerName, saleDate);
+        List<String> fields = Arrays.asList(tempCustomerName, saleDate);
 
         return stringComparasion(fields, searchText, optionOrder);
     }
 
     private boolean caseSensitiveDisabled(Sale sale, String searchText, int optionOrder) {
-        String saleId = String.valueOf(sale.getSaleId());
         String tempCustomerName = sale.getTempCustomerName().toLowerCase();
         String saleDate = sale.getSaleDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         
-        List<String> fields = Arrays.asList(saleId, tempCustomerName, saleDate);
+        List<String> fields = Arrays.asList(tempCustomerName, saleDate);
 
         return stringComparasion(fields, searchText, optionOrder);
     }
@@ -260,20 +258,16 @@ public class SalesController implements Initializable {
         boolean searchReturn = false;
         switch (optionOrder) {
             case 1:
-                searchReturn = (list.get(0).contains(searchText)) || (list.get(1).contains(searchText))
-                        || (list.get(2).contains(searchText));
+                searchReturn = (list.get(0).contains(searchText)) || (list.get(1).contains(searchText));
                 break;
             case 2:
-                searchReturn = (list.get(0).equals(searchText)) || (list.get(1).equals(searchText))
-                        || (list.get(2).equals(searchText));
+                searchReturn = (list.get(0).equals(searchText)) || (list.get(1).equals(searchText));
                 break;
             case 3:
-                searchReturn = (list.get(0).startsWith(searchText)) || (list.get(1).startsWith(searchText))
-                        || (list.get(2).startsWith(searchText));
+                searchReturn = (list.get(0).startsWith(searchText)) || (list.get(1).startsWith(searchText));
                 break;
             case 4:
-                searchReturn = (list.get(0).endsWith(searchText)) || (list.get(1).endsWith(searchText))
-                        || (list.get(2).endsWith(searchText));
+                searchReturn = (list.get(0).endsWith(searchText)) || (list.get(1).endsWith(searchText));
                 break;
             default:
                 break;

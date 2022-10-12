@@ -105,6 +105,9 @@ public class CustomersController implements Initializable {
 
     @FXML
     private TableColumn<Customer, String> addressTableColumn;
+    
+    @FXML
+    private TableColumn<Customer, String> districtTableColumn;
 
     @FXML
     private TableColumn<Customer, String> cityTableColumn;
@@ -313,49 +316,42 @@ public class CustomersController implements Initializable {
         emailTableColumn.setCellValueFactory(new PropertyValueFactory("email"));
         phoneTableColumn.setCellValueFactory(new PropertyValueFactory("phone"));
         addressTableColumn.setCellValueFactory(new PropertyValueFactory("address"));
+        districtTableColumn.setCellValueFactory(new PropertyValueFactory("district"));
         cityTableColumn.setCellValueFactory(new PropertyValueFactory("city"));
         federativeUnitTableColumn.setCellValueFactory(new PropertyValueFactory("federativeUnit"));
         refreshTableView();
     }
     
     private boolean caseSensitiveEnabled(Customer customer, String searchText, int optionOrder) {
-        String customerId = String.valueOf(customer.getCustomerId());
         String personRegistry = customer.getPersonRegistry();
         String name = customer.getName();
         String sex = customer.getSex();
         String birthDate = customer.getBirthDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         String email = customer.getEmail();
         String phone = customer.getPhone();
-        String zipCode = customer.getZipCode();
         String address = customer.getAddress();
-        String addressComplement = customer.getAddressComplement();
         String district = customer.getDistrict();
         String city = customer.getCity();
         String federativeUnit = customer.getFederativeUnit();
 
-        List<String> fields = Arrays.asList(customerId, personRegistry, name, sex, birthDate, email,
-                phone, zipCode, address, addressComplement, district, city, federativeUnit);
+        List<String> fields = Arrays.asList(personRegistry, name, sex, birthDate, email, phone, address, district, city, federativeUnit);
 
         return stringComparasion(fields, searchText, optionOrder);
     }
     
     private boolean caseSensitiveDisabled(Customer customer, String searchText, int optionOrder) {
-        String customerId = String.valueOf(customer.getCustomerId());
         String personRegistry = customer.getPersonRegistry();
         String name = customer.getName().toLowerCase();
         String sex = customer.getSex().toLowerCase();
         String birthDate = customer.getBirthDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         String email = customer.getEmail().toLowerCase();
         String phone = customer.getPhone();
-        String zipCode = customer.getZipCode();
         String address = customer.getAddress().toLowerCase();
-        String addressComplement = customer.getAddressComplement().toLowerCase();
         String district = customer.getDistrict().toLowerCase();
         String city = customer.getCity().toLowerCase();
         String federativeUnit = customer.getFederativeUnit().toLowerCase();
 
-        List<String> fields = Arrays.asList(customerId, personRegistry, name, sex, birthDate, email,
-                phone, zipCode, address, addressComplement, district, city, federativeUnit);
+        List<String> fields = Arrays.asList(personRegistry, name, sex, birthDate, email, phone, address, district, city, federativeUnit);
 
         return stringComparasion(fields, searchText, optionOrder);
     }
@@ -367,29 +363,25 @@ public class CustomersController implements Initializable {
                 searchReturn = (list.get(0).contains(searchText)) || (list.get(1).contains(searchText)) || (list.get(2).contains(searchText))
                         || (list.get(3).contains(searchText)) || (list.get(4).contains(searchText)) || (list.get(5).contains(searchText))
                         || (list.get(6).contains(searchText)) || (list.get(7).contains(searchText)) || (list.get(8).contains(searchText))
-                        || (list.get(9).contains(searchText)) || (list.get(10).contains(searchText)) || (list.get(11).contains(searchText)
-                        || (list.get(12).contains(searchText)));
+                        || (list.get(9).contains(searchText));
                 break;
             case 2:
                 searchReturn = (list.get(0).equals(searchText)) || (list.get(1).equals(searchText)) || (list.get(2).equals(searchText))
                         || (list.get(3).equals(searchText)) || (list.get(4).equals(searchText)) || (list.get(5).equals(searchText))
                         || (list.get(6).equals(searchText)) || (list.get(7).equals(searchText)) || (list.get(8).equals(searchText))
-                        || (list.get(9).equals(searchText)) || (list.get(10).equals(searchText)) || (list.get(11).equals(searchText)
-                        || (list.get(12).equals(searchText)));
+                        || (list.get(9).equals(searchText));
                 break;
             case 3:
                 searchReturn = (list.get(0).startsWith(searchText)) || (list.get(1).startsWith(searchText)) || (list.get(2).startsWith(searchText))
                         || (list.get(3).startsWith(searchText)) || (list.get(4).startsWith(searchText)) || (list.get(5).startsWith(searchText))
                         || (list.get(6).startsWith(searchText)) || (list.get(7).startsWith(searchText)) || (list.get(8).startsWith(searchText))
-                        || (list.get(9).startsWith(searchText)) || (list.get(10).startsWith(searchText)) || (list.get(11).startsWith(searchText)
-                        || (list.get(12).startsWith(searchText)));
+                        || (list.get(9).startsWith(searchText));
                 break;
             case 4:
                 searchReturn = (list.get(0).endsWith(searchText)) || (list.get(1).endsWith(searchText)) || (list.get(2).endsWith(searchText))
                         || (list.get(3).endsWith(searchText)) || (list.get(4).endsWith(searchText)) || (list.get(5).endsWith(searchText))
                         || (list.get(6).endsWith(searchText)) || (list.get(7).endsWith(searchText)) || (list.get(8).endsWith(searchText))
-                        || (list.get(9).endsWith(searchText)) || (list.get(10).endsWith(searchText)) || (list.get(11).endsWith(searchText)
-                        || (list.get(12).endsWith(searchText)));
+                        || (list.get(9).endsWith(searchText));
                 break;
             default:
                 break;

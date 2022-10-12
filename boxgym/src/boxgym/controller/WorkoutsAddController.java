@@ -212,6 +212,8 @@ public class WorkoutsAddController implements Initializable {
                 case "Tríceps":
                     filterExercisesByGroup("Tríceps");
                     break;
+                default:
+                    break;
             }
         });
     }

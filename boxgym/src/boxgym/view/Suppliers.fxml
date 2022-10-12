@@ -111,7 +111,8 @@
                         <TableColumn fx:id="tradeNameTableColumn" minWidth="200.0" prefWidth="200.0" text="Nome Fantasia" />
                         <TableColumn fx:id="emailTableColumn" minWidth="250.0" prefWidth="250.0" text="E-mail" />
                         <TableColumn fx:id="phoneTableColumn" minWidth="108.0" prefWidth="108.0" text="Telefone" />
-                        <TableColumn fx:id="addressTableColumn" minWidth="200.0" prefWidth="200.0" text="Endereço" />
+                        <TableColumn fx:id="addressTableColumn" minWidth="250.0" prefWidth="250.0" text="Endereço" />
+                  <TableColumn fx:id="districtTableColumn" minWidth="200.0" prefWidth="200.0" text="Bairro" />
                         <TableColumn fx:id="cityTableColumn" minWidth="130.0" prefWidth="130.0" text="Cidade" />
                         <TableColumn fx:id="federativeUnitTableColumn" minWidth="55.0" prefWidth="55.0" text="UF" />
                     </columns>

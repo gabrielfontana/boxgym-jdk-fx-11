@@ -231,6 +231,8 @@ public class SheetsAddController implements Initializable {
                 case "Reabilitação Física":
                     filterWorkoutsByGoal("Reabilitação Física");
                     break;
+                default:
+                    break;
             }
         });
     }
