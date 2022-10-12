@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -278,19 +279,82 @@ public class SheetsController implements Initializable {
     }
 
     private boolean caseSensitiveEnabled(Sheet sheet, String searchText, int optionOrder) {
-        return true;
+        String tempCustomerName = sheet.getTempCustomerName();
+        String description = sheet.getDescription();
+        String expirationDate = sheet.getExpirationDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        String comments = sheet.getComments();
+
+        List<String> fields = Arrays.asList(tempCustomerName, description, expirationDate, comments);
+
+        return stringComparasion(fields, searchText, optionOrder);
     }
 
     private boolean caseSensitiveDisabled(Sheet sheet, String searchText, int optionOrder) {
-        return true;
+        String tempCustomerName = sheet.getTempCustomerName().toLowerCase();
+        String description = sheet.getDescription().toLowerCase();
+        String expirationDate = sheet.getExpirationDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        String comments = sheet.getComments().toLowerCase();
+
+        List<String> fields = Arrays.asList(tempCustomerName, description, expirationDate, comments);
+
+        return stringComparasion(fields, searchText, optionOrder);
     }
 
     private boolean stringComparasion(List<String> list, String searchText, int optionOrder) {
-        return true;
+        boolean searchReturn = false;
+        switch (optionOrder) {
+            case 1:
+                searchReturn = (list.get(0).contains(searchText)) || (list.get(1).contains(searchText))
+                        || (list.get(2).contains(searchText) || (list.get(3).contains(searchText)));
+                break;
+            case 2:
+                searchReturn = (list.get(0).equals(searchText)) || (list.get(1).equals(searchText))
+                        || (list.get(2).equals(searchText)) || (list.get(3).equals(searchText));
+                break;
+            case 3:
+                searchReturn = (list.get(0).startsWith(searchText)) || (list.get(1).startsWith(searchText))
+                        || (list.get(2).startsWith(searchText)) || (list.get(3).startsWith(searchText));
+                break;
+            case 4:
+                searchReturn = (list.get(0).endsWith(searchText)) || (list.get(1).endsWith(searchText))
+                        || (list.get(2).endsWith(searchText)) || (list.get(3).endsWith(searchText));
+                break;
+            default:
+                break;
+        }
+        return searchReturn;
     }
 
     private void search() {
+        FilteredList<Sheet> filteredData = new FilteredList<>(loadData(), p -> true);
 
+        searchBox.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(sheet -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                
+                if (caseSensitiveOp.isSelected()) {
+                    if (containsOp.isSelected()) return caseSensitiveEnabled(sheet, newValue, 1);
+                    if (alphabeticalEqualsToOp.isSelected()) return caseSensitiveEnabled(sheet, newValue, 2);
+                    if (startsWithOp.isSelected()) return caseSensitiveEnabled(sheet, newValue, 3);
+                    if (endsWithOp.isSelected()) return caseSensitiveEnabled(sheet, newValue, 4);
+                } 
+                
+                if (alphabeticalEqualsToOp.isSelected()) return caseSensitiveDisabled(sheet, newValue.toLowerCase(), 2);
+                if (startsWithOp.isSelected()) return caseSensitiveDisabled(sheet, newValue.toLowerCase(), 3);
+                if (endsWithOp.isSelected()) return caseSensitiveDisabled(sheet, newValue.toLowerCase(), 4);
+                
+                return caseSensitiveDisabled(sheet, newValue.toLowerCase(), 1);
+            });
+            sheetTableView.getSelectionModel().clearSelection();
+            countLabel.setText(TableViewCount.footerMessage(sheetTableView.getItems().size(), "resultado"));
+            selectedRowLabel.setText("");
+        });
+
+        SortedList<Sheet> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(sheetTableView.comparatorProperty());
+        sheetTableView.setItems(sortedData);
     }
 
     private void listeners() {
