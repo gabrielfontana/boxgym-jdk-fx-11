@@ -138,6 +138,7 @@ public class SuppliersUpdateController implements Initializable {
     void save(ActionEvent event) {
         TextValidationHelper validation = new TextValidationHelper("Atenção: \n\n");
         validation.emptyTextField(corporateNameTextField.getText(), "Preencha o campo Razão Social. \n");
+        validation.emptyTextField(tradeNameTextField.getText(), "Preencha o campo Nome Fantasia. \n");
 
         if (!(validation.getEmptyCounter() == 0)) {
             ah.customAlert(Alert.AlertType.WARNING, "Não foi possível atualizar o cadastro deste fornecedor", validation.getMessage());

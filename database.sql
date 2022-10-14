@@ -6,7 +6,7 @@ CREATE TABLE `supplier` (
   `supplierId` INT(11) NOT NULL AUTO_INCREMENT,
   `companyRegistry` CHAR(14) NOT NULL,
   `corporateName` VARCHAR(255) NOT NULL,
-  `tradeName` VARCHAR(255) NULL,
+  `tradeName` VARCHAR(255) NOT NULL,
   `email` VARCHAR(255) NULL, 
   `phone` VARCHAR(11) NULL, 
   `zipCode` CHAR(8) NULL,
@@ -205,8 +205,7 @@ CREATE TABLE `measurement` (
   `createdAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`measurementId`),
-  FOREIGN KEY (`fkCustomer`) REFERENCES `customer`(`customerId`) ON UPDATE CASCADE,
-  UNIQUE KEY `fkCustomerUnique` (`fkCustomer`) USING BTREE
+  FOREIGN KEY (`fkCustomer`) REFERENCES `customer`(`customerId`) ON UPDATE CASCADE
 );
 
 CREATE TABLE `sheet` (

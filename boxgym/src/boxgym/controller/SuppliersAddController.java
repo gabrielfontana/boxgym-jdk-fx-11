@@ -114,6 +114,7 @@ public class SuppliersAddController implements Initializable {
         TextValidationHelper validation = new TextValidationHelper("Atenção: \n\n");
         validation.emptyTextField(companyRegistryTextField.getText(), "Preencha o campo CNPJ. \n");
         validation.emptyTextField(corporateNameTextField.getText(), "Preencha o campo Razão Social. \n");
+        validation.emptyTextField(tradeNameTextField.getText(), "Preencha o campo Nome Fantasia. \n");
 
         if (!(validation.getEmptyCounter() == 0)) {
             ah.customAlert(Alert.AlertType.WARNING, "Não foi possível realizar o cadastro deste fornecedor", validation.getMessage());
