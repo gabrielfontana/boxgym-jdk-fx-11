@@ -1,15 +1,172 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="695.0" prefWidth="1280.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="695.0" prefWidth="1280.0" style="-fx-background-color: #f2f2f2;" styleClass="anchor-pane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.HomeController">
     <children>
-        <Label layoutX="568.0" layoutY="303.0" text="Início">
-            <font>
-                <Font size="61.0" />
-            </font>
-        </Label>
+        <AnchorPane layoutX="20.0" layoutY="25.0" prefHeight="80.0" prefWidth="1280.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <Label text="Início &gt; Dashboard" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                </Label>
+            </children>
+        </AnchorPane>
+        <AnchorPane layoutX="14.0" layoutY="79.0" prefHeight="615.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
+            <children>
+                <TabPane prefHeight="615.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <tabs>
+                        <Tab text="Clientes">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="586.0" prefWidth="1280.0">
+                                    <children>
+                                        <HBox layoutX="135.0" layoutY="43.0" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="135.0">
+                                            <children>
+                                                <VBox>
+                                                    <children>
+                                                        <AnchorPane prefHeight="90.0" prefWidth="500.0" style="-fx-background-color: WHITE;">
+                                                            <VBox.margin>
+                                                                <Insets bottom="10.0" />
+                                                            </VBox.margin>
+                                                            <children>
+                                                                <Label layoutX="33.0" layoutY="14.0" styleClass="tile-title" text="TOTAL DE CLIENTES CADASTRADOS" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+                                                                    <font>
+                                                                        <Font size="14.0" />
+                                                                    </font>
+                                                                </Label>
+                                                                <HBox layoutX="14.0" layoutY="30.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0">
+                                                                    <children>
+                                                                        <Label styleClass="tite-content">
+                                                                            <font>
+                                                                                <Font size="28.0" />
+                                                                            </font>
+                                                                            <graphic>
+                                                                                <MaterialDesignIconView glyphName="ACCOUNT_MULTIPLE" />
+                                                                            </graphic>
+                                                                            <HBox.margin>
+                                                                                <Insets right="10.0" />
+                                                                            </HBox.margin>
+                                                                        </Label>
+                                                                        <Label fx:id="totalCustomers" styleClass="tite-content" text="0">
+                                                                            <font>
+                                                                                <Font size="28.0" />
+                                                                            </font>
+                                                                        </Label>
+                                                                    </children>
+                                                                </HBox>
+                                                            </children>
+                                                        </AnchorPane>
+                                                        <AnchorPane prefHeight="90.0" prefWidth="500.0" style="-fx-background-color: WHITE;">
+                                                            <VBox.margin>
+                                                                <Insets bottom="10.0" />
+                                                            </VBox.margin>
+                                                            <children>
+                                                                <Label layoutX="4.0" layoutY="33.0" styleClass="tile-title" text="CLIENTES CADASTRADOS NOS ÚLTIMOS 90 DIAS" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+                                                                    <font>
+                                                                        <Font size="14.0" />
+                                                                    </font>
+                                                                </Label>
+                                                                <HBox AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0">
+                                                                    <children>
+                                                                        <Label styleClass="tite-content">
+                                                                            <font>
+                                                                                <Font size="28.0" />
+                                                                            </font>
+                                                                            <graphic>
+                                                                                <MaterialDesignIconView glyphName="ACCOUNT_MULTIPLE" />
+                                                                            </graphic>
+                                                                            <HBox.margin>
+                                                                                <Insets right="10.0" />
+                                                                            </HBox.margin>
+                                                                        </Label>
+                                                                        <Label fx:id="customersLast90Days" styleClass="tite-content" text="0">
+                                                                            <font>
+                                                                                <Font size="28.0" />
+                                                                            </font>
+                                                                        </Label>
+                                                                    </children>
+                                                                </HBox>
+                                                            </children>
+                                                        </AnchorPane>
+                                                        <AnchorPane prefHeight="300.0" prefWidth="500.0" style="-fx-background-color: WHITE;">
+                                                            <children>
+                                                                <Label layoutX="28.0" layoutY="25.0" styleClass="tile-title" text="FAIXA ETÁRIA" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+                                                                    <font>
+                                                                        <Font size="14.0" />
+                                                                    </font>
+                                                                </Label>
+                                                                <BarChart fx:id="ageGroupBarChart" prefHeight="265.0" prefWidth="340.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+                                                                    <xAxis>
+                                                                        <CategoryAxis fx:id="ageGroupBarChartXAxis" side="BOTTOM" />
+                                                                    </xAxis>
+                                                                    <yAxis>
+                                                                        <NumberAxis fx:id="ageGroupBarChartYAxis" side="LEFT" />
+                                                                    </yAxis>
+                                                                </BarChart>
+                                                                <Label fx:id="ageGroupEmptyWarningLabel" layoutX="152.0" layoutY="142.0" AnchorPane.bottomAnchor="141.0" AnchorPane.leftAnchor="152.0" AnchorPane.rightAnchor="152.0" AnchorPane.topAnchor="142.0" />
+                                                            </children>
+                                                        </AnchorPane>
+                                                    </children>
+                                                    <HBox.margin>
+                                                        <Insets right="10.0" />
+                                                    </HBox.margin>
+                                                </VBox>
+                                                <VBox prefWidth="500.0">
+                                                    <children>
+                                                        <AnchorPane prefHeight="245.0" prefWidth="500.0" style="-fx-background-color: WHITE;">
+                                                            <VBox.margin>
+                                                                <Insets bottom="10.0" />
+                                                            </VBox.margin>
+                                                            <children>
+                                                                <Label layoutX="84.0" layoutY="12.0" styleClass="tile-title" text="PERFIL DOS CLIENTES" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+                                                                    <font>
+                                                                        <Font size="14.0" />
+                                                                    </font>
+                                                                </Label>
+                                                                <PieChart fx:id="customersProfilePieChart" layoutX="155.0" prefHeight="245.0" prefWidth="345.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="30.0" />
+                                                                <Label fx:id="customersProfileEmptyWarningLabel" layoutX="152.0" layoutY="114.0" AnchorPane.bottomAnchor="114.0" AnchorPane.leftAnchor="152.0" AnchorPane.rightAnchor="152.0" AnchorPane.topAnchor="114.0" />
+                                                            </children>
+                                                        </AnchorPane>
+                                                        <AnchorPane prefHeight="245.0" prefWidth="500.0" style="-fx-background-color: WHITE;">
+                                                            <children>
+                                                                <Label styleClass="tile-title" text="CLIENTES POR CIDADE" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+                                                                    <font>
+                                                                        <Font size="14.0" />
+                                                                    </font>
+                                                                </Label>
+                                                                <PieChart fx:id="customersByCityPieChart" layoutY="43.0" prefHeight="200.0" prefWidth="500.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="30.0" />
+                                                                <Label fx:id="customersByCityEmptyWarningLabel" layoutX="152.0" layoutY="124.0" AnchorPane.bottomAnchor="114.0" AnchorPane.leftAnchor="152.0" AnchorPane.rightAnchor="152.0" AnchorPane.topAnchor="114.0" />
+                                                            </children>
+                                                        </AnchorPane>
+                                                    </children>
+                                                </VBox>
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+                    </tabs>
+                </TabPane>
+            </children>
+        </AnchorPane>
     </children>
+    <stylesheets>
+        <URL value="@../css/theme.css" />
+        <URL value="@../css/dashboard.css" />
+    </stylesheets>
 </AnchorPane>

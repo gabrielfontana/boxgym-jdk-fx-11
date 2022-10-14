@@ -19,6 +19,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.commons.collections4.MultiValuedMap;
+import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.util.CellRangeAddress;
@@ -269,6 +271,86 @@ public class CustomerDao {
             DbUtils.closeQuietly(rs);
         }
         return false;
+    }
+    
+    public int getAmountOfCustomersLast90Days(){
+        String sql = "SELECT COUNT(*) AS `amount` FROM `customer` WHERE `createdAt` >= DATE_ADD(NOW(), INTERVAL -3 MONTH);";
+        int amount = 0;
+        
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                amount = rs.getInt("amount");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return amount;
+    }
+    
+    public int getAmountOfEachSexForDashboard(String sex){
+        String sql = "SELECT COUNT(*) AS `amount` FROM `customer` WHERE `sex` = '" + sex + "';";
+        int amount = 0;
+        
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                amount = rs.getInt("amount");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return amount;
+    }
+    
+    public MultiValuedMap<Integer, String> getAmountOfCustomersByCity() {
+        MultiValuedMap<Integer, String> map = new ArrayListValuedHashMap<>();
+        String sql = "SELECT COUNT(*) AS `amount`, `city` FROM `customer` WHERE `city` <> '' OR `city` <> NULL GROUP BY `city` ORDER BY `amount` ASC LIMIT 7;";
+
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                map.put(rs.getInt("amount"), rs.getString("city"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return map;
+    }
+    
+    public int getAmountOfCustomersWithoutCity(){
+        String sql = "SELECT COUNT(*) AS `amount` FROM `customer` WHERE `city` = '' OR `city` = NULL;";
+        int amount = 0;
+        
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                amount = rs.getInt("amount");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return amount;
     }
 
     public boolean createExcelFile(String filePath) {
