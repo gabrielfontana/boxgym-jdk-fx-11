@@ -273,7 +273,7 @@ public class CustomerDao {
         return false;
     }
     
-    public int getAmountOfCustomersLast90Days(){
+    public int getAmountOfCustomersLast90DaysForDashboard(){
         String sql = "SELECT COUNT(*) AS `amount` FROM `customer` WHERE `createdAt` >= DATE_ADD(NOW(), INTERVAL -3 MONTH);";
         int amount = 0;
         
@@ -313,9 +313,14 @@ public class CustomerDao {
         return amount;
     }
     
-    public MultiValuedMap<Integer, String> getAmountOfCustomersByCity() {
+    public MultiValuedMap<Integer, String> getAmountOfCustomersByCityForDashboard() {
         MultiValuedMap<Integer, String> map = new ArrayListValuedHashMap<>();
-        String sql = "SELECT COUNT(*) AS `amount`, `city` FROM `customer` WHERE `city` <> '' OR `city` <> NULL GROUP BY `city` ORDER BY `amount` ASC LIMIT 7;";
+        String sql = "SELECT COUNT(*) AS `amount`, `city` "
+                + "FROM `customer` "
+                + "WHERE `city` <> '' OR `city` <> NULL "
+                + "GROUP BY `city` "
+                + "ORDER BY `amount` ASC "
+                + "LIMIT 7;";
 
         try {
             ps = conn.prepareStatement(sql);
@@ -333,7 +338,7 @@ public class CustomerDao {
         return map;
     }
     
-    public int getAmountOfCustomersWithoutCity(){
+    public int getAmountOfCustomersWithoutCityForDashboard(){
         String sql = "SELECT COUNT(*) AS `amount` FROM `customer` WHERE `city` = '' OR `city` = NULL;";
         int amount = 0;
         
@@ -351,6 +356,66 @@ public class CustomerDao {
             DbUtils.closeQuietly(rs);
         }
         return amount;
+    }
+    
+    public List<Integer> getMaleAgeRangeForDashboard(){
+        List<Integer> list = new ArrayList<>();
+        String sql = "SELECT "
+                + "SUM(CASE WHEN `sex` = 'Masculino' AND TIMESTAMPDIFF(YEAR, `birthDate`, CURDATE()) BETWEEN 0 AND 20 THEN 1 ELSE 0 END) AS 'Até 20', "
+                + "SUM(CASE WHEN `sex` = 'Masculino' AND TIMESTAMPDIFF(YEAR, `birthDate`, CURDATE()) BETWEEN 21 AND 30 THEN 1 ELSE 0 END) AS '21 a 30', "
+                + "SUM(CASE WHEN `sex` = 'Masculino' AND TIMESTAMPDIFF(YEAR, `birthDate`, CURDATE()) BETWEEN 31 AND 40 THEN 1 ELSE 0 END) AS '31 a 40', "
+                + "SUM(CASE WHEN `sex` = 'Masculino' AND TIMESTAMPDIFF(YEAR, `birthDate`, CURDATE()) BETWEEN 41 AND 50 THEN 1 ELSE 0 END) AS '41 a 50', "
+                + "SUM(CASE WHEN `sex` = 'Masculino' AND TIMESTAMPDIFF(YEAR, `birthDate`, CURDATE()) > 50 THEN 1 ELSE 0 END) AS 'Acima de 50' "
+                + "FROM `customer`;";
+        
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                list.add(rs.getInt(1));
+                list.add(rs.getInt(2));
+                list.add(rs.getInt(3));
+                list.add(rs.getInt(4));
+                list.add(rs.getInt(5));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return list;
+    }
+    
+    public List<Integer> getFemaleAgeRangeForDashboard(){
+        List<Integer> list = new ArrayList<>();
+        String sql = "SELECT "
+                + "SUM(CASE WHEN `sex` = 'Feminino' AND TIMESTAMPDIFF(YEAR, `birthDate`, CURDATE()) BETWEEN 0 AND 20 THEN 1 ELSE 0 END) AS 'Até 20', "
+                + "SUM(CASE WHEN `sex` = 'Feminino' AND TIMESTAMPDIFF(YEAR, `birthDate`, CURDATE()) BETWEEN 21 AND 30 THEN 1 ELSE 0 END) AS '21 a 30', "
+                + "SUM(CASE WHEN `sex` = 'Feminino' AND TIMESTAMPDIFF(YEAR, `birthDate`, CURDATE()) BETWEEN 31 AND 40 THEN 1 ELSE 0 END) AS '31 a 40', "
+                + "SUM(CASE WHEN `sex` = 'Feminino' AND TIMESTAMPDIFF(YEAR, `birthDate`, CURDATE()) BETWEEN 41 AND 50 THEN 1 ELSE 0 END) AS '41 a 50', "
+                + "SUM(CASE WHEN `sex` = 'Feminino' AND TIMESTAMPDIFF(YEAR, `birthDate`, CURDATE()) > 50 THEN 1 ELSE 0 END) AS 'Acima de 50' "
+                + "FROM `customer`;";
+        
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                list.add(rs.getInt(1));
+                list.add(rs.getInt(2));
+                list.add(rs.getInt(3));
+                list.add(rs.getInt(4));
+                list.add(rs.getInt(5));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return list;
     }
 
     public boolean createExcelFile(String filePath) {

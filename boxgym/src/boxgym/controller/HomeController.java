@@ -3,8 +3,6 @@ package boxgym.controller;
 import boxgym.dao.CustomerDao;
 import boxgym.model.Customer;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -31,16 +29,16 @@ public class HomeController implements Initializable {
     private Label customersLast90Days;
 
     @FXML
-    private BarChart<String, Integer> ageGroupBarChart;
+    private BarChart<String, Integer> ageRangeBarChart;
 
     @FXML
-    private CategoryAxis ageGroupBarChartXAxis;
+    private CategoryAxis ageRangeBarChartXAxis;
 
     @FXML
-    private NumberAxis ageGroupBarChartYAxis;
+    private NumberAxis ageRangeBarChartYAxis;
 
     @FXML
-    private Label ageGroupEmptyWarningLabel;
+    private Label ageRangeEmptyWarningLabel;
 
     @FXML
     private PieChart customersProfilePieChart;
@@ -62,7 +60,7 @@ public class HomeController implements Initializable {
     private void customersDashboard() {
         setTotalCustomers();
         setCustomersLast90Days();
-        buildAgeGroupBarChart();
+        buildAgeRangeBarChart();
         buildCustomersProfilePieChart();
         buildCustomersByCityPieChart();
     }
@@ -75,39 +73,45 @@ public class HomeController implements Initializable {
 
     private void setCustomersLast90Days() {
         CustomerDao customerDao = new CustomerDao();
-        customersLast90Days.setText(String.valueOf(customerDao.getAmountOfCustomersLast90Days()));
+        customersLast90Days.setText(String.valueOf(customerDao.getAmountOfCustomersLast90DaysForDashboard()));
     }
 
-    private void buildAgeGroupBarChart() {
+    private void buildAgeRangeBarChart() {
         CustomerDao customerDao = new CustomerDao();
         List<Customer> customersList = customerDao.read();
 
         if (customersList == null || customersList.isEmpty()) {
-            ageGroupEmptyWarningLabel.setText("Não há registros para gerar o gráfico");
-            ageGroupBarChart.setVisible(false);
+            ageRangeEmptyWarningLabel.setText("Não há registros para gerar o gráfico");
+            ageRangeBarChart.setVisible(false);
         } else {
-            ageGroupBarChartXAxis.setLabel("Idade");
-            ageGroupBarChartYAxis.setLabel("Quantidade");
-
+            ageRangeBarChartXAxis.setLabel("Idade");
+            ageRangeBarChartYAxis.setLabel("Quantidade");
+            
+            CustomerDao maleAgeRange = new CustomerDao();
+            List<Integer> maleList = maleAgeRange.getMaleAgeRangeForDashboard();
+            
             XYChart.Series<String, Integer> series1 = new XYChart.Series();
-            series1.setName("Homens");
-            series1.getData().add(new XYChart.Data("Até 20", 5));
-            series1.getData().add(new XYChart.Data("21 a 30", 8));
-            series1.getData().add(new XYChart.Data("31 a 40", 40));
-            series1.getData().add(new XYChart.Data("41 a 50", 2));
-            series1.getData().add(new XYChart.Data("Acima de 50", 1));
+            series1.setName("Masculina");
+            series1.getData().add(new XYChart.Data("Até 20", maleList.get(0)));
+            series1.getData().add(new XYChart.Data("21 a 30", maleList.get(1)));
+            series1.getData().add(new XYChart.Data("31 a 40", maleList.get(2)));
+            series1.getData().add(new XYChart.Data("41 a 50", maleList.get(3)));
+            series1.getData().add(new XYChart.Data("Acima de 50", maleList.get(4)));
 
+            CustomerDao femaleAgeRange = new CustomerDao();
+            List<Integer> femaleList = femaleAgeRange.getFemaleAgeRangeForDashboard();
+            
             XYChart.Series<String, Integer> series2 = new XYChart.Series();
-            series2.setName("Mulheres");
-            series2.getData().add(new XYChart.Data("Até 20", 3));
-            series2.getData().add(new XYChart.Data("21 a 30", 9));
-            series2.getData().add(new XYChart.Data("31 a 40", 1));
-            series2.getData().add(new XYChart.Data("41 a 50", 2));
-            series2.getData().add(new XYChart.Data("Acima de 50", 0));
+            series2.setName("Feminina");
+            series2.getData().add(new XYChart.Data("Até 20", femaleList.get(0)));
+            series2.getData().add(new XYChart.Data("21 a 30", femaleList.get(1)));
+            series2.getData().add(new XYChart.Data("31 a 40", femaleList.get(2)));
+            series2.getData().add(new XYChart.Data("41 a 50", femaleList.get(3)));
+            series2.getData().add(new XYChart.Data("Acima de 50", femaleList.get(4)));
 
-            ageGroupBarChart.getData().addAll(series1, series2);
+            ageRangeBarChart.getData().addAll(series1, series2);
 
-            for (XYChart.Series<String, Integer> series : ageGroupBarChart.getData()) {
+            for (XYChart.Series<String, Integer> series : ageRangeBarChart.getData()) {
                 for (XYChart.Data<String, Integer> item : series.getData()) {
                     if (item.getYValue() != 1) {
                         Tooltip.install(item.getNode(), new Tooltip(item.getXValue() + ": " + item.getYValue() + " pessoas"));
@@ -129,8 +133,8 @@ public class HomeController implements Initializable {
             CustomerDao male = new CustomerDao();
             CustomerDao female = new CustomerDao();
             ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
-                    new PieChart.Data("Mulheres", female.getAmountOfEachSexForDashboard("Feminino")),
-                    new PieChart.Data("Homens", male.getAmountOfEachSexForDashboard("Masculino"))
+                    new PieChart.Data("Masculino", male.getAmountOfEachSexForDashboard("Masculino")),
+                    new PieChart.Data("Feminino", female.getAmountOfEachSexForDashboard("Feminino"))
             );
             
             pieChartCommonMethods(customersProfilePieChart);
@@ -152,14 +156,14 @@ public class HomeController implements Initializable {
             customersByCityEmptyWarningLabel.setText("Não há registros para gerar o gráfico");
         } else {
             CustomerDao amount = new CustomerDao();
-            MultiValuedMap<Integer, String> map = amount.getAmountOfCustomersByCity();
+            MultiValuedMap<Integer, String> map = amount.getAmountOfCustomersByCityForDashboard();
 
             ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
             map.entries().forEach(entry -> {
                 pieChartData.add(new PieChart.Data(entry.getValue(), entry.getKey()));
             });
             CustomerDao withoutCity = new CustomerDao();
-            pieChartData.add(new PieChart.Data("Não informado", withoutCity.getAmountOfCustomersWithoutCity()));
+            pieChartData.add(new PieChart.Data("Não informado", withoutCity.getAmountOfCustomersWithoutCityForDashboard()));
 
             pieChartCommonMethods(customersByCityPieChart);
             customersByCityPieChart.setData(pieChartData);

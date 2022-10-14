@@ -109,15 +109,15 @@
                                                                         <Font size="14.0" />
                                                                     </font>
                                                                 </Label>
-                                                                <BarChart fx:id="ageGroupBarChart" prefHeight="265.0" prefWidth="340.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+                                                                <BarChart fx:id="ageRangeBarChart" prefHeight="265.0" prefWidth="340.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
                                                                     <xAxis>
-                                                                        <CategoryAxis fx:id="ageGroupBarChartXAxis" side="BOTTOM" />
+                                                                        <CategoryAxis fx:id="ageRangeBarChartXAxis" side="BOTTOM" />
                                                                     </xAxis>
                                                                     <yAxis>
-                                                                        <NumberAxis fx:id="ageGroupBarChartYAxis" side="LEFT" />
+                                                                        <NumberAxis fx:id="ageRangeBarChartYAxis" side="LEFT" />
                                                                     </yAxis>
                                                                 </BarChart>
-                                                                <Label fx:id="ageGroupEmptyWarningLabel" layoutX="152.0" layoutY="142.0" AnchorPane.bottomAnchor="141.0" AnchorPane.leftAnchor="152.0" AnchorPane.rightAnchor="152.0" AnchorPane.topAnchor="142.0" />
+                                                                <Label fx:id="ageRangeEmptyWarningLabel" layoutX="152.0" layoutY="142.0" AnchorPane.bottomAnchor="141.0" AnchorPane.leftAnchor="152.0" AnchorPane.rightAnchor="152.0" AnchorPane.topAnchor="142.0" />
                                                             </children>
                                                         </AnchorPane>
                                                     </children>

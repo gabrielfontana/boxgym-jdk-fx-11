@@ -165,7 +165,7 @@ public class SheetDao {
     }
     
     public int checkExpiredSheets() {
-        String sql = "SELECT COUNT(*) AS `expiredSheets` FROM `sheet` WHERE `expirationDate` < now() AND `status` = 1;";
+        String sql = "SELECT COUNT(*) AS `expiredSheets` FROM `sheet` WHERE `expirationDate` < NOW() AND `status` = 1;";
         int expiredSheets = 0;
 
         try {
@@ -186,7 +186,7 @@ public class SheetDao {
     }
     
     public boolean updateExpiredSheetsStatus() {
-        String sql = "UPDATE `sheet` SET `status` = 0 WHERE `expirationDate` < now();";
+        String sql = "UPDATE `sheet` SET `status` = 0 WHERE `expirationDate` < NOW();";
 
         try {
             ps = conn.prepareStatement(sql);
