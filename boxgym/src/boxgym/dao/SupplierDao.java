@@ -18,6 +18,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.commons.collections4.MultiValuedMap;
+import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.util.CellRangeAddress;
@@ -188,7 +190,7 @@ public class SupplierDao {
         }
         return false;
     }
-    
+
     public boolean checkStockEntryDeleteConstraint(int supplierId) {
         String sql = "SELECT `fkSupplier` FROM `stockentry` WHERE `fkSupplier` = " + supplierId + ";";
 
@@ -206,6 +208,95 @@ public class SupplierDao {
             DbUtils.closeQuietly(rs);
         }
         return false;
+    }
+
+    public int getAmountOfSuppliersLast90DaysForDashboard() {
+        String sql = "SELECT COUNT(*) AS `amount` FROM `supplier` WHERE `createdAt` >= DATE_ADD(NOW(), INTERVAL -3 MONTH);";
+        int amount = 0;
+
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                amount = rs.getInt("amount");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SupplierDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return amount;
+    }
+
+    public MultiValuedMap<Integer, String> getAmountOfSuppliersByFUForDashboard() {
+        MultiValuedMap<Integer, String> map = new ArrayListValuedHashMap<>();
+        String sql = "SELECT COUNT(*) AS `amount`, `federativeUnit` "
+                + "FROM `supplier` "
+                + "WHERE `federativeUnit` <> '' OR `federativeUnit` <> NULL "
+                + "GROUP BY `federativeUnit` "
+                + "ORDER BY `federativeUnit` ASC;";
+
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                map.put(rs.getInt("amount"), rs.getString("federativeUnit"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SupplierDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return map;
+    }
+
+    public int getAmountOfSuppliersWithoutFUForDashboard() {
+        String sql = "SELECT COUNT(*) AS `amount` FROM `supplier` WHERE `federativeUnit` = '' OR `federativeUnit` = NULL;";
+        int amount = 0;
+
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                amount = rs.getInt("amount");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SupplierDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return amount;
+    }
+
+    public MultiValuedMap<Integer, String> getMostFrequentSuppliersSEForDashboard() {
+        MultiValuedMap<Integer, String> map = new ArrayListValuedHashMap<>();
+        String sql = "SELECT COUNT(*) AS `amount`, s.tradeName AS `tempSupplierName` "
+                + "FROM `stockentry` AS se INNER JOIN `supplier` AS s "
+                + "ON se.fkSupplier = s.supplierId "
+                + "GROUP BY `fkSupplier` "
+                + "ORDER BY `amount` DESC "
+                + "LIMIT 10;";
+        
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                map.put(rs.getInt("amount"), rs.getString("tempSupplierName"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SupplierDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return map;
     }
 
     public boolean createExcelFile(String filePath) {

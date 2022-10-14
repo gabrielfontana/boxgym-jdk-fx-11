@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="392.0" prefWidth="730.0" style="-fx-background-color: #f2f2f2;" stylesheets="@../css/theme.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.WorkoutsExercisesListController">
+<AnchorPane id="AnchorPane" prefHeight="392.0" prefWidth="730.0" style="-fx-background-color: #f2f2f2;" stylesheets="@../css/theme.css" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.WorkoutsExercisesListController">
     <children>
       <VBox layoutX="20.0" layoutY="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
          <children>

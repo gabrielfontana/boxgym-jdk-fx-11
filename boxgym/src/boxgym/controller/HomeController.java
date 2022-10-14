@@ -1,7 +1,9 @@
 package boxgym.controller;
 
 import boxgym.dao.CustomerDao;
+import boxgym.dao.SupplierDao;
 import boxgym.model.Customer;
+import boxgym.model.Supplier;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -21,7 +23,6 @@ import org.apache.commons.collections4.MultiValuedMap;
 
 public class HomeController implements Initializable {
 
-    // Clientes
     @FXML
     private Label totalCustomers;
 
@@ -38,23 +39,24 @@ public class HomeController implements Initializable {
     private NumberAxis ageRangeBarChartYAxis;
 
     @FXML
-    private Label ageRangeEmptyWarningLabel;
+    private Label ageRangeWarningLabel;
 
     @FXML
     private PieChart customersProfilePieChart;
 
     @FXML
-    private Label customersProfileEmptyWarningLabel;
+    private Label customersProfileWarningLabel;
 
     @FXML
     private PieChart customersByCityPieChart;
 
     @FXML
-    private Label customersByCityEmptyWarningLabel;
+    private Label customersByCityWarningLabel;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         customersDashboard();
+        suppliersDashboard();
     }
 
     private void customersDashboard() {
@@ -81,17 +83,17 @@ public class HomeController implements Initializable {
         List<Customer> customersList = customerDao.read();
 
         if (customersList == null || customersList.isEmpty()) {
-            ageRangeEmptyWarningLabel.setText("Não há registros para gerar o gráfico");
+            ageRangeWarningLabel.setText("Não há registros para gerar o gráfico");
             ageRangeBarChart.setVisible(false);
         } else {
             ageRangeBarChartXAxis.setLabel("Idade");
             ageRangeBarChartYAxis.setLabel("Quantidade");
-            
+
             CustomerDao maleAgeRange = new CustomerDao();
             List<Integer> maleList = maleAgeRange.getMaleAgeRangeForDashboard();
-            
+
             XYChart.Series<String, Integer> series1 = new XYChart.Series();
-            series1.setName("Masculina");
+            series1.setName("Masculino");
             series1.getData().add(new XYChart.Data("Até 20", maleList.get(0)));
             series1.getData().add(new XYChart.Data("21 a 30", maleList.get(1)));
             series1.getData().add(new XYChart.Data("31 a 40", maleList.get(2)));
@@ -100,9 +102,9 @@ public class HomeController implements Initializable {
 
             CustomerDao femaleAgeRange = new CustomerDao();
             List<Integer> femaleList = femaleAgeRange.getFemaleAgeRangeForDashboard();
-            
+
             XYChart.Series<String, Integer> series2 = new XYChart.Series();
-            series2.setName("Feminina");
+            series2.setName("Feminino");
             series2.getData().add(new XYChart.Data("Até 20", femaleList.get(0)));
             series2.getData().add(new XYChart.Data("21 a 30", femaleList.get(1)));
             series2.getData().add(new XYChart.Data("31 a 40", femaleList.get(2)));
@@ -128,7 +130,7 @@ public class HomeController implements Initializable {
         List<Customer> customersList = customerDao.read();
 
         if (customersList == null || customersList.isEmpty()) {
-            customersProfileEmptyWarningLabel.setText("Não há registros para gerar o gráfico");
+            customersProfileWarningLabel.setText("Não há registros para gerar o gráfico");
         } else {
             CustomerDao male = new CustomerDao();
             CustomerDao female = new CustomerDao();
@@ -136,10 +138,10 @@ public class HomeController implements Initializable {
                     new PieChart.Data("Masculino", male.getAmountOfEachSexForDashboard("Masculino")),
                     new PieChart.Data("Feminino", female.getAmountOfEachSexForDashboard("Feminino"))
             );
-            
-            pieChartCommonMethods(customersProfilePieChart);
+
+            pieChartCommonMethods(customersProfilePieChart, Side.RIGHT);
             customersProfilePieChart.setData(pieChartData);
-            
+
             customersProfilePieChart.getData().forEach(data -> {
                 int pieValue = (int) (data.getPieValue());
                 Tooltip tooltip = new Tooltip(String.valueOf(pieValue));
@@ -153,7 +155,7 @@ public class HomeController implements Initializable {
         List<Customer> customersList = customerDao.read();
 
         if (customersList == null || customersList.isEmpty()) {
-            customersByCityEmptyWarningLabel.setText("Não há registros para gerar o gráfico");
+            customersByCityWarningLabel.setText("Não há registros para gerar o gráfico");
         } else {
             CustomerDao amount = new CustomerDao();
             MultiValuedMap<Integer, String> map = amount.getAmountOfCustomersByCityForDashboard();
@@ -165,9 +167,9 @@ public class HomeController implements Initializable {
             CustomerDao withoutCity = new CustomerDao();
             pieChartData.add(new PieChart.Data("Não informado", withoutCity.getAmountOfCustomersWithoutCityForDashboard()));
 
-            pieChartCommonMethods(customersByCityPieChart);
+            pieChartCommonMethods(customersByCityPieChart, Side.RIGHT);
             customersByCityPieChart.setData(pieChartData);
-            
+
             customersByCityPieChart.getData().forEach(data -> {
                 int pieValue = (int) (data.getPieValue());
                 Tooltip tooltip = new Tooltip(String.valueOf(pieValue));
@@ -176,10 +178,100 @@ public class HomeController implements Initializable {
         }
     }
 
-    private void pieChartCommonMethods(PieChart pieChart) {
+    @FXML
+    private Label totalSuppliers;
+
+    @FXML
+    private Label suppliersLast90Days;
+
+    @FXML
+    private PieChart suppliersByFUPieChart;
+
+    @FXML
+    private Label suppliersByFUWarningLabel;
+
+    @FXML
+    private PieChart mostFrequentSuppliersSEPieChart;
+
+    @FXML
+    private Label mostFrequentSuppliersSEWarningLabel;
+
+    private void suppliersDashboard() {
+        setTotalSuppliers();
+        setSuppliersLast90Days();
+        buildSuppliersByFUPieChart();
+        buildMostFrequentSuppliersSEPieChart();
+    }
+
+    private void setTotalSuppliers() {
+        SupplierDao supplierDao = new SupplierDao();
+        List<Supplier> suppliersList = supplierDao.read();
+        totalSuppliers.setText(String.valueOf(suppliersList.size()));
+    }
+
+    private void setSuppliersLast90Days() {
+        SupplierDao supplierDao = new SupplierDao();
+        suppliersLast90Days.setText(String.valueOf(supplierDao.getAmountOfSuppliersLast90DaysForDashboard()));
+    }
+
+    private void buildSuppliersByFUPieChart() {
+        SupplierDao supplierDao = new SupplierDao();
+        List<Supplier> suppliersList = supplierDao.read();
+
+        if (suppliersList == null || suppliersList.isEmpty()) {
+            suppliersByFUWarningLabel.setText("Não há registros para gerar o gráfico");
+        } else {
+            SupplierDao amount = new SupplierDao();
+            MultiValuedMap<Integer, String> map = amount.getAmountOfSuppliersByFUForDashboard();
+
+            ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+            map.entries().forEach(entry -> {
+                pieChartData.add(new PieChart.Data(entry.getValue(), entry.getKey()));
+            });
+            SupplierDao withoutFU = new SupplierDao();
+            pieChartData.add(new PieChart.Data("Não informado", withoutFU.getAmountOfSuppliersWithoutFUForDashboard()));
+
+            pieChartCommonMethods(suppliersByFUPieChart, Side.RIGHT);
+            suppliersByFUPieChart.setData(pieChartData);
+
+            suppliersByFUPieChart.getData().forEach(data -> {
+                int pieValue = (int) (data.getPieValue());
+                Tooltip tooltip = new Tooltip(String.valueOf(pieValue));
+                Tooltip.install(data.getNode(), tooltip);
+            });
+        }
+    }
+
+    private void buildMostFrequentSuppliersSEPieChart() {
+        SupplierDao supplierDao = new SupplierDao();
+        List<Supplier> suppliersList = supplierDao.read();
+
+        if (suppliersList == null || suppliersList.isEmpty()) {
+            mostFrequentSuppliersSEWarningLabel.setText("Não há registros para gerar o gráfico");
+        } else {
+            SupplierDao amount = new SupplierDao();
+            MultiValuedMap<Integer, String> map = amount.getMostFrequentSuppliersSEForDashboard();
+
+            ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+            map.entries().forEach(entry -> {
+                pieChartData.add(new PieChart.Data(entry.getValue(), entry.getKey()));
+            });
+
+            pieChartCommonMethods(mostFrequentSuppliersSEPieChart, Side.BOTTOM);
+            mostFrequentSuppliersSEPieChart.setData(pieChartData);
+
+            mostFrequentSuppliersSEPieChart.getData().forEach(data -> {
+                int pieValue = (int) (data.getPieValue());
+                Tooltip tooltip = new Tooltip(String.valueOf(pieValue));
+                Tooltip.install(data.getNode(), tooltip);
+            });
+        }
+    }
+
+    private void pieChartCommonMethods(PieChart pieChart, Side value) {
         pieChart.setClockwise(true);
         pieChart.setLabelsVisible(true);
         pieChart.setAnimated(true);
-        pieChart.setLegendSide(Side.RIGHT);
+        pieChart.setLegendSide(value);
     }
 }

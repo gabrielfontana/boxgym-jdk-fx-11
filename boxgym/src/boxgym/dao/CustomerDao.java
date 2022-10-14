@@ -320,7 +320,7 @@ public class CustomerDao {
                 + "WHERE `city` <> '' OR `city` <> NULL "
                 + "GROUP BY `city` "
                 + "ORDER BY `amount` ASC "
-                + "LIMIT 7;";
+                + "LIMIT 10;";
 
         try {
             ps = conn.prepareStatement(sql);
