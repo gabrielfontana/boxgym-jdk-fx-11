@@ -165,7 +165,10 @@ public class HomeController implements Initializable {
                 pieChartData.add(new PieChart.Data(entry.getValue(), entry.getKey()));
             });
             CustomerDao withoutCity = new CustomerDao();
-            pieChartData.add(new PieChart.Data("Não informado", withoutCity.getAmountOfCustomersWithoutCityForDashboard()));
+            int amountOfCustomersWithoutCity = withoutCity.getAmountOfCustomersWithoutCityForDashboard();
+            if (amountOfCustomersWithoutCity != 0) {
+                pieChartData.add(new PieChart.Data("Não informado", amountOfCustomersWithoutCity));
+            }
 
             pieChartCommonMethods(customersByCityPieChart, Side.RIGHT);
             customersByCityPieChart.setData(pieChartData);
@@ -229,9 +232,12 @@ public class HomeController implements Initializable {
                 pieChartData.add(new PieChart.Data(entry.getValue(), entry.getKey()));
             });
             SupplierDao withoutFU = new SupplierDao();
-            pieChartData.add(new PieChart.Data("Não informado", withoutFU.getAmountOfSuppliersWithoutFUForDashboard()));
+            int amountOfSuppliersWithoutFU = withoutFU.getAmountOfSuppliersWithoutFUForDashboard();
+            if (amountOfSuppliersWithoutFU != 0) {
+                pieChartData.add(new PieChart.Data("Não informado", amountOfSuppliersWithoutFU));
+            }
 
-            pieChartCommonMethods(suppliersByFUPieChart, Side.RIGHT);
+            pieChartCommonMethods(suppliersByFUPieChart, Side.BOTTOM);
             suppliersByFUPieChart.setData(pieChartData);
 
             suppliersByFUPieChart.getData().forEach(data -> {

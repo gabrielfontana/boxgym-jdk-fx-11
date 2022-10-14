@@ -239,7 +239,7 @@
                                                       <Font size="14.0" />
                                                    </font>
                                                 </Label>
-                                                <PieChart fx:id="suppliersByFUPieChart" prefHeight="200.0" prefWidth="500.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="30.0" />
+                                                <PieChart fx:id="suppliersByFUPieChart" prefHeight="200.0" prefWidth="500.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="30.0" />
                                                 <Label fx:id="suppliersByFUWarningLabel" layoutX="152.0" layoutY="142.0" AnchorPane.bottomAnchor="141.0" AnchorPane.leftAnchor="152.0" AnchorPane.rightAnchor="152.0" AnchorPane.topAnchor="142.0" />
                                              </children>
                                           </AnchorPane>
