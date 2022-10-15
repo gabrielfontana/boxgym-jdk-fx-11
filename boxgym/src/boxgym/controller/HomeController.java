@@ -1,11 +1,15 @@
 package boxgym.controller;
 
 import boxgym.dao.CustomerDao;
+import boxgym.dao.ProductDao;
 import boxgym.dao.SupplierDao;
 import boxgym.model.Customer;
+import boxgym.model.Product;
 import boxgym.model.Supplier;
 import java.net.URL;
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -57,6 +61,7 @@ public class HomeController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         customersDashboard();
         suppliersDashboard();
+        productsDashboard();
     }
 
     private void customersDashboard() {
@@ -272,6 +277,58 @@ public class HomeController implements Initializable {
                 Tooltip.install(data.getNode(), tooltip);
             });
         }
+    }
+    
+    @FXML
+    private Label totalProducts;
+    
+    @FXML
+    private Label productsLast90Days;
+    
+    @FXML
+    private Label productsLast30Days;
+    
+    @FXML
+    private Label totalStockValue;
+    
+    @FXML
+    private PieChart mostPopularProductsPieChart;
+
+    @FXML
+    private Label mostPopularProductsWarningLabel;
+    
+    private void productsDashboard() {
+        setTotalProducts();
+        setProductsLast90Days();
+        setProductsLast30Days();
+        setTotalStockValue();
+        buildMostPopularProductsPieChart();
+    }
+    
+    private void setTotalProducts() {
+        ProductDao productDao = new ProductDao();
+        List<Product> productsList = productDao.read();
+        totalProducts.setText(String.valueOf(productsList.size()));
+    }
+    
+    private void setProductsLast90Days() {
+        ProductDao productDao = new ProductDao();
+        productsLast90Days.setText(String.valueOf(productDao.getAmountOfProductsLast90DaysForDashboard()));
+    }
+    
+    private void setProductsLast30Days() {
+        ProductDao productDao = new ProductDao();
+        productsLast30Days.setText(String.valueOf(productDao.getAmountOfProductsLast30DaysForDashboard()));
+    }
+    
+    private void setTotalStockValue() {
+        ProductDao productDao = new ProductDao();
+        NumberFormat nf = NumberFormat.getInstance(new Locale("pt", "BR"));
+        totalStockValue.setText("R$ " + nf.format(productDao.getTotalStockValueForDashboard()));
+    }
+    
+    private void buildMostPopularProductsPieChart() {
+        
     }
 
     private void pieChartCommonMethods(PieChart pieChart, Side value) {

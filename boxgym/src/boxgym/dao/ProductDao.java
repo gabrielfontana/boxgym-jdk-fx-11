@@ -257,6 +257,66 @@ public class ProductDao {
         }
         return false;
     }
+    
+    public int getAmountOfProductsLast90DaysForDashboard() {
+        String sql = "SELECT COUNT(*) AS `amount` FROM `product` WHERE `createdAt` >= DATE_ADD(NOW(), INTERVAL -3 MONTH);";
+        int amount = 0;
+
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                amount = rs.getInt("amount");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return amount;
+    }
+    
+    public int getAmountOfProductsLast30DaysForDashboard() {
+        String sql = "SELECT COUNT(*) AS `amount` FROM `product` WHERE `createdAt` >= DATE_ADD(NOW(), INTERVAL -1 MONTH);";
+        int amount = 0;
+
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                amount = rs.getInt("amount");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return amount;
+    }
+    
+    public BigDecimal getTotalStockValueForDashboard() {
+        String sql = "SELECT SUM(`amount` * `costPrice`) AS `total` FROM `product`;";
+        BigDecimal total = new BigDecimal("0");
+
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                total = rs.getBigDecimal("total");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return total;
+    }
 
     public boolean createExcelFile(String filePath) {
         String sql = "SELECT * FROM `product`";
