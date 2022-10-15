@@ -3,6 +3,8 @@ package boxgym.dao;
 import boxgym.helper.ExcelFileHelper;
 import boxgym.jdbc.ConnectionFactory;
 import boxgym.model.Customer;
+import com.google.common.collect.Ordering;
+import com.google.common.collect.TreeMultimap;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -313,9 +315,9 @@ public class CustomerDao {
         return amount;
     }
     
-    public MultiValuedMap<Integer, String> getAmountOfCustomersByCityForDashboard() {
-        MultiValuedMap<Integer, String> map = new ArrayListValuedHashMap<>();
-        String sql = "SELECT COUNT(*) AS `amount`, `city` "
+    public TreeMultimap<String, Integer> getAmountOfCustomersByCityForDashboard() {
+        TreeMultimap<String, Integer> sortedMap = TreeMultimap.create(Ordering.natural(), Ordering.natural());
+        String sql = "SELECT `city`, COUNT(*) AS `amount` "
                 + "FROM `customer` "
                 + "WHERE `city` <> '' OR `city` <> NULL "
                 + "GROUP BY `city` "
@@ -326,7 +328,7 @@ public class CustomerDao {
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
-                map.put(rs.getInt("amount"), rs.getString("city"));
+                sortedMap.put(rs.getString("city"), rs.getInt("amount"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(CustomerDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -335,7 +337,7 @@ public class CustomerDao {
             DbUtils.closeQuietly(ps);
             DbUtils.closeQuietly(rs);
         }
-        return map;
+        return sortedMap;
     }
     
     public int getAmountOfCustomersWithoutCityForDashboard(){

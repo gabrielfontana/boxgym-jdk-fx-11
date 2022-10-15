@@ -3,6 +3,8 @@ package boxgym.dao;
 import boxgym.helper.ExcelFileHelper;
 import boxgym.jdbc.ConnectionFactory;
 import boxgym.model.Supplier;
+import com.google.common.collect.Ordering;
+import com.google.common.collect.TreeMultimap;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -230,9 +232,9 @@ public class SupplierDao {
         return amount;
     }
 
-    public MultiValuedMap<Integer, String> getAmountOfSuppliersByFUForDashboard() {
-        MultiValuedMap<Integer, String> map = new ArrayListValuedHashMap<>();
-        String sql = "SELECT COUNT(*) AS `amount`, `federativeUnit` "
+    public TreeMultimap<String, Integer> getAmountOfSuppliersByFUForDashboard() {
+        TreeMultimap<String, Integer> sortedMap = TreeMultimap.create(Ordering.natural(), Ordering.natural());
+        String sql = "SELECT `federativeUnit`, COUNT(*) AS `amount` "
                 + "FROM `supplier` "
                 + "WHERE `federativeUnit` <> '' OR `federativeUnit` <> NULL "
                 + "GROUP BY `federativeUnit` "
@@ -242,7 +244,7 @@ public class SupplierDao {
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
-                map.put(rs.getInt("amount"), rs.getString("federativeUnit"));
+                sortedMap.put(rs.getString("federativeUnit"), rs.getInt("amount"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(SupplierDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -251,7 +253,7 @@ public class SupplierDao {
             DbUtils.closeQuietly(ps);
             DbUtils.closeQuietly(rs);
         }
-        return map;
+        return sortedMap;
     }
 
     public int getAmountOfSuppliersWithoutFUForDashboard() {
@@ -274,8 +276,8 @@ public class SupplierDao {
         return amount;
     }
 
-    public MultiValuedMap<Integer, String> getMostFrequentSuppliersSEForDashboard() {
-        MultiValuedMap<Integer, String> map = new ArrayListValuedHashMap<>();
+    public TreeMultimap<Integer, String> getMostFrequentSuppliersSEForDashboard() {
+        TreeMultimap<Integer, String> sortedMap = TreeMultimap.create(Ordering.natural().reverse(), Ordering.natural());
         String sql = "SELECT COUNT(*) AS `amount`, s.tradeName AS `tempSupplierName` "
                 + "FROM `stockentry` AS se INNER JOIN `supplier` AS s "
                 + "ON se.fkSupplier = s.supplierId "
@@ -287,7 +289,7 @@ public class SupplierDao {
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
-                map.put(rs.getInt("amount"), rs.getString("tempSupplierName"));
+                sortedMap.put(rs.getInt("amount"), rs.getString("tempSupplierName"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(SupplierDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -296,7 +298,7 @@ public class SupplierDao {
             DbUtils.closeQuietly(ps);
             DbUtils.closeQuietly(rs);
         }
-        return map;
+        return sortedMap;
     }
 
     public boolean createExcelFile(String filePath) {

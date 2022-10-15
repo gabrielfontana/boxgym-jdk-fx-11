@@ -164,11 +164,11 @@ public class HomeController implements Initializable {
             customersByCityWarningLabel.setText("Não há registros para gerar o gráfico");
         } else {
             CustomerDao amount = new CustomerDao();
-            MultiValuedMap<Integer, String> map = amount.getAmountOfCustomersByCityForDashboard();
+            TreeMultimap<String, Integer> sortedMap = amount.getAmountOfCustomersByCityForDashboard();
 
             ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-            map.entries().forEach(entry -> {
-                pieChartData.add(new PieChart.Data(entry.getValue(), entry.getKey()));
+            sortedMap.entries().forEach(entry -> {
+                pieChartData.add(new PieChart.Data(entry.getKey(), entry.getValue()));
             });
             CustomerDao withoutCity = new CustomerDao();
             int amountOfCustomersWithoutCity = withoutCity.getAmountOfCustomersWithoutCityForDashboard();
@@ -231,11 +231,11 @@ public class HomeController implements Initializable {
             suppliersByFUWarningLabel.setText("Não há registros para gerar o gráfico");
         } else {
             SupplierDao amount = new SupplierDao();
-            MultiValuedMap<Integer, String> map = amount.getAmountOfSuppliersByFUForDashboard();
+            TreeMultimap<String, Integer> sortedMap = amount.getAmountOfSuppliersByFUForDashboard();
 
             ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-            map.entries().forEach(entry -> {
-                pieChartData.add(new PieChart.Data(entry.getValue(), entry.getKey()));
+            sortedMap.entries().forEach(entry -> {
+                pieChartData.add(new PieChart.Data(entry.getKey(), entry.getValue()));
             });
             SupplierDao withoutFU = new SupplierDao();
             int amountOfSuppliersWithoutFU = withoutFU.getAmountOfSuppliersWithoutFUForDashboard();
@@ -262,10 +262,10 @@ public class HomeController implements Initializable {
             mostFrequentSuppliersSEWarningLabel.setText("Não há registros para gerar o gráfico");
         } else {
             SupplierDao amount = new SupplierDao();
-            MultiValuedMap<Integer, String> map = amount.getMostFrequentSuppliersSEForDashboard();
+            TreeMultimap<Integer, String> sortedMap = amount.getMostFrequentSuppliersSEForDashboard();
 
             ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-            map.entries().forEach(entry -> {
+            sortedMap.entries().forEach(entry -> {
                 pieChartData.add(new PieChart.Data(entry.getValue(), entry.getKey()));
             });
 
@@ -336,10 +336,10 @@ public class HomeController implements Initializable {
             mostPopularProductsWarningLabel.setText("Não há registros para gerar o gráfico");
         } else {
             ProductDao sumAmount = new ProductDao();
-            TreeMultimap<Integer, String> map = sumAmount.getMostPopularProductsForDashboard();
+            TreeMultimap<Integer, String> sortedMap = sumAmount.getMostPopularProductsForDashboard();
 
             ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-            map.entries().forEach(entry -> {
+            sortedMap.entries().forEach(entry -> {
                 pieChartData.add(new PieChart.Data(entry.getValue(), entry.getKey()));
             });
 
