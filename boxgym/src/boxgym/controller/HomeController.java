@@ -6,6 +6,7 @@ import boxgym.dao.SupplierDao;
 import boxgym.model.Customer;
 import boxgym.model.Product;
 import boxgym.model.Supplier;
+import com.google.common.collect.TreeMultimap;
 import java.net.URL;
 import java.text.NumberFormat;
 import java.util.List;
@@ -328,7 +329,29 @@ public class HomeController implements Initializable {
     }
     
     private void buildMostPopularProductsPieChart() {
+        ProductDao productDao = new ProductDao();
+        List<Product> productsList = productDao.read();
         
+        if (productsList == null || productsList.isEmpty()) {
+            mostPopularProductsWarningLabel.setText("Não há registros para gerar o gráfico");
+        } else {
+            ProductDao sumAmount = new ProductDao();
+            TreeMultimap<Integer, String> map = sumAmount.getMostPopularProductsForDashboard();
+
+            ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+            map.entries().forEach(entry -> {
+                pieChartData.add(new PieChart.Data(entry.getValue(), entry.getKey()));
+            });
+
+            pieChartCommonMethods(mostPopularProductsPieChart, Side.RIGHT);
+            mostPopularProductsPieChart.setData(pieChartData);
+
+            mostPopularProductsPieChart.getData().forEach(data -> {
+                int pieValue = (int) (data.getPieValue());
+                Tooltip tooltip = new Tooltip(String.valueOf(pieValue));
+                Tooltip.install(data.getNode(), tooltip);
+            });
+        }
     }
 
     private void pieChartCommonMethods(PieChart pieChart, Side value) {

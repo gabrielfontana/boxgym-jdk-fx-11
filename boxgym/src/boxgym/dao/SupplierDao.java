@@ -279,7 +279,7 @@ public class SupplierDao {
         String sql = "SELECT COUNT(*) AS `amount`, s.tradeName AS `tempSupplierName` "
                 + "FROM `stockentry` AS se INNER JOIN `supplier` AS s "
                 + "ON se.fkSupplier = s.supplierId "
-                + "GROUP BY `fkSupplier` "
+                + "GROUP BY se.fkSupplier "
                 + "ORDER BY `amount` DESC "
                 + "LIMIT 10;";
         
