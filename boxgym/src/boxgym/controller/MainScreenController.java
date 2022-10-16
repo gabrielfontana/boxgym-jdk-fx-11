@@ -4,6 +4,7 @@ import boxgym.dao.CustomerDao;
 import boxgym.dao.MeasurementDao;
 import boxgym.dao.ProductDao;
 import boxgym.dao.SaleDao;
+import boxgym.dao.SheetDao;
 import boxgym.dao.StockEntryDao;
 import boxgym.dao.SupplierDao;
 import boxgym.dao.WorkoutDao;
@@ -205,6 +206,20 @@ public class MainScreenController implements Initializable {
 
         if (file != null) {
             stockEntryDao.createExcelFile(file.getAbsolutePath());
+            alert.customAlert(Alert.AlertType.WARNING, "Relatório gerado com sucesso em '" + file.getAbsolutePath() + "'.", "");
+        }
+    }
+    
+    @FXML
+    void exportSheetsToExcel(ActionEvent event) {
+        FileChooser chooser = new FileChooser();
+        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Pasta de Trabalho do Excel", "*.xlsx"));
+        File file = chooser.showSaveDialog(new Stage());
+
+        SheetDao sheetDao = new SheetDao();
+
+        if (file != null) {
+            sheetDao.createExcelFile(file.getAbsolutePath());
             alert.customAlert(Alert.AlertType.WARNING, "Relatório gerado com sucesso em '" + file.getAbsolutePath() + "'.", "");
         }
     }
