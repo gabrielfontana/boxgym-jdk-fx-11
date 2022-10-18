@@ -2,13 +2,17 @@ package boxgym.controller;
 
 import boxgym.dao.CustomerDao;
 import boxgym.dao.ProductDao;
+import boxgym.dao.SaleDao;
 import boxgym.dao.SupplierDao;
 import boxgym.model.Customer;
 import boxgym.model.Product;
+import boxgym.model.Sale;
 import boxgym.model.Supplier;
 import com.google.common.collect.TreeMultimap;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.text.NumberFormat;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -19,12 +23,12 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Side;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
-import org.apache.commons.collections4.MultiValuedMap;
 
 public class HomeController implements Initializable {
 
@@ -63,6 +67,7 @@ public class HomeController implements Initializable {
         customersDashboard();
         suppliersDashboard();
         productsDashboard();
+        salesDashboard();
     }
 
     private void customersDashboard() {
@@ -279,59 +284,59 @@ public class HomeController implements Initializable {
             });
         }
     }
-    
+
     @FXML
     private Label totalProducts;
-    
+
     @FXML
     private Label productsLast90Days;
-    
+
     @FXML
-    private Label productsLast30Days;
-    
+    private Label productsThisMonth;
+
     @FXML
     private Label totalStockValue;
-    
+
     @FXML
     private PieChart mostPopularProductsPieChart;
 
     @FXML
     private Label mostPopularProductsWarningLabel;
-    
+
     private void productsDashboard() {
         setTotalProducts();
         setProductsLast90Days();
-        setProductsLast30Days();
+        setProductsThisMonth();
         setTotalStockValue();
         buildMostPopularProductsPieChart();
     }
-    
+
     private void setTotalProducts() {
         ProductDao productDao = new ProductDao();
         List<Product> productsList = productDao.read();
         totalProducts.setText(String.valueOf(productsList.size()));
     }
-    
+
     private void setProductsLast90Days() {
         ProductDao productDao = new ProductDao();
         productsLast90Days.setText(String.valueOf(productDao.getAmountOfProductsLast90DaysForDashboard()));
     }
-    
-    private void setProductsLast30Days() {
+
+    private void setProductsThisMonth() {
         ProductDao productDao = new ProductDao();
-        productsLast30Days.setText(String.valueOf(productDao.getAmountOfProductsLast30DaysForDashboard()));
+        productsThisMonth.setText(String.valueOf(productDao.getAmountOfProductsThisMonthForDashboard()));
     }
-    
+
     private void setTotalStockValue() {
         ProductDao productDao = new ProductDao();
         NumberFormat nf = NumberFormat.getInstance(new Locale("pt", "BR"));
         totalStockValue.setText("R$ " + nf.format(productDao.getTotalStockValueForDashboard()));
     }
-    
+
     private void buildMostPopularProductsPieChart() {
         ProductDao productDao = new ProductDao();
         List<Product> productsList = productDao.read();
-        
+
         if (productsList == null || productsList.isEmpty()) {
             mostPopularProductsWarningLabel.setText("Não há registros para gerar o gráfico");
         } else {
@@ -354,10 +359,103 @@ public class HomeController implements Initializable {
         }
     }
 
-    private void pieChartCommonMethods(PieChart pieChart, Side value) {
+    @FXML
+    private Label salesLast90Days;
+
+    @FXML
+    private Label salesThisMonth;
+
+    @FXML
+    private Label avgTicketThisMonth;
+
+    @FXML
+    private Label lowestSaleThisMonth;
+
+    @FXML
+    private Label biggestSaleThisMonth;
+
+    @FXML
+    private LineChart<String, BigDecimal> annualSalesHistoryLineChart;
+
+    @FXML
+    private CategoryAxis annualSalesHistoryLineChartXAxis;
+
+    @FXML
+    private NumberAxis annualSalesHistoryLineChartYAxis;
+
+    @FXML
+    private Label annualSalesHistoryWarningLabel;
+
+    private void salesDashboard() {
+        setSalesLast90Days();
+        setSalesThisMonth();
+        setAvgTicketThisMonth();
+        setLowestSaleThisMonth();
+        setBiggestSaleThisMonth();
+        buildAnnualSalesHistoryLineChart();
+    }
+
+    private void setSalesLast90Days() {
+        SaleDao saleDao = new SaleDao();
+        salesLast90Days.setText(String.valueOf(saleDao.getAmountOfSalesLast90DaysForDashboard()));
+    }
+
+    private void setSalesThisMonth() {
+        SaleDao saleDao = new SaleDao();
+        salesThisMonth.setText(String.valueOf(saleDao.getAmountOfSalesThisMonthForDashboard()));
+    }
+
+    private void setAvgTicketThisMonth() {
+        SaleDao saleDao = new SaleDao();
+        NumberFormat nf = NumberFormat.getInstance(new Locale("pt", "BR"));
+        avgTicketThisMonth.setText("R$ " + nf.format(saleDao.getAvgTicketThisMonthForDashboard()));
+    }
+
+    private void setLowestSaleThisMonth() {
+        SaleDao saleDao = new SaleDao();
+        NumberFormat nf = NumberFormat.getInstance(new Locale("pt", "BR"));
+        lowestSaleThisMonth.setText("R$ " + nf.format(saleDao.getLowestSaleThisMonthForDashboard()));
+    }
+
+    private void setBiggestSaleThisMonth() {
+        SaleDao saleDao = new SaleDao();
+        NumberFormat nf = NumberFormat.getInstance(new Locale("pt", "BR"));
+        biggestSaleThisMonth.setText("R$ " + nf.format(saleDao.getBiggestSaleThisMonthForDashboard()));
+    }
+
+    private void buildAnnualSalesHistoryLineChart() {
+        SaleDao saleDao = new SaleDao();
+        List<Sale> salesList = saleDao.read();
+
+        if (salesList == null || salesList.isEmpty()) {
+            annualSalesHistoryWarningLabel.setText("Não há registros para gerar o gráfico");
+            annualSalesHistoryLineChart.setVisible(false);
+        } else {
+            annualSalesHistoryLineChartXAxis.setLabel("Meses");
+            annualSalesHistoryLineChartYAxis.setLabel("Valor (R$)");
+
+            SaleDao annualSalesHistory = new SaleDao();
+            List<BigDecimal> sumOfSalesByMonthList = annualSalesHistory.getAnnualSalesHistoryForDashboard();
+            List<String> monthsList = Arrays.asList("Jan.", "Fev.", "Mar.", "Abr.", "Mai.", "Jun.", "Jul.", "Ago.", "Set.", "Out.", "Nov.", "Dez.");
+
+            XYChart.Series<String, BigDecimal> series = new XYChart.Series();
+            for (int i = 0; i < 12; i++) {
+                series.getData().add(new XYChart.Data(monthsList.get(i), sumOfSalesByMonthList.get(i)));
+            }
+            annualSalesHistoryLineChart.getData().addAll(series);
+            annualSalesHistoryLineChart.setLegendVisible(false);
+            
+            NumberFormat nf = NumberFormat.getInstance(new Locale("pt", "BR"));
+            for (XYChart.Data<String, BigDecimal> item : series.getData()) {
+                Tooltip.install(item.getNode(), new Tooltip("X: " + item.getXValue() + "\nY: R$ " + nf.format(item.getYValue())));
+            }
+        }
+    }
+
+    private void pieChartCommonMethods(PieChart pieChart, Side side) {
         pieChart.setClockwise(true);
         pieChart.setLabelsVisible(true);
         pieChart.setAnimated(true);
-        pieChart.setLegendSide(value);
+        pieChart.setLegendSide(side);
     }
 }

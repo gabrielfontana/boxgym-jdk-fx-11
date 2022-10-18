@@ -282,8 +282,8 @@ public class ProductDao {
         return amount;
     }
     
-    public int getAmountOfProductsLast30DaysForDashboard() {
-        String sql = "SELECT COUNT(*) AS `amount` FROM `product` WHERE `createdAt` >= DATE_ADD(NOW(), INTERVAL -1 MONTH);";
+    public int getAmountOfProductsThisMonthForDashboard() {
+        String sql = "SELECT COUNT(*) AS `amount` FROM `product` WHERE MONTH(`createdAt`) = MONTH(CURRENT_DATE()) AND YEAR(`createdAt`) = YEAR(CURRENT_DATE());";
         int amount = 0;
 
         try {

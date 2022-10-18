@@ -4,9 +4,12 @@ import boxgym.helper.ExcelFileHelper;
 import boxgym.jdbc.ConnectionFactory;
 import boxgym.model.Sale;
 import boxgym.model.SaleProduct;
+import com.google.common.collect.Ordering;
+import com.google.common.collect.TreeMultimap;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,6 +18,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -138,6 +142,178 @@ public class SaleDao {
             DbUtils.closeQuietly(rs);
         }
         return false;
+    }
+
+    public int getAmountOfSalesLast90DaysForDashboard() {
+        String sql = "SELECT COUNT(*) AS `amount` FROM `sale` WHERE `createdAt` >= DATE_ADD(NOW(), INTERVAL -3 MONTH);";
+        int amount = 0;
+
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                amount = rs.getInt("amount");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SaleDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return amount;
+    }
+
+    public int getAmountOfSalesThisMonthForDashboard() {
+        String sql = "SELECT COUNT(*) AS `amount` FROM `sale` WHERE MONTH(`saleDate`) = MONTH(CURRENT_DATE()) AND YEAR(`saleDate`) = YEAR(CURRENT_DATE());";
+        int amount = 0;
+
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                amount = rs.getInt("amount");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SaleDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return amount;
+    }
+
+    public BigDecimal getAvgTicketThisMonthForDashboard() {
+        String sql
+                = "SELECT "
+                + "TRUNCATE("
+                    + "SUM("
+                        + "s_p.amount * s_p.unitPrice"
+                    + ") / ("
+                            + "SELECT COUNT(*) "
+                            + "FROM `sale` "
+                            + "WHERE MONTH(`saleDate`) = MONTH(CURRENT_DATE()) AND YEAR(`saleDate`) = YEAR(CURRENT_DATE())"
+                        + ")"
+                + ", 2) AS `avgTicket` "
+                + "FROM `sale_product` AS s_p INNER JOIN `sale` AS s "
+                + "ON s_p.fkSale = s.saleId "
+                + "WHERE MONTH(s.saleDate) = MONTH(CURRENT_DATE()) AND YEAR(s.saleDate) = YEAR(CURRENT_DATE());";
+        BigDecimal avgTicket = new BigDecimal("0");
+
+        //Consulta para conferir se o ticket médio está correto
+        //SELECT SUM(s_p.amount * s_p.unitPrice) AS `sumSalesOrderBy`, s_p.fkSale FROM `sale_product` AS s_p INNER JOIN `sale` AS s ON s_p.fkSale = s.saleId WHERE MONTH(s.saleDate) = MONTH(CURRENT_DATE()) AND YEAR(s.saleDate) = YEAR(CURRENT_DATE()) GROUP BY s_p.fkSale;
+        
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                avgTicket = rs.getBigDecimal("avgTicket");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SaleDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return avgTicket;
+    }
+    
+    public BigDecimal getLowestSaleThisMonthForDashboard() {
+        String sql 
+                = "SELECT MIN(temp.sumOrderBy) AS `lowestSale` "
+                + "FROM ("
+                    + "SELECT SUM(s_p.amount * s_p.unitPrice) AS `sumOrderBy`, s_p.fkSale "
+                    + "FROM `sale_product` AS s_p INNER JOIN `sale` AS s "
+                    + "ON s_p.fkSale = s.saleId "
+                    + "WHERE MONTH(s.saleDate) = MONTH(CURRENT_DATE()) AND YEAR(s.saleDate) = YEAR(CURRENT_DATE()) "
+                    + "GROUP BY s_p.fkSale"
+                + ") AS temp;";
+        BigDecimal lowestSale = new BigDecimal("0");
+        
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                lowestSale = rs.getBigDecimal("lowestSale");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SaleDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return lowestSale;
+    }
+    
+    public BigDecimal getBiggestSaleThisMonthForDashboard() {
+        String sql 
+                = "SELECT MAX(temp.sumOrderBy) AS `biggestSale` "
+                + "FROM ("
+                    + "SELECT SUM(s_p.amount * s_p.unitPrice) AS `sumOrderBy`, s_p.fkSale "
+                    + "FROM `sale_product` AS s_p INNER JOIN `sale` AS s "
+                    + "ON s_p.fkSale = s.saleId "
+                    + "WHERE MONTH(s.saleDate) = MONTH(CURRENT_DATE()) AND YEAR(s.saleDate) = YEAR(CURRENT_DATE()) "
+                    + "GROUP BY s_p.fkSale"
+                + ") AS temp;";
+        BigDecimal biggestSale = new BigDecimal("0");
+        
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                biggestSale = rs.getBigDecimal("biggestSale");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SaleDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return biggestSale;
+    }
+    
+    public List<BigDecimal> getAnnualSalesHistoryForDashboard (){
+        List<BigDecimal> sumOfSalesByMonthList = new ArrayList<>();
+        String sql 
+                = "SELECT m.month, IFNULL(SUM(s_p.amount * s_p.unitPrice), 0) AS `sumOfSalesByMonth` "
+                + "FROM "
+                + "("
+                    + "SELECT 1 AS month UNION "
+                    + "SELECT 2 UNION "
+                    + "SELECT 3 UNION "
+                    + "SELECT 4 UNION "
+                    + "SELECT 5 UNION "
+                    + "SELECT 6 UNION "
+                    + "SELECT 7 UNION "
+                    + "SELECT 8 UNION "
+                    + "SELECT 9 UNION "
+                    + "SELECT 10 UNION "
+                    + "SELECT 11 UNION "
+                    + "SELECT 12"
+                + ") AS m LEFT JOIN `sale` AS s "
+                + "ON m.month = MONTH(s.saleDate) "
+                + "LEFT JOIN `sale_product` AS s_p "
+                + "ON s.saleId = s_p.fkSale "
+                + "GROUP BY (m.month);";
+        
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                sumOfSalesByMonthList.add(rs.getBigDecimal("sumOfSalesByMonth"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return sumOfSalesByMonthList;
     }
 
     public boolean createExcelFile(String filePath) {
