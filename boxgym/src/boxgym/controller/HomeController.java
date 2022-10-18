@@ -169,10 +169,10 @@ public class HomeController implements Initializable {
             customersByCityWarningLabel.setText("Não há registros para gerar o gráfico");
         } else {
             CustomerDao amount = new CustomerDao();
-            TreeMultimap<String, Integer> sortedMap = amount.getAmountOfCustomersByCityForDashboard();
+            TreeMultimap<String, Integer> ascMap = amount.getAmountOfCustomersByCityForDashboard();
 
             ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-            sortedMap.entries().forEach(entry -> {
+            ascMap.entries().forEach(entry -> {
                 pieChartData.add(new PieChart.Data(entry.getKey(), entry.getValue()));
             });
             CustomerDao withoutCity = new CustomerDao();
@@ -236,10 +236,10 @@ public class HomeController implements Initializable {
             suppliersByFUWarningLabel.setText("Não há registros para gerar o gráfico");
         } else {
             SupplierDao amount = new SupplierDao();
-            TreeMultimap<String, Integer> sortedMap = amount.getAmountOfSuppliersByFUForDashboard();
+            TreeMultimap<String, Integer> ascMap = amount.getAmountOfSuppliersByFUForDashboard();
 
             ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-            sortedMap.entries().forEach(entry -> {
+            ascMap.entries().forEach(entry -> {
                 pieChartData.add(new PieChart.Data(entry.getKey(), entry.getValue()));
             });
             SupplierDao withoutFU = new SupplierDao();
@@ -267,10 +267,10 @@ public class HomeController implements Initializable {
             mostFrequentSuppliersSEWarningLabel.setText("Não há registros para gerar o gráfico");
         } else {
             SupplierDao amount = new SupplierDao();
-            TreeMultimap<Integer, String> sortedMap = amount.getMostFrequentSuppliersSEForDashboard();
+            TreeMultimap<Integer, String> descMap = amount.getMostFrequentSuppliersSEForDashboard();
 
             ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-            sortedMap.entries().forEach(entry -> {
+            descMap.entries().forEach(entry -> {
                 pieChartData.add(new PieChart.Data(entry.getValue(), entry.getKey()));
             });
 
@@ -341,10 +341,10 @@ public class HomeController implements Initializable {
             mostPopularProductsWarningLabel.setText("Não há registros para gerar o gráfico");
         } else {
             ProductDao sumAmount = new ProductDao();
-            TreeMultimap<Integer, String> sortedMap = sumAmount.getMostPopularProductsForDashboard();
+            TreeMultimap<Integer, String> descMap = sumAmount.getMostPopularProductsForDashboard();
 
             ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-            sortedMap.entries().forEach(entry -> {
+            descMap.entries().forEach(entry -> {
                 pieChartData.add(new PieChart.Data(entry.getValue(), entry.getKey()));
             });
 
@@ -385,6 +385,12 @@ public class HomeController implements Initializable {
 
     @FXML
     private Label annualSalesHistoryWarningLabel;
+    
+    @FXML
+    private PieChart mostFrequentCustomersLast90DaysPieChart;
+    
+    @FXML
+    private Label mostFrequentCustomersLast90DaysWarningLabel;
 
     private void salesDashboard() {
         setSalesLast90Days();
@@ -393,6 +399,7 @@ public class HomeController implements Initializable {
         setLowestSaleThisMonth();
         setBiggestSaleThisMonth();
         buildAnnualSalesHistoryLineChart();
+        buildMostFrequentCustomersLast90DaysPieChart();
     }
 
     private void setSalesLast90Days() {
@@ -449,6 +456,32 @@ public class HomeController implements Initializable {
             for (XYChart.Data<String, BigDecimal> item : series.getData()) {
                 Tooltip.install(item.getNode(), new Tooltip("X: " + item.getXValue() + "\nY: R$ " + nf.format(item.getYValue())));
             }
+        }
+    }
+    
+    private void buildMostFrequentCustomersLast90DaysPieChart() {
+        SaleDao saleDao = new SaleDao();
+        List<Sale> salesList = saleDao.read();
+
+        if (salesList == null || salesList.isEmpty()) {
+            mostFrequentCustomersLast90DaysWarningLabel.setText("Não há registros para gerar o gráfico");
+        } else {
+            SaleDao sumAmount = new SaleDao();
+            TreeMultimap<Integer, String> descMap = sumAmount.getMostFrequentCustomersLast90DaysForDashoboard();
+
+            ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+            descMap.entries().forEach(entry -> {
+                pieChartData.add(new PieChart.Data(entry.getValue(), entry.getKey()));
+            });
+
+            pieChartCommonMethods(mostFrequentCustomersLast90DaysPieChart, Side.BOTTOM);
+            mostFrequentCustomersLast90DaysPieChart.setData(pieChartData);
+
+            mostFrequentCustomersLast90DaysPieChart.getData().forEach(data -> {
+                int pieValue = (int) (data.getPieValue());
+                Tooltip tooltip = new Tooltip(String.valueOf(pieValue));
+                Tooltip.install(data.getNode(), tooltip);
+            });
         }
     }
 

@@ -315,6 +315,32 @@ public class SaleDao {
         }
         return sumOfSalesByMonthList;
     }
+    
+    public TreeMultimap<Integer, String> getMostFrequentCustomersLast90DaysForDashoboard() {
+        TreeMultimap<Integer, String> descMap = TreeMultimap.create(Ordering.natural().reverse(), Ordering.natural());
+        String sql = "SELECT COUNT(*) AS `amount`, c.name AS `tempCustomerName` "
+                + "FROM `sale` AS s INNER JOIN `customer` AS c "
+                + "ON s.fkCustomer = c.customerId "
+                + "WHERE s.saleDate >= DATE_ADD(NOW(), INTERVAL -3 MONTH) "
+                + "GROUP by s.fkCustomer "
+                + "ORDER BY `amount` DESC "
+                + "LIMIT 5;";
+
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                descMap.put(rs.getInt("amount"), rs.getString("tempCustomerName"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return descMap;
+    }
 
     public boolean createExcelFile(String filePath) {
         String sql = "SELECT s.saleId, c.name AS `tempCustomerName`, s.saleDate, s.createdAt, s.updatedAt "

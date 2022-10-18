@@ -21,8 +21,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.commons.collections4.MultiValuedMap;
-import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.util.CellRangeAddress;
@@ -323,7 +321,7 @@ public class ProductDao {
     }
     
     public TreeMultimap<Integer, String> getMostPopularProductsForDashboard() {
-        TreeMultimap<Integer, String> sortedMap = TreeMultimap.create(Ordering.natural().reverse(), Ordering.natural());
+        TreeMultimap<Integer, String> descMap = TreeMultimap.create(Ordering.natural().reverse(), Ordering.natural());
         String sql = "SELECT SUM(s_p.amount) AS `sumAmount`, p.name AS `tempProductName` "
                 + "FROM `sale_product` AS s_p INNER JOIN `product` AS p "
                 + "ON s_p.fkProduct = p.productId "
@@ -335,7 +333,7 @@ public class ProductDao {
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
-                sortedMap.put(rs.getInt("sumAmount"), rs.getString("tempProductName"));
+                descMap.put(rs.getInt("sumAmount"), rs.getString("tempProductName"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(ProductDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -344,7 +342,7 @@ public class ProductDao {
             DbUtils.closeQuietly(ps);
             DbUtils.closeQuietly(rs);
         }
-        return sortedMap;
+        return descMap;
     }
 
     public boolean createExcelFile(String filePath) {

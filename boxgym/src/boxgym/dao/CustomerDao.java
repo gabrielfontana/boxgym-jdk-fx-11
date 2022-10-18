@@ -316,7 +316,7 @@ public class CustomerDao {
     }
     
     public TreeMultimap<String, Integer> getAmountOfCustomersByCityForDashboard() {
-        TreeMultimap<String, Integer> sortedMap = TreeMultimap.create(Ordering.natural(), Ordering.natural());
+        TreeMultimap<String, Integer> ascMap = TreeMultimap.create(Ordering.natural(), Ordering.natural());
         String sql = "SELECT `city`, COUNT(*) AS `amount` "
                 + "FROM `customer` "
                 + "WHERE `city` <> '' OR `city` <> NULL "
@@ -328,7 +328,7 @@ public class CustomerDao {
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
-                sortedMap.put(rs.getString("city"), rs.getInt("amount"));
+                ascMap.put(rs.getString("city"), rs.getInt("amount"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(CustomerDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -337,7 +337,7 @@ public class CustomerDao {
             DbUtils.closeQuietly(ps);
             DbUtils.closeQuietly(rs);
         }
-        return sortedMap;
+        return ascMap;
     }
     
     public int getAmountOfCustomersWithoutCityForDashboard(){
