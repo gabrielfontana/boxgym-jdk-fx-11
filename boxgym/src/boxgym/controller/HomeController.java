@@ -126,10 +126,10 @@ public class HomeController implements Initializable {
 
             for (XYChart.Series<String, Integer> series : ageRangeBarChart.getData()) {
                 for (XYChart.Data<String, Integer> item : series.getData()) {
-                    if (item.getYValue() != 1) {
-                        Tooltip.install(item.getNode(), new Tooltip(item.getXValue() + ": " + item.getYValue() + " pessoas"));
-                    } else {
+                    if (item.getYValue() == 1) {
                         Tooltip.install(item.getNode(), new Tooltip(item.getXValue() + ": " + item.getYValue() + " pessoa"));
+                    } else {
+                        Tooltip.install(item.getNode(), new Tooltip(item.getXValue() + ": " + item.getYValue() + " pessoas"));
                     }
                 }
             }
@@ -150,14 +150,9 @@ public class HomeController implements Initializable {
                     new PieChart.Data("Feminino", female.getAmountOfEachSexForDashboard("Feminino"))
             );
 
-            pieChartCommonMethods(customersProfilePieChart, Side.RIGHT);
             customersProfilePieChart.setData(pieChartData);
-
-            customersProfilePieChart.getData().forEach(data -> {
-                int pieValue = (int) (data.getPieValue());
-                Tooltip tooltip = new Tooltip(String.valueOf(pieValue));
-                Tooltip.install(data.getNode(), tooltip);
-            });
+            pieChartCommonMethods(customersProfilePieChart, Side.RIGHT);
+            pieChartTooltip(customersProfilePieChart, "cliente", "clientes");
         }
     }
 
@@ -181,14 +176,9 @@ public class HomeController implements Initializable {
                 pieChartData.add(new PieChart.Data("Não informado", amountOfCustomersWithoutCity));
             }
 
-            pieChartCommonMethods(customersByCityPieChart, Side.RIGHT);
             customersByCityPieChart.setData(pieChartData);
-
-            customersByCityPieChart.getData().forEach(data -> {
-                int pieValue = (int) (data.getPieValue());
-                Tooltip tooltip = new Tooltip(String.valueOf(pieValue));
-                Tooltip.install(data.getNode(), tooltip);
-            });
+            pieChartCommonMethods(customersByCityPieChart, Side.RIGHT);
+            pieChartTooltip(customersByCityPieChart, "cliente", "clientes");
         }
     }
 
@@ -248,14 +238,9 @@ public class HomeController implements Initializable {
                 pieChartData.add(new PieChart.Data("Não informado", amountOfSuppliersWithoutFU));
             }
 
-            pieChartCommonMethods(suppliersByFUPieChart, Side.BOTTOM);
             suppliersByFUPieChart.setData(pieChartData);
-
-            suppliersByFUPieChart.getData().forEach(data -> {
-                int pieValue = (int) (data.getPieValue());
-                Tooltip tooltip = new Tooltip(String.valueOf(pieValue));
-                Tooltip.install(data.getNode(), tooltip);
-            });
+            pieChartCommonMethods(suppliersByFUPieChart, Side.BOTTOM);
+            pieChartTooltip(suppliersByFUPieChart, "fornecedor", "fornecedores");
         }
     }
 
@@ -274,14 +259,9 @@ public class HomeController implements Initializable {
                 pieChartData.add(new PieChart.Data(entry.getValue(), entry.getKey()));
             });
 
-            pieChartCommonMethods(mostFrequentSuppliersSEPieChart, Side.BOTTOM);
             mostFrequentSuppliersSEPieChart.setData(pieChartData);
-
-            mostFrequentSuppliersSEPieChart.getData().forEach(data -> {
-                int pieValue = (int) (data.getPieValue());
-                Tooltip tooltip = new Tooltip(String.valueOf(pieValue));
-                Tooltip.install(data.getNode(), tooltip);
-            });
+            pieChartCommonMethods(mostFrequentSuppliersSEPieChart, Side.BOTTOM);
+            pieChartTooltip(mostFrequentSuppliersSEPieChart, "entrada de estoque", "entradas de estoque");
         }
     }
 
@@ -348,14 +328,9 @@ public class HomeController implements Initializable {
                 pieChartData.add(new PieChart.Data(entry.getValue(), entry.getKey()));
             });
 
-            pieChartCommonMethods(mostPopularProductsPieChart, Side.RIGHT);
             mostPopularProductsPieChart.setData(pieChartData);
-
-            mostPopularProductsPieChart.getData().forEach(data -> {
-                int pieValue = (int) (data.getPieValue());
-                Tooltip tooltip = new Tooltip(String.valueOf(pieValue));
-                Tooltip.install(data.getNode(), tooltip);
-            });
+            pieChartCommonMethods(mostPopularProductsPieChart, Side.RIGHT);
+            pieChartTooltip(mostPopularProductsPieChart, "unidade", "unidades");
         }
     }
 
@@ -385,10 +360,10 @@ public class HomeController implements Initializable {
 
     @FXML
     private Label annualSalesHistoryWarningLabel;
-    
+
     @FXML
     private PieChart mostFrequentCustomersLast90DaysPieChart;
-    
+
     @FXML
     private Label mostFrequentCustomersLast90DaysWarningLabel;
 
@@ -451,14 +426,14 @@ public class HomeController implements Initializable {
             }
             annualSalesHistoryLineChart.getData().addAll(series);
             annualSalesHistoryLineChart.setLegendVisible(false);
-            
+
             NumberFormat nf = NumberFormat.getInstance(new Locale("pt", "BR"));
             for (XYChart.Data<String, BigDecimal> item : series.getData()) {
-                Tooltip.install(item.getNode(), new Tooltip("X: " + item.getXValue() + "\nY: R$ " + nf.format(item.getYValue())));
+                Tooltip.install(item.getNode(), new Tooltip(item.getXValue() + ": R$ " + nf.format(item.getYValue())));
             }
         }
     }
-    
+
     private void buildMostFrequentCustomersLast90DaysPieChart() {
         SaleDao saleDao = new SaleDao();
         List<Sale> salesList = saleDao.read();
@@ -474,14 +449,9 @@ public class HomeController implements Initializable {
                 pieChartData.add(new PieChart.Data(entry.getValue(), entry.getKey()));
             });
 
-            pieChartCommonMethods(mostFrequentCustomersLast90DaysPieChart, Side.BOTTOM);
             mostFrequentCustomersLast90DaysPieChart.setData(pieChartData);
-
-            mostFrequentCustomersLast90DaysPieChart.getData().forEach(data -> {
-                int pieValue = (int) (data.getPieValue());
-                Tooltip tooltip = new Tooltip(String.valueOf(pieValue));
-                Tooltip.install(data.getNode(), tooltip);
-            });
+            pieChartCommonMethods(mostFrequentCustomersLast90DaysPieChart, Side.BOTTOM);
+            pieChartTooltip(mostFrequentCustomersLast90DaysPieChart, "compra", "compras");
         }
     }
 
@@ -490,5 +460,16 @@ public class HomeController implements Initializable {
         pieChart.setLabelsVisible(true);
         pieChart.setAnimated(true);
         pieChart.setLegendSide(side);
+    }
+
+    private void pieChartTooltip(PieChart pieChart, String tooltipSingular, String tooltipPlural) {
+        pieChart.getData().forEach(data -> {
+            int pieValue = (int) (data.getPieValue());
+            if (pieValue == 1) {
+                Tooltip.install(data.getNode(), new Tooltip(String.valueOf(pieValue) + " " + tooltipSingular));
+            } else {
+                Tooltip.install(data.getNode(), new Tooltip(String.valueOf(pieValue) + " " + tooltipPlural));
+            }
+        });
     }
 }
