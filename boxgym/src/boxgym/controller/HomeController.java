@@ -99,28 +99,26 @@ public class HomeController implements Initializable {
         } else {
             ageRangeBarChartXAxis.setLabel("Idade");
             ageRangeBarChartYAxis.setLabel("Quantidade");
-
+            
+            List<String> subtitleList = Arrays.asList("Até 20", "21 a 30", "31 a 40", "41 a 50", "Acima de 50");
+            
             CustomerDao maleAgeRange = new CustomerDao();
             List<Integer> maleList = maleAgeRange.getMaleAgeRangeForDashboard();
 
             XYChart.Series<String, Integer> series1 = new XYChart.Series();
             series1.setName("Masculino");
-            series1.getData().add(new XYChart.Data("Até 20", maleList.get(0)));
-            series1.getData().add(new XYChart.Data("21 a 30", maleList.get(1)));
-            series1.getData().add(new XYChart.Data("31 a 40", maleList.get(2)));
-            series1.getData().add(new XYChart.Data("41 a 50", maleList.get(3)));
-            series1.getData().add(new XYChart.Data("Acima de 50", maleList.get(4)));
-
+            for (int i = 0; i < subtitleList.size(); i++) {
+                series1.getData().add(new XYChart.Data(subtitleList.get(i), maleList.get(i)));
+            }
+            
             CustomerDao femaleAgeRange = new CustomerDao();
             List<Integer> femaleList = femaleAgeRange.getFemaleAgeRangeForDashboard();
 
             XYChart.Series<String, Integer> series2 = new XYChart.Series();
             series2.setName("Feminino");
-            series2.getData().add(new XYChart.Data("Até 20", femaleList.get(0)));
-            series2.getData().add(new XYChart.Data("21 a 30", femaleList.get(1)));
-            series2.getData().add(new XYChart.Data("31 a 40", femaleList.get(2)));
-            series2.getData().add(new XYChart.Data("41 a 50", femaleList.get(3)));
-            series2.getData().add(new XYChart.Data("Acima de 50", femaleList.get(4)));
+            for (int i = 0; i < subtitleList.size(); i++) {
+                series2.getData().add(new XYChart.Data(subtitleList.get(i), femaleList.get(i)));
+            }
 
             ageRangeBarChart.getData().addAll(series1, series2);
 
@@ -421,7 +419,7 @@ public class HomeController implements Initializable {
             List<String> monthsList = Arrays.asList("Jan.", "Fev.", "Mar.", "Abr.", "Mai.", "Jun.", "Jul.", "Ago.", "Set.", "Out.", "Nov.", "Dez.");
 
             XYChart.Series<String, BigDecimal> series = new XYChart.Series();
-            for (int i = 0; i < 12; i++) {
+            for (int i = 0; i < monthsList.size(); i++) {
                 series.getData().add(new XYChart.Data(monthsList.get(i), sumOfSalesByMonthList.get(i)));
             }
             annualSalesHistoryLineChart.getData().addAll(series);
