@@ -43,6 +43,21 @@ public class TextFieldFormat {
             }
         });
     }
+    
+    public static void stockEntryTableCellCurrencyFormat(TableColumn column) {
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
+        column.setCellFactory(tc -> new TableCell<StockEntry, BigDecimal>() {
+            @Override
+            protected void updateItem(BigDecimal price, boolean empty) {
+                super.updateItem(price, empty);
+                if (empty) {
+                    setText(null);
+                } else {
+                    setText(currencyFormat.format(price));
+                }
+            }
+        });
+    }
 
     public static void stockEntryProductTableCellCurrencyFormat(TableColumn column) {
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();

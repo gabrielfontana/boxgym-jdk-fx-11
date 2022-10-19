@@ -112,6 +112,23 @@ public class StockEntryDao {
                 se.setInvoiceNumber(rs.getString("invoiceNumber"));
                 se.setCreatedAt(rs.getTimestamp("createdAt").toLocalDateTime());
                 se.setUpdatedAt(rs.getTimestamp("updatedAt").toLocalDateTime());
+                
+                String sqlTotal 
+                        = "SELECT SUM(se_p.amount * se_p.costPrice) AS `tempTotal` "
+                        + "FROM `stockentry_product` AS se_p INNER JOIN `product` AS p "
+                        + "ON se_p.fkProduct = p.productId "
+                        + "WHERE se_p.fkStockEntry = " + rs.getInt("stockEntryId") + ";";
+                
+                Connection connTotal = new ConnectionFactory().getConnection();
+                PreparedStatement psTotal = connTotal.prepareStatement(sqlTotal);
+                ResultSet rsTotal = psTotal.executeQuery();
+                if (rsTotal.next()) {
+                    se.setTempTotal(rsTotal.getBigDecimal("tempTotal"));
+                }
+                DbUtils.closeQuietly(connTotal);
+                DbUtils.closeQuietly(psTotal);
+                DbUtils.closeQuietly(rsTotal);
+                
                 stockEntriesList.add(se);
             }
         } catch (SQLException ex) {

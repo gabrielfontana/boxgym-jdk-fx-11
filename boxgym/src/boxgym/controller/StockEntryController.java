@@ -10,6 +10,7 @@ import boxgym.helper.TextFieldFormat;
 import boxgym.model.StockEntry;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -91,6 +92,9 @@ public class StockEntryController implements Initializable {
 
     @FXML
     private TableColumn<StockEntry, String> invoiceNumberTableColumn;
+    
+    @FXML
+    private TableColumn<StockEntry, BigDecimal> tempTotalTableColumn;
 
     @FXML
     private Label countLabel;
@@ -115,6 +119,9 @@ public class StockEntryController implements Initializable {
 
     @FXML
     private Label invoiceNumberLabel;
+    
+    @FXML
+    private Label tempTotalLabel;
 
     @FXML
     private Label createdAtLabel;
@@ -184,6 +191,7 @@ public class StockEntryController implements Initializable {
             fkSupplierLabel.setText("");
             invoiceIssueDateLabel.setText("");
             invoiceNumberLabel.setText("");
+            tempTotalLabel.setText("");
             createdAtLabel.setText("");
             updatedAtLabel.setText("");
         }
@@ -195,6 +203,7 @@ public class StockEntryController implements Initializable {
             fkSupplierLabel.setText(selected.getTempSupplierName());
             invoiceIssueDateLabel.setText(selected.getInvoiceIssueDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
             invoiceNumberLabel.setText(selected.getInvoiceNumber());
+            TextFieldFormat.currencyFormat(tempTotalLabel, selected.getTempTotal());
             createdAtLabel.setText(selected.getCreatedAt().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
             updatedAtLabel.setText(selected.getUpdatedAt().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
         }
@@ -240,6 +249,10 @@ public class StockEntryController implements Initializable {
         TextFieldFormat.stockEntryTableCellDateFormat(invoiceIssueDateTableColumn);
 
         invoiceNumberTableColumn.setCellValueFactory(new PropertyValueFactory("invoiceNumber"));
+        
+        tempTotalTableColumn.setCellValueFactory(new PropertyValueFactory("tempTotal"));
+        TextFieldFormat.stockEntryTableCellCurrencyFormat(tempTotalTableColumn);
+        
         refreshTableView();
     }
 
@@ -247,8 +260,9 @@ public class StockEntryController implements Initializable {
         String tempSupplierName = stockEntry.getTempSupplierName();
         String invoiceIssueDate = stockEntry.getInvoiceIssueDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         String invoiceNumber = stockEntry.getInvoiceNumber();
+        String tempTotal = "R$ ".concat(String.valueOf(stockEntry.getTempTotal()).replace(".", ","));
 
-        List<String> fields = Arrays.asList(tempSupplierName, invoiceIssueDate, invoiceNumber);
+        List<String> fields = Arrays.asList(tempSupplierName, invoiceIssueDate, invoiceNumber, tempTotal);
 
         return stringComparasion(fields, searchText, optionOrder);
     }
@@ -257,8 +271,9 @@ public class StockEntryController implements Initializable {
         String tempSupplierName = stockEntry.getTempSupplierName().toLowerCase();
         String invoiceIssueDate = stockEntry.getInvoiceIssueDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         String invoiceNumber = stockEntry.getInvoiceNumber();
-
-        List<String> fields = Arrays.asList(tempSupplierName, invoiceIssueDate, invoiceNumber);
+        String tempTotal = "r$ ".concat(String.valueOf(stockEntry.getTempTotal()).replace(".", ","));
+        
+        List<String> fields = Arrays.asList(tempSupplierName, invoiceIssueDate, invoiceNumber, tempTotal);
 
         return stringComparasion(fields, searchText, optionOrder);
     }
@@ -267,16 +282,20 @@ public class StockEntryController implements Initializable {
         boolean searchReturn = false;
         switch (optionOrder) {
             case 1:
-                searchReturn = (list.get(0).contains(searchText)) || (list.get(1).contains(searchText)) || (list.get(2).contains(searchText));
+                searchReturn = (list.get(0).contains(searchText)) || (list.get(1).contains(searchText)) 
+                        || (list.get(2).contains(searchText)) || (list.get(3).contains(searchText));
                 break;
             case 2:
-                searchReturn = (list.get(0).equals(searchText)) || (list.get(1).equals(searchText)) || (list.get(2).equals(searchText));
+                searchReturn = (list.get(0).equals(searchText)) || (list.get(1).equals(searchText)) 
+                        || (list.get(2).equals(searchText)) || (list.get(3).equals(searchText));
                 break;
             case 3:
-                searchReturn = (list.get(0).startsWith(searchText)) || (list.get(1).startsWith(searchText)) || (list.get(2).startsWith(searchText));
+                searchReturn = (list.get(0).startsWith(searchText)) || (list.get(1).startsWith(searchText)) 
+                        || (list.get(2).startsWith(searchText)) || (list.get(3).startsWith(searchText));
                 break;
             case 4:
-                searchReturn = (list.get(0).endsWith(searchText)) || (list.get(1).endsWith(searchText)) || (list.get(2).endsWith(searchText));
+                searchReturn = (list.get(0).endsWith(searchText)) || (list.get(1).endsWith(searchText)) 
+                        || (list.get(2).endsWith(searchText)) || (list.get(3).endsWith(searchText));
                 break;
             default:
                 break;
