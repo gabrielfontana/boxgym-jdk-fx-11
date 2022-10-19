@@ -76,11 +76,6 @@ public class MainScreenController implements Initializable {
     }
 
     @FXML
-    void handlePlans(ActionEvent event) throws IOException {
-        changeContentArea("/boxgym/view/Plans.fxml");
-    }
-
-    @FXML
     void handleCustomers(ActionEvent event) throws IOException {
         changeContentArea("/boxgym/view/Customers.fxml");
     }
