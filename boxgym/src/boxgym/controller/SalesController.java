@@ -10,6 +10,7 @@ import boxgym.helper.TextFieldFormat;
 import boxgym.model.Sale;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -90,6 +91,9 @@ public class SalesController implements Initializable {
     private TableColumn<Sale, LocalDate> saleDateTableColumn;
     
     @FXML
+    private TableColumn<Sale, BigDecimal> tempTotalTableColumn;
+    
+    @FXML
     private Label countLabel;
 
     @FXML
@@ -109,6 +113,9 @@ public class SalesController implements Initializable {
     
     @FXML
     private Label saleDateLabel;
+    
+    @FXML
+    private Label tempTotalLabel;
 
     @FXML
     private Label createdAtLabel;
@@ -179,6 +186,7 @@ public class SalesController implements Initializable {
             saleIdLabel.setText("");
             fkCustomerLabel.setText("");
             saleDateLabel.setText("");
+            tempTotalLabel.setText("");
             createdAtLabel.setText("");
             updatedAtLabel.setText("");
         }
@@ -189,6 +197,7 @@ public class SalesController implements Initializable {
             saleIdLabel.setText(String.valueOf(selected.getSaleId()));
             fkCustomerLabel.setText(selected.getTempCustomerName());
             saleDateLabel.setText(selected.getSaleDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+            TextFieldFormat.currencyFormat(tempTotalLabel, selected.getTempTotal());
             createdAtLabel.setText(selected.getCreatedAt().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
             updatedAtLabel.setText(selected.getUpdatedAt().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
         }
@@ -232,15 +241,19 @@ public class SalesController implements Initializable {
 
         saleDateTableColumn.setCellValueFactory(new PropertyValueFactory("saleDate"));
         TextFieldFormat.saleTableCellDateFormat(saleDateTableColumn);
-
+        
+        tempTotalTableColumn.setCellValueFactory(new PropertyValueFactory("tempTotal"));
+        TextFieldFormat.saleTableCellCurrencyFormat(tempTotalTableColumn);
+        
         refreshTableView();
     }
     
     private boolean caseSensitiveEnabled(Sale sale, String searchText, int optionOrder) {
         String tempCustomerName = sale.getTempCustomerName();
         String saleDate = sale.getSaleDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        String tempTotal = "R$ ".concat(String.valueOf(sale.getTempTotal()).replace(".", ","));
 
-        List<String> fields = Arrays.asList(tempCustomerName, saleDate);
+        List<String> fields = Arrays.asList(tempCustomerName, saleDate, tempTotal);
 
         return stringComparasion(fields, searchText, optionOrder);
     }
@@ -248,8 +261,9 @@ public class SalesController implements Initializable {
     private boolean caseSensitiveDisabled(Sale sale, String searchText, int optionOrder) {
         String tempCustomerName = sale.getTempCustomerName().toLowerCase();
         String saleDate = sale.getSaleDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        String tempTotal = "r$ ".concat(String.valueOf(sale.getTempTotal()).replace(".", ","));
         
-        List<String> fields = Arrays.asList(tempCustomerName, saleDate);
+        List<String> fields = Arrays.asList(tempCustomerName, saleDate, tempTotal);
 
         return stringComparasion(fields, searchText, optionOrder);
     }
@@ -258,16 +272,16 @@ public class SalesController implements Initializable {
         boolean searchReturn = false;
         switch (optionOrder) {
             case 1:
-                searchReturn = (list.get(0).contains(searchText)) || (list.get(1).contains(searchText));
+                searchReturn = (list.get(0).contains(searchText)) || (list.get(1).contains(searchText) || (list.get(2).contains(searchText)));
                 break;
             case 2:
-                searchReturn = (list.get(0).equals(searchText)) || (list.get(1).equals(searchText));
+                searchReturn = (list.get(0).equals(searchText)) || (list.get(1).equals(searchText)) || (list.get(2).equals(searchText));
                 break;
             case 3:
-                searchReturn = (list.get(0).startsWith(searchText)) || (list.get(1).startsWith(searchText));
+                searchReturn = (list.get(0).startsWith(searchText)) || (list.get(1).startsWith(searchText)) || (list.get(2).startsWith(searchText));
                 break;
             case 4:
-                searchReturn = (list.get(0).endsWith(searchText)) || (list.get(1).endsWith(searchText));
+                searchReturn = (list.get(0).endsWith(searchText)) || (list.get(1).endsWith(searchText)) || (list.get(2).endsWith(searchText));
                 break;
             default:
                 break;

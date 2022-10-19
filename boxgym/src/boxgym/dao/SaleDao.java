@@ -114,6 +114,22 @@ public class SaleDao {
                 s.setSaleDate(rs.getDate("saleDate").toLocalDate());
                 s.setCreatedAt(rs.getTimestamp("createdAt").toLocalDateTime());
                 s.setUpdatedAt(rs.getTimestamp("updatedAt").toLocalDateTime());
+
+                String sqlTotal
+                        = "SELECT SUM(s_p.amount * s_p.unitPrice) AS `tempTotal` "
+                        + "FROM `sale_product` AS s_p INNER JOIN `product` AS p "
+                        + "ON s_p.fkProduct = p.productId "
+                        + "WHERE s_p.fkSale = " + rs.getInt("saleId") + ";";
+                Connection connTotal = new ConnectionFactory().getConnection();
+                PreparedStatement psTotal = connTotal.prepareStatement(sqlTotal);
+                ResultSet rsTotal = psTotal.executeQuery();
+                if (rsTotal.next()) {
+                    s.setTempTotal(rsTotal.getBigDecimal("tempTotal"));
+                }
+                DbUtils.closeQuietly(connTotal);
+                DbUtils.closeQuietly(psTotal);
+                DbUtils.closeQuietly(rsTotal);
+
                 salesList.add(s);
             }
         } catch (SQLException ex) {
@@ -219,9 +235,9 @@ public class SaleDao {
         }
         return avgTicket;
     }
-    
+
     public BigDecimal getLowestSaleThisMonthForDashboard() {
-        String sql 
+        String sql
                 = "SELECT MIN(temp.sumOrderBy) AS `lowestSale` "
                 + "FROM ("
                     + "SELECT SUM(s_p.amount * s_p.unitPrice) AS `sumOrderBy`, s_p.fkSale "
@@ -231,7 +247,7 @@ public class SaleDao {
                     + "GROUP BY s_p.fkSale"
                 + ") AS temp;";
         BigDecimal lowestSale = new BigDecimal("0");
-        
+
         try {
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -247,9 +263,9 @@ public class SaleDao {
         }
         return lowestSale;
     }
-    
+
     public BigDecimal getBiggestSaleThisMonthForDashboard() {
-        String sql 
+        String sql
                 = "SELECT MAX(temp.sumOrderBy) AS `biggestSale` "
                 + "FROM ("
                     + "SELECT SUM(s_p.amount * s_p.unitPrice) AS `sumOrderBy`, s_p.fkSale "
@@ -259,7 +275,7 @@ public class SaleDao {
                     + "GROUP BY s_p.fkSale"
                 + ") AS temp;";
         BigDecimal biggestSale = new BigDecimal("0");
-        
+
         try {
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -275,10 +291,10 @@ public class SaleDao {
         }
         return biggestSale;
     }
-    
-    public List<BigDecimal> getAnnualSalesHistoryForDashboard (){
+
+    public List<BigDecimal> getAnnualSalesHistoryForDashboard() {
         List<BigDecimal> sumOfSalesByMonthList = new ArrayList<>();
-        String sql 
+        String sql
                 = "SELECT m.month, IFNULL(SUM(s_p.amount * s_p.unitPrice), 0) AS `sumOfSalesByMonth` "
                 + "FROM "
                 + "("
@@ -299,7 +315,7 @@ public class SaleDao {
                 + "LEFT JOIN `sale_product` AS s_p "
                 + "ON s.saleId = s_p.fkSale "
                 + "GROUP BY (m.month);";
-        
+
         try {
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -307,7 +323,7 @@ public class SaleDao {
                 sumOfSalesByMonthList.add(rs.getBigDecimal("sumOfSalesByMonth"));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ProductDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SaleDao.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DbUtils.closeQuietly(conn);
             DbUtils.closeQuietly(ps);
@@ -315,7 +331,7 @@ public class SaleDao {
         }
         return sumOfSalesByMonthList;
     }
-    
+
     public TreeMultimap<Integer, String> getMostFrequentCustomersLast90DaysForDashoboard() {
         TreeMultimap<Integer, String> descMap = TreeMultimap.create(Ordering.natural().reverse(), Ordering.natural());
         String sql = "SELECT COUNT(*) AS `amount`, c.name AS `tempCustomerName` "
@@ -333,7 +349,7 @@ public class SaleDao {
                 descMap.put(rs.getInt("amount"), rs.getString("tempCustomerName"));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ProductDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SaleDao.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DbUtils.closeQuietly(conn);
             DbUtils.closeQuietly(ps);
@@ -413,9 +429,9 @@ public class SaleDao {
             workbook.close();
             return true;
         } catch (SQLException | FileNotFoundException ex) {
-            Logger.getLogger(StockEntryDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SaleDao.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(StockEntryDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SaleDao.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DbUtils.closeQuietly(conn);
             DbUtils.closeQuietly(ps);

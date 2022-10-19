@@ -59,6 +59,21 @@ public class TextFieldFormat {
         });
     }
     
+    public static void saleTableCellCurrencyFormat(TableColumn column) {
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
+        column.setCellFactory(tc -> new TableCell<Sale, BigDecimal>() {
+            @Override
+            protected void updateItem(BigDecimal price, boolean empty) {
+                super.updateItem(price, empty);
+                if (empty) {
+                    setText(null);
+                } else {
+                    setText(currencyFormat.format(price));
+                }
+            }
+        });
+    }
+    
     public static void saleProductTableCellCurrencyFormat(TableColumn column) {
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
         column.setCellFactory(tc -> new TableCell<SaleProduct, BigDecimal>() {

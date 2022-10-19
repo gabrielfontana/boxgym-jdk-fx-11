@@ -1,7 +1,10 @@
 package boxgym.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 
 public class Sale {
 
@@ -12,6 +15,7 @@ public class Sale {
     private LocalDateTime updatedAt; //Atualizado em
 
     private String tempCustomerName;
+    private final ObjectProperty<BigDecimal> tempTotal = new SimpleObjectProperty<>();
 
     public Sale() {
 
@@ -71,4 +75,15 @@ public class Sale {
         this.tempCustomerName = tempCustomerName;
     }
 
+    public ObjectProperty<BigDecimal> tempTotalProperty() {
+        return this.tempTotal;
+    }
+
+    public final BigDecimal getTempTotal() {
+        return this.tempTotalProperty().get();
+    }
+
+    public final void setTempTotal(final BigDecimal tempTotal) {
+        this.tempTotalProperty().set(tempTotal);
+    }
 }
