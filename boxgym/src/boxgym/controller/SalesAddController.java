@@ -1,5 +1,6 @@
 package boxgym.controller;
 
+import boxgym.dao.BillingDao;
 import boxgym.dao.CustomerDao;
 import boxgym.dao.ProductDao;
 import boxgym.dao.SaleDao;
@@ -10,6 +11,7 @@ import boxgym.helper.ButtonHelper;
 import boxgym.helper.TableViewCount;
 import boxgym.helper.TextFieldFormat;
 import boxgym.helper.TextValidationHelper;
+import boxgym.model.Billing;
 import boxgym.model.Sale;
 import boxgym.model.SaleProduct;
 import currencyfield.CurrencyField;
@@ -316,6 +318,14 @@ public class SalesAddController implements Initializable {
                 }
                 setProductsEntryCreationFlag(true);
                 ah.customAlert(Alert.AlertType.INFORMATION, "Venda realizada com sucesso", "");
+
+                Billing saleBilling = new Billing(Integer.valueOf(saleIdTextField.getText()), "Venda de Produtos", saleDateDatePicker.getValue(),
+                        new BigDecimal(totalPriceTextField.getText().replace("R$ ", "").replace(",", ".")));
+                saleBilling.setTempCustomerName(customerComboBox.getSelectionModel().getSelectedItem());
+
+                BillingDao billingDao = new BillingDao();
+                billingDao.createSaleBilling(saleBilling);
+
                 anchorPane.getScene().getWindow().hide();
             }
         } else {

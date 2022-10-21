@@ -237,7 +237,7 @@ CREATE TABLE `membership` (
   `membershipId` INT(11) NOT NULL AUTO_INCREMENT,
   `expirationDate` DATE NOT NULL,
   `periodicity` VARCHAR(10) NOT NULL,
-  `valueToPay` DECIMAL(10, 2) NOT NULL,
+  `price` DECIMAL(10, 2) NOT NULL,
   `status` VARCHAR(10) NOT NULL,
   `createdAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -249,21 +249,21 @@ CREATE TABLE `billing` (
   `fkSale` INT(11) NULL,
   `fkMembership` INT(11) NULL,
   `description` VARCHAR(255) NOT NULL,
+  `expirationDate` DATE NOT NULL,
+  `valueToPay` DECIMAL(10, 2) NOT NULL,
   `createdAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`billingId`),
-  FOREIGN KEY (`fkSale`) REFERENCES `sale`(`saleId`) ON UPDATE CASCADE,
-  FOREIGN KEY (`fkMembership`) REFERENCES `membership`(`membershipId`) ON UPDATE CASCADE
+  FOREIGN KEY (`fkSale`) REFERENCES `sale`(`saleId`) ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (`fkMembership`) REFERENCES `membership`(`membershipId`) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE `payment` (
   `paymentId` INT(11) NOT NULL AUTO_INCREMENT,
-  `fkSale` INT(11) NULL,
-  `fkBilling` INT(11) NULL,
+  `fkBilling` INT(11) NOT NULL,
   `description` VARCHAR(255) NOT NULL,
   `paymentDate` DATE NOT NULL,
   `paidValue` DECIMAL(10, 2) NOT NULL,
   PRIMARY KEY (`paymentId`),
-  FOREIGN KEY (`fkSale`) REFERENCES `sale`(`saleId`) ON UPDATE CASCADE,
-  FOREIGN KEY (`fkBilling`) REFERENCES `billing`(`billingId`) ON UPDATE CASCADE
+  FOREIGN KEY (`fkBilling`) REFERENCES `billing`(`billingId`) ON UPDATE CASCADE ON DELETE CASCADE
 );
