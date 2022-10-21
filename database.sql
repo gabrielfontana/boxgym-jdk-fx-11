@@ -232,3 +232,36 @@ CREATE TABLE `sheet_workout` (
   FOREIGN KEY (`fkSheet`) REFERENCES `sheet`(`sheetId`) ON UPDATE CASCADE,
   FOREIGN KEY (`fkWorkout`) REFERENCES `workout`(`workoutId`) ON UPDATE CASCADE
 );
+
+CREATE TABLE `membership` (
+  `membershipId` INT(11) NOT NULL AUTO_INCREMENT,
+  `expirationDate` DATE NOT NULL,
+  `periodicity` VARCHAR(10) NOT NULL,
+  `valueToPay` DECIMAL(10, 2) NOT NULL,
+  `status` VARCHAR(10) NOT NULL,
+  `createdAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`membershipId`)
+);
+
+CREATE TABLE `billing` (
+  `billingId` INT(11) NOT NULL AUTO_INCREMENT,
+  `fkSale` INT(11) NULL,
+  `fkMembership` INT(11) NULL,
+  `description` VARCHAR(255) NOT NULL,
+  `createdAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`billingId`),
+  FOREIGN KEY (`fkSale`) REFERENCES `sale`(`saleId`) ON UPDATE CASCADE,
+  FOREIGN KEY (`fkMembership`) REFERENCES `membership`(`membershipId`) ON UPDATE CASCADE
+);
+
+CREATE TABLE `payment` (
+  `paymentId` INT(11) NOT NULL AUTO_INCREMENT,
+  `fkBilling` INT(11) NOT NULL,
+  `description` VARCHAR(255) NOT NULL,
+  `paymentDate` DATE NOT NULL,
+  `paidValue` DECIMAL(10, 2) NOT NULL,
+  PRIMARY KEY (`paymentId`),
+  FOREIGN KEY (`fkBilling`) REFERENCES `billing`(`billingId`) ON UPDATE CASCADE
+);
