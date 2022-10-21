@@ -258,10 +258,12 @@ CREATE TABLE `billing` (
 
 CREATE TABLE `payment` (
   `paymentId` INT(11) NOT NULL AUTO_INCREMENT,
-  `fkBilling` INT(11) NOT NULL,
+  `fkSale` INT(11) NULL,
+  `fkBilling` INT(11) NULL,
   `description` VARCHAR(255) NOT NULL,
   `paymentDate` DATE NOT NULL,
   `paidValue` DECIMAL(10, 2) NOT NULL,
   PRIMARY KEY (`paymentId`),
+  FOREIGN KEY (`fkSale`) REFERENCES `sale`(`saleId`) ON UPDATE CASCADE,
   FOREIGN KEY (`fkBilling`) REFERENCES `billing`(`billingId`) ON UPDATE CASCADE
 );
