@@ -18,6 +18,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import org.controlsfx.control.PrefixSelectionComboBox?>
 
 <AnchorPane prefHeight="695.0" prefWidth="1280.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.BillingsController">
    <children>
@@ -78,14 +79,11 @@
                         <Insets right="15.0" />
                      </HBox.margin>
                   </TextField>
-                  <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="Cadastrar">
+                  <PrefixSelectionComboBox fx:id="changeTableDataComboBox" prefHeight="30.0" prefWidth="90.0">
                      <HBox.margin>
                         <Insets right="15.0" />
                      </HBox.margin>
-                     <graphic>
-                        <MaterialDesignIconView glyphName="PLUS" size="15.0" />
-                     </graphic>
-                  </Button>
+                  </PrefixSelectionComboBox>
                   <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="Cancelar">
                      <graphic>
                         <MaterialDesignIconView glyphName="CANCEL" size="15.0" />
@@ -98,10 +96,10 @@
             </HBox>
             <TableView fx:id="billingTableView" prefHeight="550.0" prefWidth="900.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="40.0">
                <columns>
-                  <TableColumn fx:id="fkCustomerTableColumn" minWidth="222.0" prefWidth="222.0" text="Cliente" />
-                  <TableColumn fx:id="descriptionTableColumn" minWidth="221.0" prefWidth="221.0" text="Descrição" />
-                  <TableColumn fx:id="expirationDateTableColumn" minWidth="221.0" prefWidth="221.0" text="Data de Vencimento" />
-                  <TableColumn fx:id="valueToPayTableColumn" minWidth="221.0" prefWidth="221.0" text="Valor" />
+                  <TableColumn fx:id="fkCustomerTableColumn" minWidth="315.0" prefWidth="315.0" text="Cliente" />
+                  <TableColumn fx:id="descriptionTableColumn" minWidth="250.0" prefWidth="250.0" text="Descrição" />
+                  <TableColumn fx:id="expirationDateTableColumn" minWidth="170.0" prefWidth="170.0" text="Data de Vencimento" />
+                  <TableColumn fx:id="valueToPayTableColumn" minWidth="150.0" prefWidth="150.0" text="Valor" />
                </columns>
             </TableView>
             <BorderPane prefHeight="20.0" prefWidth="900.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
@@ -151,6 +149,19 @@
                            </HBox.margin>
                         </Label>
                         <Label fx:id="billingIdLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="280.0" styleClass="attribute-value-label" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Cliente: ">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="tempCustomerNameLabel" maxWidth="-Infinity" prefHeight="20.0" prefWidth="254.0" styleClass="attribute-value-label" />
                      </children>
                      <VBox.margin>
                         <Insets bottom="10.0" />
