@@ -274,7 +274,7 @@ public class SalesController implements Initializable {
         boolean searchReturn = false;
         switch (optionOrder) {
             case 1:
-                searchReturn = (list.get(0).contains(searchText)) || (list.get(1).contains(searchText) || (list.get(2).contains(searchText)));
+                searchReturn = (list.get(0).contains(searchText)) || (list.get(1).contains(searchText)) || (list.get(2).contains(searchText));
                 break;
             case 2:
                 searchReturn = (list.get(0).equals(searchText)) || (list.get(1).equals(searchText)) || (list.get(2).equals(searchText));

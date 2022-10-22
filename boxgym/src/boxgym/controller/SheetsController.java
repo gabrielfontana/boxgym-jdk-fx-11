@@ -305,7 +305,7 @@ public class SheetsController implements Initializable {
         switch (optionOrder) {
             case 1:
                 searchReturn = (list.get(0).contains(searchText)) || (list.get(1).contains(searchText))
-                        || (list.get(2).contains(searchText) || (list.get(3).contains(searchText)));
+                        || (list.get(2).contains(searchText)) || (list.get(3).contains(searchText));
                 break;
             case 2:
                 searchReturn = (list.get(0).equals(searchText)) || (list.get(1).equals(searchText))

@@ -10,10 +10,14 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckMenuItem;
@@ -139,7 +143,7 @@ public class BillingsController implements Initializable {
 
     private void refreshTableView() {
         billingTableView.setItems(loadData());
-        //search();
+        search();
         countLabel.setText(TableViewCount.footerMessage(billingTableView.getItems().size(), "resultado"));
     }
 
@@ -151,6 +155,85 @@ public class BillingsController implements Initializable {
         valueToPayTableColumn.setCellValueFactory(new PropertyValueFactory("valueToPay"));
         TextFieldFormat.billingTableCellCurrencyFormat(valueToPayTableColumn);
         refreshTableView();
+    }
+    
+    private boolean caseSensitiveEnabled(Billing billing, String searchText, int optionOrder) {
+        //String tempCustomerName = billing.getTempCustomerName();
+        String description = billing.getDescription();
+        String expirationDate = billing.getExpirationDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        String valueToPay = "R$ ".concat(String.valueOf(billing.getValueToPay()).replace(".", ","));
+
+        List<String> fields = Arrays.asList(/*tempCustomerName,*/ description, expirationDate, valueToPay);
+
+        return stringComparasion(fields, searchText, optionOrder);
+    }
+    
+    private boolean caseSensitiveDisabled(Billing billing, String searchText, int optionOrder) {
+        //String tempCustomerName = billing.getTempCustomerName();
+        String description = billing.getDescription().toLowerCase();
+        String expirationDate = billing.getExpirationDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        String valueToPay = "r$ ".concat(String.valueOf(billing.getValueToPay()).replace(".", ","));
+
+        List<String> fields = Arrays.asList(/*tempCustomerName,*/ description, expirationDate, valueToPay);
+
+        return stringComparasion(fields, searchText, optionOrder);
+    }
+    
+    private boolean stringComparasion(List<String> list, String searchText, int optionOrder) {
+        boolean searchReturn = false;
+        switch (optionOrder) {
+            case 1:
+                searchReturn = (list.get(0).contains(searchText)) || (list.get(1).contains(searchText)) 
+                        || (list.get(2).contains(searchText)) /*|| (list.get(3).contains(searchText))*/;
+                break;
+            case 2:
+                searchReturn = (list.get(0).equals(searchText)) || (list.get(1).equals(searchText)) 
+                        || (list.get(2).equals(searchText)) /*|| (list.get(3).equals(searchText))*/;
+                break;
+            case 3:
+                searchReturn = (list.get(0).startsWith(searchText)) || (list.get(1).startsWith(searchText)) 
+                        || (list.get(2).startsWith(searchText)) /*|| (list.get(3).startsWith(searchText))*/;
+                break;
+            case 4:
+                searchReturn = (list.get(0).endsWith(searchText)) || (list.get(1).endsWith(searchText)) 
+                        || (list.get(2).endsWith(searchText)) /*|| (list.get(3).endsWith(searchText))*/;
+                break;
+            default:
+                break;
+        }
+        return searchReturn;
+    }
+    
+    private void search() {
+        FilteredList<Billing> filteredData = new FilteredList<>(loadData(), p -> true);
+
+        searchBox.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(billing -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                
+                if (caseSensitiveOp.isSelected()) {
+                    if (containsOp.isSelected()) return caseSensitiveEnabled(billing, newValue, 1);
+                    if (alphabeticalEqualsToOp.isSelected()) return caseSensitiveEnabled(billing, newValue, 2);
+                    if (startsWithOp.isSelected()) return caseSensitiveEnabled(billing, newValue, 3);
+                    if (endsWithOp.isSelected()) return caseSensitiveEnabled(billing, newValue, 4);
+                } 
+                
+                if (alphabeticalEqualsToOp.isSelected()) return caseSensitiveDisabled(billing, newValue.toLowerCase(), 2);
+                if (startsWithOp.isSelected()) return caseSensitiveDisabled(billing, newValue.toLowerCase(), 3);
+                if (endsWithOp.isSelected()) return caseSensitiveDisabled(billing, newValue.toLowerCase(), 4);
+                
+                return caseSensitiveDisabled(billing, newValue.toLowerCase(), 1);
+            });
+            billingTableView.getSelectionModel().clearSelection();
+            countLabel.setText(TableViewCount.footerMessage(billingTableView.getItems().size(), "resultado"));
+            selectedRowLabel.setText("");
+        });
+
+        SortedList<Billing> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(billingTableView.comparatorProperty());
+        billingTableView.setItems(sortedData);
     }
 
     private void listeners() {
