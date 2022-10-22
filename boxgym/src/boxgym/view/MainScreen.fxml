@@ -43,16 +43,8 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Financeiro">
                     <items>
-                        <MenuItem accelerator="Ctrl+4" mnemonicParsing="false" onAction="#handleBillsToPay" text="Contas a Pagar">
-                            <graphic>
-                                <MaterialDesignIconView fill="BLACK" glyphName="CURRENCY_USD_OFF" size="15.0" />
-                            </graphic>
-                        </MenuItem>
-                        <MenuItem accelerator="Ctrl+5" mnemonicParsing="false" onAction="#handleBillsToReceive" text="Contas a Receber">
-                            <graphic>
-                                <MaterialDesignIconView fill="BLACK" glyphName="CURRENCY_USD" size="15.0" />
-                            </graphic>
-                        </MenuItem>
+                        <MenuItem accelerator="Ctrl+4" mnemonicParsing="false" onAction="#handleBilling" text="Cobranças" />
+                        <MenuItem accelerator="Ctrl+5" mnemonicParsing="false" onAction="#handlePayments" text="Pagamentos" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Vendas">
@@ -136,21 +128,21 @@
                                                 <MaterialDesignIconView fill="BLACK" glyphName="PACKAGE_UP" size="15.0" />
                                             </graphic>
                                         </MenuItem>
-                              <MenuItem mnemonicParsing="false" onAction="#exportSheetsToExcel" text="Fichas">
-                                 <graphic>
-                                    <MaterialDesignIconView fill="BLACK" glyphName="FILE_DOCUMENT" size="15.0" />
-                                 </graphic>
-                              </MenuItem>
+                                        <MenuItem mnemonicParsing="false" onAction="#exportSheetsToExcel" text="Fichas">
+                                            <graphic>
+                                                <MaterialDesignIconView fill="BLACK" glyphName="FILE_DOCUMENT" size="15.0" />
+                                            </graphic>
+                                        </MenuItem>
                                         <MenuItem mnemonicParsing="false" onAction="#exportWorkoutsToExcel" text="Treinos">
                                             <graphic>
                                                 <MaterialDesignIconView fill="BLACK" glyphName="DUMBBELL" size="15.0" />
                                             </graphic>
                                         </MenuItem>
-                              <MenuItem mnemonicParsing="false" onAction="#exportMeasurementsToExcel" text="Medidas">
-                                 <graphic>
-                                    <MaterialDesignIconView fill="BLACK" glyphName="RULER" size="15.0" />
-                                 </graphic>
-                              </MenuItem>
+                                        <MenuItem mnemonicParsing="false" onAction="#exportMeasurementsToExcel" text="Medidas">
+                                            <graphic>
+                                                <MaterialDesignIconView fill="BLACK" glyphName="RULER" size="15.0" />
+                                            </graphic>
+                                        </MenuItem>
                                     </items>
                                 </Menu>
                             </items>

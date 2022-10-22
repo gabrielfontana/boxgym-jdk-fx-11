@@ -1,5 +1,6 @@
 package boxgym.helper;
 
+import boxgym.model.Billing;
 import boxgym.model.Customer;
 import boxgym.model.Measurement;
 import boxgym.model.Product;
@@ -174,6 +175,36 @@ public class TextFieldFormat {
                     setText(null);
                 } else {
                     setText(date.format(dateFormat));
+                }
+            }
+        });
+    }
+    
+    public static void billingTableCellDateFormat(TableColumn column) {
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        column.setCellFactory(tc -> new TableCell<Billing, LocalDate>() {
+            @Override
+            protected void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                if (empty) {
+                    setText(null);
+                } else {
+                    setText(date.format(dateFormat));
+                }
+            }
+        });
+    }
+    
+    public static void billingTableCellCurrencyFormat(TableColumn column) {
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
+        column.setCellFactory(tc -> new TableCell<Billing, BigDecimal>() {
+            @Override
+            protected void updateItem(BigDecimal price, boolean empty) {
+                super.updateItem(price, empty);
+                if (empty) {
+                    setText(null);
+                } else {
+                    setText(currencyFormat.format(price));
                 }
             }
         });

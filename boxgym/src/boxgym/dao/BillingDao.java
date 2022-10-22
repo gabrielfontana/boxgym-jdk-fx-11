@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.dbutils.DbUtils;
@@ -39,5 +41,32 @@ public class BillingDao {
             DbUtils.closeQuietly(rs);
         }
         return false;
+    }
+    
+    public List<Billing> readSales() {
+        List<Billing> billingsList = new ArrayList<>();
+        String sql = "SELECT * FROM `billing` WHERE `fkSale` IS NOT NULL;";
+
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Billing b = new Billing();
+                b.setBillingId(rs.getInt("billingId"));
+                b.setDescription(rs.getString("description"));
+                b.setExpirationDate(rs.getDate("expirationDate").toLocalDate());
+                b.setValueToPay(rs.getBigDecimal("valueToPay"));
+                b.setCreatedAt(rs.getTimestamp("createdAt").toLocalDateTime());
+                b.setUpdatedAt(rs.getTimestamp("updatedAt").toLocalDateTime());
+                billingsList.add(b);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BillingDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return billingsList;
     }
 }
