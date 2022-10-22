@@ -1,17 +1,23 @@
 package boxgym.controller;
 
+import boxgym.dao.MembershipDao;
 import boxgym.helper.ButtonHelper;
 import boxgym.helper.StageHelper;
+import boxgym.helper.TableViewCount;
 import boxgym.helper.TextFieldFormat;
 import boxgym.model.Membership;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,6 +32,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
@@ -69,19 +76,19 @@ public class MembershipsController implements Initializable {
     private Button deleteButton;
 
     @FXML
-    private TableView<?> membershipTableView;
+    private TableView<Membership> membershipTableView;
 
     @FXML
-    private TableColumn<?, ?> fkCustomerTableColumn;
+    private TableColumn<Membership, String> fkCustomerTableColumn;
 
     @FXML
-    private TableColumn<?, ?> dueDateTableColumn;
+    private TableColumn<Membership, LocalDate> dueDateTableColumn;
 
     @FXML
-    private TableColumn<?, ?> priceTableColumn;
+    private TableColumn<Membership, BigDecimal> priceTableColumn;
 
     @FXML
-    private TableColumn<?, ?> statusTableColumn;
+    private TableColumn<Membership, String> statusTableColumn;
 
     @FXML
     private Label countLabel;
@@ -138,7 +145,7 @@ public class MembershipsController implements Initializable {
             StageHelper.createAddOrUpdateStage("Cadastrar mensalidade(s)", root);
 
             if (controller.isCreated()) {
-                //refreshTableView();
+                refreshTableView();
                 membershipTableView.getSelectionModel().selectLast();
             }
         } catch (IOException ex) {
@@ -174,8 +181,25 @@ public class MembershipsController implements Initializable {
         }
     }
     
+    private ObservableList<Membership> loadData() {
+        MembershipDao membershipDao = new MembershipDao();
+        return FXCollections.observableArrayList(membershipDao.read());
+    }
+
+    private void refreshTableView() {
+        membershipTableView.setItems(loadData());
+        //search();
+        countLabel.setText(TableViewCount.footerMessage(membershipTableView.getItems().size(), "resultado"));
+    }
+
     private void initMembershipTableView() {
-        
+        fkCustomerTableColumn.setCellValueFactory(new PropertyValueFactory("tempCustomerName"));
+        dueDateTableColumn.setCellValueFactory(new PropertyValueFactory("dueDate"));
+        TextFieldFormat.membershipTableCellDateFormat(dueDateTableColumn);
+        priceTableColumn.setCellValueFactory(new PropertyValueFactory("price"));
+        TextFieldFormat.membershipTableCellCurrencyFormat(priceTableColumn);
+        statusTableColumn.setCellValueFactory(new PropertyValueFactory("status"));
+        refreshTableView();
     }
 
     private void listeners() {

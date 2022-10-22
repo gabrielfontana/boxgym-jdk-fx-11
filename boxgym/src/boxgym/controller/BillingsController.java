@@ -113,7 +113,7 @@ public class BillingsController implements Initializable {
     @FXML
     private Label updatedAtLabel;
 
-    List<String> billingTypeList = Arrays.asList("Todas", "Vendas", "Filiações");
+    List<String> billingTypeList = Arrays.asList("Todas", "Vendas", "Mensalidades");
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -163,7 +163,7 @@ public class BillingsController implements Initializable {
             } else if (changeTableDataComboBox.getSelectionModel().getSelectedItem().equals(billingTypeList.get(1))) {
                 refreshTableView(billingTypeList.get(1)); //Vendas
             } else {
-                refreshTableView(billingTypeList.get(2)); //Filiações
+                refreshTableView(billingTypeList.get(2)); //Mensalidades
             }
         });
     }
@@ -187,7 +187,7 @@ public class BillingsController implements Initializable {
         } else if (selectedItem.equals(billingTypeList.get(1))) {
             list = FXCollections.observableArrayList(billingDao.readSales()); //Vendas
         } else {
-            list = FXCollections.observableArrayList(billingDao.readMembership()); //Filiações
+            list = FXCollections.observableArrayList(billingDao.readMembership()); //Mensalidades
         }
 
         return list;
