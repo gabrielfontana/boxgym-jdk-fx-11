@@ -1,6 +1,7 @@
 package boxgym.controller;
 
 import boxgym.dao.MembershipDao;
+import boxgym.helper.AlertHelper;
 import boxgym.helper.ButtonHelper;
 import boxgym.helper.StageHelper;
 import boxgym.helper.TableViewCount;
@@ -23,7 +24,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
@@ -39,6 +42,8 @@ import jfxtras.styles.jmetro.Style;
 import org.controlsfx.control.PrefixSelectionComboBox;
 
 public class MembershipsController implements Initializable {
+    
+    AlertHelper alert = new AlertHelper();
     
     private Membership selected;
     
@@ -155,6 +160,21 @@ public class MembershipsController implements Initializable {
 
     @FXML
     private void deleteMembership(ActionEvent event) {
+        MembershipDao membershipDao = new MembershipDao();
+
+        if (selected == null) {
+            alert.customAlert(Alert.AlertType.WARNING, "Selecione uma mensalidade para cancelar", "");
+        } else {
+            alert.confirmationAlert("Cancelar mensalidade", "Tem certeza que deseja cancelar esta mensalidade? "
+                    + "\n\nA mensalidade será cancelada de forma definitiva e não poderá ser recuperada. "
+                    + "Além disso, qualquer cobrança em aberto também será cancelada.");
+            if (alert.getResult().get() == ButtonType.YES) {
+                membershipDao.delete(selected);
+                refreshTableView();
+                resetDetails();
+                alert.customAlert(Alert.AlertType.WARNING, "Mensalidade cancelada com sucesso", "");
+            }
+        }
     }
     
     private void resetDetails() {

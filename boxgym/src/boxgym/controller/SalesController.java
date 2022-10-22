@@ -171,7 +171,7 @@ public class SalesController implements Initializable {
         } else {
             alert.confirmationAlert("Cancelar venda", "Tem certeza que deseja cancelar esta venda? "
                     + "\n\nA venda será cancelada de forma definitiva e não poderá ser recuperada. "
-                    + "Além disso, qualquer cobrança em aberto referente a essa venda será igualmente cancelada. "
+                    + "Além disso, qualquer cobrança em aberto também será cancelada. "
                     + "Após isso, os produtos entrarão no estoque novamente.");
             if (alert.getResult().get() == ButtonType.YES) {
                 saleProductDao.delete(selected);

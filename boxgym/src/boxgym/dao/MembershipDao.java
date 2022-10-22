@@ -95,5 +95,23 @@ public class MembershipDao {
         }
         return membershipsList;
     }
+    
+    public boolean delete(Membership membership) {
+        String sql = "DELETE FROM `membership` WHERE `membershipId` = ?;";
+
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, membership.getMembershipId());
+            ps.execute();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(MembershipDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return false;
+    }
 
 }
