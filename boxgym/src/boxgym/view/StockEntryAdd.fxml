@@ -118,7 +118,7 @@
                                 </VBox>
                                 <VBox prefHeight="52.0" prefWidth="105.0">
                                     <children>
-                                        <Label text="Preço de Custo">
+                                        <Label text="Preço de Custo *">
                                             <VBox.margin>
                                                 <Insets bottom="5.0" />
                                             </VBox.margin>

@@ -91,7 +91,7 @@
                                 </VBox>
                                 <VBox prefWidth="132.5" HBox.hgrow="ALWAYS">
                                     <children>
-                                        <Label text="Preço de Custo">
+                                        <Label text="Preço de Custo *">
                                             <VBox.margin>
                                                 <Insets bottom="5.0" />
                                             </VBox.margin>
@@ -104,7 +104,7 @@
                                 </VBox>
                                 <VBox prefWidth="132.5" HBox.hgrow="ALWAYS">
                                     <children>
-                                        <Label text="Preço de Venda">
+                                        <Label text="Preço de Venda *">
                                             <VBox.margin>
                                                 <Insets bottom="5.0" />
                                             </VBox.margin>
