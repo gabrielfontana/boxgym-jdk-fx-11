@@ -39,12 +39,14 @@
                                 <MaterialDesignIconView fill="BLACK" glyphName="TRUCK" size="15.0" />
                             </graphic>
                         </MenuItem>
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleMemberships" text="Mensalidades" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Financeiro">
                     <items>
-                        <MenuItem accelerator="Ctrl+4" mnemonicParsing="false" onAction="#handleBilling" text="Cobranças" />
-                        <MenuItem accelerator="Ctrl+5" mnemonicParsing="false" onAction="#handlePayments" text="Pagamentos" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleBilling" text="Cobranças" />
+                        <MenuItem mnemonicParsing="false" onAction="#handlePayments" text="Pagamentos" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Vendas">

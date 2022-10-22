@@ -236,8 +236,7 @@ CREATE TABLE `sheet_workout` (
 CREATE TABLE `membership` (
   `membershipId` INT(11) NOT NULL AUTO_INCREMENT,
   `fkCustomer` INT(11) NOT NULL,
-  `expirationDate` DATE NOT NULL,
-  `periodicity` VARCHAR(10) NOT NULL,
+  `dueDate` DATE NOT NULL,
   `price` DECIMAL(10, 2) NOT NULL,
   `status` VARCHAR(10) NOT NULL,
   `createdAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -251,7 +250,7 @@ CREATE TABLE `billing` (
   `fkSale` INT(11) NULL,
   `fkMembership` INT(11) NULL,
   `description` VARCHAR(255) NOT NULL,
-  `expirationDate` DATE NOT NULL,
+  `dueDate` DATE NOT NULL,
   `valueToPay` DECIMAL(10, 2) NOT NULL,
   `createdAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

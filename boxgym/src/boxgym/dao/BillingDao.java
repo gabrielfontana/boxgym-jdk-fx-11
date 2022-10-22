@@ -22,13 +22,34 @@ public class BillingDao {
     }
     
     public boolean createSaleBilling(Billing billing) {
-        String sql = "INSERT INTO `billing` (`fkSale`, `description`, `expirationDate`, `valueToPay`) VALUES (?, ?, ?, ?);";
+        String sql = "INSERT INTO `billing` (`fkSale`, `description`, `dueDate`, `valueToPay`) VALUES (?, ?, ?, ?);";
         
         try {
             ps = conn.prepareStatement(sql);
             ps.setInt(1, billing.getFkSale());
             ps.setString(2, billing.getDescription());
-            ps.setDate(3, java.sql.Date.valueOf(billing.getExpirationDate()));
+            ps.setDate(3, java.sql.Date.valueOf(billing.getDueDate()));
+            ps.setBigDecimal(4, billing.getValueToPay());
+            ps.execute();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(BillingDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return false;
+    }
+    
+    public boolean createMembershipBilling(Billing billing) {
+        String sql = "INSERT INTO `billing` (`fkMembership`, `description`, `dueDate`, `valueToPay`) VALUES (?, ?, ?, ?);";
+        
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, billing.getFkMembership());
+            ps.setString(2, billing.getDescription());
+            ps.setDate(3, java.sql.Date.valueOf(billing.getDueDate()));
             ps.setBigDecimal(4, billing.getValueToPay());
             ps.execute();
             return true;
@@ -45,13 +66,13 @@ public class BillingDao {
     public List<Billing> readAll() {
         List<Billing> billingsList = new ArrayList<>();
         String sql 
-                = "SELECT b.billingId AS `billingId`, c.name AS `tempCustomerName`, b.description, b.expirationDate, b.valueToPay, b.createdAt, b.updatedAt "
+                = "SELECT b.billingId AS `billingId`, c.name AS `tempCustomerName`, b.description, b.dueDate, b.valueToPay, b.createdAt, b.updatedAt "
                 + "FROM `billing` AS b INNER JOIN `sale` AS v "
                 + "ON b.fkSale = v.saleId INNER JOIN `customer` as C "
                 + "ON v.fkCustomer = c.customerId "
                 + "WHERE b.fkSale IS NOT NULL "
                 + "UNION "
-                + "SELECT b.billingId, c.name AS `tempCustomerName`, b.description, b.expirationDate, b.valueToPay, b.createdAt, b.updatedAt "
+                + "SELECT b.billingId, c.name AS `tempCustomerName`, b.description, b.dueDate, b.valueToPay, b.createdAt, b.updatedAt "
                 + "FROM `billing` AS b INNER JOIN `membership` AS m "
                 + "ON b.fkMembership = m.membershipId INNER JOIN `customer` as C "
                 + "ON m.fkCustomer = c.customerId "
@@ -65,7 +86,7 @@ public class BillingDao {
                 Billing b = new Billing();
                 b.setBillingId(rs.getInt("billingId"));
                 b.setDescription(rs.getString("description"));
-                b.setExpirationDate(rs.getDate("expirationDate").toLocalDate());
+                b.setDueDate(rs.getDate("dueDate").toLocalDate());
                 b.setValueToPay(rs.getBigDecimal("valueToPay"));
                 b.setCreatedAt(rs.getTimestamp("createdAt").toLocalDateTime());
                 b.setUpdatedAt(rs.getTimestamp("updatedAt").toLocalDateTime());
@@ -84,7 +105,7 @@ public class BillingDao {
     
     public List<Billing> readSales() {
         List<Billing> billingsList = new ArrayList<>();
-        String sql = "SELECT b.billingId, c.name AS `tempCustomerName`, b.description, b.expirationDate, b.valueToPay, b.createdAt, b.updatedAt "
+        String sql = "SELECT b.billingId, c.name AS `tempCustomerName`, b.description, b.dueDate, b.valueToPay, b.createdAt, b.updatedAt "
                 + "FROM `billing` AS b INNER JOIN `sale` AS v "
                 + "ON b.fkSale = v.saleId INNER JOIN `customer` as C "
                 + "ON v.fkCustomer = c.customerId "
@@ -97,7 +118,7 @@ public class BillingDao {
                 Billing b = new Billing();
                 b.setBillingId(rs.getInt("billingId"));
                 b.setDescription(rs.getString("description"));
-                b.setExpirationDate(rs.getDate("expirationDate").toLocalDate());
+                b.setDueDate(rs.getDate("dueDate").toLocalDate());
                 b.setValueToPay(rs.getBigDecimal("valueToPay"));
                 b.setCreatedAt(rs.getTimestamp("createdAt").toLocalDateTime());
                 b.setUpdatedAt(rs.getTimestamp("updatedAt").toLocalDateTime());
@@ -116,7 +137,7 @@ public class BillingDao {
     
     public List<Billing> readMembership() {
         List<Billing> billingsList = new ArrayList<>();
-        String sql = "SELECT b.billingId, c.name AS `tempCustomerName`, b.description, b.expirationDate, b.valueToPay, b.createdAt, b.updatedAt "
+        String sql = "SELECT b.billingId, c.name AS `tempCustomerName`, b.description, b.dueDate, b.valueToPay, b.createdAt, b.updatedAt "
                 + "FROM `billing` AS b INNER JOIN `membership` AS m "
                 + "ON b.fkMembership = m.membershipId INNER JOIN `customer` as C "
                 + "ON m.fkCustomer = c.customerId "
@@ -129,7 +150,7 @@ public class BillingDao {
                 Billing b = new Billing();
                 b.setBillingId(rs.getInt("billingId"));
                 b.setDescription(rs.getString("description"));
-                b.setExpirationDate(rs.getDate("expirationDate").toLocalDate());
+                b.setDueDate(rs.getDate("dueDate").toLocalDate());
                 b.setValueToPay(rs.getBigDecimal("valueToPay"));
                 b.setCreatedAt(rs.getTimestamp("createdAt").toLocalDateTime());
                 b.setUpdatedAt(rs.getTimestamp("updatedAt").toLocalDateTime());

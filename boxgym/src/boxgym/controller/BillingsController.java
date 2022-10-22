@@ -69,13 +69,13 @@ public class BillingsController implements Initializable {
     private TableView<Billing> billingTableView;
 
     @FXML
-    private TableColumn<Billing, String> fkCustomerTableColumn;
+    private TableColumn<Billing, String> tempCustomerNameTableColumn;
 
     @FXML
     private TableColumn<Billing, String> descriptionTableColumn;
 
     @FXML
-    private TableColumn<Billing, LocalDate> expirationDateTableColumn;
+    private TableColumn<Billing, LocalDate> dueDateTableColumn;
 
     @FXML
     private TableColumn<Billing, BigDecimal> valueToPayTableColumn;
@@ -102,7 +102,7 @@ public class BillingsController implements Initializable {
     private Label descriptionLabel;
 
     @FXML
-    private Label expirationDateLabel;
+    private Label dueDateLabel;
 
     @FXML
     private Label valueToPayLabel;
@@ -132,7 +132,7 @@ public class BillingsController implements Initializable {
             billingIdLabel.setText("");
             tempCustomerNameLabel.setText("");
             descriptionLabel.setText("");
-            expirationDateLabel.setText("");
+            dueDateLabel.setText("");
             valueToPayLabel.setText("");
             createdAtLabel.setText("");
             updatedAtLabel.setText("");
@@ -144,7 +144,7 @@ public class BillingsController implements Initializable {
             billingIdLabel.setText(String.valueOf(selected.getBillingId()));
             tempCustomerNameLabel.setText(selected.getTempCustomerName());
             descriptionLabel.setText(selected.getDescription());
-            expirationDateLabel.setText(selected.getExpirationDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+            dueDateLabel.setText(selected.getDueDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
             TextFieldFormat.currencyFormat(valueToPayLabel, selected.getValueToPay());
             createdAtLabel.setText(selected.getCreatedAt().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
             updatedAtLabel.setText(selected.getUpdatedAt().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
@@ -194,10 +194,10 @@ public class BillingsController implements Initializable {
     }
 
     private void initBillingTableView() {
-        fkCustomerTableColumn.setCellValueFactory(new PropertyValueFactory("tempCustomerName"));
+        tempCustomerNameTableColumn.setCellValueFactory(new PropertyValueFactory("tempCustomerName"));
         descriptionTableColumn.setCellValueFactory(new PropertyValueFactory("description"));
-        expirationDateTableColumn.setCellValueFactory(new PropertyValueFactory("expirationDate"));
-        TextFieldFormat.billingTableCellDateFormat(expirationDateTableColumn);
+        dueDateTableColumn.setCellValueFactory(new PropertyValueFactory("dueDate"));
+        TextFieldFormat.billingTableCellDateFormat(dueDateTableColumn);
         valueToPayTableColumn.setCellValueFactory(new PropertyValueFactory("valueToPay"));
         TextFieldFormat.billingTableCellCurrencyFormat(valueToPayTableColumn);
         refreshTableView(billingTypeList.get(0));
@@ -206,10 +206,10 @@ public class BillingsController implements Initializable {
     private boolean caseSensitiveEnabled(Billing billing, String searchText, int optionOrder) {
         String tempCustomerName = billing.getTempCustomerName();
         String description = billing.getDescription();
-        String expirationDate = billing.getExpirationDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        String dueDate = billing.getDueDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         String valueToPay = "R$ ".concat(String.valueOf(billing.getValueToPay()).replace(".", ","));
 
-        List<String> fields = Arrays.asList(tempCustomerName, description, expirationDate, valueToPay);
+        List<String> fields = Arrays.asList(tempCustomerName, description, dueDate, valueToPay);
 
         return stringComparasion(fields, searchText, optionOrder);
     }
@@ -217,10 +217,10 @@ public class BillingsController implements Initializable {
     private boolean caseSensitiveDisabled(Billing billing, String searchText, int optionOrder) {
         String tempCustomerName = billing.getTempCustomerName();
         String description = billing.getDescription().toLowerCase();
-        String expirationDate = billing.getExpirationDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        String dueDate = billing.getDueDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         String valueToPay = "r$ ".concat(String.valueOf(billing.getValueToPay()).replace(".", ","));
 
-        List<String> fields = Arrays.asList(tempCustomerName, description, expirationDate, valueToPay);
+        List<String> fields = Arrays.asList(tempCustomerName, description, dueDate, valueToPay);
 
         return stringComparasion(fields, searchText, optionOrder);
     }

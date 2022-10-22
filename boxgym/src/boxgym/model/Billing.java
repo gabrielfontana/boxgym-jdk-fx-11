@@ -10,7 +10,7 @@ public class Billing {
     private int fkSale;
     private int fkMembership;
     private String description;
-    private LocalDate expirationDate;
+    private LocalDate dueDate;
     private BigDecimal valueToPay;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -22,10 +22,9 @@ public class Billing {
     }
 
     //Construtor CREATE
-    public Billing(int fkSale, String description, LocalDate expirationDate, BigDecimal valueToPay) {
-        this.fkSale = fkSale;
+    public Billing(String description, LocalDate dueDate, BigDecimal valueToPay) {
         this.description = description;
-        this.expirationDate = expirationDate;
+        this.dueDate = dueDate;
         this.valueToPay = valueToPay;
     }
 
@@ -61,12 +60,12 @@ public class Billing {
         this.description = description;
     }
 
-    public LocalDate getExpirationDate() {
-        return expirationDate;
+    public LocalDate getDueDate() {
+        return dueDate;
     }
 
-    public void setExpirationDate(LocalDate expirationDate) {
-        this.expirationDate = expirationDate;
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
     }
 
     public BigDecimal getValueToPay() {

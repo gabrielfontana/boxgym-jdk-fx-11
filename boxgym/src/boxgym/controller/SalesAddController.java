@@ -319,8 +319,9 @@ public class SalesAddController implements Initializable {
                 setProductsEntryCreationFlag(true);
                 ah.customAlert(Alert.AlertType.INFORMATION, "Venda realizada com sucesso", "");
 
-                Billing saleBilling = new Billing(Integer.valueOf(saleIdTextField.getText()), "Venda de Produtos", saleDateDatePicker.getValue(),
+                Billing saleBilling = new Billing("Venda de Produtos", saleDateDatePicker.getValue(),
                         new BigDecimal(totalPriceTextField.getText().replace("R$ ", "").replace(",", ".")));
+                saleBilling.setFkSale(Integer.valueOf(saleIdTextField.getText()));
                 saleBilling.setTempCustomerName(customerComboBox.getSelectionModel().getSelectedItem());
 
                 BillingDao billingDao = new BillingDao();
