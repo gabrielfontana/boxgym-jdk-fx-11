@@ -40,7 +40,7 @@ public class TextValidationHelper {
     }
 
     public boolean nullDatePicker(DatePicker datePicker, String message) {
-        if (datePicker.getValue() == null) {
+        if (datePicker.getValue() == null || datePicker.getValue().toString().isEmpty()) {
             this.message += message;
             this.emptyCounter++;
             return true;

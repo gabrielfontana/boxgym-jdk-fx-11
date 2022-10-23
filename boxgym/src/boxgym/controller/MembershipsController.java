@@ -12,7 +12,11 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -78,6 +82,9 @@ public class MembershipsController implements Initializable {
     private Button addButton;
 
     @FXML
+    private Button updateButton;
+    
+    @FXML
     private Button deleteButton;
 
     @FXML
@@ -131,7 +138,7 @@ public class MembershipsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         resetDetails();
-        ButtonHelper.buttonCursor(filterButton, addButton, deleteButton);
+        ButtonHelper.buttonCursor(filterButton, addButton, updateButton, deleteButton);
         ButtonHelper.iconButton(firstRow, lastRow);
         initMembershipTableView();
         listeners();
@@ -157,11 +164,35 @@ public class MembershipsController implements Initializable {
             Logger.getLogger(MembershipsController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    @FXML
+    private void updateMembership(ActionEvent event) {
+        if (selected == null) {
+            alert.customAlert(Alert.AlertType.WARNING, "Selecione uma mensalidade para atualizar", "");
+        } else {
+            int index = membershipTableView.getSelectionModel().getSelectedIndex();
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/boxgym/view/MembershipsUpdate.fxml"));
+                Parent root = (Parent) loader.load();
+                JMetro jMetro = new JMetro(root, Style.LIGHT);
+
+                MembershipsUpdateController controller = loader.getController();
+                controller.setLoadMembership(selected);
+
+                StageHelper.createAddOrUpdateStage("Atualizar mensalidade", root);
+
+                if (controller.isUpdated()) {
+                    refreshTableView();
+                    membershipTableView.getSelectionModel().select(index);
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(MembershipsController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
 
     @FXML
     private void deleteMembership(ActionEvent event) {
-        MembershipDao membershipDao = new MembershipDao();
-
         if (selected == null) {
             alert.customAlert(Alert.AlertType.WARNING, "Selecione uma mensalidade para cancelar", "");
         } else {
@@ -169,7 +200,28 @@ public class MembershipsController implements Initializable {
                     + "\n\nA mensalidade será cancelada de forma definitiva e não poderá ser recuperada. "
                     + "Além disso, qualquer cobrança em aberto também será cancelada.");
             if (alert.getResult().get() == ButtonType.YES) {
+                int fkCustomer = selected.getFkCustomer();
+                
+                MembershipDao membershipDao = new MembershipDao();
                 membershipDao.delete(selected);
+                
+                MembershipDao membershipDao1 = new MembershipDao();
+                if (membershipDao1.checkExistingBillingDescription(fkCustomer)) {
+                    MembershipDao membershipDao2 = new MembershipDao();
+                    List<String> oldDescriptionList = membershipDao2.getBillingDescriptionToRename(fkCustomer);
+                    
+                    List<String> newDescriptionList = new ArrayList<>();
+                    for (int i = 0; i < oldDescriptionList.size(); i++) {
+                        newDescriptionList.add("Mensalidade " + (i + 1) + "/" + oldDescriptionList.size());
+                    }
+                    
+                    MembershipDao membershipDao3 = new MembershipDao();
+                    List<Integer> idList = membershipDao3.getBillingIdToRename(fkCustomer);
+                    
+                    MembershipDao membershipDao4 = new MembershipDao();
+                    membershipDao4.updateBillingDescription(idList, newDescriptionList);
+                }
+                
                 refreshTableView();
                 resetDetails();
                 alert.customAlert(Alert.AlertType.WARNING, "Mensalidade cancelada com sucesso", "");

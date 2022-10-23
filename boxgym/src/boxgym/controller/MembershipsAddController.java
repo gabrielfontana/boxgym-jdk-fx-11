@@ -72,6 +72,7 @@ public class MembershipsAddController implements Initializable {
         setCreated(false);
         buttonsProperties();
         loadCustomerNameComboBox();
+        dueDateDatePicker.setEditable(false);
         loadAmountComboBox();
     } 
     
@@ -138,7 +139,7 @@ public class MembershipsAddController implements Initializable {
     @FXML
     void clear(ActionEvent event) {
         customerComboBox.valueProperty().set(null);
-        dueDateDatePicker.getEditor().clear();
+        dueDateDatePicker.setValue(null);
         priceTextField.setPrice(0.0);
         amountComboBox.valueProperty().set(null);
     }

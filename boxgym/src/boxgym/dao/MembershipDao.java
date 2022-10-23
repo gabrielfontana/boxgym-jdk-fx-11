@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -95,7 +96,7 @@ public class MembershipDao {
         }
         return membershipsList;
     }
-    
+
     public boolean delete(Membership membership) {
         String sql = "DELETE FROM `membership` WHERE `membershipId` = ?;";
 
@@ -114,4 +115,92 @@ public class MembershipDao {
         return false;
     }
 
+    public boolean checkExistingBillingDescription(int fkCustomer) {
+        String sql = "SELECT b.description "
+                + "FROM `billing` AS b INNER JOIN `membership` AS m "
+                + "ON b.fkMembership = m.membershipId INNER JOIN `customer` as C "
+                + "ON m.fkCustomer = c.customerId "
+                + "WHERE b.fkMembership IS NOT NULL AND m.fkCustomer = " + fkCustomer + ";";
+
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MembershipDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            //DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return false;
+    }
+
+    public List<Integer> getBillingIdToRename(int fkCustomer) {
+        List<Integer> idList = new ArrayList<>();
+        String sql = "SELECT b.billingId "
+                + "FROM `billing` AS b INNER JOIN `membership` AS m "
+                + "ON b.fkMembership = m.membershipId INNER JOIN `customer` as C "
+                + "ON m.fkCustomer = c.customerId "
+                + "WHERE b.fkMembership IS NOT NULL AND m.fkCustomer = " + fkCustomer + ";";
+
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                idList.add(rs.getInt("billingId"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MembershipDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return idList;
+    }
+
+    public List<String> getBillingDescriptionToRename(int fkCustomer) {
+        List<String> descriptionList = new ArrayList<>();
+        String sql = "SELECT b.description "
+                + "FROM `billing` AS b INNER JOIN `membership` AS m "
+                + "ON b.fkMembership = m.membershipId INNER JOIN `customer` as C "
+                + "ON m.fkCustomer = c.customerId "
+                + "WHERE b.fkMembership IS NOT NULL AND m.fkCustomer = " + fkCustomer + ";";
+
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                descriptionList.add(rs.getString("description"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MembershipDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return descriptionList;
+    }
+    
+    public void updateBillingDescription(List<Integer> idList, List<String> newDescriptionList) {
+        if (idList.size() == newDescriptionList.size()) {
+            for (int i = 0; i < idList.size(); i++) {
+                String sql = "UPDATE `billing` SET `description` = '" + newDescriptionList.get(i) + "' WHERE `billingId` = " + idList.get(i) + ";";
+
+                try {
+                    ps = conn.prepareStatement(sql);
+                    ps.execute();
+                } catch (SQLException ex) {
+                    Logger.getLogger(MembershipDao.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+    }
 }
