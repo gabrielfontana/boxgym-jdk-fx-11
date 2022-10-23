@@ -13,7 +13,6 @@ import boxgym.model.Sheet;
 import boxgym.model.SheetWorkout;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
