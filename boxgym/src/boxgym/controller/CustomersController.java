@@ -48,7 +48,7 @@ public class CustomersController implements Initializable {
     AlertHelper alert = new AlertHelper();
 
     private Customer selected;
-    
+
     @FXML
     private MenuButton filterButton;
 
@@ -81,7 +81,7 @@ public class CustomersController implements Initializable {
 
     @FXML
     private Button deleteButton;
-    
+
     @FXML
     private TableView<Customer> customerTableView;
 
@@ -93,10 +93,10 @@ public class CustomersController implements Initializable {
 
     @FXML
     private TableColumn<Customer, String> sexTableColumn;
-    
+
     @FXML
     private TableColumn<Customer, LocalDate> birthDateTableColumn;
-    
+
     @FXML
     private TableColumn<Customer, String> emailTableColumn;
 
@@ -105,7 +105,7 @@ public class CustomersController implements Initializable {
 
     @FXML
     private TableColumn<Customer, String> addressTableColumn;
-    
+
     @FXML
     private TableColumn<Customer, String> districtTableColumn;
 
@@ -114,7 +114,7 @@ public class CustomersController implements Initializable {
 
     @FXML
     private TableColumn<Customer, String> federativeUnitTableColumn;
-    
+
     @FXML
     private Label countLabel;
 
@@ -138,7 +138,7 @@ public class CustomersController implements Initializable {
 
     @FXML
     private Label sexLabel;
-    
+
     @FXML
     private Label birthDateLabel;
 
@@ -171,7 +171,7 @@ public class CustomersController implements Initializable {
 
     @FXML
     private Label updatedAtLabel;
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         resetDetails();
@@ -180,8 +180,8 @@ public class CustomersController implements Initializable {
         initCustomerTableView();
         listeners();
         Platform.runLater(() -> searchBox.requestFocus());
-    }    
-    
+    }
+
     @FXML
     void addCustomer(ActionEvent event) {
         try {
@@ -201,7 +201,7 @@ public class CustomersController implements Initializable {
             Logger.getLogger(CustomersController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     @FXML
     void updateCustomer(ActionEvent event) {
         if (selected == null) {
@@ -230,24 +230,27 @@ public class CustomersController implements Initializable {
 
     @FXML
     void deleteCustomer(ActionEvent event) {
-        CustomerDao customerDao = new CustomerDao();
-
         if (selected == null) {
             alert.customAlert(Alert.AlertType.WARNING, "Selecione um cliente para excluir", "");
         } else {
-            alert.confirmationAlert("Excluir cliente", "Tem certeza que deseja excluir o(a) cliente '" + selected.getName()+ "'? "
+            alert.confirmationAlert("Excluir cliente", "Tem certeza que deseja excluir o(a) cliente '" + selected.getName() + "'? "
                     + "\n\nO(a) cliente será excluído(a) de forma definitiva e não poderá ser recuperado(a).");
             if (alert.getResult().get() == ButtonType.YES) {
+                CustomerDao customerDao = new CustomerDao();
+                CustomerDao customerDao1 = new CustomerDao();
+                CustomerDao customerDao2 = new CustomerDao();
+                CustomerDao customerDao3 = new CustomerDao();
+                
                 boolean saleConstraint = customerDao.checkSaleDeleteConstraint(selected.getCustomerId());
-                boolean measurementConstraint = customerDao.checkMeasurementDeleteConstraint(selected.getCustomerId());
-                if (saleConstraint && measurementConstraint) {
-                    alert.customAlert(Alert.AlertType.WARNING, "Não foi possível excluir", "Existem vendas e medidas relacionadas a este(a) cliente. ");
-                } else if (saleConstraint) {
-                    alert.customAlert(Alert.AlertType.WARNING, "Não foi possível excluir", "Existem vendas relacionadas a este(a) cliente.");
-                } else if (measurementConstraint) {
-                    alert.customAlert(Alert.AlertType.WARNING, "Não foi possível excluir", "Existem medidas relacionadas a este(a) cliente.");
+                boolean measurementConstraint = customerDao1.checkMeasurementDeleteConstraint(selected.getCustomerId());
+                boolean sheetConstraint = customerDao2.checkSheetDeleteConstraint(selected.getCustomerId());
+                boolean membershipConstraint = customerDao3.checkMembershipDeleteConstraint(selected.getCustomerId());
+
+                if (saleConstraint || measurementConstraint || sheetConstraint || membershipConstraint) {
+                    alert.customAlert(Alert.AlertType.WARNING, "Não foi possível excluir", "Existem vendas, medidas, fichas ou mensalidades relacionadas a este(a) cliente.");
                 } else {
-                    customerDao.delete(selected);
+                    CustomerDao customerDao4 = new CustomerDao();
+                    customerDao4.delete(selected);
                     refreshTableView();
                     resetDetails();
                     alert.customAlert(Alert.AlertType.WARNING, "Cliente excluído(a) com sucesso", "");
@@ -255,7 +258,7 @@ public class CustomersController implements Initializable {
             }
         }
     }
-    
+
     private void resetDetails() {
         if (selected == null) {
             customerIdLabel.setText("");
@@ -295,7 +298,7 @@ public class CustomersController implements Initializable {
             updatedAtLabel.setText(selected.getUpdatedAt().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
         }
     }
-    
+
     private ObservableList<Customer> loadData() {
         CustomerDao customerDao = new CustomerDao();
         return FXCollections.observableArrayList(customerDao.read());
@@ -321,7 +324,7 @@ public class CustomersController implements Initializable {
         federativeUnitTableColumn.setCellValueFactory(new PropertyValueFactory("federativeUnit"));
         refreshTableView();
     }
-    
+
     private boolean caseSensitiveEnabled(Customer customer, String searchText, int optionOrder) {
         String personRegistry = customer.getPersonRegistry();
         String name = customer.getName();
@@ -338,7 +341,7 @@ public class CustomersController implements Initializable {
 
         return stringComparasion(fields, searchText, optionOrder);
     }
-    
+
     private boolean caseSensitiveDisabled(Customer customer, String searchText, int optionOrder) {
         String personRegistry = customer.getPersonRegistry();
         String name = customer.getName().toLowerCase();
@@ -355,7 +358,7 @@ public class CustomersController implements Initializable {
 
         return stringComparasion(fields, searchText, optionOrder);
     }
-    
+
     private boolean stringComparasion(List<String> list, String searchText, int optionOrder) {
         boolean searchReturn = false;
         switch (optionOrder) {
@@ -388,7 +391,7 @@ public class CustomersController implements Initializable {
         }
         return searchReturn;
     }
-    
+
     private void search() {
         FilteredList<Customer> filteredData = new FilteredList<>(loadData(), p -> true);
 
@@ -420,7 +423,7 @@ public class CustomersController implements Initializable {
         sortedData.comparatorProperty().bind(customerTableView.comparatorProperty());
         customerTableView.setItems(sortedData);
     }
-    
+
     private void listeners() {
         customerTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             selected = (Customer) newValue;
@@ -431,12 +434,12 @@ public class CustomersController implements Initializable {
                 selectedRowLabel.setText("Linha " + String.valueOf(customerTableView.getSelectionModel().getSelectedIndex() + 1) + " selecionada");
             }
         });
-        
+
         caseSensitiveOp.selectedProperty().addListener((observable, oldValue, newValue) -> {
             searchBox.setText("");
             searchBox.requestFocus();
         });
-        
+
         filterOptions.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
             searchBox.setText("");
             searchBox.requestFocus();
@@ -451,12 +454,12 @@ public class CustomersController implements Initializable {
 
     @FXML
     void goToLastRow(MouseEvent event) {
-         if (customerTableView.getItems().size() == 1) {
+        if (customerTableView.getItems().size() == 1) {
             goToFirstRow(event);
         } else {
-            customerTableView.getSelectionModel().selectLast(); 
+            customerTableView.getSelectionModel().selectLast();
             customerTableView.scrollTo(customerTableView.getItems().size() - 1);
-         }
+        }
     }
-    
+
 }

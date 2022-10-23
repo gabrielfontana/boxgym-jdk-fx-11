@@ -115,7 +115,7 @@ public class MembershipsAddController implements Initializable {
             for (int i = 0; i < Integer.valueOf(amountComboBox.getSelectionModel().getSelectedItem()); i++) {
                 LocalDate dueDate = dueDateDatePicker.getValue().plusMonths(i);
                 
-                Membership membership = new Membership(getKeyFromCustomerComboBox(), dueDate, new BigDecimal(priceTextField.getPrice()), "Aguardando");
+                Membership membership = new Membership(getKeyFromCustomerComboBox(), dueDate, new BigDecimal(priceTextField.getPrice()), "Aguardando pagamento");
                 MembershipDao membershipDao = new MembershipDao();
                 membershipDao.create(membership);
                 

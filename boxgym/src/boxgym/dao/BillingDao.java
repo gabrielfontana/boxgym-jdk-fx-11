@@ -2,6 +2,7 @@ package boxgym.dao;
 
 import boxgym.jdbc.ConnectionFactory;
 import boxgym.model.Billing;
+import boxgym.model.Membership;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -165,5 +166,25 @@ public class BillingDao {
             DbUtils.closeQuietly(rs);
         }
         return billingsList;
+    }
+    
+    public boolean update(Membership membership) {
+        String sql = "UPDATE `billing` SET `dueDate` = ?, `valueToPay` = ? WHERE `fkMembership` = ?;";
+
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setDate(1, java.sql.Date.valueOf(membership.getDueDate()));
+            ps.setBigDecimal(2, membership.getPrice());
+            ps.setInt(3, membership.getMembershipId());
+            ps.execute();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(BillingDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return false;
     }
 }

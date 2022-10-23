@@ -114,6 +114,26 @@ public class MembershipDao {
         }
         return false;
     }
+    
+    public boolean update(Membership membership) {
+        String sql = "UPDATE `membership` SET `dueDate` = ?, `price` = ? WHERE `membershipId` = ?;";
+
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setDate(1, java.sql.Date.valueOf(membership.getDueDate()));
+            ps.setBigDecimal(2, membership.getPrice());
+            ps.setInt(3, membership.getMembershipId());
+            ps.execute();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(MembershipDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return false;
+    }
 
     public boolean checkExistingBillingDescription(int fkCustomer) {
         String sql = "SELECT b.description "

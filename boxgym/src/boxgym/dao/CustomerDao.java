@@ -239,7 +239,7 @@ public class CustomerDao {
     
     public boolean checkSaleDeleteConstraint(int customerId) {
         String sql = "SELECT `fkCustomer` FROM `sale` WHERE `fkCustomer` = " + customerId + ";";
-
+        
         try {
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -249,7 +249,7 @@ public class CustomerDao {
         } catch (SQLException ex) {
             Logger.getLogger(CustomerDao.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            //DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(conn);
             DbUtils.closeQuietly(ps);
             DbUtils.closeQuietly(rs);
         }
@@ -258,7 +258,7 @@ public class CustomerDao {
     
     public boolean checkMeasurementDeleteConstraint(int customerId) {
         String sql = "SELECT `fkCustomer` FROM `measurement` WHERE `fkCustomer` = " + customerId + ";";
-
+        
         try {
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -268,7 +268,45 @@ public class CustomerDao {
         } catch (SQLException ex) {
             Logger.getLogger(CustomerDao.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            //DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return false;
+    }
+    
+    public boolean checkSheetDeleteConstraint(int customerId) {
+        String sql = "SELECT `fkCustomer` FROM `sheet` WHERE `fkCustomer` = " + customerId + ";";
+        
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return false;
+    }
+    
+    public boolean checkMembershipDeleteConstraint(int customerId) {
+        String sql = "SELECT `fkCustomer` FROM `membership` WHERE `fkCustomer` = " + customerId + ";";
+        
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
             DbUtils.closeQuietly(ps);
             DbUtils.closeQuietly(rs);
         }

@@ -50,7 +50,7 @@
                               <Insets bottom="5.0" />
                            </VBox.margin>
                         </Label>
-                        <CurrencyField fx:id="priceTextField" disable="true" prefHeight="30.0" prefWidth="105.0" />
+                        <CurrencyField fx:id="priceTextField" prefHeight="30.0" prefWidth="105.0" />
                      </children>
                      <HBox.margin>
                         <Insets right="10.0" />

@@ -19,12 +19,20 @@ public class Membership {
     public Membership() {
     
     }
-
+    
+    //Construtor CREATE
     public Membership(int fkCustomer, LocalDate dueDate, BigDecimal price, String status) {
         this.fkCustomer = fkCustomer;
         this.dueDate = dueDate;
         this.price = price;
         this.status = status;
+    }
+    
+     //Construtor UPDATE
+    public Membership(int membershipId, LocalDate dueDate, BigDecimal price) {
+        this.membershipId = membershipId;
+        this.dueDate = dueDate;
+        this.price = price;
     }
     
     public int getMembershipId() {

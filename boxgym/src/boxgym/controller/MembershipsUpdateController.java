@@ -1,10 +1,13 @@
 package boxgym.controller;
 
+import boxgym.dao.BillingDao;
+import boxgym.dao.MembershipDao;
 import boxgym.helper.AlertHelper;
 import boxgym.helper.ButtonHelper;
 import boxgym.helper.TextValidationHelper;
 import boxgym.model.Membership;
 import currencyfield.CurrencyField;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -90,13 +93,24 @@ public class MembershipsUpdateController implements Initializable {
         if (!(validation.getEmptyCounter() == 0)) {
             ah.customAlert(Alert.AlertType.WARNING, "Não foi possível atualizar o cadastro desta mensalidade", validation.getMessage());
         } else {
+            Membership membership = new Membership(loadMembership.getMembershipId(), dueDateDatePicker.getValue(), new BigDecimal(priceTextField.getPrice()));
             
+            MembershipDao membershipDao = new MembershipDao();
+            membershipDao.update(membership);
+            
+            BillingDao billingDao = new BillingDao();
+            billingDao.update(membership);
+            
+            setUpdated(true);
+            ah.customAlert(Alert.AlertType.INFORMATION, "Mensalidade atualizada com sucesso!", "");
+            anchorPane.getScene().getWindow().hide();
         }
     }
 
     @FXML
     void clear(ActionEvent event) {
         dueDateDatePicker.setValue(null);
+        priceTextField.setPrice(0.0);
     }
     
 }
