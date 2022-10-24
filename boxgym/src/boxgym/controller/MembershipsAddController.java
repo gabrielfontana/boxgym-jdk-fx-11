@@ -122,7 +122,7 @@ public class MembershipsAddController implements Initializable {
                 int membershipId = getMembershipIdDao.getMembershipId();
                 
                 Billing membershipBilling = new Billing("Mensalidade " + (i + 1) + "/" + amountComboBox.getSelectionModel().getSelectedItem(), 
-                        dueDate, new BigDecimal(priceTextField.getPrice()));
+                        dueDate, new BigDecimal(priceTextField.getPrice()), "1");
                 membershipBilling.setFkMembership(membershipId);
                 membershipBilling.setTempCustomerName(customerComboBox.getSelectionModel().getSelectedItem());
 

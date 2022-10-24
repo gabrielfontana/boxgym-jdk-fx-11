@@ -1,11 +1,14 @@
 package boxgym.controller;
 
 import boxgym.dao.BillingDao;
+import boxgym.helper.AlertHelper;
 import boxgym.helper.ButtonHelper;
+import boxgym.helper.StageHelper;
 import boxgym.helper.TableViewCount;
 import boxgym.helper.TextFieldFormat;
 import boxgym.model.Billing;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.time.LocalDate;
@@ -13,13 +16,20 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
@@ -30,9 +40,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import jfxtras.styles.jmetro.JMetro;
+import jfxtras.styles.jmetro.Style;
 import org.controlsfx.control.PrefixSelectionComboBox;
 
 public class BillingsController implements Initializable {
+
+    AlertHelper alert = new AlertHelper();
 
     private Billing selected;
 
@@ -92,7 +106,7 @@ public class BillingsController implements Initializable {
 
     @FXML
     private Label billingIdLabel;
-    
+
     @FXML
     private Label tempCustomerNameLabel;
 
@@ -111,18 +125,47 @@ public class BillingsController implements Initializable {
     @FXML
     private Label updatedAtLabel;
 
-    List<String> billingTypeList = Arrays.asList("Todas", "Vendas", "Mensalidades");
+    @FXML
+    private Button receiveButton;
+
+    List<String> billingTypeList = Arrays.asList("Vendas", "Mensalidades");
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         resetDetails();
-        ButtonHelper.buttonCursor(filterButton);
+        ButtonHelper.buttonCursor(filterButton, receiveButton);
         ButtonHelper.iconButton(firstRow, lastRow);
         loadChangeTableDataComboBox();
         changeTableDataComboBoxListener();
         initBillingTableView();
         listeners();
         Platform.runLater(() -> searchBox.requestFocus());
+    }
+
+    @FXML
+    void receive(ActionEvent event) {
+        if (selected == null) {
+            alert.customAlert(Alert.AlertType.WARNING, "Selecione uma cobrança para receber", "");
+        } else {
+            int index = billingTableView.getSelectionModel().getSelectedIndex();
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/boxgym/view/PaymentsAdd.fxml"));
+                Parent root = (Parent) loader.load();
+                JMetro jMetro = new JMetro(root, Style.LIGHT);
+
+                PaymentsAddController controller = loader.getController();
+                controller.setLoadBilling(selected);
+
+                StageHelper.createAddOrUpdateStage("Receber pagamento", root);
+                
+                if (controller.isPaid()) {
+                    refreshTableView(changeTableDataComboBox.getSelectionModel().getSelectedItem());
+                    billingTableView.getSelectionModel().select(index);
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(CustomersController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     private void resetDetails() {
@@ -157,11 +200,9 @@ public class BillingsController implements Initializable {
     private void changeTableDataComboBoxListener() {
         changeTableDataComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
             if (changeTableDataComboBox.getSelectionModel().getSelectedItem().equals(billingTypeList.get(0))) {
-                refreshTableView(billingTypeList.get(0)); //Todas
-            } else if (changeTableDataComboBox.getSelectionModel().getSelectedItem().equals(billingTypeList.get(1))) {
-                refreshTableView(billingTypeList.get(1)); //Vendas
+                refreshTableView(billingTypeList.get(0)); //Vendas
             } else {
-                refreshTableView(billingTypeList.get(2)); //Mensalidades
+                refreshTableView(billingTypeList.get(1)); //Mensalidades
             }
         });
     }
@@ -179,10 +220,8 @@ public class BillingsController implements Initializable {
     private ObservableList<Billing> loadData(String selectedItem) {
         BillingDao billingDao = new BillingDao();
         ObservableList<Billing> list;
-        
+
         if (selectedItem.equals(billingTypeList.get(0))) {
-            list = FXCollections.observableArrayList(billingDao.readAll()); //Todas
-        } else if (selectedItem.equals(billingTypeList.get(1))) {
             list = FXCollections.observableArrayList(billingDao.readSales()); //Vendas
         } else {
             list = FXCollections.observableArrayList(billingDao.readMembership()); //Mensalidades
@@ -279,7 +318,7 @@ public class BillingsController implements Initializable {
         sortedData.comparatorProperty().bind(billingTableView.comparatorProperty());
         billingTableView.setItems(sortedData);
     }
-    
+
     private void listeners() {
         billingTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             selected = (Billing) newValue;

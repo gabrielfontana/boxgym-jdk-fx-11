@@ -10,6 +10,9 @@ public class Payment {
     private String description;
     private LocalDate paymentDate;
     private BigDecimal paidValue;
+    
+    private String tempCustomerName;
+    private BigDecimal tempValueToPay;
 
     public Payment() {
         
@@ -63,4 +66,20 @@ public class Payment {
         this.paidValue = paidValue;
     }
 
+    public String getTempCustomerName() {
+        return tempCustomerName;
+    }
+
+    public void setTempCustomerName(String tempCustomerName) {
+        this.tempCustomerName = tempCustomerName;
+    }
+
+    public BigDecimal getTempValueToPay() {
+        return tempValueToPay;
+    }
+
+    public void setTempValueToPay(BigDecimal tempValueToPay) {
+        this.tempValueToPay = tempValueToPay;
+    }
+    
 }

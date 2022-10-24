@@ -12,6 +12,7 @@ public class Billing {
     private String description;
     private LocalDate dueDate;
     private BigDecimal valueToPay;
+    private String status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -22,10 +23,11 @@ public class Billing {
     }
 
     //Construtor CREATE
-    public Billing(String description, LocalDate dueDate, BigDecimal valueToPay) {
+    public Billing(String description, LocalDate dueDate, BigDecimal valueToPay, String status) {
         this.description = description;
         this.dueDate = dueDate;
         this.valueToPay = valueToPay;
+        this.status = status;
     }
 
     public int getBillingId() {
@@ -76,6 +78,14 @@ public class Billing {
         this.valueToPay = valueToPay;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }

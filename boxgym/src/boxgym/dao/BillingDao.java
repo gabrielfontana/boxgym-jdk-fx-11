@@ -3,6 +3,7 @@ package boxgym.dao;
 import boxgym.jdbc.ConnectionFactory;
 import boxgym.model.Billing;
 import boxgym.model.Membership;
+import boxgym.model.Payment;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,7 +24,7 @@ public class BillingDao {
     }
     
     public boolean createSaleBilling(Billing billing) {
-        String sql = "INSERT INTO `billing` (`fkSale`, `description`, `dueDate`, `valueToPay`) VALUES (?, ?, ?, ?);";
+        String sql = "INSERT INTO `billing` (`fkSale`, `description`, `dueDate`, `valueToPay`, `status`) VALUES (?, ?, ?, ?, ?);";
         
         try {
             ps = conn.prepareStatement(sql);
@@ -31,6 +32,7 @@ public class BillingDao {
             ps.setString(2, billing.getDescription());
             ps.setDate(3, java.sql.Date.valueOf(billing.getDueDate()));
             ps.setBigDecimal(4, billing.getValueToPay());
+            ps.setString(5, billing.getStatus());
             ps.execute();
             return true;
         } catch (SQLException ex) {
@@ -44,7 +46,7 @@ public class BillingDao {
     }
     
     public boolean createMembershipBilling(Billing billing) {
-        String sql = "INSERT INTO `billing` (`fkMembership`, `description`, `dueDate`, `valueToPay`) VALUES (?, ?, ?, ?);";
+        String sql = "INSERT INTO `billing` (`fkMembership`, `description`, `dueDate`, `valueToPay`, `status`) VALUES (?, ?, ?, ?, ?);";
         
         try {
             ps = conn.prepareStatement(sql);
@@ -52,6 +54,7 @@ public class BillingDao {
             ps.setString(2, billing.getDescription());
             ps.setDate(3, java.sql.Date.valueOf(billing.getDueDate()));
             ps.setBigDecimal(4, billing.getValueToPay());
+            ps.setString(5, billing.getStatus());
             ps.execute();
             return true;
         } catch (SQLException ex) {
@@ -64,53 +67,13 @@ public class BillingDao {
         return false;
     }
     
-    public List<Billing> readAll() {
-        List<Billing> billingsList = new ArrayList<>();
-        String sql 
-                = "SELECT b.billingId AS `billingId`, c.name AS `tempCustomerName`, b.description, b.dueDate, b.valueToPay, b.createdAt, b.updatedAt "
-                + "FROM `billing` AS b INNER JOIN `sale` AS v "
-                + "ON b.fkSale = v.saleId INNER JOIN `customer` as C "
-                + "ON v.fkCustomer = c.customerId "
-                + "WHERE b.fkSale IS NOT NULL "
-                + "UNION "
-                + "SELECT b.billingId, c.name AS `tempCustomerName`, b.description, b.dueDate, b.valueToPay, b.createdAt, b.updatedAt "
-                + "FROM `billing` AS b INNER JOIN `membership` AS m "
-                + "ON b.fkMembership = m.membershipId INNER JOIN `customer` as C "
-                + "ON m.fkCustomer = c.customerId "
-                + "WHERE b.fkMembership IS NOT NULL "
-                + "ORDER BY `billingId`;";
-
-        try {
-            ps = conn.prepareStatement(sql);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                Billing b = new Billing();
-                b.setBillingId(rs.getInt("billingId"));
-                b.setDescription(rs.getString("description"));
-                b.setDueDate(rs.getDate("dueDate").toLocalDate());
-                b.setValueToPay(rs.getBigDecimal("valueToPay"));
-                b.setCreatedAt(rs.getTimestamp("createdAt").toLocalDateTime());
-                b.setUpdatedAt(rs.getTimestamp("updatedAt").toLocalDateTime());
-                b.setTempCustomerName(rs.getString("tempCustomerName"));
-                billingsList.add(b);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(BillingDao.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            DbUtils.closeQuietly(conn);
-            DbUtils.closeQuietly(ps);
-            DbUtils.closeQuietly(rs);
-        }
-        return billingsList;
-    }
-    
     public List<Billing> readSales() {
         List<Billing> billingsList = new ArrayList<>();
-        String sql = "SELECT b.billingId, c.name AS `tempCustomerName`, b.description, b.dueDate, b.valueToPay, b.createdAt, b.updatedAt "
-                + "FROM `billing` AS b INNER JOIN `sale` AS v "
-                + "ON b.fkSale = v.saleId INNER JOIN `customer` as C "
-                + "ON v.fkCustomer = c.customerId "
-                + "WHERE b.fkSale IS NOT NULL;";
+        String sql = "SELECT b.billingId, b.fkSale, c.name AS `tempCustomerName`, b.description, b.dueDate, b.status, b.valueToPay, b.createdAt, b.updatedAt "
+                + "FROM `billing` AS b INNER JOIN `sale` AS s "
+                + "ON b.fkSale = s.saleId INNER JOIN `customer` as C "
+                + "ON s.fkCustomer = c.customerId "
+                + "WHERE b.fkSale IS NOT NULL AND b.status = 1;";
 
         try {
             ps = conn.prepareStatement(sql);
@@ -118,9 +81,11 @@ public class BillingDao {
             while (rs.next()) {
                 Billing b = new Billing();
                 b.setBillingId(rs.getInt("billingId"));
+                b.setFkSale(rs.getInt("fkSale"));
                 b.setDescription(rs.getString("description"));
                 b.setDueDate(rs.getDate("dueDate").toLocalDate());
                 b.setValueToPay(rs.getBigDecimal("valueToPay"));
+                b.setStatus(rs.getString("status"));
                 b.setCreatedAt(rs.getTimestamp("createdAt").toLocalDateTime());
                 b.setUpdatedAt(rs.getTimestamp("updatedAt").toLocalDateTime());
                 b.setTempCustomerName(rs.getString("tempCustomerName"));
@@ -138,11 +103,11 @@ public class BillingDao {
     
     public List<Billing> readMembership() {
         List<Billing> billingsList = new ArrayList<>();
-        String sql = "SELECT b.billingId, c.name AS `tempCustomerName`, b.description, b.dueDate, b.valueToPay, b.createdAt, b.updatedAt "
+        String sql = "SELECT b.billingId, b.fkMembership, c.name AS `tempCustomerName`, b.description, b.dueDate, b.status, b.valueToPay, b.createdAt, b.updatedAt "
                 + "FROM `billing` AS b INNER JOIN `membership` AS m "
                 + "ON b.fkMembership = m.membershipId INNER JOIN `customer` as C "
                 + "ON m.fkCustomer = c.customerId "
-                + "WHERE b.fkMembership IS NOT NULL;";
+                + "WHERE b.fkMembership IS NOT NULL AND b.status = 1;";
 
         try {
             ps = conn.prepareStatement(sql);
@@ -150,9 +115,11 @@ public class BillingDao {
             while (rs.next()) {
                 Billing b = new Billing();
                 b.setBillingId(rs.getInt("billingId"));
+                b.setFkMembership(rs.getInt("fkMembership"));
                 b.setDescription(rs.getString("description"));
                 b.setDueDate(rs.getDate("dueDate").toLocalDate());
                 b.setValueToPay(rs.getBigDecimal("valueToPay"));
+                b.setStatus(rs.getString("status"));
                 b.setCreatedAt(rs.getTimestamp("createdAt").toLocalDateTime());
                 b.setUpdatedAt(rs.getTimestamp("updatedAt").toLocalDateTime());
                 b.setTempCustomerName(rs.getString("tempCustomerName"));
