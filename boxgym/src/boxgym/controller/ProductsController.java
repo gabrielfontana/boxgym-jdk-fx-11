@@ -44,7 +44,6 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
 
