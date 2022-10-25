@@ -1,6 +1,5 @@
 package boxgym.controller;
 
-import boxgym.dao.BillingDao;
 import boxgym.dao.PaymentDao;
 import boxgym.helper.AlertHelper;
 import boxgym.helper.ButtonHelper;
@@ -37,8 +36,8 @@ public class PaymentsAddController implements Initializable {
     @FXML
     private LimitedTextField valueToBePaidTextField;
 
-    @FXML
-    private LimitedTextField finesAndInterestTextField;
+    /*@FXML
+    private LimitedTextField finesAndInterestTextField;*/
 
     @FXML
     private Label billingValueToPayLabel;
@@ -97,7 +96,7 @@ public class PaymentsAddController implements Initializable {
 
     private void inputMasks() {
         InputMasks.monetaryField(valueToBePaidTextField);
-        InputMasks.monetaryField(finesAndInterestTextField);
+        /*InputMasks.monetaryField(finesAndInterestTextField);*/
     }
 
     private void initPaymentDate() {
@@ -107,11 +106,14 @@ public class PaymentsAddController implements Initializable {
 
     private void initValues() {
         String value = nf.format(loadBilling.getValueToPay());
+        if (loadBilling.getValueToPay().doubleValue() % 10 == 0) {
+            value = value.concat(",00");
+        }
 
         valueToBePaidTextField.setText(value);
         eraseListener(valueToBePaidTextField);
-        finesAndInterestTextField.setText("0,00");
-        eraseListener(finesAndInterestTextField);
+        /*finesAndInterestTextField.setText("0,00");
+        eraseListener(finesAndInterestTextField);*/
 
         billingValueToPayLabel.setText(value);
         valueToBePaidLabel.setText(value);
@@ -145,7 +147,7 @@ public class PaymentsAddController implements Initializable {
         });
     }
 
-    private void finesAndInterestCalc() {
+    /*private void finesAndInterestCalc() {
         BigDecimal billingValueToPay = new BigDecimal(replaceDotComma(nf.format(loadBilling.getValueToPay())));
         BigDecimal finesAndInterest = new BigDecimal(replaceDotComma(finesAndInterestTextField.getText()));
         BigDecimal newBillingValueToPay = billingValueToPay.add(finesAndInterest);
@@ -155,7 +157,7 @@ public class PaymentsAddController implements Initializable {
         } else {
             billingValueToPayLabel.setText(String.valueOf(nf.format(newBillingValueToPay)));
         }
-    }
+    }*/
 
     private void moneyChangeLabelCalc() {
         BigDecimal billingValueToPay = new BigDecimal(replaceDotComma(billingValueToPayLabel.getText()));
@@ -180,7 +182,7 @@ public class PaymentsAddController implements Initializable {
 
     @FXML
     private void calculate(ActionEvent event) {
-        finesAndInterestCalc();
+        /*finesAndInterestCalc();*/
         moneyChangeLabelCalc();
     }
 
@@ -192,12 +194,14 @@ public class PaymentsAddController implements Initializable {
         if (!(validation.getEmptyCounter() == 0)) {
             ah.customAlert(Alert.AlertType.WARNING, "Não foi possível confirmar o pagamento desta cobrança", validation.getMessage());
         } else {
+            moneyChangeLabelCalc();
+            
             BigDecimal billingValueToPay = new BigDecimal(replaceDotComma(billingValueToPayLabel.getText()));
             BigDecimal valueToBePaid = new BigDecimal(replaceDotComma(valueToBePaidLabel.getText()));
             BigDecimal paidValue = new BigDecimal("0");
             if (valueToBePaid.compareTo(billingValueToPay) > 0 || valueToBePaid.compareTo(billingValueToPay) == 0) {
                 paidValue = billingValueToPay; //Valor que será pago é maior ou igual que o valor da cobrança
-                createPaymentObject(loadBilling.getDescription(), paidValue);
+                createPaymentObject(loadBilling.getDescription(), billingValueToPay, paidValue);
                 changeBillingStatusAfterPayment(loadBilling.getBillingId());
 
                 if (loadBilling.getFkSale() == 0) {//Se for uma mensalidade
@@ -206,10 +210,10 @@ public class PaymentsAddController implements Initializable {
             } else if (valueToBePaid.compareTo(billingValueToPay) < 0) {
                 paidValue = valueToBePaid; //Valor que será pago é menor que o valor da cobrança
                 if (loadBilling.getFkSale() == 0) { //Se for uma mensalidade
-                    createPaymentObject("Parte da " + loadBilling.getDescription(), paidValue);
+                    createPaymentObject("Parte da " + loadBilling.getDescription(), billingValueToPay, paidValue);
                     changeBillingValueToPayAfterPayment(paidValue, loadBilling.getBillingId());
                 } else if (loadBilling.getFkMembership() == 0) { //Se for uma venda
-                    createPaymentObject("Parte de Vendas", paidValue);
+                    createPaymentObject("Parte de Vendas", billingValueToPay, paidValue);
                     changeBillingValueToPayAfterPayment(paidValue, loadBilling.getBillingId());
                 }
             }
@@ -219,8 +223,8 @@ public class PaymentsAddController implements Initializable {
         }
     }
 
-    private void createPaymentObject(String description, BigDecimal paidValue) {
-        Payment payment = new Payment(loadBilling.getBillingId(), description, paymentDateDatePicker.getValue(), paidValue);
+    private void createPaymentObject(String description, BigDecimal tempValueToPay, BigDecimal paidValue) {
+        Payment payment = new Payment(loadBilling.getBillingId(), description, paymentDateDatePicker.getValue(), tempValueToPay, paidValue);
         PaymentDao paymentDao = new PaymentDao();
         paymentDao.create(payment);
     }

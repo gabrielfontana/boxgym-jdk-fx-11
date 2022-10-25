@@ -139,7 +139,7 @@ public class PaymentsController implements Initializable {
             tempCustomerNameLabel.setText(selected.getTempCustomerName());
             descriptionLabel.setText(selected.getDescription());
             paymentDateLabel.setText(selected.getPaymentDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-            //TextFieldFormat.currencyFormat(tempValueToPayLabel, selected.getTempValueToPay());
+            TextFieldFormat.currencyFormat(tempValueToPayLabel, selected.getTempValueToPay());
             TextFieldFormat.currencyFormat(paidValueLabel, selected.getPaidValue());
         }
     }
@@ -158,13 +158,10 @@ public class PaymentsController implements Initializable {
     private void initPaymentTableView() {
         tempCustomerNameTableColumn.setCellValueFactory(new PropertyValueFactory("tempCustomerName"));
         descriptionTableColumn.setCellValueFactory(new PropertyValueFactory("description"));
-
         paymentDateTableColumn.setCellValueFactory(new PropertyValueFactory("paymentDate"));
         TextFieldFormat.paymentTableCellDateFormat(paymentDateTableColumn);
-        
-//        tempValueToPayTableColumn.setCellValueFactory(new PropertyValueFactory("tempValueToPay"));
-//        TextFieldFormat.paymentTableCellCurrencyFormat(tempValueToPayTableColumn);
-        
+        tempValueToPayTableColumn.setCellValueFactory(new PropertyValueFactory("tempValueToPay"));
+        TextFieldFormat.paymentTableCellCurrencyFormat(tempValueToPayTableColumn);
         paidValueTableColumn.setCellValueFactory(new PropertyValueFactory("paidValue"));
         TextFieldFormat.paymentTableCellCurrencyFormat(paidValueTableColumn);
         

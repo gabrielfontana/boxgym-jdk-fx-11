@@ -9,23 +9,24 @@ public class Payment {
     private int fkBilling;
     private String description;
     private LocalDate paymentDate;
+    private BigDecimal tempValueToPay;
     private BigDecimal paidValue;
     
     private String tempCustomerName;
-    private BigDecimal tempValueToPay;
-
+    
     public Payment() {
         
     }
 
     //Construtor CREATE
-    public Payment(int fkBilling, String description, LocalDate paymentDate, BigDecimal paidValue) {
+    public Payment(int fkBilling, String description, LocalDate paymentDate, BigDecimal tempValueToPay, BigDecimal paidValue) {
         this.fkBilling = fkBilling;
         this.description = description;
         this.paymentDate = paymentDate;
+        this.tempValueToPay = tempValueToPay;
         this.paidValue = paidValue;
     }
-    
+
     public int getPaymentId() {
         return paymentId;
     }
@@ -58,6 +59,14 @@ public class Payment {
         this.paymentDate = paymentDate;
     }
 
+    public BigDecimal getTempValueToPay() {
+        return tempValueToPay;
+    }
+
+    public void setTempValueToPay(BigDecimal tempValueToPay) {
+        this.tempValueToPay = tempValueToPay;
+    }
+
     public BigDecimal getPaidValue() {
         return paidValue;
     }
@@ -72,14 +81,6 @@ public class Payment {
 
     public void setTempCustomerName(String tempCustomerName) {
         this.tempCustomerName = tempCustomerName;
-    }
-
-    public BigDecimal getTempValueToPay() {
-        return tempValueToPay;
-    }
-
-    public void setTempValueToPay(BigDecimal tempValueToPay) {
-        this.tempValueToPay = tempValueToPay;
     }
     
 }

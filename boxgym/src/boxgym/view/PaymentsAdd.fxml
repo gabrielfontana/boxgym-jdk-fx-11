@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import limitedtextfield.LimitedTextField?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="255.0" prefWidth="455.0" stylesheets="@../css/theme.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.PaymentsAddController">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="255.0" prefWidth="340.0" stylesheets="@../css/theme.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.PaymentsAddController">
    <children>
       <AnchorPane layoutX="20.0" layoutY="20.0" prefHeight="185.0" prefWidth="444.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -42,19 +42,6 @@
                                        </VBox.margin>
                                     </Label>
                                     <LimitedTextField fx:id="valueToBePaidTextField" prefHeight="30.0" />
-                                 </children>
-                                 <HBox.margin>
-                                    <Insets right="10.0" />
-                                 </HBox.margin>
-                              </VBox>
-                              <VBox layoutX="10.0" layoutY="10.0" prefHeight="52.0" prefWidth="105.0">
-                                 <children>
-                                    <Label text="Multa e Juros">
-                                       <VBox.margin>
-                                          <Insets bottom="5.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <LimitedTextField fx:id="finesAndInterestTextField" prefHeight="30.0" />
                                  </children>
                                  <HBox.margin>
                                     <Insets />

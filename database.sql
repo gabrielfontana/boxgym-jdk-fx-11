@@ -265,6 +265,7 @@ CREATE TABLE `payment` (
   `fkBilling` INT(11) NOT NULL,
   `description` VARCHAR(255) NOT NULL,
   `paymentDate` DATE NOT NULL,
+  `tempValueToPay` DECIMAL(10, 2) NOT NULL,
   `paidValue` DECIMAL(10, 2) NOT NULL,
   PRIMARY KEY (`paymentId`),
   FOREIGN KEY (`fkBilling`) REFERENCES `billing`(`billingId`) ON UPDATE CASCADE ON DELETE CASCADE
