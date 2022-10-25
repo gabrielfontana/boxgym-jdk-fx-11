@@ -106,7 +106,7 @@ public class PaymentsAddController implements Initializable {
 
     private void initValues() {
         String value = nf.format(loadBilling.getValueToPay());
-        if (loadBilling.getValueToPay().doubleValue() % 10 == 0) {
+        if (String.valueOf(loadBilling.getValueToPay()).endsWith(".00")) {
             value = value.concat(",00");
         }
 

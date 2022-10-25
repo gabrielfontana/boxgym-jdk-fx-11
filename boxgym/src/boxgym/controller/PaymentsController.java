@@ -1,22 +1,25 @@
 package boxgym.controller;
 
 import boxgym.dao.PaymentDao;
-import boxgym.dao.SaleDao;
 import boxgym.helper.AlertHelper;
 import boxgym.helper.ButtonHelper;
+import boxgym.helper.ChangeTableRow;
 import boxgym.helper.TableViewCount;
 import boxgym.helper.TextFieldFormat;
 import boxgym.model.Payment;
-import boxgym.model.Sale;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckMenuItem;
@@ -28,8 +31,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
-import org.controlsfx.control.PrefixSelectionComboBox;
 
 public class PaymentsController implements Initializable {
     
@@ -60,9 +61,6 @@ public class PaymentsController implements Initializable {
     
     @FXML
     private TextField searchBox;
-    
-    @FXML
-    private PrefixSelectionComboBox<?> changeTableDataComboBox;
     
     @FXML
     private TableView<Payment> paymentTableView;
@@ -151,7 +149,7 @@ public class PaymentsController implements Initializable {
 
     private void refreshTableView() {
         paymentTableView.setItems(loadData());
-        //search();
+        search();
         countLabel.setText(TableViewCount.footerMessage(paymentTableView.getItems().size(), "resultado"));
     }
 
@@ -166,6 +164,87 @@ public class PaymentsController implements Initializable {
         TextFieldFormat.paymentTableCellCurrencyFormat(paidValueTableColumn);
         
         refreshTableView();
+    }
+    
+    private boolean caseSensitiveEnabled(Payment payment, String searchText, int optionOrder) {
+        String tempCustomerName = payment.getTempCustomerName();
+        String description = payment.getDescription();
+        String paymentDate = payment.getPaymentDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        String tempValueToPay = "R$ ".concat(String.valueOf(payment.getTempValueToPay()).replace(".", ","));
+        String paidValue = "R$ ".concat(String.valueOf(payment.getPaidValue()).replace(".", ","));
+        
+        List<String> fields = Arrays.asList(tempCustomerName, description, paymentDate, tempValueToPay, paidValue);
+
+        return stringComparasion(fields, searchText, optionOrder);
+    }
+
+    private boolean caseSensitiveDisabled(Payment payment, String searchText, int optionOrder) {
+        String tempCustomerName = payment.getTempCustomerName().toLowerCase();
+        String description = payment.getDescription().toLowerCase();
+        String paymentDate = payment.getPaymentDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        String tempValueToPay = "r$ ".concat(String.valueOf(payment.getTempValueToPay()).replace(".", ","));
+        String paidValue = "r$ ".concat(String.valueOf(payment.getPaidValue()).replace(".", ","));
+
+        List<String> fields = Arrays.asList(tempCustomerName, description, paymentDate, tempValueToPay, paidValue);
+
+        return stringComparasion(fields, searchText, optionOrder);
+    }
+    
+    private boolean stringComparasion(List<String> list, String searchText, int optionOrder) {
+        boolean searchReturn = false;
+        switch (optionOrder) {
+            case 1:
+                searchReturn = (list.get(0).contains(searchText)) || (list.get(1).contains(searchText))
+                        || (list.get(2).contains(searchText)) || (list.get(3).contains(searchText)) || (list.get(4).contains(searchText));
+                break;
+            case 2:
+                searchReturn = (list.get(0).equals(searchText)) || (list.get(1).equals(searchText))
+                        || (list.get(2).equals(searchText)) || (list.get(3).equals(searchText)) || (list.get(4).equals(searchText));
+                break;
+            case 3:
+                searchReturn = (list.get(0).startsWith(searchText)) || (list.get(1).startsWith(searchText))
+                        || (list.get(2).startsWith(searchText)) || (list.get(3).startsWith(searchText)) || (list.get(4).startsWith(searchText));
+                break;
+            case 4:
+                searchReturn = (list.get(0).endsWith(searchText)) || (list.get(1).endsWith(searchText))
+                        || (list.get(2).endsWith(searchText)) || (list.get(3).endsWith(searchText)) || (list.get(4).endsWith(searchText));
+                break;
+            default:
+                break;
+        }
+        return searchReturn;
+    }
+    
+    private void search() {
+        FilteredList<Payment> filteredData = new FilteredList<>(loadData(), p -> true);
+
+        searchBox.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(payment -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                if (caseSensitiveOp.isSelected()) {
+                    if (containsOp.isSelected()) return caseSensitiveEnabled(payment, newValue, 1);
+                    if (alphabeticalEqualsToOp.isSelected()) return caseSensitiveEnabled(payment, newValue, 2);
+                    if (startsWithOp.isSelected()) return caseSensitiveEnabled(payment, newValue, 3);
+                    if (endsWithOp.isSelected()) return caseSensitiveEnabled(payment, newValue, 4);
+                }
+
+                if (alphabeticalEqualsToOp.isSelected()) return caseSensitiveDisabled(payment, newValue.toLowerCase(), 2);
+                if (startsWithOp.isSelected()) return caseSensitiveDisabled(payment, newValue.toLowerCase(), 3);
+                if (endsWithOp.isSelected()) return caseSensitiveDisabled(payment, newValue.toLowerCase(), 4);
+
+                return caseSensitiveDisabled(payment, newValue.toLowerCase(), 1);
+            });
+            paymentTableView.getSelectionModel().clearSelection();
+            countLabel.setText(TableViewCount.footerMessage(paymentTableView.getItems().size(), "resultado"));
+            selectedRowLabel.setText("");
+        });
+
+        SortedList<Payment> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(paymentTableView.comparatorProperty());
+        paymentTableView.setItems(sortedData);
     }
     
     private void listeners() {
@@ -189,21 +268,15 @@ public class PaymentsController implements Initializable {
             searchBox.requestFocus();
         });
     }
-
+    
     @FXML
-    void goToFirstRow(MouseEvent event) {
-        paymentTableView.scrollTo(0);
-        paymentTableView.getSelectionModel().selectFirst();
+    private void goToFirstRow() {
+        ChangeTableRow.changeToFirstRow(paymentTableView);
     }
 
     @FXML
-    void goToLastRow(MouseEvent event) {
-        if (paymentTableView.getItems().size() == 1) {
-            goToFirstRow(event);
-        } else {
-            paymentTableView.getSelectionModel().selectLast();
-            paymentTableView.scrollTo(paymentTableView.getItems().size() - 1);
-        }
+    private void goToLastRow() {
+        ChangeTableRow.changeToLastRow(paymentTableView);
     }
     
 }

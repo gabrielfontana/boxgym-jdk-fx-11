@@ -2,6 +2,7 @@ package boxgym.controller;
 
 import boxgym.dao.SaleProductDao;
 import boxgym.helper.ButtonHelper;
+import boxgym.helper.ChangeTableRow;
 import boxgym.helper.TableViewCount;
 import boxgym.helper.TextFieldFormat;
 import boxgym.model.SaleProduct;
@@ -111,21 +112,15 @@ public class SalesProductsListController implements Initializable {
         }
         return total;
     }
-
+    
     @FXML
-    void goToFirstRow(MouseEvent event) {
-        productsListTableView.scrollTo(0);
-        productsListTableView.getSelectionModel().selectFirst();
+    private void goToFirstRow() {
+        ChangeTableRow.changeToFirstRow(productsListTableView);
     }
 
     @FXML
-    void goToLastRow(MouseEvent event) {
-        if (productsListTableView.getItems().size() == 1) {
-            goToFirstRow(event);
-        } else {
-            productsListTableView.getSelectionModel().selectLast();
-            productsListTableView.scrollTo(productsListTableView.getItems().size() - 1);
-        }
+    private void goToLastRow() {
+        ChangeTableRow.changeToLastRow(productsListTableView);
     }
 
 }

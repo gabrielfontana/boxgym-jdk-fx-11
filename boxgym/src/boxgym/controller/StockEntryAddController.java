@@ -7,6 +7,7 @@ import boxgym.dao.SupplierDao;
 import boxgym.helper.ActionButtonTableCell;
 import boxgym.helper.AlertHelper;
 import boxgym.helper.ButtonHelper;
+import boxgym.helper.ChangeTableRow;
 import boxgym.helper.TableViewCount;
 import boxgym.helper.TextFieldFormat;
 import boxgym.helper.TextValidationHelper;
@@ -321,21 +322,15 @@ public class StockEntryAddController implements Initializable {
         amountTextField.setText("");
         costPriceTextField.setPrice(0.0);
     }
-
+    
     @FXML
-    void goToFirstRow(MouseEvent event) {
-        productEntryTableView.scrollTo(0);
-        productEntryTableView.getSelectionModel().selectFirst();
+    private void goToFirstRow() {
+        ChangeTableRow.changeToFirstRow(productEntryTableView);
     }
 
     @FXML
-    void goToLastRow(MouseEvent event) {
-        if (productEntryTableView.getItems().size() == 1) {
-            goToFirstRow(event);
-        } else {
-            productEntryTableView.getSelectionModel().selectLast();
-            productEntryTableView.scrollTo(productEntryTableView.getItems().size() - 1);
-        }
+    private void goToLastRow() {
+        ChangeTableRow.changeToLastRow(productEntryTableView);
     }
 
 }

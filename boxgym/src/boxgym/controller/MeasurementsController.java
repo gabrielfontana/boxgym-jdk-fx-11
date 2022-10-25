@@ -3,6 +3,7 @@ package boxgym.controller;
 import boxgym.dao.MeasurementDao;
 import boxgym.helper.AlertHelper;
 import boxgym.helper.ButtonHelper;
+import boxgym.helper.ChangeTableRow;
 import boxgym.helper.StageHelper;
 import boxgym.helper.TableViewCount;
 import boxgym.helper.TextFieldFormat;
@@ -419,20 +420,14 @@ public class MeasurementsController implements Initializable {
             searchBox.requestFocus();
         });
     }
-
+    
     @FXML
-    void goToFirstRow(MouseEvent event) {
-        measurementTableView.scrollTo(0);
-        measurementTableView.getSelectionModel().selectFirst();
+    private void goToFirstRow() {
+        ChangeTableRow.changeToFirstRow(measurementTableView);
     }
 
     @FXML
-    void goToLastRow(MouseEvent event) {
-        if (measurementTableView.getItems().size() == 1) {
-            goToFirstRow(event);
-        } else {
-            measurementTableView.getSelectionModel().selectLast();
-            measurementTableView.scrollTo(measurementTableView.getItems().size() - 1);
-        }
+    private void goToLastRow() {
+        ChangeTableRow.changeToLastRow(measurementTableView);
     }
 }

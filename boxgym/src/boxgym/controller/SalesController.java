@@ -4,6 +4,7 @@ import boxgym.dao.SaleDao;
 import boxgym.dao.SaleProductDao;
 import boxgym.helper.AlertHelper;
 import boxgym.helper.ButtonHelper;
+import boxgym.helper.ChangeTableRow;
 import boxgym.helper.StageHelper;
 import boxgym.helper.TableViewCount;
 import boxgym.helper.TextFieldFormat;
@@ -344,21 +345,15 @@ public class SalesController implements Initializable {
             searchBox.requestFocus();
         });
     }
-
+    
     @FXML
-    void goToFirstRow(MouseEvent event) {
-        saleTableView.scrollTo(0);
-        saleTableView.getSelectionModel().selectFirst();
+    private void goToFirstRow() {
+        ChangeTableRow.changeToFirstRow(saleTableView);
     }
 
     @FXML
-    void goToLastRow(MouseEvent event) {
-        if (saleTableView.getItems().size() == 1) {
-            goToFirstRow(event);
-        } else {
-            saleTableView.getSelectionModel().selectLast();
-            saleTableView.scrollTo(saleTableView.getItems().size() - 1);
-        }
+    private void goToLastRow() {
+        ChangeTableRow.changeToLastRow(saleTableView);
     }
     
 }

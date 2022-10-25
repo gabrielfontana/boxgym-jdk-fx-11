@@ -17,9 +17,8 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import org.controlsfx.control.PrefixSelectionComboBox?>
 
-<AnchorPane prefHeight="695.0" prefWidth="1280.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.PaymentsController">
+<AnchorPane prefHeight="695.0" prefWidth="1280.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.PaymentsController">
    <children>
       <AnchorPane layoutX="30.0" layoutY="35.0" prefHeight="80.0" prefWidth="1280.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -75,14 +74,9 @@
                   </MenuButton>
                   <TextField fx:id="searchBox" prefHeight="30.0" prefWidth="149.0" promptText="Pesquisar..." HBox.hgrow="ALWAYS">
                      <HBox.margin>
-                        <Insets right="15.0" />
-                     </HBox.margin>
-                  </TextField>
-                  <PrefixSelectionComboBox fx:id="changeTableDataComboBox" prefHeight="30.0" prefWidth="115.0">
-                     <HBox.margin>
                         <Insets />
                      </HBox.margin>
-                  </PrefixSelectionComboBox>
+                  </TextField>
                </children>
             </HBox>
             <TableView fx:id="paymentTableView" prefHeight="550.0" prefWidth="900.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="40.0">

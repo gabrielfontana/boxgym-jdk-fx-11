@@ -6,6 +6,7 @@ import boxgym.dao.WorkoutExerciseDao;
 import boxgym.helper.ActionButtonTableCell;
 import boxgym.helper.AlertHelper;
 import boxgym.helper.ButtonHelper;
+import boxgym.helper.ChangeTableRow;
 import boxgym.helper.TableViewCount;
 import boxgym.helper.TextValidationHelper;
 import boxgym.model.Workout;
@@ -342,20 +343,14 @@ public class WorkoutsAddController implements Initializable {
 
         return exerciseRelated;
     }
-
+    
     @FXML
-    void goToFirstRow(MouseEvent event) {
-        exerciseEntryTableView.scrollTo(0);
-        exerciseEntryTableView.getSelectionModel().selectFirst();
+    private void goToFirstRow() {
+        ChangeTableRow.changeToFirstRow(exerciseEntryTableView);
     }
 
     @FXML
-    void goToLastRow(MouseEvent event) {
-        if (exerciseEntryTableView.getItems().size() == 1) {
-            goToFirstRow(event);
-        } else {
-            exerciseEntryTableView.getSelectionModel().selectLast();
-            exerciseEntryTableView.scrollTo(exerciseEntryTableView.getItems().size() - 1);
-        }
+    private void goToLastRow() {
+        ChangeTableRow.changeToLastRow(exerciseEntryTableView);
     }
 }

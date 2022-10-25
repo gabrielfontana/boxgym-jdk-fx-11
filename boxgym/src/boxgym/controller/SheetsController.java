@@ -4,6 +4,7 @@ import boxgym.dao.SheetDao;
 import boxgym.dao.SheetWorkoutDao;
 import boxgym.helper.AlertHelper;
 import boxgym.helper.ButtonHelper;
+import boxgym.helper.ChangeTableRow;
 import boxgym.helper.StageHelper;
 import boxgym.helper.TableViewCount;
 import boxgym.helper.TextFieldFormat;
@@ -378,21 +379,15 @@ public class SheetsController implements Initializable {
             searchBox.requestFocus();
         });
     }
-
+    
     @FXML
-    void goToFirstRow(MouseEvent event) {
-        sheetTableView.scrollTo(0);
-        sheetTableView.getSelectionModel().selectFirst();
+    private void goToFirstRow() {
+        ChangeTableRow.changeToFirstRow(sheetTableView);
     }
 
     @FXML
-    void goToLastRow(MouseEvent event) {
-        if (sheetTableView.getItems().size() == 1) {
-            goToFirstRow(event);
-        } else {
-            sheetTableView.getSelectionModel().selectLast();
-            sheetTableView.scrollTo(sheetTableView.getItems().size() - 1);
-        }
+    private void goToLastRow() {
+        ChangeTableRow.changeToLastRow(sheetTableView);
     }
 
 }

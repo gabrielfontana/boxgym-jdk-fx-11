@@ -2,6 +2,7 @@ package boxgym.controller;
 
 import boxgym.dao.SheetWorkoutDao;
 import boxgym.helper.ButtonHelper;
+import boxgym.helper.ChangeTableRow;
 import boxgym.helper.TableViewCount;
 import boxgym.model.SheetWorkout;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
@@ -86,21 +87,15 @@ public class SheetsWorkoutsListController implements Initializable {
             }
         });
     }
-
+    
     @FXML
-    void goToFirstRow(MouseEvent event) {
-        workoutListTableView.scrollTo(0);
-        workoutListTableView.getSelectionModel().selectFirst();
+    private void goToFirstRow() {
+        ChangeTableRow.changeToFirstRow(workoutListTableView);
     }
 
     @FXML
-    void goToLastRow(MouseEvent event) {
-        if (workoutListTableView.getItems().size() == 1) {
-            goToFirstRow(event);
-        } else {
-            workoutListTableView.getSelectionModel().selectLast();
-            workoutListTableView.scrollTo(workoutListTableView.getItems().size() - 1);
-        }
+    private void goToLastRow() {
+        ChangeTableRow.changeToLastRow(workoutListTableView);
     }
     
 }

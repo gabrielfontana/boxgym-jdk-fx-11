@@ -63,12 +63,22 @@ public class MembershipDao {
         return membershipId;
     }
 
-    public List<Membership> read() {
+    public List<Membership> read(String status) {
         List<Membership> membershipsList = new ArrayList<>();
-        String sql = "SELECT m.membershipId, m.fkCustomer, c.name AS `tempCustomerName`, m.dueDate, m.price, m.status, m.createdAt, m.updatedAt "
-                + "FROM `membership` AS m INNER JOIN `customer` AS c "
-                + "ON m.fkCustomer = c.customerId "
-                + "ORDER BY m.membershipId ASC;";
+        String sql = "";
+
+        if (status.equals("Todas")) {
+            sql = "SELECT m.membershipId, m.fkCustomer, c.name AS `tempCustomerName`, m.dueDate, m.price, m.status, m.createdAt, m.updatedAt "
+                    + "FROM `membership` AS m INNER JOIN `customer` AS c "
+                    + "ON m.fkCustomer = c.customerId "
+                    + "ORDER BY m.membershipId ASC;";
+        } else {
+            sql = "SELECT m.membershipId, m.fkCustomer, c.name AS `tempCustomerName`, m.dueDate, m.price, m.status, m.createdAt, m.updatedAt "
+                    + "FROM `membership` AS m INNER JOIN `customer` AS c "
+                    + "ON m.fkCustomer = c.customerId "
+                    + "WHERE m.status = '" + status + "' "
+                    + "ORDER BY m.membershipId ASC;";
+        }
 
         try {
             ps = conn.prepareStatement(sql);
@@ -112,7 +122,7 @@ public class MembershipDao {
         }
         return false;
     }
-    
+
     public boolean update(Membership membership) {
         String sql = "UPDATE `membership` SET `dueDate` = ?, `price` = ? WHERE `membershipId` = ?;";
 
@@ -203,7 +213,7 @@ public class MembershipDao {
         }
         return descriptionList;
     }
-    
+
     public void updateBillingDescription(List<Integer> idList, List<String> newDescriptionList) {
         if (idList.size() == newDescriptionList.size()) {
             for (int i = 0; i < idList.size(); i++) {

@@ -3,6 +3,7 @@ package boxgym.controller;
 import boxgym.dao.ProductDao;
 import boxgym.helper.AlertHelper;
 import boxgym.helper.ButtonHelper;
+import boxgym.helper.ChangeTableRow;
 import boxgym.helper.ImageHelper;
 import boxgym.helper.StageHelper;
 import boxgym.helper.TableViewCount;
@@ -433,19 +434,13 @@ public class ProductsController implements Initializable {
     }
     
     @FXML
-    void goToFirstRow(MouseEvent event) {
-        productTableView.scrollTo(0);
-        productTableView.getSelectionModel().selectFirst();
+    private void goToFirstRow() {
+        ChangeTableRow.changeToFirstRow(productTableView);
     }
 
     @FXML
-    void goToLastRow(MouseEvent event) {
-        if (productTableView.getItems().size() == 1) {
-            goToFirstRow(event);
-        } else {
-            productTableView.getSelectionModel().selectLast();
-            productTableView.scrollTo(productTableView.getItems().size() - 1);
-        }
+    private void goToLastRow() {
+        ChangeTableRow.changeToLastRow(productTableView);
     }
 
 }

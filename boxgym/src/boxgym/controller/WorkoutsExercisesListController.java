@@ -2,6 +2,7 @@ package boxgym.controller;
 
 import boxgym.dao.WorkoutExerciseDao;
 import boxgym.helper.ButtonHelper;
+import boxgym.helper.ChangeTableRow;
 import boxgym.helper.TableViewCount;
 import boxgym.model.WorkoutExercise;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
@@ -96,19 +97,13 @@ public class WorkoutsExercisesListController implements Initializable {
     }
 
     @FXML
-    void goToFirstRow(MouseEvent event) {
-        exerciseListTableView.scrollTo(0);
-        exerciseListTableView.getSelectionModel().selectFirst();
+    private void goToFirstRow() {
+        ChangeTableRow.changeToFirstRow(exerciseListTableView);
     }
 
     @FXML
-    void goToLastRow(MouseEvent event) {
-        if (exerciseListTableView.getItems().size() == 1) {
-            goToFirstRow(event);
-        } else {
-            exerciseListTableView.getSelectionModel().selectLast();
-            exerciseListTableView.scrollTo(exerciseListTableView.getItems().size() - 1);
-        }
+    private void goToLastRow() {
+        ChangeTableRow.changeToLastRow(exerciseListTableView);
     }
 
 }

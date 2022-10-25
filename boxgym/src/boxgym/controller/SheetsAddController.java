@@ -7,6 +7,7 @@ import boxgym.dao.WorkoutDao;
 import boxgym.helper.ActionButtonTableCell;
 import boxgym.helper.AlertHelper;
 import boxgym.helper.ButtonHelper;
+import boxgym.helper.ChangeTableRow;
 import boxgym.helper.TableViewCount;
 import boxgym.helper.TextValidationHelper;
 import boxgym.model.Sheet;
@@ -332,19 +333,13 @@ public class SheetsAddController implements Initializable {
     }
 
     @FXML
-    void goToFirstRow(MouseEvent event) {
-        workoutEntryTableView.scrollTo(0);
-        workoutEntryTableView.getSelectionModel().selectFirst();
+    private void goToFirstRow() {
+        ChangeTableRow.changeToFirstRow(workoutEntryTableView);
     }
 
     @FXML
-    void goToLastRow(MouseEvent event) {
-        if (workoutEntryTableView.getItems().size() == 1) {
-            goToFirstRow(event);
-        } else {
-            workoutEntryTableView.getSelectionModel().selectLast();
-            workoutEntryTableView.scrollTo(workoutEntryTableView.getItems().size() - 1);
-        }
+    private void goToLastRow() {
+        ChangeTableRow.changeToLastRow(workoutEntryTableView);
     }
 
 }

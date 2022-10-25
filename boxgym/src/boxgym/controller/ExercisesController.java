@@ -3,6 +3,7 @@ package boxgym.controller;
 import boxgym.dao.ExerciseDao;
 import boxgym.helper.AlertHelper;
 import boxgym.helper.ButtonHelper;
+import boxgym.helper.ChangeTableRow;
 import boxgym.helper.StageHelper;
 import boxgym.helper.TableViewCount;
 import boxgym.model.Exercise;
@@ -385,21 +386,15 @@ public class ExercisesController implements Initializable {
             searchBox.requestFocus();
         });
     }
-
+    
     @FXML
-    void goToFirstRow(MouseEvent event) {
-        exerciseTableView.scrollTo(0);
-        exerciseTableView.getSelectionModel().selectFirst();
+    private void goToFirstRow() {
+        ChangeTableRow.changeToFirstRow(exerciseTableView);
     }
 
     @FXML
-    void goToLastRow(MouseEvent event) {
-        if (exerciseTableView.getItems().size() == 1) {
-            goToFirstRow(event);
-        } else {
-            exerciseTableView.getSelectionModel().selectLast();
-            exerciseTableView.scrollTo(exerciseTableView.getItems().size() - 1);
-        }
+    private void goToLastRow() {
+        ChangeTableRow.changeToLastRow(exerciseTableView);
     }
 
 }

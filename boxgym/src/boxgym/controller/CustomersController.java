@@ -3,6 +3,7 @@ package boxgym.controller;
 import boxgym.dao.CustomerDao;
 import boxgym.helper.AlertHelper;
 import boxgym.helper.ButtonHelper;
+import boxgym.helper.ChangeTableRow;
 import boxgym.helper.StageHelper;
 import boxgym.helper.TableViewCount;
 import boxgym.helper.TextFieldFormat;
@@ -447,19 +448,13 @@ public class CustomersController implements Initializable {
     }
 
     @FXML
-    void goToFirstRow(MouseEvent event) {
-        customerTableView.scrollTo(0);
-        customerTableView.getSelectionModel().selectFirst();
+    private void goToFirstRow() {
+        ChangeTableRow.changeToFirstRow(customerTableView);
     }
 
     @FXML
-    void goToLastRow(MouseEvent event) {
-        if (customerTableView.getItems().size() == 1) {
-            goToFirstRow(event);
-        } else {
-            customerTableView.getSelectionModel().selectLast();
-            customerTableView.scrollTo(customerTableView.getItems().size() - 1);
-        }
+    private void goToLastRow() {
+        ChangeTableRow.changeToLastRow(customerTableView);
     }
 
 }

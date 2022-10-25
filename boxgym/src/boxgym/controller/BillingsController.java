@@ -3,6 +3,7 @@ package boxgym.controller;
 import boxgym.dao.BillingDao;
 import boxgym.helper.AlertHelper;
 import boxgym.helper.ButtonHelper;
+import boxgym.helper.ChangeTableRow;
 import boxgym.helper.StageHelper;
 import boxgym.helper.TableViewCount;
 import boxgym.helper.TextFieldFormat;
@@ -39,7 +40,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
 import org.controlsfx.control.PrefixSelectionComboBox;
@@ -252,7 +252,7 @@ public class BillingsController implements Initializable {
     }
 
     private boolean caseSensitiveDisabled(Billing billing, String searchText, int optionOrder) {
-        String tempCustomerName = billing.getTempCustomerName();
+        String tempCustomerName = billing.getTempCustomerName().toLowerCase();
         String description = billing.getDescription().toLowerCase();
         String dueDate = billing.getDueDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         String valueToPay = "r$ ".concat(String.valueOf(billing.getValueToPay()).replace(".", ","));
@@ -342,19 +342,13 @@ public class BillingsController implements Initializable {
     }
 
     @FXML
-    void goToFirstRow(MouseEvent event) {
-        billingTableView.scrollTo(0);
-        billingTableView.getSelectionModel().selectFirst();
+    private void goToFirstRow() {
+        ChangeTableRow.changeToFirstRow(billingTableView);
     }
 
     @FXML
-    void goToLastRow(MouseEvent event) {
-        if (billingTableView.getItems().size() == 1) {
-            goToFirstRow(event);
-        } else {
-            billingTableView.getSelectionModel().selectLast();
-            billingTableView.scrollTo(billingTableView.getItems().size() - 1);
-        }
+    private void goToLastRow() {
+        ChangeTableRow.changeToLastRow(billingTableView);
     }
 
 }

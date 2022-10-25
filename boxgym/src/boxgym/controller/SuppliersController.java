@@ -3,6 +3,7 @@ package boxgym.controller;
 import boxgym.dao.SupplierDao;
 import boxgym.helper.AlertHelper;
 import boxgym.helper.ButtonHelper;
+import boxgym.helper.ChangeTableRow;
 import boxgym.helper.StageHelper;
 import boxgym.helper.TableViewCount;
 import boxgym.model.Supplier;
@@ -420,19 +421,13 @@ public class SuppliersController implements Initializable {
     }
 
     @FXML
-    void goToFirstRow(MouseEvent event) {
-        supplierTableView.scrollTo(0);
-        supplierTableView.getSelectionModel().selectFirst();
+    private void goToFirstRow() {
+        ChangeTableRow.changeToFirstRow(supplierTableView);
     }
 
     @FXML
-    void goToLastRow(MouseEvent event) {
-         if (supplierTableView.getItems().size() == 1) {
-            goToFirstRow(event);
-        } else {
-            supplierTableView.getSelectionModel().selectLast(); 
-            supplierTableView.scrollTo(supplierTableView.getItems().size() - 1);
-         }
+    private void goToLastRow() {
+        ChangeTableRow.changeToLastRow(supplierTableView);
     }
 
 }
