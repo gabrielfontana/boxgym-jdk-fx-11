@@ -40,12 +40,13 @@ public class SaleDao {
     }
 
     public boolean create(Sale sale) {
-        String sql = "INSERT INTO `sale` (`fkCustomer`, `saleDate`) VALUES (?, ?);";
+        String sql = "INSERT INTO `sale` (`fkCustomer`, `saleDate`, `status`) VALUES (?, ?, ?);";
 
         try {
             ps = conn.prepareStatement(sql);
             ps.setInt(1, sale.getFkCustomer());
             ps.setDate(2, java.sql.Date.valueOf(sale.getSaleDate()));
+            ps.setString(3, sale.getStatus());
             ps.execute();
             return true;
         } catch (SQLException ex) {
@@ -97,7 +98,7 @@ public class SaleDao {
 
     public List<Sale> read() {
         List<Sale> salesList = new ArrayList<>();
-        String sql = "SELECT s.saleId, s.fkCustomer, c.name AS `tempCustomerName`, s.saleDate, s.createdAt, s.updatedAt "
+        String sql = "SELECT s.saleId, s.fkCustomer, c.name AS `tempCustomerName`, s.saleDate, s.status, s.createdAt, s.updatedAt "
                 + "FROM `sale` AS s INNER JOIN `customer` AS c "
                 + "ON s.fkCustomer = c.customerId "
                 + "ORDER BY s.saleId ASC;";
@@ -111,6 +112,7 @@ public class SaleDao {
                 s.setFkCustomer(rs.getInt("fkCustomer"));
                 s.setTempCustomerName(rs.getString("tempCustomerName"));
                 s.setSaleDate(rs.getDate("saleDate").toLocalDate());
+                s.setStatus(rs.getString("status"));
                 s.setCreatedAt(rs.getTimestamp("createdAt").toLocalDateTime());
                 s.setUpdatedAt(rs.getTimestamp("updatedAt").toLocalDateTime());
 
@@ -358,7 +360,7 @@ public class SaleDao {
     }
 
     public boolean createExcelFile(String filePath) {
-        String sql = "SELECT s.saleId, c.name AS `tempCustomerName`, s.saleDate, s.createdAt, s.updatedAt "
+        String sql = "SELECT s.saleId, c.name AS `tempCustomerName`, s.saleDate, s.status, s.createdAt, s.updatedAt "
                 + "FROM `sale` AS s INNER JOIN `customer` AS c "
                 + "ON s.fkCustomer = c.customerId "
                 + "ORDER BY s.saleId ASC;";
@@ -393,8 +395,9 @@ public class SaleDao {
                 ExcelFileHelper.createStyledCell(row, 0, rs.getInt("saleId"), defaultStyle);
                 ExcelFileHelper.createStyledCell(row, 1, rs.getString("tempCustomerName"), defaultStyle);
                 ExcelFileHelper.createStyledDateCell(row, 2, rs.getString("saleDate"), DateTimeFormatter.ofPattern("dd/MM/yyyy"), defaultStyle);
-                ExcelFileHelper.createStyledDateTimeCell(row, 3, rs.getString("createdAt"), DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"), defaultStyle);
-                ExcelFileHelper.createStyledDateTimeCell(row, 4, rs.getString("updatedAt"), DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"), defaultStyle);
+                ExcelFileHelper.createStyledCell(row, 3, rs.getString("status"), defaultStyle);
+                ExcelFileHelper.createStyledDateTimeCell(row, 4, rs.getString("createdAt"), DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"), defaultStyle);
+                ExcelFileHelper.createStyledDateTimeCell(row, 5, rs.getString("updatedAt"), DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"), defaultStyle);
                 rowIndex++;
 
                 // SaleProduct

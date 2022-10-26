@@ -38,7 +38,6 @@ public class PaymentsAddController implements Initializable {
 
     /*@FXML
     private LimitedTextField finesAndInterestTextField;*/
-
     @FXML
     private Label billingValueToPayLabel;
 
@@ -106,8 +105,11 @@ public class PaymentsAddController implements Initializable {
 
     private void initValues() {
         String value = nf.format(loadBilling.getValueToPay());
+        
         if (String.valueOf(loadBilling.getValueToPay()).endsWith(".00")) {
             value = value.concat(",00");
+        } else if (String.valueOf(loadBilling.getValueToPay()).endsWith("0")) {
+            value = value.concat("0");
         }
 
         valueToBePaidTextField.setText(value);
@@ -158,7 +160,6 @@ public class PaymentsAddController implements Initializable {
             billingValueToPayLabel.setText(String.valueOf(nf.format(newBillingValueToPay)));
         }
     }*/
-
     private void moneyChangeLabelCalc() {
         BigDecimal billingValueToPay = new BigDecimal(replaceDotComma(billingValueToPayLabel.getText()));
         BigDecimal valueToBePaid = new BigDecimal(replaceDotComma(valueToBePaidLabel.getText()));
@@ -195,7 +196,7 @@ public class PaymentsAddController implements Initializable {
             ah.customAlert(Alert.AlertType.WARNING, "Não foi possível confirmar o pagamento desta cobrança", validation.getMessage());
         } else {
             moneyChangeLabelCalc();
-            
+
             BigDecimal billingValueToPay = new BigDecimal(replaceDotComma(billingValueToPayLabel.getText()));
             BigDecimal valueToBePaid = new BigDecimal(replaceDotComma(valueToBePaidLabel.getText()));
             BigDecimal paidValue = new BigDecimal("0");
@@ -204,7 +205,9 @@ public class PaymentsAddController implements Initializable {
                 createPaymentObject(loadBilling.getDescription(), billingValueToPay, paidValue);
                 changeBillingStatusAfterPayment(loadBilling.getBillingId());
 
-                if (loadBilling.getFkSale() == 0) {//Se for uma mensalidade
+                if (loadBilling.getFkSale() != 0) { //Se for uma venda
+                    changeSaleStatusAfterPayment(loadBilling.getFkSale());
+                } else if (loadBilling.getFkMembership() != 0) { //Se for uma mensalidade
                     changeMembershipStatusAfterPayment(loadBilling.getFkMembership());
                 }
             } else if (valueToBePaid.compareTo(billingValueToPay) < 0) {
@@ -232,6 +235,11 @@ public class PaymentsAddController implements Initializable {
     private void changeBillingStatusAfterPayment(int billingId) {
         PaymentDao paymentDao = new PaymentDao();
         paymentDao.changeBillingStatusAfterPayment(billingId);
+    }
+    
+    private void changeSaleStatusAfterPayment(int fkSale) {
+        PaymentDao paymentDao = new PaymentDao();
+        paymentDao.changeSaleStatusAfterPayment(fkSale);
     }
 
     private void changeMembershipStatusAfterPayment(int fkMembership) {

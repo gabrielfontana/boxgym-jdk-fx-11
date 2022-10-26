@@ -7,7 +7,6 @@ import boxgym.helper.ChangeTableRow;
 import boxgym.helper.StageHelper;
 import boxgym.helper.TableViewCount;
 import boxgym.helper.TextFieldFormat;
-import boxgym.model.Billing;
 import boxgym.model.Membership;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import java.io.IOException;

@@ -123,6 +123,26 @@ public class PaymentDao {
         }
         return false;
     }
+    
+    public boolean changeSaleStatusAfterPayment(int fkSale) {
+        String sql = "UPDATE `sale` AS s INNER JOIN `billing` AS b "
+                + "ON b.fkSale = s.saleId "
+                + "SET s.status = 'Pago' "
+                + "WHERE s.saleId = " + fkSale + ";";
+
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.execute();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(PaymentDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(conn);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(rs);
+        }
+        return false;
+    }
 
     public boolean changeMembershipStatusAfterPayment(int fkMembership) {
         String sql = "UPDATE `membership` AS m INNER JOIN `billing` AS b "

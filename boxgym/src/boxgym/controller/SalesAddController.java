@@ -207,7 +207,7 @@ public class SalesAddController implements Initializable {
             lastRow.setDisable(false);
             saveButton.setDisable(false);
             clearButton.setDisable(false);
-            Sale sale = new Sale(getKeyFromCustomerComboBox(), saleDateDatePicker.getValue());
+            Sale sale = new Sale(getKeyFromCustomerComboBox(), saleDateDatePicker.getValue(), "Aguardando pagamento");
             SaleDao saleDao = new SaleDao();
             saleDao.create(sale);
             saleIdTextField.setText(String.valueOf(saleDao.getSaleId()));

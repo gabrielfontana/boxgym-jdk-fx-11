@@ -388,19 +388,25 @@ public class HomeController implements Initializable {
     private void setAvgTicketThisMonth() {
         SaleDao saleDao = new SaleDao();
         NumberFormat nf = NumberFormat.getInstance(new Locale("pt", "BR"));
-        avgTicketThisMonth.setText("R$ " + nf.format(saleDao.getAvgTicketThisMonthForDashboard()));
+        BigDecimal avgTicket = saleDao.getAvgTicketThisMonthForDashboard();
+        if (avgTicket == null) avgTicket = new BigDecimal("0");
+        avgTicketThisMonth.setText("R$ " + nf.format(avgTicket));
     }
 
     private void setLowestSaleThisMonth() {
         SaleDao saleDao = new SaleDao();
         NumberFormat nf = NumberFormat.getInstance(new Locale("pt", "BR"));
-        lowestSaleThisMonth.setText("R$ " + nf.format(saleDao.getLowestSaleThisMonthForDashboard()));
+        BigDecimal lowestSale = saleDao.getLowestSaleThisMonthForDashboard();
+        if (lowestSale == null) lowestSale = new BigDecimal("0");
+        lowestSaleThisMonth.setText("R$ " + nf.format(lowestSale));
     }
 
     private void setBiggestSaleThisMonth() {
         SaleDao saleDao = new SaleDao();
         NumberFormat nf = NumberFormat.getInstance(new Locale("pt", "BR"));
-        biggestSaleThisMonth.setText("R$ " + nf.format(saleDao.getBiggestSaleThisMonthForDashboard()));
+        BigDecimal biggestSale = saleDao.getBiggestSaleThisMonthForDashboard();
+        if (biggestSale == null) biggestSale = new BigDecimal("0");
+        biggestSaleThisMonth.setText("R$ " + nf.format(biggestSale));
     }
 
     private void buildAnnualSalesHistoryLineChart() {

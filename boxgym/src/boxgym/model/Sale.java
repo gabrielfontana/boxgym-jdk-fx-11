@@ -11,6 +11,7 @@ public class Sale {
     private int saleId; //Identificador
     private int fkCustomer; //Cliente
     private LocalDate saleDate; //Data de venda
+    private String status; //Status
     private LocalDateTime createdAt; //Criado em
     private LocalDateTime updatedAt; //Atualizado em
 
@@ -22,9 +23,10 @@ public class Sale {
     }
 
     //Construtor CREATE
-    public Sale(int fkCustomer, LocalDate saleDate) {
+    public Sale(int fkCustomer, LocalDate saleDate, String status) {
         this.fkCustomer = fkCustomer;
         this.saleDate = saleDate;
+        this.status = status;
     }
 
     public int getSaleId() {
@@ -51,6 +53,14 @@ public class Sale {
         this.saleDate = saleDate;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
