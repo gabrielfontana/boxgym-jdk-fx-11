@@ -105,7 +105,7 @@ public class PaymentsAddController implements Initializable {
 
     private void initValues() {
         String value = nf.format(loadBilling.getValueToPay());
-        
+
         if (String.valueOf(loadBilling.getValueToPay()).endsWith(".00")) {
             value = value.concat(",00");
         } else if (String.valueOf(loadBilling.getValueToPay()).endsWith("0")) {
@@ -212,11 +212,11 @@ public class PaymentsAddController implements Initializable {
                 }
             } else if (valueToBePaid.compareTo(billingValueToPay) < 0) {
                 paidValue = valueToBePaid; //Valor que será pago é menor que o valor da cobrança
-                if (loadBilling.getFkSale() == 0) { //Se for uma mensalidade
-                    createPaymentObject("Parte da " + loadBilling.getDescription(), billingValueToPay, paidValue);
-                    changeBillingValueToPayAfterPayment(paidValue, loadBilling.getBillingId());
-                } else if (loadBilling.getFkMembership() == 0) { //Se for uma venda
+                if (loadBilling.getFkSale() != 0) { //Se for uma venda
                     createPaymentObject("Parte de Vendas", billingValueToPay, paidValue);
+                    changeBillingValueToPayAfterPayment(paidValue, loadBilling.getBillingId());
+                } else if (loadBilling.getFkMembership() != 0) { //Se for uma mensalidade
+                    createPaymentObject("Parte da " + loadBilling.getDescription(), billingValueToPay, paidValue);
                     changeBillingValueToPayAfterPayment(paidValue, loadBilling.getBillingId());
                 }
             }
@@ -236,7 +236,7 @@ public class PaymentsAddController implements Initializable {
         PaymentDao paymentDao = new PaymentDao();
         paymentDao.changeBillingStatusAfterPayment(billingId);
     }
-    
+
     private void changeSaleStatusAfterPayment(int fkSale) {
         PaymentDao paymentDao = new PaymentDao();
         paymentDao.changeSaleStatusAfterPayment(fkSale);

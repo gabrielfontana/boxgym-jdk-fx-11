@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="695.0" prefWidth="1280.0" style="-fx-background-color: #f2f2f2;" styleClass="anchor-pane" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.HomeController">
+<AnchorPane prefHeight="695.0" prefWidth="1280.0" style="-fx-background-color: #f2f2f2;" styleClass="anchor-pane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.HomeController">
     <children>
         <AnchorPane layoutX="20.0" layoutY="25.0" prefHeight="80.0" prefWidth="1280.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -418,7 +418,7 @@
                                                 <Font size="14.0" />
                                              </font>
                                           </Label>
-                                          <PieChart fx:id="mostPopularProductsPieChart" layoutX="57.0" layoutY="45.0" prefHeight="272.0" prefWidth="500.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="40.0" />
+                                          <PieChart fx:id="mostPopularProductsPieChart" layoutX="57.0" layoutY="45.0" prefHeight="272.0" prefWidth="500.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="40.0" />
                                           <Label fx:id="mostPopularProductsWarningLabel" alignment="CENTER" layoutX="522.0" layoutY="153.0" prefWidth="197.0" AnchorPane.bottomAnchor="152.0" AnchorPane.leftAnchor="522.0" AnchorPane.rightAnchor="521.0" AnchorPane.topAnchor="153.0" />
                                        </children>
                                     </AnchorPane>

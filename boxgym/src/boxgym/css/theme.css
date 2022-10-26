@@ -91,3 +91,20 @@
 .up-down-icon:pressed {
     -fx-fill: #111 !important;
 }
+
+.tab-pane > .tab-header-area > .headers-region > .tab:selected {
+    -fx-background-color: transparent, #cccccc, white;
+    -fx-background-radius: 0 0 0 0, 0 0 0 0, 0 0 0 0;
+}
+
+.tab-pane > .tab-header-area > .headers-region > .tab:hover > .tab-container > .tab-label {
+    -fx-text-fill: -main-theme-color;
+}
+
+.tab-pane > .tab-header-area > .headers-region > .tab:selected > .tab-container > .tab-label {
+    -fx-text-fill: -main-theme-color;
+}
+
+.tab-pane > .tab-header-area > .headers-region > .tab:selected:hover > .tab-container > .tab-label {
+    -fx-text-fill: derive(-main-theme-color, 30%);
+}
