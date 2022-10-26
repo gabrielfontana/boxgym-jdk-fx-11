@@ -3,7 +3,6 @@ package boxgym.dao;
 import boxgym.jdbc.ConnectionFactory;
 import boxgym.model.Billing;
 import boxgym.model.Membership;
-import boxgym.model.Payment;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
