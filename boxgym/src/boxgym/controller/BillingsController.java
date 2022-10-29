@@ -222,7 +222,7 @@ public class BillingsController implements Initializable {
         ObservableList<Billing> list;
 
         if (selectedItem.equals(billingTypeList.get(0))) {
-            list = FXCollections.observableArrayList(billingDao.readSales()); //Vendas
+            list = FXCollections.observableArrayList(billingDao.readSale()); //Vendas
         } else {
             list = FXCollections.observableArrayList(billingDao.readMembership()); //Mensalidades
         }

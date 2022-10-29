@@ -66,7 +66,7 @@ public class BillingDao {
         return false;
     }
     
-    public List<Billing> readSales() {
+    public List<Billing> readSale() {
         List<Billing> billingsList = new ArrayList<>();
         String sql = "SELECT b.billingId, b.fkSale, c.name AS `tempCustomerName`, b.description, b.dueDate, b.status, b.valueToPay, b.createdAt, b.updatedAt "
                 + "FROM `billing` AS b INNER JOIN `sale` AS s "

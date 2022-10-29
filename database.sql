@@ -43,7 +43,8 @@ CREATE TABLE `userRegistration` (
   `confirmPassword` VARCHAR(64) NOT NULL,
   `createdAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`userId`)
+  PRIMARY KEY (`userId`),
+  UNIQUE KEY `userUnique` (`username`) USING BTREE
 );
 
 CREATE TABLE `stockentry` (
