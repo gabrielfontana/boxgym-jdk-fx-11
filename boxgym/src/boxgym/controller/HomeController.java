@@ -3,10 +3,12 @@ package boxgym.controller;
 import boxgym.dao.CustomerDao;
 import boxgym.dao.ProductDao;
 import boxgym.dao.SaleDao;
+import boxgym.dao.StockEntryDao;
 import boxgym.dao.SupplierDao;
 import boxgym.model.Customer;
 import boxgym.model.Product;
 import boxgym.model.Sale;
+import boxgym.model.StockEntry;
 import boxgym.model.Supplier;
 import com.google.common.collect.TreeMultimap;
 import java.math.BigDecimal;
@@ -245,8 +247,11 @@ public class HomeController implements Initializable {
     private void buildMostFrequentSuppliersSEPieChart() {
         SupplierDao supplierDao = new SupplierDao();
         List<Supplier> suppliersList = supplierDao.read();
+        
+        StockEntryDao stockEntryDao = new StockEntryDao();
+        List<StockEntry> stockEntriesList = stockEntryDao.read();
 
-        if (suppliersList == null || suppliersList.isEmpty()) {
+        if (suppliersList == null || suppliersList.isEmpty() || stockEntriesList == null || stockEntriesList.isEmpty()) {
             mostFrequentSuppliersSEWarningLabel.setText("Não há registros para gerar o gráfico");
         } else {
             SupplierDao amount = new SupplierDao();
@@ -314,8 +319,11 @@ public class HomeController implements Initializable {
     private void buildMostPopularProductsPieChart() {
         ProductDao productDao = new ProductDao();
         List<Product> productsList = productDao.read();
+        
+        SaleDao saleDao = new SaleDao();
+        List<Sale> salesList = saleDao.read();
 
-        if (productsList == null || productsList.isEmpty()) {
+        if (productsList == null || productsList.isEmpty() || salesList == null || salesList.isEmpty()) {
             mostPopularProductsWarningLabel.setText("Não há registros para gerar o gráfico");
         } else {
             ProductDao sumAmount = new ProductDao();

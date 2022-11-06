@@ -211,7 +211,7 @@ public class WorkoutDao {
             XSSFCellStyle subHeaderStyle = ExcelFileHelper.excelStyle(workbook, "Arial", true, BorderStyle.THIN, new byte[]{(byte) 230, (byte) 230, (byte) 230});
             XSSFCellStyle defaultStyle = ExcelFileHelper.excelStyle(workbook, "Arial", false, BorderStyle.THIN, new byte[]{(byte) 255, (byte) 255, (byte) 255});
 
-            XSSFSheet sheet = workbook.createSheet("Treinos Predefinidos");
+            XSSFSheet sheet = workbook.createSheet("Treinos");
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 3));
             ExcelFileHelper.createStyledCell(sheet.createRow(0), 0, "Relatório gerado em: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")), infoStyle);
 

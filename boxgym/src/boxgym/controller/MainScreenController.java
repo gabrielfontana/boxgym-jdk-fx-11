@@ -136,11 +136,6 @@ public class MainScreenController implements Initializable {
     }
 
     @FXML
-    void handleAbout(ActionEvent event) throws IOException {
-        changeContentArea("/boxgym/view/About.fxml");
-    }
-
-    @FXML
     void exportCustomersToExcel(ActionEvent event) {
         FileChooser chooser = new FileChooser();
         chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Pasta de Trabalho do Excel", "*.xlsx"));

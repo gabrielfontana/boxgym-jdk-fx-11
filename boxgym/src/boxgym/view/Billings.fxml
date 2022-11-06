@@ -224,7 +224,7 @@
                         <Insets bottom="10.0" />
                      </VBox.margin>
                   </HBox>
-                  <Button fx:id="receiveButton" mnemonicParsing="false" onAction="#receive" prefHeight="30.0" prefWidth="90.0" text="Receber">
+                  <Button fx:id="receiveButton" mnemonicParsing="false" onAction="#receive" prefHeight="30.0" prefWidth="90.0" text="Receber Cobrança">
                      <graphic>
                         <MaterialDesignIconView glyphName="SITEMAP" size="15.0" />
                      </graphic>
