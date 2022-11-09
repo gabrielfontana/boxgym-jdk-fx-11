@@ -197,7 +197,7 @@ public class MeasurementDao {
 
             List<String> fields = Arrays.asList("ID", "Cliente", "Data", "Altura (em cm)", "Peso (em kg)",
                     "Pescoço", "Ombro", "Braço Direito", "Braço Esquerdo", "Antebraço Direito", "Antebraço Esquerdo",
-                    "Tórax", "Cintura", "Abdome", "Quadril", "Coxa Direita", "Coxa Esquerda",
+                    "Tórax", "Cintura", "Abdômen", "Quadril", "Coxa Direita", "Coxa Esquerda",
                     "Panturrilha Direita", "Panturrilha Esquerda", "Criação", "Modificação");
             XSSFRow headerRow = sheet.createRow(2);
             for (int i = 0; i < fields.size(); i++) {

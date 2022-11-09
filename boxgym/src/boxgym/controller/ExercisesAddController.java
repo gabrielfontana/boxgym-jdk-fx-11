@@ -75,7 +75,7 @@ public class ExercisesAddController implements Initializable {
     }
 
     private void loadExerciseGroupComboBox() {
-        String[] groupsList = {"Abdome", "Antebraço", "Bíceps", "Corpo", "Costas", "Glúteo", "Ombro", "Peito", "Perna", "Tríceps"};
+        String[] groupsList = {"Abdômen", "Antebraço", "Bíceps", "Corpo", "Costas", "Glúteo", "Ombro", "Peito", "Perna", "Tríceps"};
         exerciseGroupComboBox.setPromptText("Selecione");
         exerciseGroupComboBox.setItems(FXCollections.observableArrayList(groupsList));
     }

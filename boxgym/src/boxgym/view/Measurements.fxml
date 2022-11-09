@@ -324,7 +324,7 @@
                   </HBox>
                   <HBox>
                      <children>
-                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Abdome: ">
+                        <Label minWidth="-Infinity" prefHeight="20.0" styleClass="attribute-name-label" text="Abdômen: ">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>

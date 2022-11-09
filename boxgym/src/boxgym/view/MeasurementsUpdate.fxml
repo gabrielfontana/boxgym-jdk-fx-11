@@ -214,7 +214,7 @@
                   </HBox>
                   <HBox>
                      <children>
-                        <Label alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="120.0" text="Abdome">
+                        <Label alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="120.0" text="Abdômen">
                            <padding>
                               <Insets left="5.0" right="5.0" />
                            </padding>

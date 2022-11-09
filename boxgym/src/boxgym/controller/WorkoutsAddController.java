@@ -160,7 +160,7 @@ public class WorkoutsAddController implements Initializable {
     }
 
     private void inputRestrictions() {
-        descriptionTextField.setValidationPattern("[a-zA-Z\\u00C0-\\u00FF0-9 ._-]", 255);
+        descriptionTextField.setValidationPattern("[a-zA-Z\\u00C0-\\u00FF0-9 ,._-]", 255);
         sessionsTextField.setValidationPattern("[0-9]", 10);
         setsTextField.setValidationPattern("[0-9]", 10);
         repsTextField.setValidationPattern("[0-9]", 10);
@@ -174,7 +174,7 @@ public class WorkoutsAddController implements Initializable {
     }
 
     private void loadExerciseGroupComboBox() {
-        String[] groupsList = {"Abdome", "Antebraço", "Bíceps", "Corpo", "Costas", "Glúteo", "Ombro", "Peito", "Perna", "Tríceps"};
+        String[] groupsList = {"Abdômen", "Antebraço", "Bíceps", "Corpo", "Costas", "Glúteo", "Ombro", "Peito", "Perna", "Tríceps"};
         exerciseGroupComboBox.setPromptText("Selecione");
         exerciseGroupComboBox.setItems(FXCollections.observableArrayList(groupsList));
     }
@@ -182,8 +182,8 @@ public class WorkoutsAddController implements Initializable {
     private void exerciseGroupComboBoxListener() {
         exerciseGroupComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
             switch (exerciseGroupComboBox.getSelectionModel().getSelectedItem()) {
-                case "Abdome":
-                    filterExercisesByGroup("Abdome");
+                case "Abdômen":
+                    filterExercisesByGroup("Abdômen");
                     break;
                 case "Antebraço":
                     filterExercisesByGroup("Antebraço");

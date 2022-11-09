@@ -18,7 +18,7 @@ public class Measurement {
     private float leftForearm; //Antebraço esquerdo
     private float thorax; //Tórax
     private float waist; //Cintura
-    private float abdomen; //Abdome
+    private float abdomen; //Abdômen
     private float hip; //Quadril
     private float rightThigh; //Coxa direita
     private float leftThigh; //Coxa esquerda
