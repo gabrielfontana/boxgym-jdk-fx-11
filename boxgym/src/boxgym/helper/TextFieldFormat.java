@@ -46,7 +46,7 @@ public class TextFieldFormat {
             }
         });
     }
-    
+
     public static void stockEntryTableCellCurrencyFormat(TableColumn column) {
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
         column.setCellFactory(tc -> new TableCell<StockEntry, BigDecimal>() {
@@ -76,7 +76,7 @@ public class TextFieldFormat {
             }
         });
     }
-    
+
     public static void saleTableCellCurrencyFormat(TableColumn column) {
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
         column.setCellFactory(tc -> new TableCell<Sale, BigDecimal>() {
@@ -91,7 +91,7 @@ public class TextFieldFormat {
             }
         });
     }
-    
+
     public static void saleProductTableCellCurrencyFormat(TableColumn column) {
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
         column.setCellFactory(tc -> new TableCell<SaleProduct, BigDecimal>() {
@@ -151,7 +151,7 @@ public class TextFieldFormat {
             }
         });
     }
-    
+
     public static void measurementTableCellDateFormat(TableColumn column) {
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         column.setCellFactory(tc -> new TableCell<Measurement, LocalDate>() {
@@ -166,7 +166,21 @@ public class TextFieldFormat {
             }
         });
     }
-    
+
+    public static void measurementTableCellFloatFormat(TableColumn column) {
+        column.setCellFactory(tc -> new TableCell<Measurement, Float>() {
+            @Override
+            protected void updateItem(Float weight, boolean empty) {
+                super.updateItem(weight, empty);
+                if (empty) {
+                    setText(null);
+                } else {
+                    setText(weight.toString().replace(".", ","));
+                }
+            }
+        });
+    }
+
     public static void sheetTableCellDateFormat(TableColumn column) {
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         column.setCellFactory(tc -> new TableCell<Sheet, LocalDate>() {
@@ -181,7 +195,7 @@ public class TextFieldFormat {
             }
         });
     }
-    
+
     public static void billingTableCellDateFormat(TableColumn column) {
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         column.setCellFactory(tc -> new TableCell<Billing, LocalDate>() {
@@ -196,7 +210,7 @@ public class TextFieldFormat {
             }
         });
     }
-    
+
     public static void billingTableCellCurrencyFormat(TableColumn column) {
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
         column.setCellFactory(tc -> new TableCell<Billing, BigDecimal>() {
@@ -211,7 +225,7 @@ public class TextFieldFormat {
             }
         });
     }
-    
+
     public static void membershipTableCellDateFormat(TableColumn column) {
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         column.setCellFactory(tc -> new TableCell<Membership, LocalDate>() {
@@ -226,7 +240,7 @@ public class TextFieldFormat {
             }
         });
     }
-    
+
     public static void membershipTableCellCurrencyFormat(TableColumn column) {
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
         column.setCellFactory(tc -> new TableCell<Membership, BigDecimal>() {
@@ -241,7 +255,7 @@ public class TextFieldFormat {
             }
         });
     }
-    
+
     public static void paymentTableCellDateFormat(TableColumn column) {
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         column.setCellFactory(tc -> new TableCell<Payment, LocalDate>() {
@@ -256,7 +270,7 @@ public class TextFieldFormat {
             }
         });
     }
-    
+
     public static void paymentTableCellCurrencyFormat(TableColumn column) {
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
         column.setCellFactory(tc -> new TableCell<Payment, BigDecimal>() {

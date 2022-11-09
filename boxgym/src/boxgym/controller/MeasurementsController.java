@@ -316,6 +316,7 @@ public class MeasurementsController implements Initializable {
         TextFieldFormat.measurementTableCellDateFormat(measurementDateTableColumn);
         heightTableColumn.setCellValueFactory(new PropertyValueFactory("height"));
         weightTableColumn.setCellValueFactory(new PropertyValueFactory("weight"));
+        TextFieldFormat.measurementTableCellFloatFormat(weightTableColumn);
         refreshTableView();
     }
 
