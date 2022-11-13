@@ -377,7 +377,7 @@ public class SaleDao {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 3));
             ExcelFileHelper.createStyledCell(sheet.createRow(0), 0, "Relatório gerado em: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")), infoStyle);
 
-            List<String> fields = Arrays.asList("ID", "Cliente", "Data de Venda", "Criação", "Modificação");
+            List<String> fields = Arrays.asList("ID", "Cliente", "Data de Venda", "Status", "Criação", "Modificação");
             XSSFRow headerRow = sheet.createRow(2);
             for (int i = 0; i < fields.size(); i++) {
                 ExcelFileHelper.createStyledCell(headerRow, i, fields.get(i), headerStyle);
