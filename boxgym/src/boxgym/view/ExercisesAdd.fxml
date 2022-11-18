@@ -11,7 +11,7 @@
 <?import limitedtextfield.LimitedTextField?>
 <?import org.controlsfx.control.PrefixSelectionComboBox?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="600.0" style="-fx-background-color: #f2f2f2;" stylesheets="@../css/theme.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.ExercisesAddController">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="600.0" style="-fx-background-color: #f2f2f2;" stylesheets="@../css/theme.css" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.ExercisesAddController">
     <children>
         <AnchorPane layoutX="15.0" layoutY="15.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
