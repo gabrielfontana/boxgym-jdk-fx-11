@@ -90,9 +90,6 @@ public class ExercisesController implements Initializable {
     private TableColumn<Exercise, String> nameTableColumn;
 
     @FXML
-    private TableColumn<Exercise, String> abbreviationTableColumn;
-
-    @FXML
     private TableColumn<Exercise, String> exerciseTypeTableColumn;
 
     @FXML
@@ -115,9 +112,6 @@ public class ExercisesController implements Initializable {
 
     @FXML
     private Label nameLabel;
-
-    @FXML
-    private Label abbreviationLabel;
 
     @FXML
     private Label exerciseTypeLabel;
@@ -223,7 +217,7 @@ public class ExercisesController implements Initializable {
         if (selected == null) {
             alert.customAlert(Alert.AlertType.WARNING, "Selecione um exercício para excluir", "");
         } else {
-            alert.confirmationAlert("Excluir exercício", "Tem certeza que deseja excluir o exercício '" + selected.getAbbreviation() + "'? "
+            alert.confirmationAlert("Excluir exercício", "Tem certeza que deseja excluir o exercício '" + selected.getName()+ "'? "
                     + "\n\nO exercício será excluído de forma definitiva e não poderá ser recuperado.");
             if (alert.getResult().get() == ButtonType.YES) {
                 if (exerciseDao.checkWorkoutDeleteConstraint(selected.getExerciseId())){
@@ -242,7 +236,6 @@ public class ExercisesController implements Initializable {
         if (selected == null) {
             exerciseIdLabel.setText("");
             nameLabel.setText("");
-            abbreviationLabel.setText("");
             exerciseTypeLabel.setText("");
             exerciseGroupLabel.setText("");
             descriptionLabel.setText("");
@@ -256,7 +249,6 @@ public class ExercisesController implements Initializable {
         if (selected != null) {
             exerciseIdLabel.setText(String.valueOf(selected.getExerciseId()));
             nameLabel.setText(selected.getName());
-            abbreviationLabel.setText(selected.getAbbreviation());
             exerciseTypeLabel.setText(selected.getExerciseType());
             exerciseGroupLabel.setText(selected.getExerciseGroup());
             descriptionLabel.setText(selected.getDescription());
@@ -279,7 +271,6 @@ public class ExercisesController implements Initializable {
 
     private void initExerciseTableView() {
         nameTableColumn.setCellValueFactory(new PropertyValueFactory("name"));
-        abbreviationTableColumn.setCellValueFactory(new PropertyValueFactory("abbreviation"));
         exerciseTypeTableColumn.setCellValueFactory(new PropertyValueFactory("exerciseType"));
         exerciseGroupTableColumn.setCellValueFactory(new PropertyValueFactory("exerciseGroup"));
         refreshTableView();
@@ -287,22 +278,20 @@ public class ExercisesController implements Initializable {
 
     private boolean caseSensitiveEnabled(Exercise exercise, String searchText, int optionOrder) {
         String name = exercise.getName();
-        String abbreviation = exercise.getAbbreviation();
         String exerciseType = exercise.getExerciseType();
         String exerciseGroup = exercise.getExerciseGroup();
 
-        List<String> fields = Arrays.asList(name, abbreviation, exerciseType, exerciseGroup);
+        List<String> fields = Arrays.asList(name, exerciseType, exerciseGroup);
 
         return stringComparasion(fields, searchText, optionOrder);
     }
 
     private boolean caseSensitiveDisabled(Exercise exercise, String searchText, int optionOrder) {
         String name = exercise.getName().toLowerCase();
-        String abbreviation = exercise.getAbbreviation().toLowerCase();
         String exerciseType = exercise.getExerciseType().toLowerCase();
         String exerciseGroup = exercise.getExerciseGroup().toLowerCase();
 
-        List<String> fields = Arrays.asList(name, abbreviation, exerciseType, exerciseGroup);
+        List<String> fields = Arrays.asList(name, exerciseType, exerciseGroup);
 
         return stringComparasion(fields, searchText, optionOrder);
     }
@@ -311,20 +300,16 @@ public class ExercisesController implements Initializable {
         boolean searchReturn = false;
         switch (optionOrder) {
             case 1:
-                searchReturn = (list.get(0).contains(searchText)) || (list.get(1).contains(searchText)) || (list.get(2).contains(searchText))
-                        || (list.get(3).contains(searchText));
+                searchReturn = (list.get(0).contains(searchText)) || (list.get(1).contains(searchText)) || (list.get(2).contains(searchText));
                 break;
             case 2:
-                searchReturn = (list.get(0).equals(searchText)) || (list.get(1).equals(searchText)) || (list.get(2).equals(searchText))
-                        || (list.get(3).equals(searchText));
+                searchReturn = (list.get(0).equals(searchText)) || (list.get(1).equals(searchText)) || (list.get(2).equals(searchText));
                 break;
             case 3:
-                searchReturn = (list.get(0).startsWith(searchText)) || (list.get(1).startsWith(searchText)) || (list.get(2).startsWith(searchText))
-                        || (list.get(3).startsWith(searchText));
+                searchReturn = (list.get(0).startsWith(searchText)) || (list.get(1).startsWith(searchText)) || (list.get(2).startsWith(searchText));
                 break;
             case 4:
-                searchReturn = (list.get(0).endsWith(searchText)) || (list.get(1).endsWith(searchText)) || (list.get(2).endsWith(searchText))
-                        || (list.get(3).endsWith(searchText));
+                searchReturn = (list.get(0).endsWith(searchText)) || (list.get(1).endsWith(searchText)) || (list.get(2).endsWith(searchText));
                 break;
             default:
                 break;

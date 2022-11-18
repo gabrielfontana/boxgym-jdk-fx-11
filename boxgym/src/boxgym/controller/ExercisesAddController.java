@@ -31,9 +31,6 @@ public class ExercisesAddController implements Initializable {
     private LimitedTextField nameTextField;
 
     @FXML
-    private LimitedTextField abbreviationTextField;
-
-    @FXML
     private PrefixSelectionComboBox<String> exerciseTypeComboBox;
 
     @FXML
@@ -82,7 +79,6 @@ public class ExercisesAddController implements Initializable {
 
     private void exercisesInputRestrictions() {
         nameTextField.setValidationPattern("[a-zA-Z\\u00C0-\\u00FF0-9 ()%._-]", 255);
-        abbreviationTextField.setValidationPattern("[a-zA-Z\\u00C0-\\u00FF0-9 ()%._-]", 255);
     }
 
     @FXML
@@ -91,7 +87,6 @@ public class ExercisesAddController implements Initializable {
 
         TextValidationHelper validation = new TextValidationHelper("Atenção: \n\n");
         validation.emptyTextField(nameTextField.getText(), "Preencha o campo Nome. \n");
-        validation.emptyTextField(abbreviationTextField.getText(), "Preencha o campo Abreviação. \n");
         validation.invalidComboBox(exerciseTypeComboBox, "Selecione o campo Tipo. \n");
         validation.invalidComboBox(exerciseGroupComboBox, "Selecione o campo Grupo. \n");
 
@@ -100,8 +95,7 @@ public class ExercisesAddController implements Initializable {
         } else {
             String selectedExerciseType = exerciseTypeComboBox.getSelectionModel().getSelectedItem();
             String selectedExerciseGroup = exerciseGroupComboBox.getSelectionModel().getSelectedItem();
-            Exercise exercise = new Exercise(nameTextField.getText(), abbreviationTextField.getText(), selectedExerciseType, selectedExerciseGroup,
-                    descriptionTextArea.getText(), instructionTextArea.getText());
+            Exercise exercise = new Exercise(nameTextField.getText(), selectedExerciseType, selectedExerciseGroup, descriptionTextArea.getText(), instructionTextArea.getText());
             exerciseDao.create(exercise);
             setCreated(true);
             ah.customAlert(Alert.AlertType.INFORMATION, "Exercício cadastrado com sucesso", "");
@@ -112,7 +106,6 @@ public class ExercisesAddController implements Initializable {
     @FXML
     void clear() {
         nameTextField.setText("");
-        abbreviationTextField.setText("");
         exerciseTypeComboBox.valueProperty().set(null);
         exerciseGroupComboBox.valueProperty().set(null);
         descriptionTextArea.setText("");

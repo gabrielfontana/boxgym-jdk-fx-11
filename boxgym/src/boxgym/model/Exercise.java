@@ -6,7 +6,6 @@ public class Exercise {
 
     private int exerciseId; //Identificador
     private String name; //Nome
-    private String abbreviation; //Abreviação
     private String exerciseType; //Tipo
     private String exerciseGroup; //Grupo
     private String description; //Descrição
@@ -25,9 +24,8 @@ public class Exercise {
     }
 
     //Construtor CREATE
-    public Exercise(String name, String abbreviation, String exerciseType, String exerciseGroup, String description, String instruction) {
+    public Exercise(String name, String exerciseType, String exerciseGroup, String description, String instruction) {
         this.name = name;
-        this.abbreviation = abbreviation;
         this.exerciseType = exerciseType;
         this.exerciseGroup = exerciseGroup;
         this.description = description;
@@ -35,10 +33,9 @@ public class Exercise {
     }
 
     //Construtor  UPDATE
-    public Exercise(int exerciseId, String name, String abbreviation, String exerciseType, String exerciseGroup, String description, String instruction) {
+    public Exercise(int exerciseId, String name, String exerciseType, String exerciseGroup, String description, String instruction) {
         this.exerciseId = exerciseId;
         this.name = name;
-        this.abbreviation = abbreviation;
         this.exerciseType = exerciseType;
         this.exerciseGroup = exerciseGroup;
         this.description = description;
@@ -59,14 +56,6 @@ public class Exercise {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getAbbreviation() {
-        return abbreviation;
-    }
-
-    public void setAbbreviation(String abbreviation) {
-        this.abbreviation = abbreviation;
     }
 
     public String getExerciseType() {

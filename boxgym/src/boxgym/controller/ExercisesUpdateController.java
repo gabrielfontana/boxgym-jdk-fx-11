@@ -30,9 +30,6 @@ public class ExercisesUpdateController implements Initializable {
     private LimitedTextField nameTextField;
 
     @FXML
-    private LimitedTextField abbreviationTextField;
-
-    @FXML
     private PrefixSelectionComboBox<String> exerciseTypeComboBox;
 
     @FXML
@@ -97,12 +94,10 @@ public class ExercisesUpdateController implements Initializable {
 
     private void exercisesInputRestrictions() {
         nameTextField.setValidationPattern("[a-zA-Z\\u00C0-\\u00FF0-9 ()%._-]", 255);
-        abbreviationTextField.setValidationPattern("[a-zA-Z\\u00C0-\\u00FF0-9 ()%._-]", 255);
     }
 
     private void initExercise() {
         nameTextField.setText(loadExercise.getName());
-        abbreviationTextField.setText(loadExercise.getAbbreviation());
         exerciseTypeComboBox.valueProperty().set(loadExercise.getExerciseType());
         exerciseGroupComboBox.valueProperty().set(loadExercise.getExerciseGroup());
         descriptionTextArea.setText(loadExercise.getDescription());
@@ -115,7 +110,6 @@ public class ExercisesUpdateController implements Initializable {
 
         TextValidationHelper validation = new TextValidationHelper("Atenção: \n\n");
         validation.emptyTextField(nameTextField.getText(), "Preencha o campo Nome. \n");
-        validation.emptyTextField(abbreviationTextField.getText(), "Preencha o campo Abreviação. \n");
         validation.invalidComboBox(exerciseTypeComboBox, "Selecione o campo Tipo. \n");
         validation.invalidComboBox(exerciseGroupComboBox, "Selecione o campo Grupo. \n");
 
@@ -124,7 +118,7 @@ public class ExercisesUpdateController implements Initializable {
         } else {
             String selectedExerciseType = exerciseTypeComboBox.getSelectionModel().getSelectedItem();
             String selectedExerciseGroup = exerciseGroupComboBox.getSelectionModel().getSelectedItem();
-            Exercise exercise = new Exercise(loadExercise.getExerciseId(), nameTextField.getText(), abbreviationTextField.getText(), selectedExerciseType, selectedExerciseGroup,
+            Exercise exercise = new Exercise(loadExercise.getExerciseId(), nameTextField.getText(), selectedExerciseType, selectedExerciseGroup,
                     descriptionTextArea.getText(), instructionTextArea.getText());
             exerciseDao.update(exercise);
             setUpdated(true);
@@ -136,7 +130,6 @@ public class ExercisesUpdateController implements Initializable {
     @FXML
     void clear() {
         nameTextField.setText("");
-        abbreviationTextField.setText("");
         exerciseTypeComboBox.valueProperty().set(null);
         exerciseGroupComboBox.valueProperty().set(null);
         descriptionTextArea.setText("");

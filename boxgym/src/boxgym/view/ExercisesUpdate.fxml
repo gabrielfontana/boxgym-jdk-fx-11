@@ -11,7 +11,7 @@
 <?import limitedtextfield.LimitedTextField?>
 <?import org.controlsfx.control.PrefixSelectionComboBox?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="600.0" style="-fx-background-color: #f2f2f2;" stylesheets="@../css/theme.css" xmlns="http://javafx.com/javafx/11.0.14" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.ExercisesUpdateController">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="600.0" style="-fx-background-color: #f2f2f2;" stylesheets="@../css/theme.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boxgym.controller.ExercisesUpdateController">
     <children>
         <AnchorPane layoutX="15.0" layoutY="15.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -29,18 +29,8 @@
                                         <LimitedTextField fx:id="nameTextField" prefHeight="30.0" prefWidth="550.0" />
                                     </children>
                                     <HBox.margin>
-                                        <Insets right="10.0" />
+                                        <Insets />
                                     </HBox.margin>
-                                </VBox>
-                                <VBox prefWidth="275.0" HBox.hgrow="ALWAYS">
-                                    <children>
-                                        <Label text="Abreviação *">
-                                            <VBox.margin>
-                                                <Insets bottom="5.0" />
-                                            </VBox.margin>
-                                        </Label>
-                                        <LimitedTextField fx:id="abbreviationTextField" prefHeight="30.0" prefWidth="550.0" />
-                                    </children>
                                 </VBox>
                             </children>
                             <VBox.margin>

@@ -150,7 +150,6 @@ DELIMITER ;
 CREATE TABLE `exercise` (
   `exerciseId` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
-  `abbreviation` VARCHAR(255) NOT NULL,
   `exerciseType` VARCHAR(255) NOT NULL,
   `exerciseGroup` VARCHAR(255) NOT NULL,
   `description` TEXT NULL,
